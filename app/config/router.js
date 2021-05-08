@@ -1,16 +1,12 @@
 
-import {createStackNavigator} from '@react-navigation/stack';
-import ContactUsUnAuth from '../screens/contacts/ContactUsUnAuth';
-import Splash from '../screens/welcome/Splash';
+import {createStackNavigator} from 'react-navigation-stack';
+import AboutUs from '../screens/contacts/AboutUs';
 
-export const AppNavigator = createStackNavigator({
-    Splash: {
-      screen: Splash
-    },
-    ContactUsUnAuth : {
-      screen: ContactUsUnAuth
+export let AppNavigator = createStackNavigator({
+    AboutUs : {
+      screen: AboutUs
     }
   },{
-    initialRouteName: "Splash"
+    initialRouteName: "AboutUs"
 });
 

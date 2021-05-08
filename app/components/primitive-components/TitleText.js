@@ -1,11 +1,11 @@
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
-import {titleTextColor} from '../config/colors';
+import {titleTextColor} from '../../config/colors';
 
 
-const TitleText = () => {
+const TitleText = (props) => {
 	return (
-	    <Text style={styles.text}>{this.props.value}</Text>
+	    <Text style={styles.text}>{props.value}</Text>
 	);
 }
 
