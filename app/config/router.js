@@ -1,6 +1,6 @@
 
 import {createStackNavigator} from 'react-navigation-stack';
-import AboutUs from '../screens/contacts/aboutUs';
+import AboutUs from '../screens/contacts/AboutUs';
 import VisitUs from '../screens/contacts/VisitUs';
 
 const Stack = createStackNavigator();
