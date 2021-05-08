@@ -1,0 +1,12 @@
+{
+  "name": "ibs-mobile",
+  "displayName": "ibs-mobile",
+  "expo": {
+    "name": "ibs-mobile",
+    "slug": "ibs-mobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
