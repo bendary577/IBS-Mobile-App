@@ -2,11 +2,12 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import AboutUs from '../screens/contacts/AboutUs';
 
-export let AppNavigator = createStackNavigator({
-    AboutUs : {
-      screen: AboutUs
-    }
-  },{
-    initialRouteName: "AboutUs"
-});
+const Stack = createStackNavigator();
 
+export const StackNavigation = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="AboutUs" component={AboutUs} />
+    </Stack.Navigator>
+  );
+}
