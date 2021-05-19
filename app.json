@@ -3,10 +3,25 @@
   "displayName": "ibs-mobile",
   "expo": {
     "name": "ibs-mobile",
-    "slug": "ibs-mobile",
+    "icon": "./app/assets/icons/App/app-ibs.png",
     "version": "1.0.0",
+    "slug": "ibs-mobile",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.ibs.mobile",
+      "buildNumber": "1.0.0"
+    },
+    "android": {  
+      "package": "com.ibs.mobile",
+      "versionCode": 1 ,
+      "softwareKeyboardLayoutMode":"pan",
+      "config":{
+        "googleMaps":{
+          "apiKey":"AIzaSyC81e2oX48iixXivgl_dUQ1LTd5-_Z52io"
+        }
+      }
+    }
   }
 }

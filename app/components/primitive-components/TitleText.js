@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     text: {
         color : titleTextColor,
         fontWeight : 'bold',
-        fontSize: 20,
+        fontSize: 22,
     }
-  });
+});
 
 export default TitleText;

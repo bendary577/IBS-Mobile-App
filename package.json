@@ -8,7 +8,10 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-picker/picker": "^1.16.0",
+    "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
+    "@react-navigation/stack": "^5.14.4",
     "expo": "~41.0.1",
     "expo-splash-screen": "~0.10.2",
     "expo-status-bar": "~1.0.4",
@@ -16,17 +19,19 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
+    "react-native-dropdown-menu": "^2.0.0",
+    "react-native-dropdown-picker": "^5.1.15",
     "react-native-elements": "^3.4.1",
     "react-native-gesture-handler": "~1.10.2",
-<<<<<<< HEAD
     "react-native-maps": "^0.28.0",
-=======
->>>>>>> 64394aa3d82c56e4ca07db21977018e6ddad8249
+    "react-native-paper": "^4.8.1",
     "react-native-reanimated": "~2.1.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
+    "react-native-svg": "12.1.0",
     "react-native-unimodules": "~0.13.3",
-    "react-native-web": "~0.13.12",
+    "react-native-vector-icons": "^8.1.0",
+    "react-native-web": "^0.13.18",
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4"
   },
