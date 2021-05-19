@@ -13,7 +13,7 @@ let black = '../../assets/images/WelcomeAnimationScreen/black-right-3.png';
 const WelcomeAnimation = ({navigation}) => {
 
     const navigate = () => {
-        navigation.navigate("PaymentDetails");
+        navigation.navigate("Login");
     }
 
     const navigate2 = () => {

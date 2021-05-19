@@ -15,7 +15,7 @@ import Home from '../screens/home/Home';
 import NotificationsButton from '../components/sub-components/buttons/NotificationsButton';
 import LogoButton from '../components/sub-components/buttons/LogoButton';
 import MyTransactions from '../screens/account/Payments/MyTransactions';
-import Profile from '../screens/account/Profile/Profile';
+import MyProfile from '../screens/account/Profile/MyProfile';
 import Support from '../screens/account/Support/Support';
 import More from '../screens/account/More/More';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,6 +26,9 @@ import MoreTabButton from '../components/sub-components/navigationTabs/MoreTabBu
 import ProfileTabButton from '../components/sub-components/navigationTabs/ProfileTabButton';
 import ConfirmNewPassword from '../screens/auth/ConfirmNewPassword';
 import PaymentDetails from '../screens/account/Payments/PaymentDetails';
+import TitleText from '../components/primitive-components/TitleText';
+import Chat from '../screens/account/Support/Chat';
+import  {View} from 'react-native'
 
 const Stack = createStackNavigator();
 
@@ -122,6 +125,42 @@ export default function StackNavigation() {
           headerBackImage : () =>( <BackButton /> )
       }}
       /> 
+
+      <Stack.Screen
+        name="Support" 
+        component={Support}
+        options={{
+          title : false,
+          headerStyle: {
+            backgroundColor: "#D8D8D8",
+            borderBottomRightRadius : 20,
+            borderBottomLeftRadius : 20
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerRight : ()=>(  <NotificationsButton />),
+          headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value="Support" /></View>)
+      }}
+      />
+
+     <Stack.Screen
+        name="Chat" 
+        component={Chat}
+        options={{
+          title : false,
+          headerStyle: {
+            backgroundColor: "#D8D8D8",
+            borderBottomRightRadius : 20,
+            borderBottomLeftRadius : 20
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerRight : ()=>(  <NotificationsButton />),
+          headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value="Support" /></View>)
+      }}
+      />
 
       <Stack.Screen
         name="AboutUs" 
@@ -238,8 +277,8 @@ export const BottomTabsNavigation = () => {
         />
 
         <Tab.Screen
-          name="Profile"
-          component={Profile}
+          name="MyProfile"
+          component={MyProfile}
           options={{
             tabBarLabel: '',
             tabBarIcon : ({ tintColor, focused })=>(<ProfileTabButton active={focused ? true : false}/>),
