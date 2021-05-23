@@ -1,15 +1,15 @@
 import React from 'react';
 import {View,Image,Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+import getFlipForRTLStyle from '../../utils/utilFunctions';
 
 let login = '../../assets/icons/Login/login.png';
 
 const IBSButtonLargeRed = (props) => {
     return (
-        <TouchableOpacity style={styles.button} onPress={props.onHandlePress}>
+        <TouchableOpacity style={styles.button} onPress={()=>{props.onHandlePress()}}>
                 <Text style={styles.text}>{props.value}</Text>
                 {props.action === true ? 
-                     <Image style={styles.icon} source={require(login)} />
+                     <Image style={[styles.icon, getFlipForRTLStyle()]} source={require(login)} />
                 :
                     <View></View>
                 }

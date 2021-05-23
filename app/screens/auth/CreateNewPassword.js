@@ -4,7 +4,9 @@ import TitleText from '../../components/primitive-components/TitleText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
-
+import { t } from '../../languages/i18Manager';
+import getFlipForRTLStyle from '../../utils/utilFunctions';
+import {updatePassword} from '../../services/authentication';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -16,7 +18,41 @@ class CreateNewPassword extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { };
+        this.state = {
+            newPassword : '',
+            newPasswordConfirmation : ''
+         };
+    }
+
+
+    handleNewPasswordChange = (userInput) => {
+        this.setState({
+            newPassword : userInput
+        });
+    }
+
+    handleNewPasswordConfirmationChange = (userInput) => {
+        this.setState({
+            newPasswordConfirmation : userInput
+        });
+    }
+
+    validate = (newPassword, newPasswordConfirmation) => {
+        if(newPassword === newPasswordConfirmation){
+            return true
+        }
+        return false;
+    }
+
+    handleUpdatePassword = () => {
+        let validation = validate(this.state.newPassword, this.state.newPasswordConfirmation);
+        if(validation){
+            let data = {
+                currentPassword : this.state.newPassword,
+                newPassword : this.state.newPasswordConfirmation
+            }
+            updatePassword(data);
+        }
     }
 
     render(){
@@ -27,20 +63,20 @@ class CreateNewPassword extends Component {
                         <BackButton />
                     </View>
                     <View style={styles.rightLogo}>
-                        <Image style={styles.topImage} source={require(ibsImage)} />
+                        <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value="Create New" />
-                            <TitleText value="Password" />
+                            <TitleText value={t(`auth:createNew`)} />
+                            <TitleText value={t(`auth:password`)} />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            <IBSPasswordText placeholder="New Password"/>
-                            <IBSPasswordText placeholder="Confirm Password"/>
-                            <IBSButtonLargeRed value="Change Password" action={false} />
+                            <IBSPasswordText placeholder={t(`auth:newPassword`)} onChangeText={this.handleNewPasswordChange}/>
+                            <IBSPasswordText placeholder={t(`auth:confirmPassword`)} onChangeText={this.handleNewPasswordConfirmationChange}/>
+                            <IBSButtonLargeRed value={t(`authchangePassword`)} action={false}  onHandlePress={this.handleUpdatePassword}/>
                         </View>
                     </View>
                 </ImageBackground>

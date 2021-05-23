@@ -4,20 +4,20 @@ import TitleText from '../../../components/primitive-components/TitleText';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Transaction from '../../../components/sub-components/Payment/Transaction';
 import { useNavigation } from '@react-navigation/native';
-
+import { t } from '../../../languages/i18Manager';
 
 const MyTransactions = () => {
 
     const navigation = useNavigation();
 
     const navigate = () => {
-      navigation.navigate("PaymentDetails");
+      navigation.navigate(t(`payment:payments`));
     }
 
     return (
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.titleView}>
-               <TitleText value="My Transactions"/>
+               <TitleText value={t(`payment:myTransactions`)}/>
                <View style={{marginTop : 30}}>
                     <DropDownPicker
                         items={[
@@ -29,7 +29,7 @@ const MyTransactions = () => {
                         style={styles.dropdown}
                         dropDownStyle={{backgroundColor: '#fafafa'}}
                         onChangeItem={item => console.log(item.label, item.value)}
-                        placeholder="Filter"
+                        placeholder={t(`general:filter`)}
                     />
                </View>
             </View>

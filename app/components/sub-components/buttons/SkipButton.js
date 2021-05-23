@@ -1,15 +1,15 @@
 import React from 'react';
-import { Touchable } from 'react-native';
 import { Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
-
+import {t}  from '../../../languages/i18Manager';
+import getFlipForRTLStyle from '../../../utils/utilFunctions';
 
 let SkipIcon = '../../../assets/icons/General/skip.png';
 
 const SkipButton = ({ onHandlePress }) => {
     return (
         <TouchableOpacity style={styles.container} onPress={onHandlePress}>
-            <Text style={styles.text}> Skip </Text>
-            <Image style={styles.icon} source={require(SkipIcon)} />
+            <Text style={styles.text}> { t(`general:skip`)} </Text>
+            <Image style={[styles.icon, getFlipForRTLStyle()]} source={require(SkipIcon)} />
         </TouchableOpacity>
     )
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Image, Text, View, StyleSheet} from 'react-native';
 import TitleText from '../../primitive-components/TitleText';
-
+import {t} from '../../../languages/i18Manager';
 
 
 //------------------------ screen ---------------------
@@ -17,14 +17,14 @@ class AnimationComponent extends Component {
                 require('../../../assets/icons/WelcomeAnimationScreen/tech-support.png'),
             ],
             animationTitles : [
-                "Get In Touch",
-                "Get The Latest News",
-                "Check Monthly Transfers"
+                t(`welcome:getInTouch`),
+                t(`welcome:getNews`),
+                t(`welcome:monthlyTransfers`)
             ],
             animationTexts : [
-                "No need to get in touch in person, ask all your inquiries through the in-app chat",
-                "Get the latest news on your account dashboard, transfer notifications & much more!",
-                "Keep an eye on your salary transfers through an easy transfers manager"
+                t(`welcome:getInTouchText`),
+                t(`welcome:getNewsText`),
+                t(`welcome:monthlyTransfersText`)
             ],
         };
     }

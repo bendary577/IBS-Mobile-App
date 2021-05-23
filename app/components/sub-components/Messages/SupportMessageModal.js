@@ -1,5 +1,6 @@
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity,TextInput, Image } from 'react-native';
+import {t} from '../../../languages/i18Manager';
 
 let closeIcon = '../../../assets/icons/Support/close.png';
 let supportIcon = '../../../assets/icons/Support/support.png';
@@ -11,7 +12,7 @@ const SupportMessageModal = (props) => {
            <View style={styles.titleView}>
                <View style={styles.left}>
                     <Image style={styles.icon} source={require(supportIcon)} />
-                    <Text style={styles.titleText}>New  Support Ticket</Text>
+                    <Text style={styles.titleText}>{t(`support:newTicket`)}</Text>
                </View>
                <TouchableOpacity style={styles.right} onPress={()=>{props.onClose(false)}}>
                    <Image style={styles.icon} source={require(closeIcon)} />
@@ -20,14 +21,14 @@ const SupportMessageModal = (props) => {
            <View style={styles.messageView}>
                 <TextInput  
                     style={styles.inputText}
-                    placeholder="What's your problem?" 
+                    placeholder={t(`support:problem`)} 
                     placeholderTextColor="#B9B9B9"
                     textAlign={'center'}
                 />
            </View>
            <View style={styles.buttonView}>
                <TouchableOpacity style={styles.button}>
-                   <Text style={styles.buttonText}>Start chat with support</Text>
+                   <Text style={styles.buttonText}>{t(`support:startChat`)}</Text>
                </TouchableOpacity>
            </View>
         </View>

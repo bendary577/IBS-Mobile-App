@@ -4,7 +4,9 @@ import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSConfirmationButton from '../../components/primitive-components/IBSConfirmationButton';
 import IBSConfirmationText from '../../components/primitive-components/IBSConfirmationText';
-
+import { t } from '../../languages/i18Manager';
+import getFlipForRTLStyle from '../../utils/utilFunctions';
+import {resetPassword} from '../../services/authentication';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -17,14 +19,17 @@ class ConfirmNewPassword extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            confirmationCode : '',
+            firstCellCode : '',
+            secondCellCode : '',
+            thirdCellCode : '',
+            fourthCellCode : '',
             completedInputs : 0,
             confirm : false,
         };
     }
 
 
-    incrementCompleteInputs = () =>{
+    incrementCompleteInputs = () => {
         if(this.state.completedInputs < 3 ){
             console.log(this.state.completedInputs)
             this.setState(prevState => {
@@ -39,6 +44,42 @@ class ConfirmNewPassword extends Component {
         }
     }
 
+    handleFirstCell = (userInput) => {
+        this.setState({
+            firstCellCode : userInput
+        });
+        incrementCompleteInputs();
+    }
+
+    handleSecondCell = (userInput) => {
+        this.setState({
+            secondCellCode : userInput
+        });
+        incrementCompleteInputs();
+    }
+
+    handleThirdCell = (userInput) => {
+        this.setState({
+            thirdCellCode : userInput
+        });
+        incrementCompleteInputs();
+    }
+
+    handleFourthCell = (userInput) => {
+        this.setState({
+            fourthCellCode : userInput
+        });
+        incrementCompleteInputs();
+    }
+
+    handleConfirmPassword = () => {
+        let _code = this.state.firstCellCode + this.state.secondCellCode + this.state.thirdCellCode + this.state.fourthCellCode;
+        let data = {
+            code : _code
+        };
+        resetPassword(data);
+    }
+
 
     render(){
         return (
@@ -48,35 +89,35 @@ class ConfirmNewPassword extends Component {
                         <BackButton />
                     </View>
                     <View style={styles.rightLogo}>
-                        <Image style={styles.topImage} source={require(ibsImage)} />
+                        <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value="Enter Your" />
-                            <TitleText value="Confirmation Code" />
+                            <TitleText value={t(`auth:enter`)} />
+                            <TitleText value={t(`auth:confirmationCode`)} />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
                             <View style={styles.confirmationInputs}>
-                                <IBSConfirmationText addCode={this.incrementCompleteInputs} />
-                                <IBSConfirmationText addCode={this.incrementCompleteInputs}/>
-                                <IBSConfirmationText addCode={this.incrementCompleteInputs}/>
-                                <IBSConfirmationText addCode={this.incrementCompleteInputs}/>
+                                <IBSConfirmationText onChangeText={this.handleFirstCell} />
+                                <IBSConfirmationText onChangeText={this.handleSecondCell}/>
+                                <IBSConfirmationText onChangeText={this.handleThirdCell}/>
+                                <IBSConfirmationText onChangeText={this.handleFourthCell}/>
                             </View>
-                            <IBSConfirmationButton active={ this.state.confirm ? true : false} />
+                            <IBSConfirmationButton active={this.state.confirm} onHandlePress={this.handleConfirmPassword} />
                             <View style={styles.confirmationText}>
                                 <View>
                                     <Text style={styles.leftText}>
-                                        {this.state.confirm ? "resend after 01:05" : "Didn’t Receive code?"}
+                                        {this.state.confirm ? "resend after 01:05" : t(`auth:recieveCode`)}
                                     </Text>
                                 </View>
                                 <TouchableOpacity> 
                                     {this.state.confirm ?
-                                     <Text style={styles.rightTextInactive}>Resend</Text> 
+                                     <Text style={styles.rightTextInactive}>{t(`auth:Resend`)}</Text> 
                                      :
-                                     <Text style={styles.rightText}>Resend</Text>
+                                     <Text style={styles.rightText}>{t(`auth:resend`)}</Text>
                                     }
                                 </TouchableOpacity>
                             </View>

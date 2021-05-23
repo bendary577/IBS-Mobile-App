@@ -3,14 +3,9 @@ import {View, StyleSheet} from 'react-native';
 import ContactUsCard from '../../components/sub-components/cards/ContactUsCard';
 
 
-
-
-
-
 //------------------------ screen ---------------------
 const ContactUsUnAuth = ({navigation}) => {
 
-    
 let email = '../../assets/icons/contactUs/email.png';
 
 	return (

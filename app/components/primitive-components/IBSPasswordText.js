@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet,TextInput, View , Text, Pressable} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { t } from '../../languages/i18Manager';
 
 const IBSPasswordText = (props) => {
 
@@ -12,22 +13,17 @@ const IBSPasswordText = (props) => {
             {
                 props.hasChild ? 
                     <View  
-                        style={styles.inputTextWithChild}
-                        placeholder={props.placeholder} 
-                        placeholderTextColor="#B9B9B9"
-                        secureTextEntry={true}
-                        //onChangeText={}
-                    >
+                        style={styles.inputTextWithChild}>
                         <View style={styles.passwordInput}>
                             <TextInput  
                                 placeholder={props.placeholder} 
                                 placeholderTextColor="#B9B9B9"
                                 secureTextEntry={true}
-                                //onChangeText={}
+                                onChangeText={text => props.onChangeText(text)}
                             />
                         </View>
                         <TouchableOpacity style={styles.forgotText} onPress={()=>{navigation.navigate("ResetPassword")}}>
-                            <Text style={styles.text}>Forgot ?</Text> 
+                            <Text style={styles.text}>{t(`auth:forget`)}</Text> 
                         </TouchableOpacity>
                     </View>
                 :
@@ -36,7 +32,7 @@ const IBSPasswordText = (props) => {
                         placeholder={props.placeholder} 
                         placeholderTextColor="#B9B9B9"
                         secureTextEntry={true}
-                        //onChangeText={}
+                        onChangeText={text => props.onChangeText(text)}
                     />
             }
         </View>

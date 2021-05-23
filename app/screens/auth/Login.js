@@ -6,6 +6,9 @@ import IBSPasswordText from '../../components/primitive-components/IBSPasswordTe
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import NavigationButtons from '../../components/sub-components/buttons/NaviagationButtons';
+import {t} from '../../languages/i18Manager';
+import getFlipForRTLStyle from '../../utils/utilFunctions';
+import {signIn} from '../../services/authentication';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -16,35 +19,53 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { };
+        this.state = { 
+            username : '',
+            password : ''
+        };
     }
 
-    navigatHome = () =>{
-        this.props.navigation.navigate("Home");
+    handleLogin = () =>{
+        console.log("signin screen 1")
+        signIn(this.state.username, this.state.password);
+        //this.props.navigation.navigate("Home");
+        console.log("signin screen 2")
     }
 
-    navigatSignUp = () =>{
+    handleCreateAccount = () =>{
         this.props.navigation.navigate("SignUp");
+    }
+
+    handleOnChangeUsername = (userInput) => {
+        this.setState({
+            username : userInput
+        });
+    }
+
+    handleOnChangePassword = (userInput) => {
+        this.setState({
+            password : userInput
+        });
     }
 
     render(){
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
-                    <Image style={styles.topImage} source={require(ibsImage)} />
+                    <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value="Login With" />
-                            <TitleText value="IBS Account" />
+                            <TitleText value={t(`auth:loginWith`)} />
+                            <TitleText value={t(`general:ibsaccount`)} />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            <IBSInputText placeholder="National ID or Passport Number"/>
-                            <IBSPasswordText placeholder="Your Password" hasChild={true}/>
-                            <IBSButtonLargeRed value="Login" action={true} onHandlePress={this.navigatHome} />
-                            <IBSButtonLargeGray value="Don't have an account?" action={true} actionText="Create" onHandlePress={this.navigatSignUp}/>
+                            <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={this.handleOnChangeUsername}/>
+                            <IBSPasswordText placeholder={t(`auth:passwordPlaceholder`)} hasChild={true} onChangeText={this.handleOnChangePassword}/>
+                            <IBSButtonLargeRed value={t(`auth:login`)} action={true} onHandlePress={this.handleLogin} />
+                            <IBSButtonLargeGray value={t(`auth:noAccount`)} action={true} actionText={t(`auth:create`)} onHandlePress={this.handleCreateAccount}/>
                         </View>
                     </View>
                     <View style={styles.bottom}>

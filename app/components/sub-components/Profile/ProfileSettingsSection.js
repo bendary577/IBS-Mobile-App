@@ -1,21 +1,22 @@
 import React from 'react'
 import {StyleSheet, Text, View, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {t} from '../../../languages/i18Manager';
+import {signout} from '../../../services/authentication';
 
 let arabicIcon = '../../../assets/icons/Profile/arabic.png';
 let logoutIcon = '../../../assets/icons/Profile/logout.png';
 
 const ProfileInfoSection = () => {
-
     return (
         <View style={styles.conatiner}>
             <TouchableOpacity style={styles.view}>
                 <Image style={styles.icon} source={require(arabicIcon)} />
-                <Text style={styles.text}>Change To Arabic</Text>
+                <Text style={styles.text}>{t(`profile:changeLanguage`)}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.view}>
+            <TouchableOpacity style={styles.view} onPress={()=>{ signout() }}>
                 <Image style={styles.icon} source={require(logoutIcon)} />
-                <Text style={styles.textRed}>Sign out</Text>
+                <Text style={styles.textRed}>{t(`profile:signout`)}</Text>
             </TouchableOpacity>
         </View>
     )

@@ -6,7 +6,13 @@ const Message = (props) => {
         <TouchableOpacity style={ props.open === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{props.navigate()}}>
             <View style={styles.view}>
                 <Text style={styles.title}>{props.title}</Text>
-                <Text style={styles.number}>{props.number}</Text>
+                {
+                    props.transaction === true ? 
+                        <Text style={styles.number}>{props.number}</Text>
+                    : 
+                    <></>
+                }
+
             </View>
             <View style={styles.view}>
                 <Text style={styles.body}>{props.body}</Text>

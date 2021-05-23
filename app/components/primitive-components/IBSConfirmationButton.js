@@ -1,18 +1,18 @@
 import React from 'react';
 import {View,Image,Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+import {t} from '../../languages/i18Manager';
 
 let login = '../../assets/icons/Login/login.png';
 
 const IBSConfirmationButton = (props) => {
     return (
         props.active ? 
-        <TouchableOpacity style={styles.buttonActive} onPress={props.onHandlePress}>
+        <TouchableOpacity style={styles.buttonActive} onPress={()=>{props.onHandlePress()}}>
                 <Text style={styles.textActive}>Send Confirmation</Text>
          </TouchableOpacity>
          : 
-         <TouchableOpacity style={styles.button} onPress={props.onHandlePress}>
-                <Text style={styles.text}>Confirm</Text>
+         <TouchableOpacity style={styles.button} onPress={()=>{}}>
+                <Text style={styles.text}>{t(`auth:confirm`)}</Text>
          </TouchableOpacity>
     )
 }

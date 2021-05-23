@@ -5,7 +5,7 @@ import {Text,View, TouchableOpacity, StyleSheet } from 'react-native';
 const IBSButtonLargeGray = (props) => {
 
     return (
-        <TouchableOpacity style={styles.button} onPress={props.onHandlePress}>
+        <TouchableOpacity style={styles.button} onPress={()=>{props.onHandlePress()}}>
             <Text style={styles.text}>{props.value}</Text>
             {props.action === true ? 
                      <Text style={styles.text}>{props.actionText}</Text>

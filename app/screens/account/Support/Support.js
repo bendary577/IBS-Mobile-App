@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Message from '../../../components/sub-components/Messages/Message';
 import SupportMessageModal from '../../../components/sub-components/Messages/SupportMessageModal';
-
+import { t } from '../../../languages/i18Manager';
 
 let newTicketIcon = '../../../assets/icons/Support/newTicket.png';
 
@@ -24,7 +24,7 @@ const Support = () => {
             {/* -------------------------------- upper secion --------------------------------------- */}
             <View style={styles.upperView}>
                 <View style={styles.titleView}>
-                    <TitleText value="My Tickets"/>
+                    <TitleText value={t(`support:myTickets`)}/>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
                         <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
                     </TouchableOpacity>
@@ -52,7 +52,7 @@ const Support = () => {
                         style={styles.dropdown}
                         dropDownStyle={{backgroundColor: '#fafafa'}}
                         onChangeItem={item => console.log(item.label, item.value)}
-                        placeholder="Filter"
+                        placeholder={t(`general:filter`)}
                     />
                </View>
             </View>
@@ -60,15 +60,15 @@ const Support = () => {
             {/* -------------------------------- support tickets secion --------------------------------------- */}
             <View style={styles.supportTicketsView}>
                 <ScrollView>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate}/>
-                    <Message open={true} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate}/>
-                    <Message open={true} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate}/>
-                    <Message open={true} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate}/>
+                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
+                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
+                    <Message open={true} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
+                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
+                    <Message open={true} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
+                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
+                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
+                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
+                    <Message open={true} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
                 </ScrollView>
             </View>
         </SafeAreaView>

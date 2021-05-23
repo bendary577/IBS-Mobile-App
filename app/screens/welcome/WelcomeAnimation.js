@@ -4,6 +4,7 @@ import AnimationComponent from '../../components/sub-components/animations/Anima
 import IBSButton from '../../components/primitive-components/IBSButton';
 import AnimationIndicators from '../../components/sub-components/animations/AnimationIndicators';
 import SkipButton from '../../components/sub-components/buttons/SkipButton';
+import { t } from '../../languages/i18Manager';
 
 
 let {width, height} = Dimensions.get('window'); 
@@ -44,7 +45,7 @@ const WelcomeAnimation = ({navigation}) => {
                     {/*------------------------------ get started button  ---------------------------- */}
                     <View style={styles.end}>
                         <IBSButton style={styles.btn} onHandlePress={navigate2}>
-                            <Text style={styles.buttonTxt}>Get Started</Text>
+                            <Text style={styles.buttonTxt}>{t(`welcome:getStarted`)}</Text>
                         </IBSButton>
                     </View>
                 </View>

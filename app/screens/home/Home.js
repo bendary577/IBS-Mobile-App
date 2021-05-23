@@ -4,6 +4,8 @@ import TitleText from '../../components/primitive-components/TitleText';
 import PaymentCard from '../../components/sub-components/cards/PaymentCard';
 import SmallMap from '../../components/sub-components/Maps/SmallMap';
 import {primaryRedColor} from '../../config/colors';
+import {t} from '../../languages/i18Manager';
+import getFlipForRTLStyle from '../../utils/utilFunctions';
 
 let blackElipse = '../../assets/images/Home/black-elipse.png';
 
@@ -17,7 +19,7 @@ const Home = ({navigation}) => {
 
                     {/* -------------------------------------- payment card ----------------------------- */}
                     <View style={styles.paymentCard}>
-                        <Image style={styles.blackElipseImage} source={require(blackElipse)} />
+                        <Image style={[styles.blackElipseImage, getFlipForRTLStyle()]} source={require(blackElipse)} />
                         <PaymentCard style={styles.card} navigate={navigation}/>
                     </View>
                     {/* -------------------------------------- about ibs -------------------------------- */}
@@ -30,13 +32,13 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TitleText value="About IBS"/>
+                                <TitleText value={t(`home:aboutIBS`)}/>
                             </View>
                             
                             <View style={styles.description}>
-                                <Text>We are a proud and happy company that serves the outsourcing field with passion and commitment</Text>
+                                <Text>{t(`home:aboutDesctiption`)}</Text>
                                 <TouchableOpacity onPress={()=>{navigation.navigate("AboutUs")}}>
-                                    <Text style={styles.seeMoreTxt}>See More</Text>
+                                    <Text style={styles.seeMoreTxt}>{t(`home:seeMore`)}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -51,7 +53,7 @@ const Home = ({navigation}) => {
                                     />  
                                 </View>
                                 <TouchableOpacity onPress={()=>{navigation.navigate("VisitUs")}}>
-                                    <TitleText value="Visit Us"/>
+                                    <TitleText value={t(`home:visitUs`)}/>
                                 </TouchableOpacity>
                             </View>
                             <View>

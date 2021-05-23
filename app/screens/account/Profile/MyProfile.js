@@ -3,6 +3,7 @@ import {Image, SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-na
 import ProfileInfoSection from '../../../components/sub-components/Profile/ProfileInfoSection';
 import ProfileSettingsSection from '../../../components/sub-components/Profile/ProfileSettingsSection';
 import AccountTabButtonLong from '../../../components/sub-components/navigationTabs/AccountTabButtonLong';
+import {t} from '../../../languages/i18Manager';
 
 let avatarImage = '../../../assets/icons/Profile/avatar.png';
 let cameraIcon = '../../../assets/icons/Profile/camera.png';
@@ -12,7 +13,7 @@ class MyProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {  
-            tab : "My Information"
+            tab : t(`profile:myInformations`)
         }
     }
 
@@ -34,13 +35,13 @@ class MyProfile extends Component {
                         <Image style={styles.avatarView} source={require(avatarImage)} />
                     </View>
                     <View style={styles.tabs}>
-                        <AccountTabButtonLong active={tab === "My Information" ? true : false} title="My Information" hasIcon={false} onChangeTab={this.changeTab}/>
-                        <AccountTabButtonLong active={tab === "Settings" ? true : false} title="Settings" hasIcon={true} onChangeTab={this.changeTab}/>
+                        <AccountTabButtonLong active={tab === t(`profile:myInformations`) ? true : false} title={t(`profile:myInformations`)} hasIcon={false} onChangeTab={this.changeTab}/>
+                        <AccountTabButtonLong active={tab === t(`profile:settings`) ? true : false} title={t(`profile:settings`)} hasIcon={true} onChangeTab={this.changeTab}/>
                     </View>
                 </View>
                 <View style={styles.changingView}>
                     {
-                        tab === "My Information" ? 
+                        tab === t(`profile:myInformations`) ? 
                             <ProfileInfoSection />
                         : 
                             <ProfileSettingsSection />

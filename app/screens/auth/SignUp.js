@@ -8,6 +8,8 @@ import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonL
 import NavigationButtons from '../../components/sub-components/buttons/NaviagationButtons';
 import { ScrollView } from 'react-native';
 import { RadioButton } from 'react-native-paper';
+import i18n, { t } from '../../languages/i18Manager';
+import { signup } from '../../services/authentication';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -19,14 +21,41 @@ class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked : 'unchecked'
+            checked : 'unchecked',
+            nationalId : '',
+            phone : '',
+            password : '',
+            passwordConfirm : '',
          };
+    }
+
+    getFlipForRTLStyle = () => {
+        if (!i18n.isRTL) { return {}; };
+        return {
+            transform: [{
+                scaleX: -1,
+            }],
+        };
     }
 
     setChecked = () => {
         this.setState({
             checked : this.state.checked === 'checked' ? 'unchecked' : 'checked'
         })
+    }
+
+    handleSignup = () =>{
+        console.log(this.state.nationalId + this.state.phone + this.state.password);
+        console.log("signup screen 1");
+        let data = {
+          identityNumber : this.state.nationalId,
+          password : this.state.phone,
+          phone : this.state.password
+        };
+        console.log("check type " + typeof data.password + " " + data.password);
+        signup(data);
+        //this.props.navigation.navigate("Home");
+        console.log("signup screen 2")
     }
 
     navigatHome = () =>{
@@ -36,6 +65,30 @@ class SignUp extends Component {
     navigateLogin = () =>{
         this.props.navigation.navigate("Login");
     }
+
+    handleOnChangeNationalId = (userInput) => {
+        this.setState({
+            nationalId : userInput
+        });
+    }
+
+    handleOnChangePhone = (userInput) => {
+        this.setState({
+            phone : userInput
+        });
+    }
+
+    handleOnChangePassword = (userInput) => {
+        this.setState({
+            password : userInput
+        });
+    }
+
+    handleOnChangePasswordConfirm = (userInput) => {
+        this.setState({
+            passwordConfirm : userInput
+        });
+    }
     
     render(){
         return (
@@ -44,22 +97,22 @@ class SignUp extends Component {
                 <View style={styles.top}>
                     <View style={styles.topLeft}>
                         <View style={styles.title}>
-                            <TitleText value="Create New" />
-                            <TitleText value="IBS Account" />
+                            <TitleText value={t(`auth:createNew`)} />
+                            <TitleText value={t(`general:ibsaccount`)} />
                             <View style={styles.redLine}></View>
                         </View>
                     </View>
                     <View style={styles.topRight}>
-                        <Image style={styles.topImage} source={require(ibsImage)} />
+                        <Image style={[styles.topImage, this.getFlipForRTLStyle()]} source={require(ibsImage)} />
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                         <View style={styles.middle}>
                             <View style={styles.loginForm}>
-                                <IBSInputText placeholder="National ID or Passport Number"/>
-                                <IBSInputText placeholder="Phone Number"/>
-                                <IBSPasswordText placeholder="Set Password"/>
-                                <IBSPasswordText placeholder="Confirm Password"/>
+                                <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={this.handleOnChangeNationalId}/>
+                                <IBSInputText placeholder={t(`auth:phone`)} onChangeText={this.handleOnChangePhone}/>
+                                <IBSPasswordText placeholder={t(`auth:setPassword`)} onChangeText={this.handleOnChangePassword}/>
+                                <IBSPasswordText placeholder={t(`auth:confirmPassword`)} onChangeText={this.handleOnChangePasswordConfirm}/>
                                 <View style={styles.radioView}>
                                     <View style={styles.RadioButton}>
                                         <RadioButton value="agree" 
@@ -69,12 +122,12 @@ class SignUp extends Component {
                                                      color="red" />
                                     </View>
                                     <View style={styles.termsText}>
-                                        <Text style={styles.leftText}>I agree to the</Text>
-                                        <Text style={styles.rightText}>terms & privacy policy</Text>
+                                        <Text style={styles.leftText}>{t(`auth:agree`)}</Text>
+                                        <Text style={styles.rightText}>{t(`auth:terms`)}</Text>
                                     </View>
                                 </View>
-                                <IBSButtonLargeRed value="Create Account" action={false} onHandlePress={this.navigatHome} />
-                                <IBSButtonLargeGray value="Don't have an account?" action={true} actionText="Login" onHandlePress={this.navigateLogin}/>
+                                <IBSButtonLargeRed value={t(`auth:createAccount`)} action={false} onHandlePress={this.handleSignup} />
+                                <IBSButtonLargeGray value={t(`auth:haveAccount`)} action={true} actionText={t(`auth:login`)} onHandlePress={this.navigateLogin}/>
                             </View>
                         </View>
                     <View style={styles.bottom}>

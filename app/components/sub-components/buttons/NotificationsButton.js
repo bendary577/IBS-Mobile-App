@@ -12,7 +12,7 @@ const NotificationsButton = () => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity onPress={()=>{navigation.goBack()}} >
+        <TouchableOpacity onPress={()=>{navigation.navigate("Notifications")}} >
             <Image style={styles.icon} source={require(notificationsIcon)} />
         </TouchableOpacity>
     )

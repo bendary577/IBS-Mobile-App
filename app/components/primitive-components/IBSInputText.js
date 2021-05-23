@@ -13,7 +13,7 @@ const IBSInputText = (props) => {
                     style={styles.inputText}
                     placeholder={props.placeholder} 
                     placeholderTextColor="#B9B9B9"
-                    //onChangeText={}
+                    onChangeText={text => props.onChangeText(text)}
                 />
             </ScrollView>
         </KeyboardAvoidingView>    

@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, Image, ImageBackground, Text, TouchableOpacity} from 'react-native';
 import {primaryRedColor} from '../../../config/colors';
+import {t} from '../../../languages/i18Manager';
+import getFlipForRTLStyle from '../../../utils/utilFunctions';
 
 let paymentCard = '../../../assets/images/Home/paymentCard.png';
 let paymentLogo = '../../../assets/images/Home/paymentLogo.png';
@@ -22,15 +24,15 @@ const PaymentCard = (props) => {
                                     />  
                             </TouchableOpacity>
                         </View>
-                        <Text style={styles.title}>My Payments</Text>
+                        <Text style={styles.title}>{t(`home:myPayments`)}</Text>
                     </View>
                     <View style={styles.arrow}>
                         <TouchableOpacity>
-                            <Image style={styles.arrowIcon} source={require(arrowIcon)} />
+                            <Image style={[styles.arrowIcon, getFlipForRTLStyle()]} source={require(arrowIcon)} />
                         </TouchableOpacity>
                     </View>
                </View>
-                <Text style={styles.description}>View all your payments details from this tap</Text>
+                <Text style={styles.description}>{t(`home:paymentDescription`)}</Text>
            </ImageBackground>
         </View>
 	);

@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import {Image, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import getFlipForRTLStyle from '../../../utils/utilFunctions';
 
 let backIcon = '../../../assets/icons/General/back.png';
 
@@ -13,7 +14,7 @@ const BackButton = () => {
 
     return (
         <TouchableOpacity onPress={()=>{navigation.goBack()}} >
-            <Image style={styles.icon} source={require(backIcon)} />
+            <Image style={[styles.icon, getFlipForRTLStyle()]} source={require(backIcon)} />
         </TouchableOpacity>
     )
 }

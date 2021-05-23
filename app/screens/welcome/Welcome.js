@@ -1,6 +1,9 @@
-import React from 'react';
-import {Text, SafeAreaView, View, StyleSheet, Image, ImageBackground, Dimensions, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {Text, SafeAreaView, View, StyleSheet, Image, ImageBackground, Dimensions, TouchableOpacity, NativeModules,ActivityIndicator  } from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
+import i18n, { t } from '../../languages/i18Manager';
+
+import getFlipForRTLStyle from '../../utils/utilFunctions';
 
 let welcome = '../../assets/images/Welcome/welcome7.png';
 let black = '../../assets/images/Welcome/black.png';
@@ -8,18 +11,29 @@ let width = Dimensions.get('window').width;
 
 //------------------------ screen ---------------------
 const Welcome = ({navigation}) => {
+
+    const [loadingLanguage, setLanguage] = useState(false);
+
+    const setLang = (lang) =>{
+        i18n.changeLanguage(lang);
+        //NativeModules.DevSettings.reload();
+        setLanguage(true);
+        navigation.navigate("WelcomeAnimation")
+       // RNRestart.Restart();
+    }
+
 	return (
 	    <SafeAreaView  style={styles.container}>
             <View style={styles.top}>
-                <Image style={styles.topImage} source={require(black)} />
+                <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(black)} />
             </View>
             <View style={styles.bottom}>
                 <ImageBackground style={styles.image} source={require(welcome)}>
 
                 {/* -------------------------------- get started title ------------------------------ */}
                     <View style={styles.viewTitle}>
-                        <TitleText value="Get started with your" />
-                        <TitleText value="IBS account" />
+                        <TitleText value={t(`welcome:getStarted`)} />
+                        <TitleText value={t(`welcome:ibsAccount`)} />
                     </View>
 
                     {/* -------------------------------- select language ------------------------------ */}
@@ -29,11 +43,11 @@ const Welcome = ({navigation}) => {
                                 <Text style={styles.selectLang}>Language</Text>
                             </View>
                             <View style={styles.lang}>
-                                <TouchableOpacity onPress={()=>{ navigation.navigate("WelcomeAnimation")}} >
+                                <TouchableOpacity onPress={()=>{setLang('en')}} >
                                     <Text style={styles.textLang}>English</Text>
                                 </TouchableOpacity >
                                 <Text style={styles.textLang}>\</Text>
-                                <TouchableOpacity onPress={()=>{ navigation.navigate("ContactUsUnAuth")}}>
+                                <TouchableOpacity onPress={()=>{setLang('ar')}} >
                                     <Text style={styles.textLang}>العربية</Text>
                                 </TouchableOpacity >
                             </View>

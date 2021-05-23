@@ -3,6 +3,7 @@ import MapView from 'react-native-maps';
 import { StyleSheet, View,Text, Dimensions } from 'react-native';
 import IBSButton from '../../primitive-components/IBSButton';
 import { useNavigation } from '@react-navigation/native';
+import {t} from '../../../languages/i18Manager';
 
 export default function SmallMap(props) {
 
@@ -28,14 +29,14 @@ export default function SmallMap(props) {
             {/* -------------------------------- footer text ---------------------------- */}
             <View style={styles.txtArea}>
               <Text style={styles.addressTxt}>
-                2, Street 261, New Maadi, Cairo, Egypt
+                {t(`home:address`)}
               </Text>
             </View>
             
             {/* -------------------------------- footer button ---------------------------- */}
             <View style={styles.buttonArea}>
               <IBSButton onHandlePress={navigate}>
-                <Text style={styles.buttonTxt}>Directions</Text>
+                <Text style={styles.buttonTxt}>{t(`home:directions`)}</Text>
               </IBSButton>
             </View>
 

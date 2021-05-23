@@ -5,7 +5,9 @@ import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import BackButton from '../../components/sub-components/buttons/BackButton';
-
+import { t } from '../../languages/i18Manager';
+import getFlipForRTLStyle from '../../utils/utilFunctions';
+import {forgetPassword} from '../../services/authentication';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -17,15 +19,27 @@ class ResetPassword extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { };
+        this.state = { 
+            identityNumber : ''
+        };
     }
 
     navigateLogin = () =>{
         this.props.navigation.navigate("Login");
     }
 
-    navigateConfirmation = () =>{
-        this.props.navigation.navigate("ConfirmNewPassword");
+    handleChangeText = (userInput) => {
+        this.setState({
+            identityNumber : userInput
+        });
+    }
+
+    handleSendConfirmation = () => {
+        let date = {
+            phone : this.state.identityNumber
+        }
+        forgetPassword(data);
+        //this.props.navigation.navigate("ConfirmNewPassword");
     }
 
     render(){
@@ -36,20 +50,20 @@ class ResetPassword extends Component {
                         <BackButton />
                     </View>
                     <View style={styles.rightLogo}>
-                        <Image style={styles.topImage} source={require(ibsImage)} />
+                        <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value="Reset Your" />
-                            <TitleText value="Password" />
+                            <TitleText value={t(`auth:reset`)} />
+                            <TitleText value={t(`auth:password`)} />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            <IBSInputText placeholder="National ID or Passport Number"/>
-                            <IBSButtonLargeRed value="Send Confirmation" action={false} onHandlePress={this.navigateConfirmation} />
-                            <IBSButtonLargeGray value="Back to Login" action={false} onHandlePress={this.navigateLogin}/>
+                            <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={this.handleChangeText}/>
+                            <IBSButtonLargeRed value={t(`auth:sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
+                            <IBSButtonLargeGray value={t(`auth:backtoLogin`)} action={false} onHandlePress={this.navigateLogin}/>
                         </View>
                     </View>
                 </ImageBackground>

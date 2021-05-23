@@ -5,6 +5,7 @@ import AccountTabButton from '../../../components/sub-components/navigationTabs/
 import EaringsSection from '../../../components/sub-components/Payment/EarningsSection';
 import DeductionsSection from '../../../components/sub-components/Payment/DeductionsSection';
 import OtherInfoSection from '../../../components/sub-components/Payment/OtherInfoSection';
+import {t} from '../../../languages/i18Manager';
 
 let bankIcon = '../../../assets/icons/Payment/bank.png';
 let dataIcon = '../../../assets/icons/Payment/date.png';
@@ -14,7 +15,7 @@ class PaymentDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {  
-            tab : "Earnings"
+            tab : t(`payment:earnings`)
         }
     }
 
@@ -34,7 +35,7 @@ class PaymentDetails extends Component {
                 <View style={styles.fixedView}>
                     {/* ---------------------------- title ------------------------ */}
                     <View>
-                        <TitleText value="Payment Details" />
+                        <TitleText value={t(`payment:paymentDetails`)} />
                     </View>
 
                     {/* ---------------------------- transaction info ------------------------ */}
@@ -54,18 +55,18 @@ class PaymentDetails extends Component {
 
                     {/* ---------------------------- tabs ------------------------ */}
                     <View style={styles.tabs}>
-                        <AccountTabButton active={tab === "Earnings" ? true : false} title="Earnings" onChangeTab={this.changeTab}/>
-                        <AccountTabButton active={tab === "Deductions" ? true : false} title="Deductions" onChangeTab={this.changeTab}/>
-                        <AccountTabButton active={tab === "Other Info" ? true : false} title="Other Info" onChangeTab={this.changeTab}/>
+                        <AccountTabButton active={tab === t(`payment:earnings`) ? true : false} title={t(`payment:earnings`)} onChangeTab={this.changeTab}/>
+                        <AccountTabButton active={tab === t(`payment:deductions`) ? true : false} title={t(`payment:deductions`)} onChangeTab={this.changeTab}/>
+                        <AccountTabButton active={tab === t(`payment:otherInfo`) ? true : false} title={t(`payment:otherInfo`)} onChangeTab={this.changeTab}/>
                     </View>
                 </View>
 
                 {/* ---------------------------- changing section of the screen ------------------------ */}
                 <View style={styles.changedView}>
-                    { tab === "Earnings" ? 
+                    { tab === t(`payment:earnings`) ? 
                         <EaringsSection />
                         :
-                      tab === "Deductions" ? 
+                      tab === t(`payment:deductions`) ? 
                         <DeductionsSection />
                         :
                         <OtherInfoSection />
