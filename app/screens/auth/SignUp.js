@@ -46,16 +46,13 @@ class SignUp extends Component {
 
     handleSignup = () =>{
         console.log(this.state.nationalId + this.state.phone + this.state.password);
-        console.log("signup screen 1");
         let data = {
           identityNumber : this.state.nationalId,
           password : this.state.phone,
           phone : this.state.password
         };
-        console.log("check type " + typeof data.password + " " + data.password);
         signup(data);
         //this.props.navigation.navigate("Home");
-        console.log("signup screen 2")
     }
 
     navigatHome = () =>{
@@ -146,13 +143,11 @@ class SignUp extends Component {
 const styles = StyleSheet.create({
     container : {
         flex : 1,
-        //backgroundColor : 'red',
         flexDirection : 'column'
     },
     top : {
         flex : 2,
         flexDirection : 'row'
-        //backgroundColor : 'yellow'
     },
     topLeft : {
         flex : 3,
@@ -204,7 +199,6 @@ const styles = StyleSheet.create({
     },
     bottom : {
         flex : 1,
-        //backgroundColor : 'blue',
         alignItems : 'flex-start',
         paddingTop : 40
     },

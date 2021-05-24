@@ -8,6 +8,8 @@ const Router = () => {
 
   const {authenticated} = useAuth();
 
+  console.log("is user authenticated ? " + authenticated);
+  
   return (
     <NavigationContainer>
       {authenticated ? <AppStack /> : <AuthStack />}

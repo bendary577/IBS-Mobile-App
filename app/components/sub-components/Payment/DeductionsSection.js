@@ -8,15 +8,15 @@ const DeductionsSection = (props) => {
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`payment:taxes`)}</Text>
-                <Text style={styles.text}>2970.32</Text>
+                <Text style={styles.text}>{props.item.values[0].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`payment:socialInsurance`)}</Text>
-                <Text style={styles.text}>678.2</Text>
+                <Text style={styles.text}>{props.item.values[1].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.totalText}>{t(`payment:total`)}</Text>
-                <Text style={styles.totalText}>3648.52</Text>
+                <Text style={styles.totalText}>{props.item.total}</Text>
             </View>
         </SafeAreaView>
     )

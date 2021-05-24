@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, View, StyleSheet, Dimensions, ImageBackground, SafeAreaView} from 'react-native';
+import {View, StyleSheet, Dimensions, ImageBackground, SafeAreaView} from 'react-native';
 import AnimationComponent from '../../components/sub-components/animations/AnimationComponent';
 import IBSButton from '../../components/primitive-components/IBSButton';
 import AnimationIndicators from '../../components/sub-components/animations/AnimationIndicators';
 import SkipButton from '../../components/sub-components/buttons/SkipButton';
-import { t } from '../../languages/i18Manager';
+
 
 
 let {width, height} = Dimensions.get('window'); 
@@ -13,11 +13,11 @@ let black = '../../assets/images/WelcomeAnimationScreen/black-right-3.png';
 //------------------------ screen ---------------------
 const WelcomeAnimation = ({navigation}) => {
 
-    const navigate = () => {
+    const navigateToLogin = () => {
         navigation.navigate("Login");
     }
 
-    const navigate2 = () => {
+    const navigateToSignUp = () => {
         navigation.navigate("SignUp");
     }
 
@@ -26,7 +26,7 @@ const WelcomeAnimation = ({navigation}) => {
             {/*------------------------------ upper skip button ---------------------------- */}
             <View style={styles.skip}>
                 <View>
-                    <SkipButton onHandlePress={navigate} />
+                    <SkipButton onHandlePress={navigateToLogin} />
                 </View>
            </View>
 
@@ -44,9 +44,7 @@ const WelcomeAnimation = ({navigation}) => {
 
                     {/*------------------------------ get started button  ---------------------------- */}
                     <View style={styles.end}>
-                        <IBSButton style={styles.btn} onHandlePress={navigate2}>
-                            <Text style={styles.buttonTxt}>{t(`welcome:getStarted`)}</Text>
-                        </IBSButton>
+                        <IBSButton style={styles.btn} onHandlePress={navigateToSignUp} />
                     </View>
                 </View>
             </ImageBackground>
@@ -93,10 +91,6 @@ const styles = StyleSheet.create({
     end :  {
         flex : 3,
         alignItems : 'center',
-    },
-    btn : {},
-    buttonTxt : {
-        color : 'white'
     },
 });
 

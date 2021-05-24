@@ -8,15 +8,15 @@ const EaringsSection = (props) => {
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`payment:grossSalary`)}</Text>
-                <Text style={styles.text}>15000</Text>
+                <Text style={styles.text}>{props.item.values[0].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`payment:fixedTransportaion`)}</Text>
-                <Text style={styles.text}>3000</Text>
+                <Text style={styles.text}>{props.item.values[1].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.totalText}>{t(`payment:total`)}</Text>
-                <Text style={styles.totalText}>18000</Text>
+                <Text style={styles.totalText}>{props.item.total}</Text>
             </View>
         </SafeAreaView>
     )

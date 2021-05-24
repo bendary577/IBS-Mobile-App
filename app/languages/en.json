@@ -7,7 +7,8 @@
         "getNews" : "Get The Latest News",
         "getNewsText" :  "Get the latest news on your account dashboard, transfer notifications & much more!",
         "monthlyTransfers" : "Check Monthly Transfers",
-        "monthlyTransfersText" :  "Keep an eye on your salary transfers through an easy transfers manager"
+        "monthlyTransfersText" :  "Keep an eye on your salary transfers through an easy transfers manager",
+        "getStartedButton" : "Get Started"
     },
     "auth": {
        "loginWith" : "Login With",
@@ -38,6 +39,7 @@
        "resend" : "Resend"
     },
     "home": {
+        "route" : "Home",
         "home" : "Home",
         "myPayments" : "My Payments",
         "paymentDescription" : "View all your payments details from this tap",
@@ -50,6 +52,7 @@
         "contactUs" : "Contact Us"
     },
     "payment" : {
+        "route" : "MyTransactions",
         "payments" : "Payments",
         "myTransactions" : "My Transactions",
         "paymentDetails" : "Payment Details",
@@ -67,6 +70,7 @@
         "accountNumber" : "Account Number"
     },
     "support" : {
+        "route" : "Support",
         "support" : "Support",
         "myTickets" : "My Tickets",
         "newTicket" : "New Support Ticket",
@@ -81,6 +85,7 @@
         "lastMessageOn" : "Last message on"
     },
     "profile" : {
+        "route" : "MyProfile",
         "myInformations" : "My Informations",
         "settings" : "Settings",
         "username" : "Username",
@@ -102,6 +107,8 @@
     "general" : {
         "skip" : "Skip",
         "ibsaccount" : "IBS Account",
-        "filter" : "Filter"
+        "filter" : "Filter",
+        "noContent" : "Sorry, No Content",
+        "loading" : "loading..."
     }
 }

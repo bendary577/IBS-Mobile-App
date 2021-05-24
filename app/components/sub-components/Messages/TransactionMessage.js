@@ -1,20 +1,23 @@
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
 
-const Message = (props) => {
+const TransactionMessage = (props) => {
     return (
-        <TouchableOpacity style={ props.open === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{props.onHandlePress()}}>
+        <TouchableOpacity style={ props.item.statusFormatted === "open" ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{props.onHandlePress(props.item._id, props.item.uid, props.item.statusFormatted)}}>
             <View style={styles.view}>
                 <View style={styles.leftView}>
-                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.title}>{props.item.issue}</Text>
+                </View>
+                <View style={styles.rightView}>
+                    <Text style={styles.number}>#{props.item.status}</Text>
                 </View>
             </View>
             <View style={styles.view}>
-                <View style={[styles.leftView, styles.textContainer]}>
-                    <Text style={styles.body} numberOfLines={2}>{props.body}</Text>
+                <View style={styles.leftView}>
+                    <Text style={styles.body} numberOfLines={1}>{props.item.description}</Text>
                 </View>
                 <View style={styles.rightView}>
-                    <Text style={styles.date}>{props.date}</Text>
+                    <Text style={styles.date}>{props.item.createdAt.slice(0,4)}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -53,9 +56,6 @@ const styles = StyleSheet.create({
     leftView : {
         flex : 4
     },
-    textContainer : {
-        alignSelf: 'center'
-    },
     body : {
         fontSize : 14,
         color : 'black',
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Message;
+export default TransactionMessage;

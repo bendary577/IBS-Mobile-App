@@ -1,78 +1,110 @@
-import React, { useState }  from 'react';
-import {SafeAreaView,View,Text, Modal, StyleSheet, ScrollView, Image } from 'react-native';
+import React,{Component} from 'react';
+import {SafeAreaView,View, Modal, StyleSheet, ScrollView, Image, FlatList } from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Message from '../../../components/sub-components/Messages/Message';
+import TransactionMessage from '../../../components/sub-components/Messages/TransactionMessage';
 import SupportMessageModal from '../../../components/sub-components/Messages/SupportMessageModal';
 import { t } from '../../../languages/i18Manager';
+import {authorizeRequest} from '../../../services/authentication';
+import {getUserTickets} from '../../../services/api_requests';
+import NoContent from '../../../components/sub-components/general/NoContent';
+import Loading from '../../../components/sub-components/general/Loading';
 
 let newTicketIcon = '../../../assets/icons/Support/newTicket.png';
 
-const Support = () => {
+class Support extends Component {
 
-    const navigation = useNavigation();
-    const [modalVisible, setModalVisible] = useState(false);
-    
-    const navigate = () => {
-      navigation.navigate("Chat");
+    constructor(props) {
+        super(props);
+        this.state = {  
+            modalVisible : false,
+            tickets : [],
+            isLoading : false
+        }
     }
 
-    return (
-        <SafeAreaView style={styles.conatiner}>
-            {/* -------------------------------- upper secion --------------------------------------- */}
-            <View style={styles.upperView}>
-                <View style={styles.titleView}>
-                    <TitleText value={t(`support:myTickets`)}/>
-                    <TouchableOpacity onPress={() => setModalVisible(true)}>
-                        <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
-                    </TouchableOpacity>
-                </View>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}
-                >
-                    <View  style={styles.centeredView}>
-                        <SupportMessageModal onClose={setModalVisible}/>
-                    </View>
-                </Modal>
-               <View style={{marginTop : 30}}>
-                    <DropDownPicker
-                        items={[
-                            {label: 'Item 1', value: 'item1'},
-                            {label: 'Item 2', value: 'item2'},
-                        ]}
-                        defaultValue="item1"
-                        containerStyle={{height: 45}}
-                        style={styles.dropdown}
-                        dropDownStyle={{backgroundColor: '#fafafa'}}
-                        onChangeItem={item => console.log(item.label, item.value)}
-                        placeholder={t(`general:filter`)}
-                    />
-               </View>
-            </View>
+    componentDidMount = async () =>{
+        this.setState({isLoading : true});
+        let data = await authorizeRequest(getUserTickets);
+        this.setState({
+            tickets : data
+        });
+        this.setState({isLoading : false});
+    }
 
-            {/* -------------------------------- support tickets secion --------------------------------------- */}
-            <View style={styles.supportTicketsView}>
-                <ScrollView>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
-                    <Message open={true} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
-                    <Message open={true} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
-                    <Message open={false} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
-                    <Message open={true} title="I need help !" number="#01243433" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={true}/>
-                </ScrollView>
-            </View>
-        </SafeAreaView>
-    )
+
+    setModalVisible = (bool) => {
+        this.setState({
+            modalVisible : bool
+        })
+    }
+    
+    navigateToChat = (id, number, status) => {
+        let bool = false;
+        if (status === "closed") bool = true;
+      this.props.navigation.navigate("Chat", {id, roomNumber : number, closed : bool});
+    }
+
+    render () {
+        return (
+
+            this.state.isLoading === true ? 
+                <Loading />
+            : 
+
+            this.state.tickets.length === 0 ? 
+                <NoContent />
+            : 
+
+                <SafeAreaView style={styles.conatiner}>
+                    {/* -------------------------------- upper secion --------------------------------------- */}
+                    <View style={styles.upperView}>
+                        <View style={styles.titleView}>
+                            <TitleText value={t(`support:myTickets`)}/>
+                            <TouchableOpacity onPress={() => this.setModalVisible(true)}>
+                                <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
+                            </TouchableOpacity>
+                        </View>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={this.state.modalVisible}
+                            onRequestClose={() => {
+                                this.setModalVisible(!this.state.modalVisible);
+                            }}
+                        >
+                            <View  style={styles.centeredView}>
+                                <SupportMessageModal onClose={this.setModalVisible}/>
+                            </View>
+                        </Modal>
+                        <View style={{marginTop : 30}}>
+                                <DropDownPicker
+                                    items={[
+                                        {label: 'Item 1', value: 'item1'},
+                                        {label: 'Item 2', value: 'item2'},
+                                    ]}
+                                    defaultValue="item1"
+                                    containerStyle={{height: 45}}
+                                    style={styles.dropdown}
+                                    dropDownStyle={{backgroundColor: '#fafafa'}}
+                                    onChangeItem={item => console.log(item.label, item.value)}
+                                    placeholder={t(`general:filter`)}
+                                />
+                        </View>
+                    </View>
+
+                    {/* -------------------------------- support tickets secion --------------------------------------- */}
+                    <View style={styles.supportTicketsView}>
+                        <FlatList
+                            data={this.state.tickets}
+                            renderItem={({item})=>(<TransactionMessage item={item} onHandlePress={this.navigateToChat} transaction={true}/>)}
+                            keyExtractor={(item) => item._id}
+                        />
+                    </View>
+                </SafeAreaView>
+        )
+    }
 }
 
 const styles = StyleSheet.create({

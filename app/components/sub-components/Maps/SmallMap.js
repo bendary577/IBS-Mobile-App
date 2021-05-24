@@ -10,7 +10,7 @@ export default function SmallMap(props) {
   const navigation = useNavigation();
 
   const navigate = () => {
-    navigation.navigate("AboutUs");
+    navigation.navigate("VisitUs");
   }
 
   return (

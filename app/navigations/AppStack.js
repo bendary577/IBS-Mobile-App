@@ -15,6 +15,7 @@ import MessageDetails from '../screens/account/Messages/MessageDetails';
 import Notifications from '../screens/account/Notifications/Notifications';
 import {t} from '../languages/i18Manager';
 import BottomTabsNavigation from './BottomTab';
+import ChatCard from '../components/sub-components/cards/ChatCard';
 
 const AppStack = createStackNavigator();
 
@@ -41,7 +42,7 @@ export default AppStackNavigation = () => {
       /> 
 
      <AppStack.Screen
-        name="paymentDetails"
+        name="PaymentDetails"
         component={PaymentDetails}
         options={{
           title : t(`payment:payments`),
@@ -114,8 +115,8 @@ export default AppStackNavigation = () => {
      <AppStack.Screen
         name="Chat" 
         component={Chat}
-        options={{
-          title : false,
+        options={({route})=>({
+          title : `#${route.params.roomNumber}`,
           headerStyle: {
             backgroundColor: "#D8D8D8",
             borderBottomRightRadius : 20,
@@ -124,9 +125,9 @@ export default AppStackNavigation = () => {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerRight : ()=>(  <NotificationsButton />),
-          headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value="Support" /></View>)
-      }}
+          headerRight : ()=>(route.params.closed === true ? <ChatCard /> : <></>),
+          headerBackImage : () =>( <BackButton /> )
+      })}
       />
 
       <AppStack.Screen

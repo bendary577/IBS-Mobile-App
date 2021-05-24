@@ -25,6 +25,7 @@ class ConfirmNewPassword extends Component {
             fourthCellCode : '',
             completedInputs : 0,
             confirm : false,
+            resendEnabled : false,
         };
     }
 
@@ -48,28 +49,28 @@ class ConfirmNewPassword extends Component {
         this.setState({
             firstCellCode : userInput
         });
-        incrementCompleteInputs();
+        this.incrementCompleteInputs();
     }
 
     handleSecondCell = (userInput) => {
         this.setState({
             secondCellCode : userInput
         });
-        incrementCompleteInputs();
+        this.incrementCompleteInputs();
     }
 
     handleThirdCell = (userInput) => {
         this.setState({
             thirdCellCode : userInput
         });
-        incrementCompleteInputs();
+        this.incrementCompleteInputs();
     }
 
     handleFourthCell = (userInput) => {
         this.setState({
             fourthCellCode : userInput
         });
-        incrementCompleteInputs();
+        this.incrementCompleteInputs();
     }
 
     handleConfirmPassword = () => {

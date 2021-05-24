@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {SafeAreaView,View, Text, StyleSheet, ScrollView } from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText';
-import Transaction from '../../../components/sub-components/Payment/Transaction';
 import { useNavigation } from '@react-navigation/native';
 import IBSSearchBar from '../../../components/sub-components/inputs/IBSSearchBar';
 import Message from '../../../components/sub-components/Messages/Message';
@@ -25,12 +24,12 @@ const MessagesForYou = () => {
             </View>
             <View style={styles.transactionsView}>
                 <ScrollView>
-                    <Message open={false} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={false}/>
-                    <Message open={true} title="QNB" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={false}/>
-                    <Message open={false} title="NBA" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={false}/>
-                    <Message open={true} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={false}/>
-                    <Message open={false} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={false}/>
-                    <Message open={false} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" navigate={navigate} transaction={false}/>
+                    <Message open={false} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
+                    <Message open={true} title="QNB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
+                    <Message open={false} title="NBA" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
+                    <Message open={true} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
+                    <Message open={false} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
+                    <Message open={false} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
                 </ScrollView>
             </View>
         </SafeAreaView>

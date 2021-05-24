@@ -6,20 +6,37 @@ import EaringsSection from '../../../components/sub-components/Payment/EarningsS
 import DeductionsSection from '../../../components/sub-components/Payment/DeductionsSection';
 import OtherInfoSection from '../../../components/sub-components/Payment/OtherInfoSection';
 import {t} from '../../../languages/i18Manager';
+import {authorizeRequestWithId} from '../../../services/authentication';
+import {getSiglePayment} from '../../../services/api_requests';
+import Loading from '../../../components/sub-components/general/Loading';
+import NoContent from '../../../components/sub-components/general/NoContent';
 
 let bankIcon = '../../../assets/icons/Payment/bank.png';
 let dataIcon = '../../../assets/icons/Payment/date.png';
+
 
 class PaymentDetails extends Component {
 
     constructor(props) {
         super(props);
         this.state = {  
-            tab : t(`payment:earnings`)
+            tab : t(`payment:earnings`),
+            isLoading : false,
+            payment : {}
         }
     }
 
+    //make api request when screen is mounted
+    componentDidMount = async () =>{
+        this.setState({isLoading : true});
+        let data = await authorizeRequestWithId(getSiglePayment, this.props.route.params.paymentId);
+        this.setState({
+            payment : data
+        });
+        this.setState({isLoading : false});
+    }
 
+    //change current active tab 
     changeTab = (newTab) => {
         this.setState({
             tab : newTab
@@ -27,55 +44,65 @@ class PaymentDetails extends Component {
     }
 
     render(){
-        const {tab} = this.state;
+
+        //get current active tab, payment, loading state 
+        const {tab, isLoading, payment} = this.state;
 
         return (
-            <SafeAreaView style={styles.conatiner}>
-                {/* ---------------------------- fixed section of the screen ------------------------ */}
-                <View style={styles.fixedView}>
-                    {/* ---------------------------- title ------------------------ */}
-                    <View>
-                        <TitleText value={t(`payment:paymentDetails`)} />
-                    </View>
 
-                    {/* ---------------------------- transaction info ------------------------ */}
-                    <View>
-                        <Image style={styles.bankIcon} source={require(bankIcon)} />
-                        <Text style={styles.bankTitle}>Commercial International Bank</Text>
-                        <View style={styles.transactionView}>
-                            <View>
-                                <Text style={styles.transactionAmmountText}>14351.48 LE</Text>
+            isLoading === true ? 
+                <Loading />
+            :
+
+            Object.keys(payment).length !== 0 && isLoading === false ?
+
+                <SafeAreaView style={styles.conatiner}>
+                    {/* ---------------------------- fixed section of the screen ------------------------ */}
+                    <View style={styles.fixedView}>
+                        {/* ---------------------------- title ------------------------ */}
+                        <View>
+                            <TitleText value={t(`payment:paymentDetails`)} />
+                        </View>
+
+                        {/* ---------------------------- transaction info ------------------------ */}
+                        <View>
+                            <Image style={styles.bankIcon} source={require(bankIcon)} />
+                            <Text style={styles.bankTitle}>Commercial International Bank</Text>
+                            <View style={styles.transactionView}>
+                                <View>
+                                    <Text style={styles.transactionAmmountText}>14351.48 LE</Text>
+                                </View>
+                                <View style={styles.transactionDateView}>
+                                    <Image style={styles.dateIcon} source={require(dataIcon)} />
+                                    <Text style={styles.transactionDateText}>Jul’ 2019</Text>
+                                </View>
                             </View>
-                            <View style={styles.transactionDateView}>
-                                <Image style={styles.dateIcon} source={require(dataIcon)} />
-                                <Text style={styles.transactionDateText}>Jul’ 2019</Text>
-                            </View>
+                        </View>
+
+                        {/* ---------------------------- tabs ------------------------ */}
+                        <View style={styles.tabs}>
+                            <AccountTabButton active={tab === t(`payment:earnings`) ? true : false} title={t(`payment:earnings`)} onChangeTab={this.changeTab}/>
+                            <AccountTabButton active={tab === t(`payment:deductions`) ? true : false} title={t(`payment:deductions`)} onChangeTab={this.changeTab}/>
+                            <AccountTabButton active={tab === t(`payment:otherInfo`) ? true : false} title={t(`payment:otherInfo`)} onChangeTab={this.changeTab}/>
                         </View>
                     </View>
 
-                    {/* ---------------------------- tabs ------------------------ */}
-                    <View style={styles.tabs}>
-                        <AccountTabButton active={tab === t(`payment:earnings`) ? true : false} title={t(`payment:earnings`)} onChangeTab={this.changeTab}/>
-                        <AccountTabButton active={tab === t(`payment:deductions`) ? true : false} title={t(`payment:deductions`)} onChangeTab={this.changeTab}/>
-                        <AccountTabButton active={tab === t(`payment:otherInfo`) ? true : false} title={t(`payment:otherInfo`)} onChangeTab={this.changeTab}/>
+                    {/* ---------------------------- changing section of the screen ------------------------ */}
+                    <View style={styles.changedView}>
+                        { 
+                        tab === t(`payment:earnings`) ? 
+                            <EaringsSection item={payment.paymentDetails[0]} />
+                            :
+                        tab === t(`payment:deductions`) ? 
+                            <DeductionsSection item={payment.paymentDetails[1]} />
+                            :
+                            <OtherInfoSection item={payment.paymentDetails[2]} />
+                        }
                     </View>
-                </View>
-
-                {/* ---------------------------- changing section of the screen ------------------------ */}
-                <View style={styles.changedView}>
-                    { tab === t(`payment:earnings`) ? 
-                        <EaringsSection />
-                        :
-                      tab === t(`payment:deductions`) ? 
-                        <DeductionsSection />
-                        :
-                        <OtherInfoSection />
-                    }
-
-
-                </View>
-            </SafeAreaView>
-        )
+                </SafeAreaView>
+                :
+                <NoContent />
+            )   
     }
 }
 

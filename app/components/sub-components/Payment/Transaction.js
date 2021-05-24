@@ -1,14 +1,13 @@
 import React from 'react';
-import {SafeAreaView,View, Text, StyleSheet, Image , TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image , TouchableOpacity} from 'react-native';
 
 
 let bankIcon = '../../../assets/icons/Payment/bank.png';
 let dataIcon = '../../../assets/icons/Payment/date.png';
 
 const Transaction = (props) => {
-
     return (
-        <TouchableOpacity style={props.middle == true ? styles.containerMiddle : styles.conatiner} onPress={props.onHandlePress}>
+        <TouchableOpacity style={styles.conatiner} onPress={()=>{props.onHandlePress("PaymentDetails", {paymentId : props.item._id})}} >
                 {/* ---------------------------- icon section --------------------------- */}
                 <View style={styles.iconView}>
                     <Image style={styles.bankIcon} source={require(bankIcon)} />
@@ -16,7 +15,7 @@ const Transaction = (props) => {
 
                 {/* ---------------------------- price section --------------------------- */}
                 <View style={styles.priceView}>
-                    <Text style={styles.priceValue}>{props.price}</Text>
+                    <Text style={styles.priceValue}>{props.item.total} {props.item.currency.en}</Text>
                 </View>
 
                 {/* ---------------------------- date section --------------------------- */}
@@ -25,7 +24,7 @@ const Transaction = (props) => {
                         <Image style={styles.dateIcon} source={require(dataIcon)} />
                     </View>
                     <View style={styles.dateValueView}>
-                        <Text style={styles.dateValue}>{props.date}</Text>
+                        <Text style={styles.dateValue}>{props.item.createdAt.slice(0,4)}</Text>
                     </View>
                 </View>
         </TouchableOpacity>
@@ -34,13 +33,10 @@ const Transaction = (props) => {
 
 const styles = StyleSheet.create({
     conatiner: {
-        //flex : 1,
         flexDirection : 'row',
         height : 70,
         borderTopWidth : 2,
         borderTopColor : '#D8D8D8',
-        borderBottomWidth : 2,
-        borderBottomColor : '#D8D8D8'
     },
     containerMiddle : {
         flexDirection : 'row',

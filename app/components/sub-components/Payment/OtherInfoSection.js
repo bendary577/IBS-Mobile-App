@@ -9,19 +9,19 @@ const OtherInfoSection = (props) => {
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`payment:invoice`)}</Text>
-                <Text style={styles.text}>34R17-07/2019</Text>
+                <Text style={styles.text}>{props.item.values[0].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`payment:hourRate`)}</Text>
-                <Text style={styles.text}>85.23</Text>
+                <Text style={styles.text}>{props.item.values[1].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`payment:bankName`)}</Text>
-                <Text style={styles.text}>CIBM</Text>
+                <Text style={styles.text}>{props.item.values[2].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`payment:accountNumber`)}</Text>
-                <Text style={styles.text}>10002979147</Text>
+                <Text style={styles.text}>{props.item.values[3].value.en}</Text>
             </View>
         </SafeAreaView>
     )

@@ -3,6 +3,7 @@ import {View, StyleSheet, Image, ImageBackground, Text, TouchableOpacity} from '
 import {primaryRedColor} from '../../../config/colors';
 import {t} from '../../../languages/i18Manager';
 import getFlipForRTLStyle from '../../../utils/utilFunctions';
+import { useNavigation } from '@react-navigation/native';
 
 let paymentCard = '../../../assets/images/Home/paymentCard.png';
 let paymentLogo = '../../../assets/images/Home/paymentLogo.png';
@@ -11,6 +12,8 @@ let arrowIcon = '../../../assets/images/Home/arrow.png';
 
 const PaymentCard = (props) => {
 
+    const navigation = useNavigation();
+    
 	return (
 	    <View style={styles.container}>
            <ImageBackground style={styles.paymentCardImage} source={require(paymentCard)}>
@@ -27,7 +30,7 @@ const PaymentCard = (props) => {
                         <Text style={styles.title}>{t(`home:myPayments`)}</Text>
                     </View>
                     <View style={styles.arrow}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{navigation.navigate("MyTransactions")}}>
                             <Image style={[styles.arrowIcon, getFlipForRTLStyle()]} source={require(arrowIcon)} />
                         </TouchableOpacity>
                     </View>

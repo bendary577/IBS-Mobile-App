@@ -7,7 +7,8 @@
         "getNews" : "احصل علي اّخر الأخبار",
         "getNewsText" :  "حصل على آخر الأخبار على لوحة معلومات حسابك ، وإخطارات النقل والمزيد!",
         "monthlyTransfers" : "تحقق من التحويلات الشهرية",
-        "monthlyTransfersText" :  "راقب تحويلات راتبك من خلال مدير تحويلات سهل"
+        "monthlyTransfersText" :  "راقب تحويلات راتبك من خلال مدير تحويلات سهل",
+        "getStartedButton" : "أبــــدأ"
     },
     "auth": {
        "loginWith" : "سجل الدخول بـ",
@@ -38,6 +39,7 @@
        "resend" : "أعد الإرسال"
     },
     "home": {
+        "route" : "الرئيسية",
         "home" : "الرئيسية",
         "myPayments" : "مدفوعاتي",
         "paymentDescription" : "عرض جميع تفاصيل المدفوعات الخاصة بك",
@@ -50,6 +52,7 @@
         "contactUs" : "Contact Us"
     },
     "payment" : {
+        "route" : "معاملاتي",
         "payments" : "المدفوعات",
         "myTransactions" : "معاملاتي البنكية",
         "paymentDetails" : "بيانات الدفع",
@@ -67,6 +70,7 @@
         "accountNumber" : "رقم الحساب"
     },
     "support" : {
+        "route" : "الدعم",
         "support" : "الدعم",
         "myTickets" : "تذاكري",
         "newTicket" : "تذكرة دعم جديدة",
@@ -81,6 +85,7 @@
         "lastMessageOn" : "اَخر رسالة في"
     },
     "profile" : {
+        "route" : "حسابي",
         "myInformations" : "معلوماتي",
         "settings" : "الإعدادات",
         "username" : "اسم المستخدم",
@@ -102,6 +107,8 @@
     "general" : {
         "skip" : "تخطي",
         "ibsaccount" : "حسـابك",
-        "filter" : "تنقية"
+        "filter" : "تنقية",
+        "noContent" : "عذراَ لا يوجد محتوي",
+        "loading" : "...جاري التحميل"
     }
 }

@@ -3,18 +3,27 @@ import {StyleSheet, Text, View, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {t} from '../../../languages/i18Manager';
 import {signout} from '../../../services/authentication';
+import { useNavigation } from '@react-navigation/native';
 
 let arabicIcon = '../../../assets/icons/Profile/arabic.png';
 let logoutIcon = '../../../assets/icons/Profile/logout.png';
 
 const ProfileInfoSection = () => {
+
+    const navigation = useNavigation();
+
+    const logout = () =>{
+        signout();
+        navigation.navigate("Login");
+    }
+
     return (
         <View style={styles.conatiner}>
             <TouchableOpacity style={styles.view}>
                 <Image style={styles.icon} source={require(arabicIcon)} />
                 <Text style={styles.text}>{t(`profile:changeLanguage`)}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.view} onPress={()=>{ signout() }}>
+            <TouchableOpacity style={styles.view} onPress={logout()}>
                 <Image style={styles.icon} source={require(logoutIcon)} />
                 <Text style={styles.textRed}>{t(`profile:signout`)}</Text>
             </TouchableOpacity>

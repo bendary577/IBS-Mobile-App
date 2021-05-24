@@ -50,10 +50,10 @@ const i18n = {
             .then(() => {
                 console.log("%%%%%%%%%%%%% " + i18next.language)
                 if(languageKey === 'ar' && !RNI18nManager.isRTL){
-                    RNI18nManager.forceRTL(true);
+                   // RNI18nManager.forceRTL(true);
                     //NativeModules.DevSettings.reload();
                 }else if(RNI18nManager.isRTL){
-                    RNI18nManager.forceRTL(false);
+                    //RNI18nManager.forceRTL(false);
                     //NativeModules.DevSettings.reload();
                 }
 

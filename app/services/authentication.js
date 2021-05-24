@@ -2,6 +2,7 @@ import * as SecureStore from 'expo-secure-store';
 import {LOGIN_API, SIGNIN_API, LOGOUT_API, FORGET_PASSWORD_API, RESET_PASSWORD_API, UPDATE_PASSWORD_API} from './apis';
 import axios from 'axios';
 
+let errorMessage = "something went wrong";
 //--------------------------------------- sign in api end point ------------------------------
 export const signIn = (_username,_password) => {
   try {
@@ -47,10 +48,7 @@ export const signout = () => {
         .then(response => {
           if (response) {
            console.log("in signout");
-           console.log("response is " + response);
            deleteToken();
-           let authCheck = isLoggedIn();
-           console.log("is logged in " + authCheck);
          } 
         }).catch(error => {console.log(error)});
   } catch (err) {
@@ -60,14 +58,13 @@ export const signout = () => {
 };
 
 //--------------------------------------- forget password api end point ------------------------------
-export const forgetPassword = (data) => {
+export const forgetPassword = async (data) => {
   try {
-      axios.post(FORGET_PASSWORD_API,data)
-        .then(response => {
-          if (response) {
-           console.log("response is " + response);
-         } 
-        }).catch(error => {console.log(error)});
+    const resp = await axios.post(FORGET_PASSWORD_API,data);  
+    if(resp.status === 200){
+      return resp.data.message;
+    }
+    return errorMessage;
   } catch (err) {
       //Handle Error Here
       console.error(err);
@@ -116,7 +113,11 @@ export const storeToken = (token) => {
 export const getToken = async () => {
   //retrieve the value of the token
   const userToken = await SecureStore.getItemAsync('token');
-  return userToken;
+  console.log("token is " + userToken)
+  if(userToken){
+    return userToken
+  }
+  return null;
 };
 
 //--------------------------------------- delete user token  ------------------------------
@@ -130,5 +131,22 @@ export const isLoggedIn = async () => {
   //retrieve the value of the token
   const userToken = await SecureStore.getItemAsync('token');
   console.log("check authentication " + userToken);
-  return userToken !== null;
+  if(userToken) return true;
+  return false;
 }
+
+//--------------------------------------- store user token  ------------------------------
+export const authorizeRequest = async (callback) => {
+  //retrieve the value of the token
+  const userToken = await SecureStore.getItemAsync('token');
+  let response = await callback(userToken);
+  console.log("response length " + response.length)
+  return response;
+};
+
+//--------------------------------------- store user token  ------------------------------
+export const authorizeRequestWithId = async (callback, id) => {
+  const userToken = await SecureStore.getItemAsync('token');
+  let response = await callback(userToken, id);
+  return response;
+};

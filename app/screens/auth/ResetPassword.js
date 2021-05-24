@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
+import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, Text} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
@@ -20,7 +20,8 @@ class ResetPassword extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            identityNumber : ''
+            phone : '',
+            message : '',
         };
     }
 
@@ -30,16 +31,22 @@ class ResetPassword extends Component {
 
     handleChangeText = (userInput) => {
         this.setState({
-            identityNumber : userInput
+            phone : userInput
         });
     }
 
-    handleSendConfirmation = () => {
-        let date = {
-            phone : this.state.identityNumber
+    handleSendConfirmation = async () => {
+        let data = {
+            phone : this.state.phone
         }
-        forgetPassword(data);
-        //this.props.navigation.navigate("ConfirmNewPassword");
+        let responseMessage = await forgetPassword(data);
+        console.log("in reset password" + responseMessage);
+        this.setState({
+            message : responseMessage
+        });
+        setTimeout(()=>{ 
+            this.props.navigation.navigate("ConfirmNewPassword");
+        }, 2000);
     }
 
     render(){
@@ -64,6 +71,14 @@ class ResetPassword extends Component {
                             <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={this.handleChangeText}/>
                             <IBSButtonLargeRed value={t(`auth:sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
                             <IBSButtonLargeGray value={t(`auth:backtoLogin`)} action={false} onHandlePress={this.navigateLogin}/>
+                            {
+                                this.state.message !== '' ? 
+                                    <View style={{justifyContent:'center', alignItems:'center'}}>
+                                        <Text style={{marginTop : 20, color : 'red'}}>{this.state.message}</Text>
+                                    </View>
+                                :   
+                                    <></>
+                            }
                         </View>
                     </View>
                 </ImageBackground>
