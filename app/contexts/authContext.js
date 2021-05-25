@@ -5,7 +5,10 @@ import * as SecureStore from 'expo-secure-store';
 
 //--------------------------------------------Create the Auth Context with data---------------------------------------
 
-const AuthContext = createContext({authenticated : false});
+const AuthContext = createContext({
+  authenticated : false,
+  setAuthenticated : () => {},
+});
 
 //------------------------------------------- create the Auth Provider ----------------------------------------------
 const AuthProvider = ({children}) => {
@@ -35,7 +38,7 @@ const AuthProvider = ({children}) => {
 
   return (
     //This component will be used to encapsulate the whole App, so all components will have access to the Context
-    <AuthContext.Provider value={{authenticated : true}}>
+    <AuthContext.Provider value={{authenticated, setAuthenticated}}>
       {children}
     </AuthContext.Provider>
   );

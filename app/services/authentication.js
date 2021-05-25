@@ -1,40 +1,38 @@
 import * as SecureStore from 'expo-secure-store';
-import {LOGIN_API, SIGNIN_API, LOGOUT_API, FORGET_PASSWORD_API, RESET_PASSWORD_API, UPDATE_PASSWORD_API} from './apis';
+import {LOGIN_API, SIGNUP_API, LOGOUT_API, FORGET_PASSWORD_API, RESET_PASSWORD_API, UPDATE_PASSWORD_API} from './apis';
 import axios from 'axios';
 
 let errorMessage = "something went wrong";
 //--------------------------------------- sign in api end point ------------------------------
-export const signIn = (_username,_password) => {
+export const signIn = async (data) => {
   try {
-      console.log("signin function")
-      axios.post(LOGIN_API, {
-          username : _username,
-          password: _password
-        })
-        .then(response => {
-          if (response.data.status) {
-           console.log("response is " + response);
-         } 
-        }).catch(error => {});
-
-      console.log("after signin function")
+      console.log("username is " + data.username);
+      console.log("password is "+ data.password);
+      const resp = await axios.post(LOGIN_API,data);  
+      if(resp.status === 200){
+          storeToken(resp.data.token);
+          return resp.data.status;
+     } 
   } catch (err) {
-      //Handle Error Here
       console.error(err);
   }
 };
 
 
 //--------------------------------------- signup api end point ------------------------------
-export const signup = (data) => {
+export const signupRequest = async (data) => {
   try {
-      axios.post(SIGNIN_API, data)
-        .then(response => {
-          if (response) {
-           console.log("response is " + response.data.token);
-           storeToken(response.data.token);
-         } 
-        }).catch(error => {console.log(error)});
+    console.log("identity is " + data.identityNumber);
+    console.log("phone is " + data.phone);
+    console.log("password is " + data.password);
+    const resp = await axios.post(SIGNUP_API,data);  
+    console.log("after signup");
+    if(resp.status === 200){
+      console.log("token is " + response.data.token);
+      console.log("status is " + response.data.status);
+      storeToken(response.data.token);
+      return response.data.status
+    } 
   } catch (err) {
       //Handle Error Here
       console.error(err);
@@ -42,15 +40,13 @@ export const signup = (data) => {
 };
 
 //--------------------------------------- signout api end point ------------------------------
-export const signout = () => {
+export const signout = async () => {
   try {
-      axios.post(LOGOUT_API)
-        .then(response => {
-          if (response) {
-           console.log("in signout");
-           deleteToken();
-         } 
-        }).catch(error => {console.log(error)});
+    const resp = await axios.post(LOGOUT_API);  
+    if(resp.status === 200){
+        deleteToken();
+        return resp.data.status;
+   } 
   } catch (err) {
       //Handle Error Here
       console.error(err);

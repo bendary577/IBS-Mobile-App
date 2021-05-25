@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React,{useState} from 'react';
 import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
@@ -9,47 +9,54 @@ import NavigationButtons from '../../components/sub-components/buttons/Naviagati
 import {t} from '../../languages/i18Manager';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {signIn} from '../../services/authentication';
+import {useAuth} from '../../contexts/authContext';
+import Loading from '../../components/sub-components/general/Loading';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
 
 //------------------------ screen ---------------------
-class Login extends Component {
+const Login = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = { 
-            username : '',
-            password : ''
-        };
-    }
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const {setAuthenticated} = useAuth();
 
-    handleLogin = () =>{
+    const handleLogin = async () =>{
         console.log("signin screen 1")
-        signIn(this.state.username, this.state.password);
-        //this.props.navigation.navigate("Home");
-        console.log("signin screen 2")
+        let data = {
+            username : username,
+            password : password
+        }
+        setLoading(true);
+        let response = await signIn(data);
+        if(response === "success"){
+            setLoading(false)
+            setAuthenticated(true);
+        }
     }
 
-    handleCreateAccount = () =>{
-        this.props.navigation.navigate("SignUp");
+    const handleCreateAccount = () =>{
+        //this.props.navigation.navigate("SignUp");
+        console.log("signup")
     }
 
-    handleOnChangeUsername = (userInput) => {
-        this.setState({
-            username : userInput
-        });
+    const handleOnChangeUsername = (userInput) => {
+       setUsername(userInput)
     }
 
-    handleOnChangePassword = (userInput) => {
-        this.setState({
-            password : userInput
-        });
+    const handleOnChangePassword = (userInput) => {
+       setPassword(userInput)
     }
 
-    render(){
         return (
+
+            loading === true ? 
+
+            <Loading action={t(`general:logging`)}/>
+            :
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
                     <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
@@ -62,10 +69,10 @@ class Login extends Component {
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={this.handleOnChangeUsername}/>
-                            <IBSPasswordText placeholder={t(`auth:passwordPlaceholder`)} hasChild={true} onChangeText={this.handleOnChangePassword}/>
-                            <IBSButtonLargeRed value={t(`auth:login`)} action={true} onHandlePress={this.handleLogin} />
-                            <IBSButtonLargeGray value={t(`auth:noAccount`)} action={true} actionText={t(`auth:create`)} onHandlePress={this.handleCreateAccount}/>
+                            <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={handleOnChangeUsername}/>
+                            <IBSPasswordText placeholder={t(`auth:passwordPlaceholder`)} hasChild={true} onChangeText={handleOnChangePassword}/>
+                            <IBSButtonLargeRed value={t(`auth:login`)} action={true} onHandlePress={handleLogin} />
+                            <IBSButtonLargeGray value={t(`auth:noAccount`)} action={true} actionText={t(`auth:create`)} onHandlePress={handleCreateAccount}/>
                         </View>
                     </View>
                     <View style={styles.bottom}>
@@ -77,7 +84,6 @@ class Login extends Component {
             </SafeAreaView>
         );
     }
-}
 
 //----------------------- screen styling ---------------------
 const styles = StyleSheet.create({

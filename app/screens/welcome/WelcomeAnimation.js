@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions, ImageBackground, SafeAreaView} from 'react-native';
+import  {View, StyleSheet, Dimensions, ImageBackground, SafeAreaView} from 'react-native';
 import AnimationComponent from '../../components/sub-components/animations/AnimationComponent';
 import IBSButton from '../../components/primitive-components/IBSButton';
 import AnimationIndicators from '../../components/sub-components/animations/AnimationIndicators';

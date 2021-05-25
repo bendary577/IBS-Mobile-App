@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import AboutUs from '../screens/home/AboutUs';
-import VisitUs from '../screens/home/VisitUs';
 import ContactUsAuth from '../screens/home/ContactUsAuth';
 import BackButton from '../components/sub-components/buttons/BackButton';
 import NotificationsButton from '../components/sub-components/buttons/NotificationsButton';
@@ -16,14 +14,19 @@ import Notifications from '../screens/account/Notifications/Notifications';
 import {t} from '../languages/i18Manager';
 import BottomTabsNavigation from './BottomTab';
 import ChatCard from '../components/sub-components/cards/ChatCard';
+import {getCommon} from './CommonStackScreens';
 
-const AppStack = createStackNavigator();
+
 
 export default AppStackNavigation = () => {
-  return (
-    <AppStack.Navigator initialRouteName="Home">
 
-      <AppStack.Screen
+  const Stack = createStackNavigator();
+  const common = getCommon(Stack);
+
+  return (
+    <Stack.Navigator initialRouteName="Home">
+
+      <Stack.Screen
         name="Home" 
         component={BottomTabsNavigation}
         options={{
@@ -41,7 +44,7 @@ export default AppStackNavigation = () => {
       }}
       /> 
 
-     <AppStack.Screen
+     <Stack.Screen
         name="PaymentDetails"
         component={PaymentDetails}
         options={{
@@ -60,7 +63,7 @@ export default AppStackNavigation = () => {
       /> 
 
 
-      <AppStack.Screen
+      <Stack.Screen
         name="Notifications" 
         component={Notifications}
         options={{
@@ -78,7 +81,7 @@ export default AppStackNavigation = () => {
       }}
       /> 
 
-    <AppStack.Screen
+    <Stack.Screen
         name="MessageDetails" 
         component={MessageDetails}
         options={{
@@ -94,7 +97,7 @@ export default AppStackNavigation = () => {
           headerBackImage : () =>( <BackButton /> )
       }} />
 
-      <AppStack.Screen
+      <Stack.Screen
         name="Support" 
         component={Support}
         options={{
@@ -112,7 +115,7 @@ export default AppStackNavigation = () => {
       }}
       />
 
-     <AppStack.Screen
+     <Stack.Screen
         name="Chat" 
         component={Chat}
         options={({route})=>({
@@ -130,39 +133,7 @@ export default AppStackNavigation = () => {
       })}
       />
 
-      <AppStack.Screen
-        name="AboutUs" 
-        component={AboutUs}
-        options={{
-          title: 'About Us',
-          headerStyle: {
-            backgroundColor: "#D8D8D8",
-            borderBottomRightRadius : 20,
-            borderBottomLeftRadius : 20
-          },
-            headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerBackImage : () =>( <BackButton /> )
-      }} />
-
-      <AppStack.Screen
-        name="VisitUs" 
-        component={VisitUs}
-        options={{
-          title: 'Visit Us',
-          headerStyle: {
-            backgroundColor: "#D8D8D8",
-            borderBottomRightRadius : 20,
-            borderBottomLeftRadius : 20
-          },
-            headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerBackImage : () =>( <BackButton /> )
-       }} />
-
-    <AppStack.Screen
+    <Stack.Screen
         name="ContactUsAuth" 
         component={ContactUsAuth}
         options={({navigation})=>({
@@ -178,9 +149,9 @@ export default AppStackNavigation = () => {
           headerBackImage : () =>( <BackButton /> )
        })} />
 
-      <AppStack.Screen name="Visit Us" component={VisitUs} />
+       {common}
 
-    </AppStack.Navigator>
+    </Stack.Navigator>
   );
 }
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import {View, StyleSheet, Text, ActivityIndicator} from 'react-native';
-import {t} from '../../../languages/i18Manager';
 
 
-const Loading = () => {
+
+const Loading = (props) => {
 
     return (
         <View style={styles.container} >
             <ActivityIndicator size="large" color="red" style={styles.loading}/>
-            <Text style={styles.text}>{t(`general:loading`)}</Text>
+            <Text style={styles.text}>{props.action}</Text>
         </View>
     )
 }

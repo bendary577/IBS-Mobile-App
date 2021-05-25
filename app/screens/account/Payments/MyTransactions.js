@@ -36,7 +36,7 @@ class MyTransactions extends Component {
     render (){
         return (
             this.state.isLoading === true ? 
-                <Loading />
+            <Loading action={t(`general:loading`)}/>
                 :
             this.state.transactions.length === 0 ? 
                 <NoContent />

@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React,{useState} from 'react';
 import {SafeAreaView, Image, ImageBackground,Text, View, StyleSheet, Dimensions} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
@@ -8,87 +8,78 @@ import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonL
 import NavigationButtons from '../../components/sub-components/buttons/NaviagationButtons';
 import { ScrollView } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import i18n, { t } from '../../languages/i18Manager';
-import { signup } from '../../services/authentication';
+import { t } from '../../languages/i18Manager';
+import { signupRequest } from '../../services/authentication';
+import {useAuth} from '../../contexts/authContext';
+import getFlipForRTLStyle from '../../utils/utilFunctions';
+import Loading from '../../components/sub-components/general/Loading';
+import { useNavigation } from '@react-navigation/native';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
 
+
 //------------------------ screen ---------------------
-class SignUp extends Component {
+const SignUp = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            checked : 'unchecked',
-            nationalId : '',
-            phone : '',
-            password : '',
-            passwordConfirm : '',
-         };
-    }
+    const navigation = useNavigation();
+    const [checked, setChecked] = useState('unchecked');
+    const [nationalId, setNationalId] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [loading, setLoading] = useState(false);
+    const {setAuthenticated} = useAuth();
 
-    getFlipForRTLStyle = () => {
-        if (!i18n.isRTL) { return {}; };
-        return {
-            transform: [{
-                scaleX: -1,
-            }],
-        };
-    }
-
-    setChecked = () => {
-        this.setState({
-            checked : this.state.checked === 'checked' ? 'unchecked' : 'checked'
-        })
-    }
-
-    handleSignup = () =>{
-        console.log(this.state.nationalId + this.state.phone + this.state.password);
+    const handleSignup = async () =>{
+        console.log(nationalId);
+        console.log(phone);
+        console.log(password);
         let data = {
-          identityNumber : this.state.nationalId,
-          password : this.state.phone,
-          phone : this.state.password
+          identityNumber : nationalId,
+          phone : phone,
+          password : password
         };
-        signup(data);
-        //this.props.navigation.navigate("Home");
+        setLoading(true);
+        let resp = await signupRequest(data);
+        if(resp === "success"){
+            setLoading(false);
+            setAuthenticated(true)
+        }
     }
 
-    navigatHome = () =>{
-        this.props.navigation.navigate("Home");
+    const navigatHome = () =>{
+        navigation.navigate("Home");
     }
 
-    navigateLogin = () =>{
-        this.props.navigation.navigate("Login");
+    const navigateLogin = () =>{
+        //this.props.navigation.navigate("Login");
+        navigation.navigate("Login");
     }
 
-    handleOnChangeNationalId = (userInput) => {
-        this.setState({
-            nationalId : userInput
-        });
+    const handleOnChangeNationalId = (userInput) => {
+        setNationalId(userInput);
     }
 
-    handleOnChangePhone = (userInput) => {
-        this.setState({
-            phone : userInput
-        });
+    const handleOnChangePhone = (userInput) => {
+        setPhone(userInput);
     }
 
-    handleOnChangePassword = (userInput) => {
-        this.setState({
-            password : userInput
-        });
+    const handleOnChangePassword = (userInput) => {
+        setPassword(userInput);
     }
 
-    handleOnChangePasswordConfirm = (userInput) => {
-        this.setState({
-            passwordConfirm : userInput
-        });
+    const handleOnChangePasswordConfirm = (userInput) => {
+        setPasswordConfirm(userInput)
     }
     
-    render(){
         return (
+
+            loading === true ? 
+
+            <Loading action={t(`general:registering`)}/>
+            :
             <SafeAreaView style={styles.container}>
                 <ScrollView>
                 <View style={styles.top}>
@@ -100,21 +91,21 @@ class SignUp extends Component {
                         </View>
                     </View>
                     <View style={styles.topRight}>
-                        <Image style={[styles.topImage, this.getFlipForRTLStyle()]} source={require(ibsImage)} />
+                        <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                         <View style={styles.middle}>
                             <View style={styles.loginForm}>
-                                <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={this.handleOnChangeNationalId}/>
-                                <IBSInputText placeholder={t(`auth:phone`)} onChangeText={this.handleOnChangePhone}/>
-                                <IBSPasswordText placeholder={t(`auth:setPassword`)} onChangeText={this.handleOnChangePassword}/>
-                                <IBSPasswordText placeholder={t(`auth:confirmPassword`)} onChangeText={this.handleOnChangePasswordConfirm}/>
+                                <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={handleOnChangeNationalId}/>
+                                <IBSInputText placeholder={t(`auth:phone`)} onChangeText={handleOnChangePhone}/>
+                                <IBSPasswordText placeholder={t(`auth:setPassword`)} onChangeText={handleOnChangePassword}/>
+                                <IBSPasswordText placeholder={t(`auth:confirmPassword`)} onChangeText={handleOnChangePasswordConfirm}/>
                                 <View style={styles.radioView}>
                                     <View style={styles.RadioButton}>
                                         <RadioButton value="agree" 
-                                                     status={this.state.checked}  
-                                                     onPress={() => { this.setChecked() }}  
+                                                     status={checked}  
+                                                     onPress={() => {setChecked(checked === 'checked' ? 'unchecked' : 'checked')}}  
                                                      style={styles.radio}
                                                      color="red" />
                                     </View>
@@ -123,8 +114,8 @@ class SignUp extends Component {
                                         <Text style={styles.rightText}>{t(`auth:terms`)}</Text>
                                     </View>
                                 </View>
-                                <IBSButtonLargeRed value={t(`auth:createAccount`)} action={false} onHandlePress={this.handleSignup} />
-                                <IBSButtonLargeGray value={t(`auth:haveAccount`)} action={true} actionText={t(`auth:login`)} onHandlePress={this.navigateLogin}/>
+                                <IBSButtonLargeRed value={t(`auth:createAccount`)} action={false} onHandlePress={handleSignup} />
+                                <IBSButtonLargeGray value={t(`auth:haveAccount`)} action={true} actionText={t(`auth:login`)} onHandlePress={navigateLogin}/>
                             </View>
                         </View>
                     <View style={styles.bottom}>
@@ -136,7 +127,6 @@ class SignUp extends Component {
                 </ScrollView>
             </SafeAreaView>
         );
-    }
 }
 
 //----------------------- screen styling ---------------------

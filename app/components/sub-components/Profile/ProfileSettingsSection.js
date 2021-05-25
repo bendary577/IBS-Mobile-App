@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {StyleSheet, Text, View, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {t} from '../../../languages/i18Manager';
 import {signout} from '../../../services/authentication';
 import { useNavigation } from '@react-navigation/native';
+import {useAuth} from '../../../contexts/authContext';
+import Loading from '../general/Loading';
+
 
 let arabicIcon = '../../../assets/icons/Profile/arabic.png';
 let logoutIcon = '../../../assets/icons/Profile/logout.png';
@@ -11,19 +14,30 @@ let logoutIcon = '../../../assets/icons/Profile/logout.png';
 const ProfileInfoSection = () => {
 
     const navigation = useNavigation();
+    const {setAuthenticated} = useAuth();
+    [loading, setLoading] = useState(false);
 
-    const logout = () =>{
-        signout();
-        navigation.navigate("Login");
+    const logout = async () =>{
+        setLoading(true);
+        let response = await signout();
+        if(response == "success"){
+            setLoading(false);
+            setAuthenticated(false);
+        }
     }
 
     return (
+
+        loading === true ? 
+
+        <Loading action={t(`general:loggingOut`)}/>
+        :
         <View style={styles.conatiner}>
             <TouchableOpacity style={styles.view}>
                 <Image style={styles.icon} source={require(arabicIcon)} />
                 <Text style={styles.text}>{t(`profile:changeLanguage`)}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.view} onPress={logout()}>
+            <TouchableOpacity style={styles.view} onPress={()=>{logout()}}>
                 <Image style={styles.icon} source={require(logoutIcon)} />
                 <Text style={styles.textRed}>{t(`profile:signout`)}</Text>
             </TouchableOpacity>

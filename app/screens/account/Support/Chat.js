@@ -7,7 +7,7 @@ import {authorizeRequestWithId} from '../../../services/authentication';
 import {getSingleTicket} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
 import NoContent from '../../../components/sub-components/general/NoContent';
-
+import {t} from '../../../languages/i18Manager';
 
 let sendIcon = '../../../assets/icons/Support/send.png';
 
@@ -21,7 +21,7 @@ class Chat extends React.Component {
         }
     }
      
-      //this.props.route.params.paymentId
+      //------------------------------- call the ticket's api to get comments ---------------------
       componentDidMount = async () => {
         this.setState({isLoading : true});
         let data = await authorizeRequestWithId(getSingleTicket, this.props.route.params.id);
@@ -29,26 +29,33 @@ class Chat extends React.Component {
             ticket : data,
             messages : data.comments
         });
-        this.setState({isLoading : false});
-
-        /*
+        let chatMessages = this.formatMessages();
         this.setState({
-          messages: [
-            {
-              _id: 1,
-              text: 'Hello developer',
-              createdAt: new Date(),
-              user: {
-                _id: 2,
-                name: 'React Native',
-                avatar: 'https://placeimg.com/140/140/any',
-              },
-            },
-          ]
+            messages : chatMessages
         })
-        */
+        this.setState({isLoading : false});
+      }
+
+
+    //----------------------------------- format messages returned from api ----------------------
+      formatMessages = () => {
+        let chatMessages = this.state.messages.map((chatMessage) => {
+            let gcm = {
+              _id: chatMessage._id,
+              text: chatMessage.comment,
+              createdAt: chatMessage.createdAt,
+              user: {
+                _id: chatMessage.owner,
+                name: this.state.ticket.owner.name.en,
+                avatar: chatMessage.photo
+              }
+            };
+            return gcm;
+          });
+          return chatMessages;
       }
      
+      //----------------------------------- when user sends a message ----------------------
       onSend(messages = []) {
         this.setState(previousState => ({
           messages: GiftedChat.append(previousState.messages, messages),
@@ -61,7 +68,7 @@ class Chat extends React.Component {
 
         return (
             isLoading === true ? 
-                <Loading />
+                <Loading action={t(`general:loading`)}/>
             :
 
             messages.length !== 0 && isLoading === false ?

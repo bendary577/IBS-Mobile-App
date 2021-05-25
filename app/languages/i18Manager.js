@@ -4,6 +4,7 @@ import {RNRestart} from 'react-native-restart';
 import * as config from '../config/i18n';
 import languageDetector from './language-detector';
 import translationLoader from './translation-loader';
+import { Updates } from 'expo';
 
 const i18n = {
 
@@ -48,19 +49,33 @@ const i18n = {
         i18next
             .changeLanguage(languageKey)
             .then(() => {
-                console.log("%%%%%%%%%%%%% " + i18next.language)
-                if(languageKey === 'ar' && !RNI18nManager.isRTL){
-                   // RNI18nManager.forceRTL(true);
-                    //NativeModules.DevSettings.reload();
-                }else if(RNI18nManager.isRTL){
-                    //RNI18nManager.forceRTL(false);
-                    //NativeModules.DevSettings.reload();
+                if(languageKey === 'ar'){
+                    console.log("i'm in arabic")
+                    console.log("i18n dir " + i18n.dir)
+                    console.log("is rtl ? " + RNI18nManager.isRTL)
+                    if (i18n.dir !== 'RTL') {
+                        i18n.dir === 'RTL';
+                    }else if(RNI18nManager.isRTL === false){
+                        RNI18nManager.forceRTL(true);
+                        Updates.reloadFromCache();
+                    }
+                }else if(languageKey === 'en' && RNI18nManager.isRTL){
+                    console.log("i'm in english")
+                    console.log("i'm in arabic")
+                    console.log("i18n dir " + i18n.dir)
+                    console.log("is rtl ? " + RNI18nManager.isRTL)
+                    if (i18n.dir !== 'LTR') {
+                        i18n.dir === 'LTR';
+                    }else if(RNI18nManager.isRTL === true){
+                        RNI18nManager.forceRTL(false);
+                        Updates.reloadFromCache();
+                    }
                 }
-
+                return true;
             });
-           
        //NativeModules.DevSettings.reload();
        //RNRestart.Restart();
+       return true;
     }
 };
 export const t = i18n.t;

@@ -109,6 +109,9 @@
         "ibsaccount" : "IBS Account",
         "filter" : "Filter",
         "noContent" : "Sorry, No Content",
-        "loading" : "loading..."
+        "loading" : "loading...",
+        "loggingOut" : "Logging out...",
+        "logging" : "Signing You In..",
+        "registering" : "Registering..."
     }
 }

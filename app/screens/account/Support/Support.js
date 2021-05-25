@@ -50,7 +50,7 @@ class Support extends Component {
         return (
 
             this.state.isLoading === true ? 
-                <Loading />
+                <Loading action={t(`general:loading`)}/>
             : 
 
             this.state.tickets.length === 0 ? 

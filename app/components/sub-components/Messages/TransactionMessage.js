@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     rightView : {
         flex : 2,
         justifyContent : 'center',
-        alignItems : 'center'
+        alignItems : 'flex-end',
+        paddingRight : 10
     },
     date : {
         fontSize : 16,

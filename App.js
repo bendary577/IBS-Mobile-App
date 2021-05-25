@@ -1,15 +1,19 @@
 import 'react-native-gesture-handler';
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar, I18nManager as RNI18nManager} from 'react-native';
 import Router from './app/config/router';
 import i18n from './app/languages/i18Manager';
 import {AuthProvider} from './app/contexts/authContext';
+import { Updates } from 'expo';
+import {useAuth} from './app/contexts/authContext';
+import {getToken} from './app/services/authentication';
 
-export default class App extends Component {
+const App = () => {
 
-  state = { isI18nInitialized: false }
+  const [isI18nInitialized, setI18nInitialized] = useState(false);
+  const {setAuthenticated} = useAuth();
 
-  componentDidMount() {
+  useEffect (() => {
     i18n.init()
         .then(() => {
             const RNDir = RNI18nManager.isRTL ? 'RTL' : 'LTR';
@@ -20,18 +24,25 @@ export default class App extends Component {
                 // RN won't set the layout direction if we don't restart the app's JavaScript.
                 Updates.reloadFromCache();
             }
-            this.setState({ isI18nInitialized: true });
+            setI18nInitialized(true);
         })
         .catch((error) => console.warn(error));
-  }
 
-  render(){
-      return (
-            <AuthProvider>
-              <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#EC253C" translucent = {true}/>
-              <Router />
-            </AuthProvider>
-      );    
-  }
+        //check if there is a token registered
+        let token = getToken();
+        console.log("what is the token ? " + token)
+        if(token){
+          setAuthenticated(true);
+        }
+  }, [])
+
+    return (
+        <AuthProvider>
+          <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#EC253C" translucent = {true}/>
+          <Router />
+        </AuthProvider>
+    );    
 }
 
+
+export default App;

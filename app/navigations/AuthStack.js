@@ -9,28 +9,32 @@ import SignUp from '../screens/auth/SignUp';
 import ConfirmNewPassword from '../screens/auth/ConfirmNewPassword';
 import ContactUsUnAuth from '../screens/home/ContactUsUnAuth';
 import BackButton from '../components/sub-components/buttons/BackButton';
+import {getCommon} from './CommonStackScreens';
 
-const AuthStack = createStackNavigator();
 
 export default AuthStackNavigation = () => {
-  return (
-    <AuthStack.Navigator initialRouteName="Welcome">
 
-      <AuthStack.Screen  
+  const Stack = createStackNavigator();
+  const common = getCommon(Stack);
+
+  return (
+    <Stack.Navigator initialRouteName="Welcome">
+
+      <Stack.Screen  
         name="Welcome" 
         component={Welcome}
         options={{
           headerShown: false
       }} />
 
-      <AuthStack.Screen  
+      <Stack.Screen  
         name="WelcomeAnimation" 
         component={WelcomeAnimation}
         options={{
           headerShown: false
       }} />
 
-      <AuthStack.Screen  
+      <Stack.Screen  
         name="Login" 
         component={Login}
         options={{
@@ -38,7 +42,7 @@ export default AuthStackNavigation = () => {
         }}
       />
 
-      <AuthStack.Screen  
+      <Stack.Screen  
         name="ResetPassword" 
         component={ResetPassword}
         options={{
@@ -47,7 +51,7 @@ export default AuthStackNavigation = () => {
 
       />  
 
-      <AuthStack.Screen  
+      <Stack.Screen  
         name="ConfirmNewPassword" 
         component={ConfirmNewPassword}
         options={{
@@ -55,7 +59,7 @@ export default AuthStackNavigation = () => {
         }}
       />  
 
-      <AuthStack.Screen  
+      <Stack.Screen  
         name="CreateNewPassword" 
         component={CreateNewPassword}
         options={{
@@ -63,7 +67,7 @@ export default AuthStackNavigation = () => {
         }}
       /> 
 
-      <AuthStack.Screen  
+      <Stack.Screen  
         name="SignUp" 
         component={SignUp}
         options={{
@@ -71,7 +75,7 @@ export default AuthStackNavigation = () => {
         }}
       />    
 
-    <AuthStack.Screen
+    <Stack.Screen
         name="ContactUsUnAuth" 
         component={ContactUsUnAuth}
         options={({navigation})=>({
@@ -88,7 +92,9 @@ export default AuthStackNavigation = () => {
         })}
     />
 
-    </AuthStack.Navigator>
+      {common}
+
+    </Stack.Navigator>
   );
 }
 

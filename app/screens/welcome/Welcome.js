@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {Text, SafeAreaView, View, StyleSheet, Image, ImageBackground, Dimensions, TouchableOpacity, NativeModules,ActivityIndicator  } from 'react-native';
+import {Text, SafeAreaView, View, StyleSheet, Image, ImageBackground, Dimensions, TouchableOpacity, NativeModules,ActivityIndicator } from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import i18n, { t } from '../../languages/i18Manager';
-
+import Loading from '../../components/sub-components/general/Loading';
+import {RNRestart} from 'react-native-restart';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
 
 let welcome = '../../assets/images/Welcome/welcome7.png';
@@ -15,14 +16,23 @@ const Welcome = ({navigation}) => {
     const [loadingLanguage, setLanguage] = useState(false);
 
     const setLang = (lang) =>{
-        i18n.changeLanguage(lang);
-        //NativeModules.DevSettings.reload();
         setLanguage(true);
-        navigation.navigate("WelcomeAnimation")
+        let response = i18n.changeLanguage(lang);
+        console.log("response is " + response)
+        if(response == true){
+            setLanguage(false);
+            navigation.navigate("WelcomeAnimation")
+        }
        // RNRestart.Restart();
+       // NativeModules.DevSettings.reload();
     }
 
 	return (
+
+        loadingLanguage === true ?
+            <Loading action={t(`general:loading`)} />
+        :
+
 	    <SafeAreaView  style={styles.container}>
             <View style={styles.top}>
                 <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(black)} />
