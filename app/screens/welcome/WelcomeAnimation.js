@@ -1,24 +1,31 @@
-import React from 'react';
-import  {View, StyleSheet, Dimensions, ImageBackground, SafeAreaView} from 'react-native';
+import React,{useEffect} from 'react';
+import {View, StyleSheet, Dimensions, ImageBackground, SafeAreaView} from 'react-native';
 import AnimationComponent from '../../components/sub-components/animations/AnimationComponent';
 import IBSButton from '../../components/primitive-components/IBSButton';
 import AnimationIndicators from '../../components/sub-components/animations/AnimationIndicators';
 import SkipButton from '../../components/sub-components/buttons/SkipButton';
-
-
+import i18n from '../../languages/i18Manager';
+import { Updates } from 'expo';
 
 let {width, height} = Dimensions.get('window'); 
 let black = '../../assets/images/WelcomeAnimationScreen/black-right-3.png';
 
 //------------------------ screen ---------------------
-const WelcomeAnimation = ({navigation}) => {
+const WelcomeAnimation = (props) => {
+
+    useEffect (() => {
+        let language = props.route.params.language;
+        console.log("language is in welcome animation " + language);
+        i18n.changeLanguage(language);
+        //Updates.reloadFromCache();
+      }, [])
 
     const navigateToLogin = () => {
-        navigation.navigate("Login");
+        props.navigation.navigate("Login");
     }
 
     const navigateToSignUp = () => {
-        navigation.navigate("SignUp");
+        props.navigation.navigate("SignUp");
     }
 
 	return (

@@ -29,23 +29,24 @@ const SignUp = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const {setAuthenticated} = useAuth();
 
     const handleSignup = async () =>{
-        console.log(nationalId);
-        console.log(phone);
-        console.log(password);
         let data = {
           identityNumber : nationalId,
           phone : phone,
-          password : password
+          password : password,
         };
         setLoading(true);
         let resp = await signupRequest(data);
         if(resp === "success"){
             setLoading(false);
             setAuthenticated(true)
+        }else{
+            setLoading(false);
+            setError("sorry, something went wrong")
         }
     }
 
@@ -54,7 +55,6 @@ const SignUp = () => {
     }
 
     const navigateLogin = () =>{
-        //this.props.navigation.navigate("Login");
         navigation.navigate("Login");
     }
 
@@ -97,6 +97,7 @@ const SignUp = () => {
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                         <View style={styles.middle}>
                             <View style={styles.loginForm}>
+                                { error !== '' ? <Text>{error}</Text> : <></>}
                                 <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={handleOnChangeNationalId}/>
                                 <IBSInputText placeholder={t(`auth:phone`)} onChangeText={handleOnChangePhone}/>
                                 <IBSPasswordText placeholder={t(`auth:setPassword`)} onChangeText={handleOnChangePassword}/>
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     bottom : {
         flex : 1,
         alignItems : 'flex-start',
-        paddingTop : 40
+        paddingTop : 10,
     },
 });
 

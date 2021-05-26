@@ -45,37 +45,46 @@ const i18n = {
     },
 
     changeLanguage : (languageKey)=>{
-        console.log(languageKey)
+        i18next.locale = 'ar';
+        console.log("lamguage is " + languageKey)
+        console.log("i18n language is " + i18n.locale)
+        console.log("i18n direction is " + i18n.dir)
+        console.log("react native direction is " + RNI18nManager.isRTL)
         i18next
             .changeLanguage(languageKey)
             .then(() => {
                 if(languageKey === 'ar'){
-                    console.log("i'm in arabic")
-                    console.log("i18n dir " + i18n.dir)
-                    console.log("is rtl ? " + RNI18nManager.isRTL)
+                    RNI18nManager.forceRTL(true);
+                    //Updates.reloadFromCache();
+                }else if(languageKey === 'en'){
+
+                    RNI18nManager.forceRTL(false);
+                    //Updates.reloadFromCache();
+                }
+                /*
+                if(languageKey === 'ar'){
+                    console.log("lamguage is " + languageKey)
+                    console.log("i18n language is " + i18n.locale)
+                    console.log("i18n direction is " + i18n.dir)
+                    console.log("react native direction is " + RNI18nManager.isRTL)
                     if (i18n.dir !== 'RTL') {
                         i18n.dir === 'RTL';
                     }else if(RNI18nManager.isRTL === false){
+                        console.log("rtl is false")
                         RNI18nManager.forceRTL(true);
-                        Updates.reloadFromCache();
+                        //Updates.reloadFromCache();
                     }
-                }else if(languageKey === 'en' && RNI18nManager.isRTL){
-                    console.log("i'm in english")
-                    console.log("i'm in arabic")
-                    console.log("i18n dir " + i18n.dir)
-                    console.log("is rtl ? " + RNI18nManager.isRTL)
+                }else if(languageKey === 'en'){
                     if (i18n.dir !== 'LTR') {
                         i18n.dir === 'LTR';
                     }else if(RNI18nManager.isRTL === true){
                         RNI18nManager.forceRTL(false);
-                        Updates.reloadFromCache();
+                       // Updates.reloadFromCache();
                     }
                 }
-                return true;
+                */
+                //Updates.reloadFromCache();
             });
-       //NativeModules.DevSettings.reload();
-       //RNRestart.Restart();
-       return true;
     }
 };
 export const t = i18n.t;

@@ -11,20 +11,12 @@ let black = '../../assets/images/Welcome/black.png';
 let width = Dimensions.get('window').width; 
 
 //------------------------ screen ---------------------
-const Welcome = ({navigation}) => {
+const Welcome = (props) => {
 
     const [loadingLanguage, setLanguage] = useState(false);
 
     const setLang = (lang) =>{
-        setLanguage(true);
-        let response = i18n.changeLanguage(lang);
-        console.log("response is " + response)
-        if(response == true){
-            setLanguage(false);
-            navigation.navigate("WelcomeAnimation")
-        }
-       // RNRestart.Restart();
-       // NativeModules.DevSettings.reload();
+        props.navigation.navigate("WelcomeAnimation", {language : lang})
     }
 
 	return (

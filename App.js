@@ -6,7 +6,7 @@ import i18n from './app/languages/i18Manager';
 import {AuthProvider} from './app/contexts/authContext';
 import { Updates } from 'expo';
 import {useAuth} from './app/contexts/authContext';
-import {getToken} from './app/services/authentication';
+import * as SecureStore from 'expo-secure-store';
 
 const App = () => {
 
@@ -14,8 +14,10 @@ const App = () => {
   const {setAuthenticated} = useAuth();
 
   useEffect (() => {
+    console.log("in app use effect");
     i18n.init()
         .then(() => {
+            console.log("in promise app")
             const RNDir = RNI18nManager.isRTL ? 'RTL' : 'LTR';
             // RN doesn't always correctly identify native locale direction, so we force it here.
             if (i18n.dir !== RNDir) {
@@ -25,15 +27,13 @@ const App = () => {
                 Updates.reloadFromCache();
             }
             setI18nInitialized(true);
+            //check if there is a token registered
+            let token = SecureStore.getItemAsync('token');
+            if(token !== null){
+              setAuthenticated(true);
+            }
         })
         .catch((error) => console.warn(error));
-
-        //check if there is a token registered
-        let token = getToken();
-        console.log("what is the token ? " + token)
-        if(token){
-          setAuthenticated(true);
-        }
   }, [])
 
     return (

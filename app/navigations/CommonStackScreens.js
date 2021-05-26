@@ -7,6 +7,7 @@ import BackButton from '../components/sub-components/buttons/BackButton';
 export const getCommon = (Stack) => {
     return [
         <Stack.Screen
+            key = {12}
             name="AboutUs" 
             component={AboutUs}
             options={{
@@ -24,6 +25,7 @@ export const getCommon = (Stack) => {
         />,
 
       <Stack.Screen
+        key = {123}
         name="VisitUs" 
         component={VisitUs}
         options={{
