@@ -1,9 +1,5 @@
 
 import * as React from 'react';
-import Home from '../screens/home/Home';
-import MyTransactions from '../screens/account/Payments/MyTransactions';
-import MyProfile from '../screens/account/Profile/MyProfile';
-import Support from '../screens/account/Support/Support';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeTabButton from '../components/sub-components/navigationTabs/HomeTabButton';
 import PaymentTabButton from '../components/sub-components/navigationTabs/PaymentTabButton';
@@ -13,7 +9,9 @@ import ProfileTabButton from '../components/sub-components/navigationTabs/Profil
 import { useNavigation } from '@react-navigation/native';
 import i18n,{t} from '../languages/i18Manager';
 import DrawerNavigation from './DrawerMenu';
-
+import { DrawerActions } from '@react-navigation/native';
+import {HomeStack, TransactionsStack, ProfileStack, SupportStack} from './AppStack';
+import More from '../screens/account/Messages/More';
 //------------------------------------------- bottom tab navigation ------------------------------------
 
 const Tab = createBottomTabNavigator();
@@ -43,7 +41,7 @@ const BottomTabsNavigation = () => {
 
         <Tab.Screen
           name="Home"
-          component={Home}
+          component={HomeStack}
           options={{
             tabBarLabel: 'Home',
             tabBarIcon : ({ tintColor, focused })=>(<HomeTabButton active={focused ? true : false}/>),
@@ -52,7 +50,7 @@ const BottomTabsNavigation = () => {
 
         <Tab.Screen
           name="MyTransactions"
-          component={MyTransactions}
+          component={TransactionsStack}
           options={{
             tabBarLabel: 'Payments',
             tabBarIcon : ({ tintColor, focused })=>(<PaymentTabButton active={focused ? true : false}/>),
@@ -61,7 +59,7 @@ const BottomTabsNavigation = () => {
 
         <Tab.Screen
           name="MyProfile"
-          component={MyProfile}
+          component={ProfileStack}
           options={{
             tabBarLabel: '',
             tabBarIcon : ({ tintColor, focused })=>(<ProfileTabButton active={focused ? true : false}/>),
@@ -70,7 +68,7 @@ const BottomTabsNavigation = () => {
 
         <Tab.Screen
           name="Support"
-          component={Support}
+          component={SupportStack}
           options={{
             tabBarLabel: 'Support',
             tabBarIcon : ({ tintColor, focused })=>(<SupportTabButton active={focused ? true : false}/>),
@@ -79,19 +77,17 @@ const BottomTabsNavigation = () => {
 
         <Tab.Screen
           name="More"
-          component={DrawerNavigation}
+          component={More}
           options={{
             tabBarLabel: 'More',
             tabBarIcon : ({ tintColor, focused })=>(<MoreTabButton active={focused ? true : false} />),
           }}
-          /*
-          listeners={() => ({
+          listeners={({navigation}) => ({
             tabPress: e => {
-             // navigation.dispatch(DrawerActions.openDrawer());
               e.preventDefault()
+              navigation.dispatch(DrawerActions.toggleDrawer());
             }
           })}
-          */ 
         />
     </Tab.Navigator>
   );

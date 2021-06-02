@@ -20,4 +20,6 @@ target 'ibsmobile' do
   # end
   pod 'react-native-restart', :path => '../node_modules/react-native-restart'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
 end

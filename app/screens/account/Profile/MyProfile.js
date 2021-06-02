@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
-import {Image, SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native'
+import {SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native'
 import ProfileInfoSection from '../../../components/sub-components/Profile/ProfileInfoSection';
 import ProfileSettingsSection from '../../../components/sub-components/Profile/ProfileSettingsSection';
 import AccountTabButtonLong from '../../../components/sub-components/navigationTabs/AccountTabButtonLong';
 import {t} from '../../../languages/i18Manager';
+import { ImageBackground } from 'react-native';
+import UploadImageButton from '../../../components/sub-components/buttons/UploadImageButton';
 
 let avatarImage = '../../../assets/icons/Profile/avatar.png';
-let cameraIcon = '../../../assets/icons/Profile/camera.png';
 
 class MyProfile extends Component {
 
@@ -31,8 +32,10 @@ class MyProfile extends Component {
         return (
             <SafeAreaView style={styles.conatiner}>
                 <View style={styles.fixedView}>
-                    <View >
-                        <Image style={styles.avatarView} source={require(avatarImage)} />
+                    <View>
+                        <ImageBackground style={styles.avatarView} source={require(avatarImage)} >
+                            <UploadImageButton />
+                        </ImageBackground>
                     </View>
                     <View style={styles.tabs}>
                         <AccountTabButtonLong active={tab === t(`profile:myInformations`) ? true : false} title={t(`profile:myInformations`)} hasIcon={false} onChangeTab={this.changeTab}/>
@@ -67,7 +70,13 @@ const styles = StyleSheet.create({
        width : 120,
        height : 120, 
        borderRadius : 15,
-       marginTop : 15
+       marginTop : 15,
+       alignItems : 'flex-end',
+       padding : 8
+    },
+    uploadIcon : {
+        width : 20,
+        height : 20
     },
     tabs : {
         flexDirection : 'row',

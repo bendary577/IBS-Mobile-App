@@ -141,8 +141,8 @@ export const authorizeRequest = async (callback) => {
 };
 
 //--------------------------------------- store user token  ------------------------------
-export const authorizeRequestWithId = async (callback, id) => {
+export const authorizeRequestWithData = async (callback, data) => {
   const userToken = await SecureStore.getItemAsync('token');
-  let response = await callback(userToken, id);
+  let response = await callback(userToken, data);
   return response;
 };

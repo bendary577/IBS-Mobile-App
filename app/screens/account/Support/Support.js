@@ -10,6 +10,7 @@ import {authorizeRequest} from '../../../services/authentication';
 import {getUserTickets} from '../../../services/api_requests';
 import NoContent from '../../../components/sub-components/general/NoContent';
 import Loading from '../../../components/sub-components/general/Loading';
+import { NavigationActions } from 'react-navigation';
 
 let newTicketIcon = '../../../assets/icons/Support/newTicket.png';
 
@@ -43,7 +44,7 @@ class Support extends Component {
     navigateToChat = (id, number, status) => {
         let bool = false;
         if (status === "closed") bool = true;
-      this.props.navigation.navigate("Chat", {id, roomNumber : number, closed : bool});
+        this.props.navigation.navigate('Chat',  {id, roomNumber : number, closed : bool})
     }
 
     render () {

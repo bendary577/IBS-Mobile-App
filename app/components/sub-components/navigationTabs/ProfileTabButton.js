@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     },
     icon : {
         position: 'absolute',
-        bottom: -20, 
+        bottom: -10, 
         height: 75,
         width: 75,
         borderRadius: 68,

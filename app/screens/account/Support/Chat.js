@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
-import {SafeAreaView,View, Text, StyleSheet, ScrollView, Image , TouchableOpacity} from 'react-native';
-import { GiftedChat, Send } from 'react-native-gifted-chat'
-import ChatSendButton from '../../../components/sub-components/buttons/ChatSendButton';
-import getFlipForRTLStyle from '../../../utils/utilFunctions';
-import {authorizeRequestWithId} from '../../../services/authentication';
+import {View, Text, StyleSheet} from 'react-native';
+import { GiftedChat} from 'react-native-gifted-chat'
+import ChatSendButton from '../../../components/sub-components/Chat/ChatSendButton';
+import {authorizeRequestWithData} from '../../../services/authentication';
 import {getSingleTicket} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
 import NoContent from '../../../components/sub-components/general/NoContent';
 import {t} from '../../../languages/i18Manager';
+import ChatMessageBubble from '../../../components/sub-components/Chat/ChatMessageBubble';
+import ChatInputToolbar from '../../../components/sub-components/Chat/ChatInputToolbar';
+import ChatComposer from '../../../components/sub-components/Chat/ChatComposer';
 
-let sendIcon = '../../../assets/icons/Support/send.png';
 
-class Chat extends React.Component {
+class Chat extends Component {
     constructor(props) {
         super(props);
         this.state = {  
@@ -24,7 +25,7 @@ class Chat extends React.Component {
       //------------------------------- call the ticket's api to get comments ---------------------
       componentDidMount = async () => {
         this.setState({isLoading : true});
-        let data = await authorizeRequestWithId(getSingleTicket, this.props.route.params.id);
+        let data = await authorizeRequestWithData(getSingleTicket, this.props.route.params.id);
         this.setState({
             ticket : data,
             messages : data.comments
@@ -38,6 +39,7 @@ class Chat extends React.Component {
 
 
     //----------------------------------- format messages returned from api ----------------------
+    ////chatMessage.photo 
       formatMessages = () => {
         let chatMessages = this.state.messages.map((chatMessage) => {
             let gcm = {
@@ -47,7 +49,7 @@ class Chat extends React.Component {
               user: {
                 _id: chatMessage.owner,
                 name: this.state.ticket.owner.name.en,
-                avatar: chatMessage.photo
+                avatar: 'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
               }
             };
             return gcm;
@@ -62,6 +64,7 @@ class Chat extends React.Component {
         }))
       }
 
+      //----------------------------------- render chat view --------------------------------
       render() {
 
         const {isLoading,ticket, messages} = this.state;
@@ -87,29 +90,25 @@ class Chat extends React.Component {
                     textInputStyle={styles.composer}
                     minComposerHeight={40}
                     minInputToolbarHeight={70}
+                    renderInputToolbar={props => {return( <ChatInputToolbar {...props} />);}}
+                    renderComposer={props=>{return( <ChatComposer {...props} />);}}
+                    renderBubble={props => {return(<ChatMessageBubble {...props} />);}}  
+                    renderSend={(props)=>{return (<ChatSendButton {...props} />);}} 
                     onSend={messages => this.onSend(messages)}
-                    renderSend={(props)=>{
-                        const {text,messageIdGenerator,user, onSend} = props
-                        return(
-                        <TouchableOpacity onPress= {
-                            ()=>{
-                            if (text && onSend) {
-                                onSend({ text: text.trim(), user:user,_id:messageIdGenerator()}, true);
-                                }
-                            }
-                            } style={styles.sendButton}>
-                            <Image style={[styles.icon, getFlipForRTLStyle()]} source={require(sendIcon)} />
-                        </TouchableOpacity>
-                        )}} 
+                    showUserAvatar={true}
+                    showAvatarForEveryMessage={true}
+                    keyboardShouldPersistTaps={'never'}
                     user={{
-                    _id: 1,
+                        _id: 1,
+                        name: 'ali',
+                        avatar: 'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
                     }}
                 />
-                </>
+              </>
             :
             <NoContent />    
         )
-      }
+    }
 }
 
 const styles = StyleSheet.create({

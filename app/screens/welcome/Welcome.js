@@ -24,7 +24,6 @@ const Welcome = (props) => {
         loadingLanguage === true ?
             <Loading action={t(`general:loading`)} />
         :
-
 	    <SafeAreaView  style={styles.container}>
             <View style={styles.top}>
                 <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(black)} />

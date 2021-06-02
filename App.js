@@ -7,6 +7,7 @@ import {AuthProvider} from './app/contexts/authContext';
 import { Updates } from 'expo';
 import {useAuth} from './app/contexts/authContext';
 import * as SecureStore from 'expo-secure-store';
+import registerForPushNotificationsAsync from './app/notifications/registeration';
 
 const App = () => {
 
@@ -15,6 +16,7 @@ const App = () => {
 
   useEffect (() => {
     console.log("in app use effect");
+    registerForPushNotificationsAsync();
     i18n.init()
         .then(() => {
             console.log("in promise app")

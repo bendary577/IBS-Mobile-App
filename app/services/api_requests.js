@@ -1,5 +1,10 @@
 
-import {GET_USER_API, GET_USER_PAYMENTS, GET_USER_TICKETS, GET_PAYMENTS, GET_TICKETS} from './apis';
+import {GET_USER_API,
+        GET_USER_PAYMENTS,
+        GET_USER_TICKETS, 
+        GET_PAYMENTS, 
+        GET_TICKETS, 
+        UPLOAD_USER_IMAGE} from './apis';
 import axios from 'axios';
 
 
@@ -79,6 +84,22 @@ export const getSingleTicket = async (token, id) => {
         let jwt = "jwt="+token;
         console.log("ticket id is " + id )
         const resp = await axiosInstance.get(`${GET_TICKETS}/${id}`,{
+            headers: {
+                Cookie : jwt
+            }
+        });
+        return resp.data.data;
+    } catch (err) {
+        //Handle Error Here
+        console.error(err);
+    }
+}
+
+//--------------------------------------- get user tickets api end point ------------------------------
+export const uploadUserImage = async (token, data) => {
+    try {
+        let jwt = "jwt="+token;
+        const resp = await axiosInstance.put(UPLOAD_USER_IMAGE,data,{
             headers: {
                 Cookie : jwt
             }

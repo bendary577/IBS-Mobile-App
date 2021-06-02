@@ -2,7 +2,10 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import AppStackNavigation from '../navigations/AppStack';
 import AuthStackNavigation from '../navigations/AuthStack';
+import DrawerMenu from '../navigations/DrawerMenu'
 import {useAuth} from '../contexts/authContext';
+import {AppStack} from '../navigations/AppStack';
+
 
 const Router = () => {
 
@@ -12,7 +15,7 @@ const Router = () => {
   
   return (
     <NavigationContainer>
-      {authenticated ? <AppStackNavigation /> : <AuthStackNavigation />}
+      {authenticated ? <AppStack /> : <AuthStackNavigation />}
     </NavigationContainer>
   );
 };
