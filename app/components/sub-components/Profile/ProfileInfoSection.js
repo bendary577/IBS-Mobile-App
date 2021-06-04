@@ -1,12 +1,9 @@
-import React, {Component, useState, useEffect} from 'react'
-import {StyleSheet, Text, View, ScrollView } from 'react-native'
+import React, {Component} from 'react'
+import {StyleSheet, View, ScrollView } from 'react-native'
 import ProfileInfoCard from '../../../components/sub-components/cards/ProfileInfoCard';
-import {t} from '../../../languages/i18Manager';
 import {getUserInfo} from '../../../services/api_requests';
 import {authorizeRequest} from '../../../services/authentication';
-import i18n from '../../../languages/i18Manager';
-
-let language = i18n.locale;
+import { withTranslation } from 'react-i18next';
 
 class ProfileInfoSection extends Component {
 
@@ -67,22 +64,24 @@ class ProfileInfoSection extends Component {
     }
 
     render(){
+        const { t } = this.props;
+
         return (
             <View style={styles.conatiner}>
                 <ScrollView>
-                    <ProfileInfoCard title={t(`profile:username`)} value={this.state.username} />
-                    <ProfileInfoCard title={t(`profile:nationaiID`)} value={this.state.nationaiID}/>
-                    <ProfileInfoCard title={t(`profile:phone`)} value={this.state.phone}/>
-                    <ProfileInfoCard title={t(`profile:email`)} value={this.state.email}/>
-                    <ProfileInfoCard title={t(`profile:address`)} value={this.state.address}/>
-                    <ProfileInfoCard title={t(`profile:company`)} value={this.state.company}/>
-                    <ProfileInfoCard title={t(`profile:nationality`)} value={this.state.nationality}/>
-                    <ProfileInfoCard title={t(`profile:bank`)} value={this.state.bank}/>
-                    <ProfileInfoCard title={t(`profile:hiringDate`)} value={this.state.hiringDate}/>
-                    <ProfileInfoCard title={t(`profile:ibsNumber`)} value={this.state.ibsNumber}/>
-                    <ProfileInfoCard title={t(`profile:jobTitle`)} value={this.state.jobTitle}/>
-                    <ProfileInfoCard title={t(`profile:gender`)} value={this.state.gender}/>
-                    <ProfileInfoCard title={t(`profile:insuranceNumber`)} value={this.state.insuranceNumber}/>
+                    <ProfileInfoCard title={t(`username`)} value={this.state.username} />
+                    <ProfileInfoCard title={t(`nationaiID`)} value={this.state.nationaiID}/>
+                    <ProfileInfoCard title={t(`phone`)} value={this.state.phone}/>
+                    <ProfileInfoCard title={t(`email`)} value={this.state.email}/>
+                    <ProfileInfoCard title={t(`address`)} value={this.state.address}/>
+                    <ProfileInfoCard title={t(`company`)} value={this.state.company}/>
+                    <ProfileInfoCard title={t(`nationality`)} value={this.state.nationality}/>
+                    <ProfileInfoCard title={t(`bank`)} value={this.state.bank}/>
+                    <ProfileInfoCard title={t(`hiringDate`)} value={this.state.hiringDate}/>
+                    <ProfileInfoCard title={t(`ibsNumber`)} value={this.state.ibsNumber}/>
+                    <ProfileInfoCard title={t(`jobTitle`)} value={this.state.jobTitle}/>
+                    <ProfileInfoCard title={t(`gender`)} value={this.state.gender}/>
+                    <ProfileInfoCard title={t(`insuranceNumber`)} value={this.state.insuranceNumber}/>
                 </ScrollView>
             </View>
         )
@@ -97,4 +96,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default ProfileInfoSection;
+export default withTranslation()(ProfileInfoSection);

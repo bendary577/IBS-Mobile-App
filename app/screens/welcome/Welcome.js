@@ -1,40 +1,68 @@
-import React, {useState} from 'react';
-import {Text, SafeAreaView, View, StyleSheet, Image, ImageBackground, Dimensions, TouchableOpacity, NativeModules,ActivityIndicator } from 'react-native';
+import React,{useEffect, useState} from 'react';
+import {Text, SafeAreaView, View, StyleSheet, Image, ImageBackground, Dimensions, TouchableOpacity, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
-import i18n, { t } from '../../languages/i18Manager';
 import Loading from '../../components/sub-components/general/Loading';
+//import { Updates } from 'expo';
+import * as Updates from "expo-updates";
 import {RNRestart} from 'react-native-restart';
+import {useTranslation} from 'react-i18next';
+import * as SecureStore from 'expo-secure-store';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
 
 let welcome = '../../assets/images/Welcome/welcome7.png';
+let welcomeRight = '../../assets/images/Welcome/welcome8.png';
 let black = '../../assets/images/Welcome/black.png';
 let width = Dimensions.get('window').width; 
 
 //------------------------ screen ---------------------
 const Welcome = (props) => {
 
-    const [loadingLanguage, setLanguage] = useState(false);
+    const {t, i18n} = useTranslation();
+    const [loading, setLoading] = useState(false);
 
-    const setLang = (lang) =>{
-        props.navigation.navigate("WelcomeAnimation", {language : lang})
+    useEffect(()=>{
+        const language = SecureStore.getItemAsync('language');
+        if(language !== null){
+            setTimeout(() => {
+                props.navigation.navigate('WelcomeAnimation');
+            }, 2000);
+        }
+    }, []);
+
+    const setLang = () =>{
+       // setLang(true);
+        i18n
+        .changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')
+        .then(() => {
+          I18nManager.forceRTL(i18n.language === 'ar');
+          //RNRestart.Restart();
+          //Updates.reloadFromCache();
+          SecureStore.setItemAsync('language', 'true');
+          Updates.reloadAsync();
+        }).catch((error) => {
+            console.log('error ' + error.message);
+        });
     }
 
 	return (
 
-        loadingLanguage === true ?
-            <Loading action={t(`general:loading`)} />
+        loading === true ? 
+
+        <Loading action={t(`loading`)}/>
+
         :
+
 	    <SafeAreaView  style={styles.container}>
             <View style={styles.top}>
                 <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(black)} />
             </View>
             <View style={styles.bottom}>
-                <ImageBackground style={styles.image} source={require(welcome)}>
+                <ImageBackground style={styles.image} source={ I18nManager.isRTL ? require(welcomeRight) : require(welcome)}>
 
                 {/* -------------------------------- get started title ------------------------------ */}
                     <View style={styles.viewTitle}>
-                        <TitleText value={t(`welcome:getStarted`)} />
-                        <TitleText value={t(`welcome:ibsAccount`)} />
+                        <TitleText value={t(`getStarted`)} /> 
+                        <TitleText value={t(`ibsAccount`)} /> 
                     </View>
 
                     {/* -------------------------------- select language ------------------------------ */}
@@ -44,16 +72,15 @@ const Welcome = (props) => {
                                 <Text style={styles.selectLang}>Language</Text>
                             </View>
                             <View style={styles.lang}>
-                                <TouchableOpacity onPress={()=>{setLang('en')}} >
+                                <TouchableOpacity onPress={()=>{setLang()}} >
                                     <Text style={styles.textLang}>English</Text>
                                 </TouchableOpacity >
                                 <Text style={styles.textLang}>\</Text>
-                                <TouchableOpacity onPress={()=>{setLang('ar')}} >
+                                <TouchableOpacity onPress={()=>{setLang()}} >
                                     <Text style={styles.textLang}>العربية</Text>
                                 </TouchableOpacity >
                             </View>
                         </View>
-                       
                 </ImageBackground>   
             </View>
         </SafeAreaView>
@@ -86,7 +113,8 @@ const styles = StyleSheet.create({
     viewTitle : {
         padding : 10,
         marginTop : 30,
-        marginLeft : 25
+        //marginLeft : 30
+        right : -60
     },
     viewLang : {
         flexDirection : 'column',
@@ -96,7 +124,8 @@ const styles = StyleSheet.create({
     },
     selectLang : {
         fontSize : 16,
-        fontWeight : 'bold'
+        fontWeight : 'bold',
+        left : 30
     },
     lang : {
         flexDirection : 'row',
@@ -106,7 +135,9 @@ const styles = StyleSheet.create({
     textLang : {
         padding : 3,
         color : 'white',
-        fontSize : 16
+        fontSize : 16,
+        left : 30,
+        //textDecorationLine: 'underline'
     }
 });
 

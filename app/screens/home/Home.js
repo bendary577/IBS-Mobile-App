@@ -4,14 +4,16 @@ import TitleText from '../../components/primitive-components/TitleText';
 import PaymentCard from '../../components/sub-components/cards/PaymentCard';
 import SmallMap from '../../components/sub-components/Maps/SmallMap';
 import {primaryRedColor} from '../../config/colors';
-import {t} from '../../languages/i18Manager';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
+import {useTranslation} from 'react-i18next';
 
 let blackElipse = '../../assets/images/Home/black-elipse.png';
 
 
 //------------------------ screen ---------------------
 const Home = ({navigation}) => {
+
+    const {t} = useTranslation();
 
         return (
             <SafeAreaView style={styles.container}>
@@ -32,13 +34,13 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TitleText value={t(`home:aboutIBS`)}/>
+                                <TitleText value={t(`aboutIBS`)}/>
                             </View>
                             
                             <View style={styles.description}>
-                                <Text>{t(`home:aboutDesctiption`)}</Text>
+                                <Text>{t(`aboutDesctiption`)}</Text>
                                 <TouchableOpacity onPress={()=>{navigation.navigate("AboutUs")}}>
-                                    <Text style={styles.seeMoreTxt}>{t(`home:seeMore`)}</Text>
+                                    <Text style={styles.seeMoreTxt}>{t(`seeMore`)}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -53,7 +55,7 @@ const Home = ({navigation}) => {
                                     />  
                                 </View>
                                 <TouchableOpacity onPress={()=>{navigation.navigate("VisitUs")}}>
-                                    <TitleText value={t(`home:visitUs`)}/>
+                                    <TitleText value={t(`visitUs`)}/>
                                 </TouchableOpacity>
                             </View>
                             <View>

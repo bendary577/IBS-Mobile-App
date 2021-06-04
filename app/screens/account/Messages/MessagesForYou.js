@@ -4,11 +4,14 @@ import TitleText from '../../../components/primitive-components/TitleText';
 import { useNavigation } from '@react-navigation/native';
 import IBSSearchBar from '../../../components/sub-components/inputs/IBSSearchBar';
 import Message from '../../../components/sub-components/Messages/Message';
-import { t } from '../../../languages/i18Manager';
+//import { t } from '../../../languages/i18Manager';
+import {useTranslation} from 'react-i18next';
+
 
 const MessagesForYou = () => {
 
     const navigation = useNavigation();
+    const {t} = useTranslation();
 
     const navigate = () => {
       navigation.navigate("MessageDetails");
@@ -17,7 +20,7 @@ const MessagesForYou = () => {
     return (
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.titleView}>
-               <TitleText value={t(`messages:myMessages`)}/>
+               <TitleText value={t(`myMessages`)}/>
                <View style={{marginTop : 30, justifyContent : 'center', alignItems : 'center'}}>
                    <IBSSearchBar />
                </View>

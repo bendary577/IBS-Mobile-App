@@ -11,12 +11,12 @@ import registerForPushNotificationsAsync from './app/notifications/registeration
 
 const App = () => {
 
-  const [isI18nInitialized, setI18nInitialized] = useState(false);
+  //const [isI18nInitialized, setI18nInitialized] = useState(false);
   const {setAuthenticated} = useAuth();
 
   useEffect (() => {
-    console.log("in app use effect");
     registerForPushNotificationsAsync();
+    /*
     i18n.init()
         .then(() => {
             console.log("in promise app")
@@ -29,13 +29,16 @@ const App = () => {
                 Updates.reloadFromCache();
             }
             setI18nInitialized(true);
-            //check if there is a token registered
-            let token = SecureStore.getItemAsync('token');
-            if(token !== null){
-              setAuthenticated(true);
-            }
         })
         .catch((error) => console.warn(error));
+        */
+
+
+        //check if there is a token registered
+        let token = SecureStore.getItemAsync('token');
+        if(token !== null){
+          setAuthenticated(true);
+        }
   }, [])
 
     return (

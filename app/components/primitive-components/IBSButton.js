@@ -1,11 +1,15 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { t } from '../../languages/i18Manager';
+//import { t } from '../../languages/i18Manager';
+import {useTranslation} from 'react-i18next';
 
 const IBSButton = (props) => {
+
+    const {t} = useTranslation();
+
     return (
         <TouchableOpacity style={styles.button} onPress={()=>{props.onHandlePress()}}>
-             <Text style={styles.buttonTxt}>{t(`welcome:getStartedButton`)}</Text>
+             <Text style={styles.buttonTxt}>{props.title}</Text>
         </TouchableOpacity>
     )
 }

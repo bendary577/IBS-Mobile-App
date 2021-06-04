@@ -2,11 +2,14 @@ import React from 'react';
 import {Image, Text, View, StyleSheet} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import {primaryRedColor} from '../../config/colors';
-
+import {useTranslation} from 'react-i18next';
 
 
 //------------------------ screen ---------------------
 const AboutUs = ({navigation}) => {
+
+    const {t} = useTranslation();
+
 	return (
 	    <View style={styles.container}>
             {/* ------------------------------------- header section ------------------------------------ */}
@@ -17,25 +20,25 @@ const AboutUs = ({navigation}) => {
                         source={require('../../assets/icons/aboutUs/about.png')}
                     />  
                 </View>
-                <TitleText value="About IBS"/>
+                <TitleText value={t(`aboutIBS`)}/>
             </View>
 
             {/* ------------------------------------- about text section ------------------------------------ */}
             <View>
                 <Text style={styles.text}>
-                    We are a proud and happy company that serves the outsourcing field with passion and commitment.
+                    {t(`about_description_1`)}
                 </Text>
 
                 <Text style={styles.text}>
-                    And with hard work and dedication IBS has become on of Egypt’s top leading Outsourcing firms in the country.
+                    {t(`about_description_2`)}
                 </Text>
 
                 <Text style={styles.text}>
-                IBS was founded in 1984 and distinguished itself quickly within the market compared to the traditional labor contractor that existed.
+                    {t(`about_description_3`)}
                 </Text>
                 
                 <Text style={styles.text}>
-                Over a period of 37 years, IBS has flourished with a client base of around 350 local and multinational companies and an outsourced headcount of around 45,000 employees across the country in a variety of fields.
+                    {t(`about_description_4`)}
                 </Text>
             </View>
         </View>

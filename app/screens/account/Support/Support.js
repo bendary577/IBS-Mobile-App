@@ -5,12 +5,14 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TransactionMessage from '../../../components/sub-components/Messages/TransactionMessage';
 import SupportMessageModal from '../../../components/sub-components/Messages/SupportMessageModal';
-import { t } from '../../../languages/i18Manager';
+//import { t } from '../../../languages/i18Manager';
 import {authorizeRequest} from '../../../services/authentication';
 import {getUserTickets} from '../../../services/api_requests';
 import NoContent from '../../../components/sub-components/general/NoContent';
 import Loading from '../../../components/sub-components/general/Loading';
-import { NavigationActions } from 'react-navigation';
+import {authorizeRequestWithData} from '../../../services/authentication';
+import {addTicket} from '../../../services/api_requests';
+import { withTranslation } from 'react-i18next';
 
 let newTicketIcon = '../../../assets/icons/Support/newTicket.png';
 
@@ -21,7 +23,8 @@ class Support extends Component {
         this.state = {  
             modalVisible : false,
             tickets : [],
-            isLoading : false
+            isLoading : false,
+            problem : null
         }
     }
 
@@ -40,6 +43,13 @@ class Support extends Component {
             modalVisible : bool
         })
     }
+
+    setModalText = (data) => {
+        this.setState({
+            problem : data
+        })
+        console.log("user problem is : " + this.state.problem);
+    }
     
     navigateToChat = (id, number, status) => {
         let bool = false;
@@ -47,11 +57,20 @@ class Support extends Component {
         this.props.navigation.navigate('Chat',  {id, roomNumber : number, closed : bool})
     }
 
-    render () {
-        return (
+    createNewTicket = async () => {
+        console.log("create new ticket");
+        //Send user id
+        let data = await authorizeRequestWithData(addTicket, id);
+        this.navigateToChat(data._id, data.uid, data.statusFormatted);
+    }
 
+    render () {
+
+        const { t } = this.props;
+        
+        return (
             this.state.isLoading === true ? 
-                <Loading action={t(`general:loading`)}/>
+                <Loading action={t(`loading`)}/>
             : 
 
             this.state.tickets.length === 0 ? 
@@ -62,7 +81,7 @@ class Support extends Component {
                     {/* -------------------------------- upper secion --------------------------------------- */}
                     <View style={styles.upperView}>
                         <View style={styles.titleView}>
-                            <TitleText value={t(`support:myTickets`)}/>
+                            <TitleText value={t(`myTickets`)}/>
                             <TouchableOpacity onPress={() => this.setModalVisible(true)}>
                                 <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
                             </TouchableOpacity>
@@ -76,7 +95,7 @@ class Support extends Component {
                             }}
                         >
                             <View  style={styles.centeredView}>
-                                <SupportMessageModal onClose={this.setModalVisible}/>
+                                <SupportMessageModal onClose={this.setModalVisible} onChangeText={this.setModalText} onHandlePress={this.createNewTicket}/>
                             </View>
                         </Modal>
                         <View style={{marginTop : 30}}>
@@ -90,7 +109,7 @@ class Support extends Component {
                                     style={styles.dropdown}
                                     dropDownStyle={{backgroundColor: '#fafafa'}}
                                     onChangeItem={item => console.log(item.label, item.value)}
-                                    placeholder={t(`general:filter`)}
+                                    placeholder={t(`filter`)}
                                 />
                         </View>
                     </View>
@@ -142,4 +161,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Support;
+export default withTranslation()(Support);

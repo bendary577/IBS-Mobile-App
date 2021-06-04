@@ -1,29 +1,30 @@
 import React from 'react';
 import {SafeAreaView , ScrollView, View,Text, StyleSheet, TouchableHighlight, Image, Dimensions} from 'react-native';
 import ContactUsCard from '../../components/sub-components/cards/ContactUsCard';
-
+import {useTranslation} from 'react-i18next';
 
 let customerSupport = '../../assets/icons/contactUs/support.png';
 let width = Dimensions.get('window').width; 
 
 //------------------------ screen ---------------------
 const ContactUsAuth = ({navigation}) => {
-	return (
 
+    const {t} = useTranslation();
+	return (
         <ScrollView >
             <SafeAreaView  style={styles.container}>   
                     <View style={styles.upper}>
                         <View style={styles.cardsRow}>
-                            <ContactUsCard type="hotline" title="Hotline"/>
-                            <ContactUsCard type="email" title="Email"/>
+                            <ContactUsCard type="hotline" title={t(`hotline`)}/>
+                            <ContactUsCard type="email" title={t(`email`)}/>
                         </View>
                         <View style={styles.cardsRow}>
-                            <ContactUsCard type="email" title="Payment Email"/>
-                            <ContactUsCard type="email" title="Medical Email"/>
+                            <ContactUsCard type="email" title={t(`paymentMail`)}/>
+                            <ContactUsCard type="email" title={t(`medicalMail`)}/>
                         </View>
                         <View style={styles.cardsRow}>
-                            <ContactUsCard type="website" title="Website"/>
-                            <ContactUsCard type="facebook" title="Facebook"/>
+                            <ContactUsCard type="website" title={t(`website`)}/>
+                            <ContactUsCard type="facebook" title={t(`facebook`)}/>
                         </View>
                     </View>
                     {/* ---------------------------------------- customer support card ---------------------- */}
@@ -34,7 +35,7 @@ const ContactUsAuth = ({navigation}) => {
                                     <Image style={styles.icon} source={require(customerSupport)} />
                                 </View>
                                 <View style={styles.cardRight}>                              
-                                    <Text style={styles.title}>Customer Support</Text>
+                                    <Text style={styles.title}>{t(`customerSupport`)}</Text>
                                 </View>
                             </View>
                         </TouchableHighlight>

@@ -1,18 +1,21 @@
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity,TextInput, Image } from 'react-native';
-import {t} from '../../../languages/i18Manager';
+//import {t} from '../../../languages/i18Manager';
+import {useTranslation} from 'react-i18next';
 
 let closeIcon = '../../../assets/icons/Support/close.png';
 let supportIcon = '../../../assets/icons/Support/support.png';
 
 const SupportMessageModal = (props) => {
 
+    const {t} = useTranslation();
+
     return (
         <View style={styles.container}>
            <View style={styles.titleView}>
                <View style={styles.left}>
                     <Image style={styles.icon} source={require(supportIcon)} />
-                    <Text style={styles.titleText}>{t(`support:newTicket`)}</Text>
+                    <Text style={styles.titleText}>{t(`newTicket`)}</Text>
                </View>
                <TouchableOpacity style={styles.right} onPress={()=>{props.onClose(false)}}>
                    <Image style={styles.icon} source={require(closeIcon)} />
@@ -21,14 +24,15 @@ const SupportMessageModal = (props) => {
            <View style={styles.messageView}>
                 <TextInput  
                     style={styles.inputText}
-                    placeholder={t(`support:problem`)} 
+                    placeholder={t(`problem`)} 
                     placeholderTextColor="#B9B9B9"
                     textAlign={'center'}
+                    onChangeText={text => props.onChangeText(text)}
                 />
            </View>
            <View style={styles.buttonView}>
-               <TouchableOpacity style={styles.button}>
-                   <Text style={styles.buttonText}>{t(`support:startChat`)}</Text>
+               <TouchableOpacity style={styles.button} onPress={()=>{props.onHandlePress()}}>
+                   <Text style={styles.buttonText}>{t(`startChat`)}</Text>
                </TouchableOpacity>
            </View>
         </View>

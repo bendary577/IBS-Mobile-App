@@ -1,10 +1,14 @@
 import React from 'react';
 import {View,Image,Text, TouchableOpacity, StyleSheet } from 'react-native';
-import {t} from '../../languages/i18Manager';
+//import {t} from '../../languages/i18Manager';
+import {useTranslation} from 'react-i18next';
 
 let login = '../../assets/icons/Login/login.png';
 
 const IBSConfirmationButton = (props) => {
+
+    const {t} = useTranslation();
+
     return (
         props.active ? 
         <TouchableOpacity style={styles.buttonActive} onPress={()=>{props.onHandlePress()}}>
@@ -12,7 +16,7 @@ const IBSConfirmationButton = (props) => {
          </TouchableOpacity>
          : 
          <TouchableOpacity style={styles.button} onPress={()=>{}}>
-                <Text style={styles.text}>{t(`auth:confirm`)}</Text>
+                <Text style={styles.text}>{t(`confirm`)}</Text>
          </TouchableOpacity>
     )
 }

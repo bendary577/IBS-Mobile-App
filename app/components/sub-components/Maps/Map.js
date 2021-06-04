@@ -3,10 +3,13 @@ import MapView from 'react-native-maps';
 import { StyleSheet, View,Text, Dimensions } from 'react-native';
 import IBSButton from '../../primitive-components/IBSButton';
 import { useNavigation } from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
+
 
 export default function Map(props) {
 
   const navigation = useNavigation();
+  const {t} = useTranslation();
 
   const navigate = () => {
     navigation.navigate("AboutUs");
@@ -28,15 +31,13 @@ export default function Map(props) {
             {/* -------------------------------- footer text ---------------------------- */}
             <View style={styles.txtArea}>
               <Text style={styles.addressTxt}>
-                2, Street 261, New Maadi, Cairo, Egypt
+                {t(`address`)}
               </Text>
             </View>
             
             {/* -------------------------------- footer button ---------------------------- */}
             <View style={styles.buttonArea}>
-              <IBSButton onHandlePress={navigate}>
-                <Text style={styles.buttonTxt}>Directions</Text>
-              </IBSButton>
+              <IBSButton onHandlePress={navigate} title={t(`directions`)} />
             </View>
 
           </View>

@@ -10,12 +10,13 @@ import ConfirmNewPassword from '../screens/auth/ConfirmNewPassword';
 import ContactUsUnAuth from '../screens/home/ContactUsUnAuth';
 import BackButton from '../components/sub-components/buttons/BackButton';
 import {getCommon} from './CommonStackScreens';
-
+import {useTranslation} from 'react-i18next';
 
 export default AuthStackNavigation = () => {
 
   const Stack = createStackNavigator();
   const common = getCommon(Stack);
+  const {t} = useTranslation();
 
   return (
     <Stack.Navigator initialRouteName="Welcome">
@@ -79,7 +80,7 @@ export default AuthStackNavigation = () => {
         name="ContactUsUnAuth" 
         component={ContactUsUnAuth}
         options={({navigation})=>({
-          title: 'Contact Us',
+          title: t(`contactUs`),
           headerStyle: {
             backgroundColor: "#D8D8D8",
             borderBottomRightRadius : 20,

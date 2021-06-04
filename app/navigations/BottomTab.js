@@ -7,11 +7,12 @@ import SupportTabButton from '../components/sub-components/navigationTabs/Suppor
 import MoreTabButton from '../components/sub-components/navigationTabs/MoreTabButton';
 import ProfileTabButton from '../components/sub-components/navigationTabs/ProfileTabButton';
 import { useNavigation } from '@react-navigation/native';
-import i18n,{t} from '../languages/i18Manager';
-import DrawerNavigation from './DrawerMenu';
 import { DrawerActions } from '@react-navigation/native';
 import {HomeStack, TransactionsStack, ProfileStack, SupportStack} from './AppStack';
 import More from '../screens/account/Messages/More';
+import {useTranslation} from 'react-i18next';
+import MyProfile from '../screens/account/Profile/MyProfile'
+
 //------------------------------------------- bottom tab navigation ------------------------------------
 
 const Tab = createBottomTabNavigator();
@@ -19,6 +20,7 @@ const Tab = createBottomTabNavigator();
 const BottomTabsNavigation = () => {
 
   const navigation = useNavigation();
+  const {t} = useTranslation();
 
   return (
 
@@ -31,10 +33,10 @@ const BottomTabsNavigation = () => {
              backgroundColor: '#E8E8E8' ,
              borderTopLeftRadius : 20,
              borderTopRightRadius : 20,
-             height : 60
+             height : 70
             },
           tabStyle :{
-            padding : 5
+            padding : 13
           },
         }}
       >
@@ -43,7 +45,7 @@ const BottomTabsNavigation = () => {
           name="Home"
           component={HomeStack}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: t(`home`),
             tabBarIcon : ({ tintColor, focused })=>(<HomeTabButton active={focused ? true : false}/>),
           }}
         />
@@ -52,7 +54,7 @@ const BottomTabsNavigation = () => {
           name="MyTransactions"
           component={TransactionsStack}
           options={{
-            tabBarLabel: 'Payments',
+            tabBarLabel: t(`payments`),
             tabBarIcon : ({ tintColor, focused })=>(<PaymentTabButton active={focused ? true : false}/>),
           }}
         />
@@ -70,7 +72,7 @@ const BottomTabsNavigation = () => {
           name="Support"
           component={SupportStack}
           options={{
-            tabBarLabel: 'Support',
+            tabBarLabel: t(`support`),
             tabBarIcon : ({ tintColor, focused })=>(<SupportTabButton active={focused ? true : false}/>),
           }}
         />
@@ -79,7 +81,7 @@ const BottomTabsNavigation = () => {
           name="More"
           component={More}
           options={{
-            tabBarLabel: 'More',
+            tabBarLabel: t(`more`),
             tabBarIcon : ({ tintColor, focused })=>(<MoreTabButton active={focused ? true : false} />),
           }}
           listeners={({navigation}) => ({

@@ -39,7 +39,6 @@
        "resend" : "Resend"
     },
     "home": {
-        "route" : "Home",
         "home" : "Home",
         "myPayments" : "My Payments",
         "paymentDescription" : "View all your payments details from this tap",
@@ -52,7 +51,6 @@
         "contactUs" : "Contact Us"
     },
     "payment" : {
-        "route" : "MyTransactions",
         "payments" : "Payments",
         "myTransactions" : "My Transactions",
         "paymentDetails" : "Payment Details",
@@ -70,7 +68,6 @@
         "accountNumber" : "Account Number"
     },
     "support" : {
-        "route" : "Support",
         "support" : "Support",
         "myTickets" : "My Tickets",
         "newTicket" : "New Support Ticket",
@@ -85,7 +82,6 @@
         "lastMessageOn" : "Last message on"
     },
     "profile" : {
-        "route" : "MyProfile",
         "myInformations" : "My Informations",
         "settings" : "Settings",
         "username" : "Username",

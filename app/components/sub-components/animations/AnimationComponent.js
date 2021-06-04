@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import {Image, Text, View, StyleSheet} from 'react-native';
 import TitleText from '../../primitive-components/TitleText';
-import {t} from '../../../languages/i18Manager';
+import { withTranslation } from 'react-i18next';
 
+//import {t} from '../../../languages/i18Manager';
+//import {useTranslation} from 'react-i18next';
+
+//const {t} = useTranslation();
 
 //------------------------ screen ---------------------
 class AnimationComponent extends Component {
 
     constructor(props) {
         super(props);
+        const { t } = this.props
         this.state = { 
             imageIndex : 0,
             animationImages : [
@@ -17,14 +22,14 @@ class AnimationComponent extends Component {
                 require('../../../assets/icons/WelcomeAnimationScreen/tech-support.png'),
             ],
             animationTitles : [
-                t(`welcome:getInTouch`),
-                t(`welcome:getNews`),
-                t(`welcome:monthlyTransfers`)
+                t(`getInTouch`),
+                t(`getNews`),
+                t(`monthlyTransfers`)
             ],
             animationTexts : [
-                t(`welcome:getInTouchText`),
-                t(`welcome:getNewsText`),
-                t(`welcome:monthlyTransfersText`)
+                t(`getInTouchText`),
+                t(`getNewsText`),
+                t(`monthlyTransfersText`)
             ],
         };
     }
@@ -75,4 +80,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default AnimationComponent;
+export default withTranslation()(AnimationComponent);

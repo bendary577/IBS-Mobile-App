@@ -2,11 +2,13 @@ import React from 'react';
 import {StyleSheet,TextInput, View , Text, Pressable} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import { t } from '../../languages/i18Manager';
+//import { t } from '../../languages/i18Manager';
+import {useTranslation} from 'react-i18next';
 
 const IBSPasswordText = (props) => {
 
     const navigation = useNavigation();
+    const {t} = useTranslation();
 
     return (
         <View>
@@ -23,7 +25,7 @@ const IBSPasswordText = (props) => {
                             />
                         </View>
                         <TouchableOpacity style={styles.forgotText} onPress={()=>{navigation.navigate("ResetPassword")}}>
-                            <Text style={styles.text}>{t(`auth:forget`)}</Text> 
+                            <Text style={styles.text}>{t(`forget`)}</Text> 
                         </TouchableOpacity>
                     </View>
                 :

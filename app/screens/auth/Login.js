@@ -1,20 +1,21 @@
 import React,{useState} from 'react';
-import {Text,SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
+import {Text,SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import NavigationButtons from '../../components/sub-components/buttons/NaviagationButtons';
-import {t} from '../../languages/i18Manager';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {signIn} from '../../services/authentication';
 import {useAuth} from '../../contexts/authContext';
 import Loading from '../../components/sub-components/general/Loading';
+import {useTranslation} from 'react-i18next';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
+let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 
 //------------------------ screen ---------------------
 const Login = (props) => {
@@ -24,6 +25,7 @@ const Login = (props) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const {setAuthenticated} = useAuth();
+    const {t} = useTranslation();
 
     const handleLogin = async () =>{
         let data = {
@@ -57,25 +59,25 @@ const Login = (props) => {
 
             loading === true ? 
 
-            <Loading action={t(`general:logging`)}/>
+            <Loading action={t(`logging`)}/>
             :
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
-                    <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
+                    <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value={t(`auth:loginWith`)} />
-                            <TitleText value={t(`general:ibsaccount`)} />
+                            <TitleText value={t(`loginWith`)} />
+                            <TitleText value={t(`ibsaccount`)} />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
                             { error !== '' ? <Text style={{color :'red', textAlign : 'center'}}>{error}</Text> : <></>}
-                            <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={handleOnChangeUsername}/>
-                            <IBSPasswordText placeholder={t(`auth:passwordPlaceholder`)} hasChild={true} onChangeText={handleOnChangePassword}/>
-                            <IBSButtonLargeRed value={t(`auth:login`)} action={true} onHandlePress={handleLogin} />
-                            <IBSButtonLargeGray value={t(`auth:noAccount`)} action={true} actionText={t(`auth:create`)} onHandlePress={handleCreateAccount}/>
+                            <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeUsername}/>
+                            <IBSPasswordText placeholder={t(`passwordPlaceholder`)} hasChild={true} onChangeText={handleOnChangePassword}/>
+                            <IBSButtonLargeRed value={t(`login`)} action={true} onHandlePress={handleLogin} />
+                            <IBSButtonLargeGray value={t(`noAccount`)} action={true} actionText={t(`create`)} onHandlePress={handleCreateAccount}/>
                         </View>
                     </View>
                     <View style={styles.bottom}>
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     },
     bottom : {
         flex : 1,
-        alignItems : 'flex-start'
+        right : I18nManager.isRTL ?  -100 : 100
     },
 });
 

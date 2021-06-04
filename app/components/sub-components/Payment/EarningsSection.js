@@ -1,21 +1,23 @@
 import React from 'react';
 import {SafeAreaView,View, Text, StyleSheet} from 'react-native';
-import {t} from '../../../languages/i18Manager';
+import {useTranslation} from 'react-i18next';
 
 const EaringsSection = (props) => {
+
+    const {t} = useTranslation();
 
     return (
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.view}>
-                <Text style={styles.text}>{t(`payment:grossSalary`)}</Text>
+                <Text style={styles.text}>{t(`grossSalary`)}</Text>
                 <Text style={styles.text}>{props.item.values[0].value.en}</Text>
             </View>
             <View style={styles.view}>
-                <Text style={styles.text}>{t(`payment:fixedTransportaion`)}</Text>
+                <Text style={styles.text}>{t(`fixedTransportaion`)}</Text>
                 <Text style={styles.text}>{props.item.values[1].value.en}</Text>
             </View>
             <View style={styles.view}>
-                <Text style={styles.totalText}>{t(`payment:total`)}</Text>
+                <Text style={styles.totalText}>{t(`total`)}</Text>
                 <Text style={styles.totalText}>{props.item.total}</Text>
             </View>
         </SafeAreaView>

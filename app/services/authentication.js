@@ -11,6 +11,8 @@ export const signIn = async (data) => {
       const resp = await axios.post(LOGIN_API,data);  
       if(resp.status === 200){
           storeToken(resp.data.token);
+          console.log(resp.data.data.user.name.en);
+          storeUserInfo(resp.data.data);
           return resp.data.status;
      } 
   } catch (err) {
@@ -57,6 +59,7 @@ export const signout = async () => {
 export const forgetPassword = async (data) => {
   try {
     const resp = await axios.post(FORGET_PASSWORD_API,data);  
+    console.log("hamada is heeeeeeeeeeere :" + resp.json())
     if(resp.status === 200){
       return resp.data.message;
     }
@@ -121,6 +124,15 @@ export const deleteToken = () => {
   //delete the token
   SecureStore.deleteItemAsync('token');
 };
+
+//--------------------------------------- store user id  ------------------------------
+export const storeUserInfo = (data) => {
+  console.log("set user info")
+  SecureStore.setItemAsync('id', data.id);
+  SecureStore.setItemAsync('name', data.user.name.en);
+  SecureStore.setItemAsync('photo', data.photo);
+};
+
 
 //--------------------------------------- check if user is logged in ------------------------------
 export const isLoggedIn = async () => {

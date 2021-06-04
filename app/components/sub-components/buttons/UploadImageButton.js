@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {authorizeRequestWithData} from '../../../services/authentication';
 import {uploadUserImage} from '../../../services/api_requests';
-import ImagePicker from 'react-native-image-picker';
+//import ImagePicker from 'react-native-image-picker';
 
 let cameraIcon = '../../../assets/icons/Profile/camera.png';
 
@@ -10,10 +10,10 @@ const UploadImageButton =  () => {
 
     const [image, setImage] = useState(null); 
 
-
     //--------------- upload image ---------------------------------------
     const uploadImage = async () => {
-      
+     
+      /* 
       const options = {
         title: 'Select Photo',
         storageOptions: {
@@ -40,14 +40,16 @@ const UploadImageButton =  () => {
           form.append("ProfilePicture", photo);
           let data = authorizeRequestWithData(uploadUserImage, form);
           console.log("upload image")
-
         }
+        
       });
+      */
+     console.log("upload image");
     }
 
     //-------------------------------------- screen ------------------------------------------------
     return (
-        <TouchableOpacity onPress={()=>{uploadImage()}} >
+        <TouchableOpacity /*onPress={()=>{uploadImage()}}*/ >
             <Image style={styles.icon} source={require(cameraIcon)} />
         </TouchableOpacity>
     )

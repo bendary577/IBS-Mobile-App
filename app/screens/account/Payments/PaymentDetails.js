@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import {SafeAreaView,View, Text, StyleSheet,Image,Button, ScrollView } from 'react-native';
+import {SafeAreaView,View, Text, StyleSheet,Image} from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText';
 import AccountTabButton from '../../../components/sub-components/navigationTabs/AccountTabButton';
 import EaringsSection from '../../../components/sub-components/Payment/EarningsSection';
 import DeductionsSection from '../../../components/sub-components/Payment/DeductionsSection';
 import OtherInfoSection from '../../../components/sub-components/Payment/OtherInfoSection';
-import {t} from '../../../languages/i18Manager';
 import {authorizeRequestWithData} from '../../../services/authentication';
 import {getSiglePayment} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
 import NoContent from '../../../components/sub-components/general/NoContent';
+import { withTranslation } from 'react-i18next';
 
 let bankIcon = '../../../assets/icons/Payment/bank.png';
 let dataIcon = '../../../assets/icons/Payment/date.png';
@@ -19,8 +19,9 @@ class PaymentDetails extends Component {
 
     constructor(props) {
         super(props);
+        const {t} = this.props
         this.state = {  
-            tab : t(`payment:earnings`),
+            tab : t(`earnings`),
             isLoading : false,
             payment : {}
         }
@@ -47,6 +48,7 @@ class PaymentDetails extends Component {
 
         //get current active tab, payment, loading state 
         const {tab, isLoading, payment} = this.state;
+        const { t } = this.props;
 
         return (
 
@@ -61,7 +63,7 @@ class PaymentDetails extends Component {
                     <View style={styles.fixedView}>
                         {/* ---------------------------- title ------------------------ */}
                         <View>
-                            <TitleText value={t(`payment:paymentDetails`)} />
+                            <TitleText value={t(`paymentDetails`)} />
                         </View>
 
                         {/* ---------------------------- transaction info ------------------------ */}
@@ -81,19 +83,19 @@ class PaymentDetails extends Component {
 
                         {/* ---------------------------- tabs ------------------------ */}
                         <View style={styles.tabs}>
-                            <AccountTabButton active={tab === t(`payment:earnings`) ? true : false} title={t(`payment:earnings`)} onChangeTab={this.changeTab}/>
-                            <AccountTabButton active={tab === t(`payment:deductions`) ? true : false} title={t(`payment:deductions`)} onChangeTab={this.changeTab}/>
-                            <AccountTabButton active={tab === t(`payment:otherInfo`) ? true : false} title={t(`payment:otherInfo`)} onChangeTab={this.changeTab}/>
+                            <AccountTabButton active={tab === t(`earnings`) ? true : false} title={t(`earnings`)} onChangeTab={this.changeTab}/>
+                            <AccountTabButton active={tab === t(`deductions`) ? true : false} title={t(`deductions`)} onChangeTab={this.changeTab}/>
+                            <AccountTabButton active={tab === t(`otherInfo`) ? true : false} title={t(`otherInfo`)} onChangeTab={this.changeTab}/>
                         </View>
                     </View>
 
                     {/* ---------------------------- changing section of the screen ------------------------ */}
                     <View style={styles.changedView}>
                         { 
-                        tab === t(`payment:earnings`) ? 
+                        tab === t(`earnings`) ? 
                             <EaringsSection item={payment.paymentDetails[0]} />
                             :
-                        tab === t(`payment:deductions`) ? 
+                        tab === t(`deductions`) ? 
                             <DeductionsSection item={payment.paymentDetails[1]} />
                             :
                             <OtherInfoSection item={payment.paymentDetails[2]} />
@@ -157,4 +159,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default PaymentDetails;
+export default withTranslation()(PaymentDetails);

@@ -1,13 +1,15 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {t} from '../../../languages/i18Manager';
-
+//import {t} from '../../../languages/i18Manager';
+import {useTranslation} from 'react-i18next';
 
 const NoContent = () => {
 
+    const {t} = useTranslation();
+
     return (
         <View style={styles.container} >
-            <Text style={styles.text}>{t(`general:noContent`)}</Text>
+            <Text style={styles.text}>{t(`noContent`)}</Text>
         </View>
     )
 }

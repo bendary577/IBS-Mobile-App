@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {SafeAreaView, Image, ImageBackground,Text, View, StyleSheet, Dimensions} from 'react-native';
+import {SafeAreaView, Image, ImageBackground,Text, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
@@ -8,17 +8,16 @@ import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonL
 import NavigationButtons from '../../components/sub-components/buttons/NaviagationButtons';
 import { ScrollView } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import { t } from '../../languages/i18Manager';
 import { signupRequest } from '../../services/authentication';
 import {useAuth} from '../../contexts/authContext';
-import getFlipForRTLStyle from '../../utils/utilFunctions';
 import Loading from '../../components/sub-components/general/Loading';
 import { useNavigation } from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
-
+let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 
 //------------------------ screen ---------------------
 const SignUp = () => {
@@ -32,6 +31,7 @@ const SignUp = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const {setAuthenticated} = useAuth();
+    const {t} = useTranslation();
 
     const handleSignup = async () =>{
         let data = {
@@ -73,35 +73,34 @@ const SignUp = () => {
     const handleOnChangePasswordConfirm = (userInput) => {
         setPasswordConfirm(userInput)
     }
-    
         return (
 
             loading === true ? 
 
-            <Loading action={t(`general:registering`)}/>
+            <Loading action={t(`registering`)}/>
             :
             <SafeAreaView style={styles.container}>
                 <ScrollView>
                 <View style={styles.top}>
                     <View style={styles.topLeft}>
                         <View style={styles.title}>
-                            <TitleText value={t(`auth:createNew`)} />
-                            <TitleText value={t(`general:ibsaccount`)} />
+                            <TitleText value={t(`createNew`)} />
+                            <TitleText value={t(`ibsaccount`)} />
                             <View style={styles.redLine}></View>
                         </View>
                     </View>
                     <View style={styles.topRight}>
-                        <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
+                        <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                         <View style={styles.middle}>
                             <View style={styles.loginForm}>
                                 { error !== '' ? <Text>{error}</Text> : <></>}
-                                <IBSInputText placeholder={t(`auth:loginPlaceholder`)} onChangeText={handleOnChangeNationalId}/>
-                                <IBSInputText placeholder={t(`auth:phone`)} onChangeText={handleOnChangePhone}/>
-                                <IBSPasswordText placeholder={t(`auth:setPassword`)} onChangeText={handleOnChangePassword}/>
-                                <IBSPasswordText placeholder={t(`auth:confirmPassword`)} onChangeText={handleOnChangePasswordConfirm}/>
+                                <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeNationalId}/>
+                                <IBSInputText placeholder={t(`phone`)} onChangeText={handleOnChangePhone}/>
+                                <IBSPasswordText placeholder={t(`setPassword`)} onChangeText={handleOnChangePassword}/>
+                                <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={handleOnChangePasswordConfirm}/>
                                 <View style={styles.radioView}>
                                     <View style={styles.RadioButton}>
                                         <RadioButton value="agree" 
@@ -111,12 +110,12 @@ const SignUp = () => {
                                                      color="red" />
                                     </View>
                                     <View style={styles.termsText}>
-                                        <Text style={styles.leftText}>{t(`auth:agree`)}</Text>
-                                        <Text style={styles.rightText}>{t(`auth:terms`)}</Text>
+                                        <Text style={styles.leftText}>{t(`agree`)}</Text>
+                                        <Text style={styles.rightText}>{t(`terms`)}</Text>
                                     </View>
                                 </View>
-                                <IBSButtonLargeRed value={t(`auth:createAccount`)} action={false} onHandlePress={handleSignup} />
-                                <IBSButtonLargeGray value={t(`auth:haveAccount`)} action={true} actionText={t(`auth:login`)} onHandlePress={navigateLogin}/>
+                                <IBSButtonLargeRed value={t(`createAccount`)} action={false} onHandlePress={handleSignup} />
+                                <IBSButtonLargeGray value={t(`haveAccount`)} action={true} actionText={t(`login`)} onHandlePress={navigateLogin}/>
                             </View>
                         </View>
                     <View style={styles.bottom}>

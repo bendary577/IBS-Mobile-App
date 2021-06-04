@@ -1,26 +1,27 @@
 import React from 'react';
 import {SafeAreaView,View, Text, StyleSheet} from 'react-native';
-import {t} from '../../../languages/i18Manager';
-
+import {useTranslation} from 'react-i18next';
 
 const OtherInfoSection = (props) => {
+
+    const {t} = useTranslation();
 
     return (
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.view}>
-                <Text style={styles.text}>{t(`payment:invoice`)}</Text>
+                <Text style={styles.text}>{t(`invoice`)}</Text>
                 <Text style={styles.text}>{props.item.values[0].value.en}</Text>
             </View>
             <View style={styles.view}>
-                <Text style={styles.text}>{t(`payment:hourRate`)}</Text>
+                <Text style={styles.text}>{t(`hourRate`)}</Text>
                 <Text style={styles.text}>{props.item.values[1].value.en}</Text>
             </View>
             <View style={styles.view}>
-                <Text style={styles.text}>{t(`payment:bankName`)}</Text>
+                <Text style={styles.text}>{t(`bankName`)}</Text>
                 <Text style={styles.text}>{props.item.values[2].value.en}</Text>
             </View>
             <View style={styles.view}>
-                <Text style={styles.text}>{t(`payment:accountNumber`)}</Text>
+                <Text style={styles.text}>{t(`accountNumber`)}</Text>
                 <Text style={styles.text}>{props.item.values[3].value.en}</Text>
             </View>
         </SafeAreaView>

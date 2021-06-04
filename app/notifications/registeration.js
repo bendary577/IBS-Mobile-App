@@ -1,7 +1,8 @@
 
 import {Notifications} from 'expo';
 import Constants from 'expo-constants';
-
+import {authorizeRequestWithData} from '../services/authentication';
+import {setUserNotificationToken} from '../services/api_requests';
 /*
 const registerForPushNotificationsAsync = async () => { 
     try {
@@ -31,7 +32,7 @@ const registerForPushNotificationsAsync = async () => {
       const token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log(token);
       //save token to backend
-
+      let data = await authorizeRequestWithData(setUserNotificationToken, {token});
     } else {
       alert('Must use physical device for Push Notifications');
     }

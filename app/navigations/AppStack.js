@@ -7,18 +7,14 @@ import LogoButton from '../components/sub-components/buttons/LogoButton';
 import Support from '../screens/account/Support/Support';
 import PaymentDetails from '../screens/account/Payments/PaymentDetails';
 import TitleText from '../components/primitive-components/TitleText';
-import Chat from '../screens/account/Support/Chat';
 import  {View} from 'react-native'
 import MessageDetails from '../screens/account/Messages/MessageDetails';
-import Notifications from '../screens/account/Notifications/Notifications';
-import {t} from '../languages/i18Manager';
-import DrawerMenu from './DrawerMenu';
-import ChatCard from '../components/sub-components/cards/ChatCard';
 import {getCommon} from './CommonStackScreens';
 import Home from '../screens/home/Home'
 import MyTransactions from '../screens/account/Payments/MyTransactions';
 import MyProfile from '../screens/account/Profile/MyProfile';
 import MessagesForYou from '../screens/account/Messages/MessagesForYou';
+import {useTranslation} from 'react-i18next';
 
 const Stack = createStackNavigator();
 
@@ -57,6 +53,9 @@ const HomeStack = () => {
 
 //----------------------------------- Transactions Stack -----------------------------------------------------
 const TransactionsStack = () => {
+
+  const {t} = useTranslation();
+  
   return (
     <Stack.Navigator>
 
@@ -64,7 +63,7 @@ const TransactionsStack = () => {
               name="MyTransactions"
               component={MyTransactions}
               options={{
-                title : t(`payment:payments`),
+                title : t(`payments`),
                 headerStyle: {
                   backgroundColor: "#D8D8D8",
                   borderBottomRightRadius : 20,
@@ -82,7 +81,7 @@ const TransactionsStack = () => {
               name="PaymentDetails"
               component={PaymentDetails}
               options={{
-                title : t(`payment:payments`),
+                title : t(`payments`),
                 headerStyle: {
                   backgroundColor: "#D8D8D8",
                   borderBottomRightRadius : 20,
@@ -102,6 +101,8 @@ const TransactionsStack = () => {
 
 //----------------------------------- Profile Stack -----------------------------------------------------
 const ProfileStack = () => {
+  const {t} = useTranslation();
+
   return (
     <Stack.Navigator>
             <Stack.Screen
@@ -118,7 +119,7 @@ const ProfileStack = () => {
                   fontWeight: 'bold',
                 },
                 headerRight : ()=>(  <NotificationsButton />),
-                headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value="My Profile" /></View>)
+                headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value={t(`myProfile`)} /></View>)
             }}
             />
     </Stack.Navigator>
@@ -127,6 +128,7 @@ const ProfileStack = () => {
 
 //----------------------------------- Support Stack -----------------------------------------------------
 const SupportStack = () => {
+  const {t} = useTranslation();
   return (
     <Stack.Navigator >
             <Stack.Screen
@@ -143,7 +145,7 @@ const SupportStack = () => {
                   fontWeight: 'bold',
                 },
                 headerRight : ()=>(  <NotificationsButton />),
-                headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value="Support" /></View>)
+                headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value={t(`support`)} /></View>)
             }}
             />
 
@@ -153,13 +155,16 @@ const SupportStack = () => {
 
 //----------------------------------- ContactUs Auth Stack -----------------------------------------------------
 const ContactUsAuthStack = () => {
+
+  const {t} = useTranslation();
+
   return (
     <Stack.Navigator>
             <Stack.Screen
               name="ContactUs" 
               component={ContactUsAuth}
               options={{
-                title : "Contact Us",
+                title : t(`contactUs`),
                 headerStyle: {
                   backgroundColor: "#D8D8D8",
                   borderBottomRightRadius : 20,
@@ -178,13 +183,16 @@ const ContactUsAuthStack = () => {
 
 //----------------------------------- Messages For You Stack -----------------------------------------------------
 const MessagesForYouStack = () => {
+
+  const {t} = useTranslation();
+
   return (
     <Stack.Navigator>
             <Stack.Screen
               name="MessagesForYou" 
               component={MessagesForYou}
               options={{
-                title : "Messages For You",
+                title : t(`MessagesForYou`),
                 headerStyle: {
                   backgroundColor: "#D8D8D8",
                   borderBottomRightRadius : 20,
@@ -219,54 +227,4 @@ const MessagesForYouStack = () => {
 
 
 
-//----------------------------------- App Stack -----------------------------------------------------
-const AppStack = () => {
-  return (
-    <Stack.Navigator>
-
-          <Stack.Screen
-                  name="App" 
-                  component={DrawerMenu}
-                  options={{
-                    headerShown : false
-                  }}
-                />  
-
-            <Stack.Screen
-                  name="Notifications" 
-                  component={Notifications}
-                  options={{
-                    title : "Notifications",
-                    headerStyle: {
-                      backgroundColor: "#D8D8D8",
-                      
-                    },
-                    headerTitleStyle: {
-                      fontWeight: 'bold',
-                    },
-                    headerRight : ()=>(  <NotificationsButton />),
-                    headerBackImage : () =>( <BackButton /> )
-                }}
-                /> 
-
-                <Stack.Screen
-                  name="Chat" 
-                  component={Chat}
-                  options={({route})=>({
-                    title : `#${route.params.roomNumber}`,
-                    headerStyle: {
-                      backgroundColor: "#D8D8D8",
-                      borderBottomRightRadius : 20,
-                      borderBottomLeftRadius : 20
-                    },
-                    headerTitleStyle: {
-                      fontWeight: 'bold',
-                    },
-                    headerRight : () => (route.params.closed === true ? <ChatCard /> : <></>),
-                    headerBackImage : () =>( <BackButton /> )
-                })}
-                />  
-    </Stack.Navigator>
-  );
-}
-export { HomeStack, TransactionsStack, ProfileStack, SupportStack, ContactUsAuthStack, MessagesForYouStack, AppStack};
+export { HomeStack, TransactionsStack, ProfileStack, SupportStack, ContactUsAuthStack, MessagesForYouStack};

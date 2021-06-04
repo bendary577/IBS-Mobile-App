@@ -6,19 +6,22 @@ import {authorizeRequestWithData} from '../../../services/authentication';
 import {getSingleTicket} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
 import NoContent from '../../../components/sub-components/general/NoContent';
-import {t} from '../../../languages/i18Manager';
+//import {t} from '../../../languages/i18Manager';
 import ChatMessageBubble from '../../../components/sub-components/Chat/ChatMessageBubble';
 import ChatInputToolbar from '../../../components/sub-components/Chat/ChatInputToolbar';
 import ChatComposer from '../../../components/sub-components/Chat/ChatComposer';
-
+import * as SecureStore from 'expo-secure-store';
+import { withTranslation } from 'react-i18next';
 
 class Chat extends Component {
+  
     constructor(props) {
         super(props);
         this.state = {  
             ticket : {},
             messages : [],
             isLoading : false,
+            user : {}
         }
     }
      
@@ -26,9 +29,18 @@ class Chat extends Component {
       componentDidMount = async () => {
         this.setState({isLoading : true});
         let data = await authorizeRequestWithData(getSingleTicket, this.props.route.params.id);
+        let userId = await SecureStore.getItemAsync('id');
+        let userName = await SecureStore.getItemAsync('name');
+        let userAvatar = await SecureStore.getItemAsync('photo');
+        let user = {
+          _id : userId,
+          name : userName,
+          avatar : userAvatar
+        };
         this.setState({
             ticket : data,
-            messages : data.comments
+            messages : data.comments,
+            user
         });
         let chatMessages = this.formatMessages();
         this.setState({
@@ -62,16 +74,19 @@ class Chat extends Component {
         this.setState(previousState => ({
           messages: GiftedChat.append(previousState.messages, messages),
         }))
+        //send messages to api end point
+        
       }
 
       //----------------------------------- render chat view --------------------------------
       render() {
-
-        const {isLoading,ticket, messages} = this.state;
+        
+        const { t } = this.props;
+        const {isLoading,ticket, messages, user} = this.state;
 
         return (
             isLoading === true ? 
-                <Loading action={t(`general:loading`)}/>
+                <Loading action={t(`loading`)}/>
             :
 
             messages.length !== 0 && isLoading === false ?
@@ -99,9 +114,10 @@ class Chat extends Component {
                     showAvatarForEveryMessage={true}
                     keyboardShouldPersistTaps={'never'}
                     user={{
-                        _id: 1,
-                        name: 'ali',
-                        avatar: 'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                        _id: user._id,
+                        name: user.name,
+                        avatar: user.avatar === null ? 
+                          'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' : user.avatar 
                     }}
                 />
               </>
@@ -158,4 +174,4 @@ const styles = StyleSheet.create({
       }
 })
 
-export default Chat;
+export default withTranslation()(Chat);

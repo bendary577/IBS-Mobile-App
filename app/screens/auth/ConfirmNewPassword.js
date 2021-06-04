@@ -1,80 +1,69 @@
-import React,{Component} from 'react';
-import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, TouchableOpacity } from 'react-native';
+import React,{useState} from 'react';
+import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, TouchableOpacity, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSConfirmationButton from '../../components/primitive-components/IBSConfirmationButton';
 import IBSConfirmationText from '../../components/primitive-components/IBSConfirmationText';
-import { t } from '../../languages/i18Manager';
-import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {resetPassword} from '../../services/authentication';
+import {useTranslation} from 'react-i18next';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
-
+let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 
 //------------------------ screen ---------------------
-class ConfirmNewPassword extends Component {
+const ConfirmNewPassword =()=> {
 
-    constructor(props) {
-        super(props);
-        this.state = { 
-            firstCellCode : '',
-            secondCellCode : '',
-            thirdCellCode : '',
-            fourthCellCode : '',
-            completedInputs : 0,
-            confirm : false,
-            resendEnabled : false,
-        };
-    }
+        const [firstCellCode, setFirstCellCode] = useState('');
+        const [secondCellCode, setSecondCellCode] = useState('');
+        const [thirdCellCode, setThirdCellCode] = useState('');
+        const [fourthCellCode, setFourthCellCode] = useState('');
+        const [completedInputs, setCompletedInputs] = useState(0);
+        const [confirm, setConfirm] = useState(false);
+        const [resendEnabled, setResendEnabled] = useState(false);
+        const {t} = useTranslation();
 
-
-    incrementCompleteInputs = () => {
-        if(this.state.completedInputs < 3 ){
-            console.log(this.state.completedInputs)
-            this.setState(prevState => {
-                return {
-                completedInputs : prevState.completedInputs+1
-               }
-          });
+    const incrementCompleteInputs = () => {
+        console.log("hamada : " + firstCellCode)
+        if(firstCellCode.trim() !== "" && secondCellCode.trim() !== "" && thirdCellCode.trim() !== "" && fourthCellCode.trim() !== ""){
+            setConfirm(true);  
         }else{
-            this.setState({
-                confirm : true
-            })
+            setConfirm(false);  
         }
     }
 
-    handleFirstCell = (userInput) => {
-        this.setState({
-            firstCellCode : userInput
-        });
-        this.incrementCompleteInputs();
+    const handleFirstCell = (userInput) => {
+        console.log("first : " + userInput)
+        console.log("first cell : " + firstCellCode)
+        setFirstCellCode(userInput);
+        console.log("first cell after  : " + firstCellCode)
+        //incrementCompleteInputs();
     }
 
-    handleSecondCell = (userInput) => {
-        this.setState({
-            secondCellCode : userInput
-        });
-        this.incrementCompleteInputs();
+    const handleSecondCell = (userInput) => {
+        console.log("second : " + userInput)
+        console.log("second cell : " + secondCellCode)
+        setSecondCellCode(userInput);
+        incrementCompleteInputs();
     }
 
-    handleThirdCell = (userInput) => {
-        this.setState({
-            thirdCellCode : userInput
-        });
-        this.incrementCompleteInputs();
+    const handleThirdCell = (userInput) => {
+        console.log("third : " + userInput)
+        console.log("third cell : " + thirdCellCode)
+        setThirdCellCode(userInput);
+        incrementCompleteInputs();
     }
 
-    handleFourthCell = (userInput) => {
-        this.setState({
-            fourthCellCode : userInput
-        });
-        this.incrementCompleteInputs();
+    const handleFourthCell = (userInput) => {
+        console.log("fourth : " + userInput)
+        console.log("fourth cell : " + fourthCellCode)
+        setFourthCellCode(userInput);
+        incrementCompleteInputs();
     }
 
-    handleConfirmPassword = () => {
-        let _code = this.state.firstCellCode + this.state.secondCellCode + this.state.thirdCellCode + this.state.fourthCellCode;
+    const handleConfirmPassword = () => {
+        let _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
         let data = {
             code : _code
         };
@@ -82,7 +71,6 @@ class ConfirmNewPassword extends Component {
     }
 
 
-    render(){
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
@@ -90,35 +78,35 @@ class ConfirmNewPassword extends Component {
                         <BackButton />
                     </View>
                     <View style={styles.rightLogo}>
-                        <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
+                        <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value={t(`auth:enter`)} />
-                            <TitleText value={t(`auth:confirmationCode`)} />
+                            <TitleText value={t(`enter`)} />
+                            <TitleText value={t(`confirmationCode`)} />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
                             <View style={styles.confirmationInputs}>
-                                <IBSConfirmationText onChangeText={this.handleFirstCell} />
-                                <IBSConfirmationText onChangeText={this.handleSecondCell}/>
-                                <IBSConfirmationText onChangeText={this.handleThirdCell}/>
-                                <IBSConfirmationText onChangeText={this.handleFourthCell}/>
+                                <IBSConfirmationText ChangeText={handleFirstCell} value={firstCellCode}/>
+                                <IBSConfirmationText ChangeText={handleSecondCell} value={secondCellCode}/>
+                                <IBSConfirmationText ChangeText={handleThirdCell} value={thirdCellCode}/>
+                                <IBSConfirmationText ChangeText={handleFourthCell} value={fourthCellCode}/>
                             </View>
-                            <IBSConfirmationButton active={this.state.confirm} onHandlePress={this.handleConfirmPassword} />
+                            <IBSConfirmationButton active={confirm} onHandlePress={handleConfirmPassword} />
                             <View style={styles.confirmationText}>
                                 <View>
                                     <Text style={styles.leftText}>
-                                        {this.state.confirm ? "resend after 01:05" : t(`auth:recieveCode`)}
+                                        {confirm ? "resend after 01:05" : t(`recieveCode`)}
                                     </Text>
                                 </View>
                                 <TouchableOpacity> 
-                                    {this.state.confirm ?
-                                     <Text style={styles.rightTextInactive}>{t(`auth:Resend`)}</Text> 
+                                    {confirm ?
+                                     <Text style={styles.rightTextInactive}>{t(`Resend`)}</Text> 
                                      :
-                                     <Text style={styles.rightText}>{t(`auth:resend`)}</Text>
+                                     <Text style={styles.rightText}>{t(`resend`)}</Text>
                                     }
                                 </TouchableOpacity>
                             </View>
@@ -127,7 +115,6 @@ class ConfirmNewPassword extends Component {
                 </ImageBackground>
             </SafeAreaView>
         );
-    }
 }
 
 //----------------------- screen styling ---------------------

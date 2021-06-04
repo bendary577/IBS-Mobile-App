@@ -1,11 +1,14 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 const ChatCard = () => {
 
+    const {t} = useTranslation();
+
 	return (
 	    <View style={styles.card}>      
-            <Text style={styles.text}>closed</Text> 
+            <Text style={styles.text}>{t(`closed`)}</Text> 
         </View>
 	);
 }

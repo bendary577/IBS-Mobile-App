@@ -4,9 +4,9 @@ import TitleText from '../../components/primitive-components/TitleText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
-import { t } from '../../languages/i18Manager';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {updatePassword} from '../../services/authentication';
+import { withTranslation } from 'react-i18next';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -56,6 +56,7 @@ class CreateNewPassword extends Component {
     }
 
     render(){
+        const { t } = this.props;
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
@@ -69,14 +70,14 @@ class CreateNewPassword extends Component {
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value={t(`auth:createNew`)} />
-                            <TitleText value={t(`auth:password`)} />
+                            <TitleText value={t(`createNew`)} />
+                            <TitleText value={t(`password`)} />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            <IBSPasswordText placeholder={t(`auth:newPassword`)} onChangeText={this.handleNewPasswordChange}/>
-                            <IBSPasswordText placeholder={t(`auth:confirmPassword`)} onChangeText={this.handleNewPasswordConfirmationChange}/>
-                            <IBSButtonLargeRed value={t(`authchangePassword`)} action={false}  onHandlePress={this.handleUpdatePassword}/>
+                            <IBSPasswordText placeholder={t(`newPassword`)} onChangeText={this.handleNewPasswordChange}/>
+                            <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={this.handleNewPasswordConfirmationChange}/>
+                            <IBSButtonLargeRed value={t(`changePassword`)} action={false}  onHandlePress={this.handleUpdatePassword}/>
                         </View>
                     </View>
                 </ImageBackground>
@@ -133,4 +134,4 @@ const styles = StyleSheet.create({
 
 
 
-export default CreateNewPassword;
+export default withTranslation()(CreateNewPassword);

@@ -3,11 +3,11 @@ import {SafeAreaView,View, Text, StyleSheet, ScrollView ,FlatList} from 'react-n
 import TitleText from '../../../components/primitive-components/TitleText';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Transaction from '../../../components/sub-components/Payment/Transaction';
-import { t } from '../../../languages/i18Manager';
 import {authorizeRequest} from '../../../services/authentication';
 import {getUserPayments} from '../../../services/api_requests';
 import NoContent from '../../../components/sub-components/general/NoContent';
 import Loading from '../../../components/sub-components/general/Loading';
+import { withTranslation } from 'react-i18next';
 
 class MyTransactions extends Component {
 
@@ -34,16 +34,17 @@ class MyTransactions extends Component {
     }
 
     render (){
+        const { t } = this.props;
         return (
             this.state.isLoading === true ? 
-            <Loading action={t(`general:loading`)}/>
+            <Loading action={t(`loading`)}/>
                 :
             this.state.transactions.length === 0 ? 
                 <NoContent />
                 : 
                 <SafeAreaView style={styles.conatiner}>
                     <View style={styles.titleView}>
-                    <TitleText value={t(`payment:myTransactions`)}/>
+                    <TitleText value={t(`myTransactions`)}/>
                     <View style={{marginTop : 30}}>
                             <DropDownPicker
                                 items={[
@@ -55,7 +56,7 @@ class MyTransactions extends Component {
                                 style={styles.dropdown}
                                 dropDownStyle={{backgroundColor: '#fafafa'}}
                                 onChangeItem={item => console.log(item.label, item.value)}
-                                placeholder={t(`general:filter`)}
+                                placeholder={t(`filter`)}
                             />
                     </View>
                     </View>
@@ -92,4 +93,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default MyTransactions;
+export default withTranslation()(MyTransactions);

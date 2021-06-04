@@ -3,9 +3,11 @@ import {ScrollView, SafeAreaView, View, Text, Image, StyleSheet } from 'react-na
 import Map from '../../components/sub-components/Maps/Map'
 import TitleText from '../../components/primitive-components/TitleText';
 import {primaryRedColor} from '../../config/colors';
-
+import {useTranslation} from 'react-i18next';
 
 const VisitUs = ({navigation}) => {
+
+    const {t} = useTranslation();
 
     return (
         <ScrollView>
@@ -18,7 +20,7 @@ const VisitUs = ({navigation}) => {
                             source={require('../../assets/icons/VisitUs/location.png')}
                         />  
                     </View>
-                    <TitleText value="Visit Us"/>
+                    <TitleText value={t(`visitUs`)}/>
                 </View>
                 {/* ------------------------------------ map view ------------------------------------------------ */}
                 <Map nav={navigation}/>

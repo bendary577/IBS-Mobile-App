@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text,View, TouchableOpacity, StyleSheet } from 'react-native';
 
-
 const IBSButtonLargeGray = (props) => {
+
 
     return (
         <TouchableOpacity style={styles.button} onPress={()=>{props.onHandlePress()}}>

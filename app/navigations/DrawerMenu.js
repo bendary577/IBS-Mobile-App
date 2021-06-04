@@ -1,25 +1,26 @@
 import * as React from 'react';
-import ContactUsAuth from '../screens/home/ContactUsAuth';
-import  {Image} from 'react-native'
-import { createDrawerNavigator,DrawerContentScrollView, DrawerItemList,DrawerItem } from '@react-navigation/drawer';
-import i18n,{t} from '../languages/i18Manager';
-import BottomTabsNavigation from './BottomTab';
-import AppStack from './AppStack';
+import  {Image, I18nManager} from 'react-native'
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import {ContactUsAuthStack, MessagesForYouStack} from './AppStack';
-//------------------------------------------- drawer navigation ------------------------------------
+import BottomTabStack from './BottomTabStack';
+import {useTranslation} from 'react-i18next';
+
+
+
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigation = () => {
 
+  const {t} = useTranslation();
 
   return (
-      <Drawer.Navigator drawerPosition= {i18n.isRTL ? 'left' : 'right'}>
+      <Drawer.Navigator drawerPosition= {I18nManager.isRTL ? 'left' : 'right'}>
 
         <Drawer.Screen 
           name="More" 
-          component={BottomTabsNavigation}
+          component={BottomTabStack}
           options={{ 
-            drawerLabel: 'More',
+            drawerLabel: t(`more`),
             title:"More",
           }}
         />
@@ -28,7 +29,7 @@ const DrawerNavigation = () => {
           name="MessagesForYou" 
           component={MessagesForYouStack}
           options={{ 
-            drawerLabel: 'Messages For You',
+            drawerLabel: t(`MessagesForYou`),
             title:"Contacts",
             drawerIcon: ({focused, size}) => (
               <Image source={require('../assets/icons/Support/messages.png')} style={{width:30, height:30}}/> 
@@ -40,7 +41,7 @@ const DrawerNavigation = () => {
           name="Contacts" 
           component={ContactUsAuthStack}
           options={{ 
-            drawerLabel: 'Contact Us',
+            drawerLabel: t(`contactUs`),
             title:"Contacts",
             drawerIcon: ({focused, size}) => (
               <Image source={require('../assets/icons/Support/contacts.png')} style={{width:30, height:30}}/> 

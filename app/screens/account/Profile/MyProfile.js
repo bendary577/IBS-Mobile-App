@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native'
+import {SafeAreaView, StyleSheet, View } from 'react-native'
 import ProfileInfoSection from '../../../components/sub-components/Profile/ProfileInfoSection';
 import ProfileSettingsSection from '../../../components/sub-components/Profile/ProfileSettingsSection';
 import AccountTabButtonLong from '../../../components/sub-components/navigationTabs/AccountTabButtonLong';
-import {t} from '../../../languages/i18Manager';
 import { ImageBackground } from 'react-native';
 import UploadImageButton from '../../../components/sub-components/buttons/UploadImageButton';
+import { withTranslation } from 'react-i18next';
 
 let avatarImage = '../../../assets/icons/Profile/avatar.png';
 
@@ -13,8 +13,9 @@ class MyProfile extends Component {
 
     constructor(props) {
         super(props);
+        const { t } = this.props;
         this.state = {  
-            tab : t(`profile:myInformations`)
+            tab : t(`myInformations`)
         }
     }
 
@@ -28,6 +29,7 @@ class MyProfile extends Component {
 
     render(){
         const {tab} = this.state;
+        const { t } = this.props;
 
         return (
             <SafeAreaView style={styles.conatiner}>
@@ -38,13 +40,13 @@ class MyProfile extends Component {
                         </ImageBackground>
                     </View>
                     <View style={styles.tabs}>
-                        <AccountTabButtonLong active={tab === t(`profile:myInformations`) ? true : false} title={t(`profile:myInformations`)} hasIcon={false} onChangeTab={this.changeTab}/>
-                        <AccountTabButtonLong active={tab === t(`profile:settings`) ? true : false} title={t(`profile:settings`)} hasIcon={true} onChangeTab={this.changeTab}/>
+                        <AccountTabButtonLong active={tab === t(`myInformations`) ? true : false} title={t(`myInformations`)} hasIcon={false} onChangeTab={this.changeTab}/>
+                        <AccountTabButtonLong active={tab === t(`settings`) ? true : false} title={t(`settings`)} hasIcon={true} onChangeTab={this.changeTab}/>
                     </View>
                 </View>
                 <View style={styles.changingView}>
                     {
-                        tab === t(`profile:myInformations`) ? 
+                        tab === t(`myInformations`) ? 
                             <ProfileInfoSection />
                         : 
                             <ProfileSettingsSection />
@@ -90,4 +92,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default MyProfile;
+export default withTranslation()(MyProfile);
