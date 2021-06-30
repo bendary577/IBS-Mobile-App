@@ -14,7 +14,7 @@ let ibsImage = '../../assets/images/Login/ibs.png';
 let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 
 //------------------------ screen ---------------------
-const ConfirmNewPassword =()=> {
+const PhoneVerificationCode =()=> {
 
         const [firstCellCode, setFirstCellCode] = useState("");
         const [secondCellCode, setSecondCellCode] = useState("");
@@ -210,4 +210,4 @@ const styles = StyleSheet.create({
 
 
 
-export default ConfirmNewPassword;
+export default PhoneVerificationCode;

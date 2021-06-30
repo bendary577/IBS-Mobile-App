@@ -30,7 +30,7 @@ const Welcome = (props) => {
     }, []);
 
     const setLang = () =>{
-       // setLang(true);
+       //setLang(true);
         i18n
         .changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')
         .then(() => {

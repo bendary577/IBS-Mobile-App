@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet,TextInput, View , Text, Pressable} from 'react-native';
+import {StyleSheet,TextInput, View , Text, I18nManager} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 //import { t } from '../../languages/i18Manager';
@@ -14,8 +14,7 @@ const IBSPasswordText = (props) => {
         <View>
             {
                 props.hasChild ? 
-                    <View  
-                        style={styles.inputTextWithChild}>
+                    <View style={styles.inputTextWithChild}>
                         <View style={styles.passwordInput}>
                             <TextInput  
                                 placeholder={props.placeholder} 
@@ -51,7 +50,8 @@ const styles = StyleSheet.create({
         marginBottom : 10,
         padding : 20,
         borderColor : '#DBDBDB',
-        borderWidth : 1
+        borderWidth : 1,
+        textAlign : I18nManager.isRTL ? 'right' : 'left'
     },
     inputTextWithChild : {
         width : "93%",
@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         height : 60,
         borderRadius : 20,
         marginBottom : 10,
-        //padding : 20,
         borderColor : '#DBDBDB',
         borderWidth : 1,
         flexDirection : 'row',

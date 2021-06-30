@@ -14,6 +14,7 @@ export const GET_USER_PAYMENTS = `${BASE_API}/api/users/me/payments`;
 export const GET_USER_TICKETS = `${BASE_API}/api/users/me/tickets`;
 export const UPLOAD_USER_IMAGE = `${BASE_API}/api/users/me/`;
 export const USER_NOTIFICATION_TOKEN = `${BASE_API}/api/users/set-notification-token`;
+
 //--------------------------------------- TEST API endpoints -------------------------
 export const PAYMENTS_API = `${BASE_API}/api/payments`;
 export const TICKETS_API = `${BASE_API}/api/tickets`;

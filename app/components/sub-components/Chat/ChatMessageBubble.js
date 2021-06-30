@@ -7,18 +7,18 @@ const ChatMessageBubble = (props) => {
         {...props}
                 textStyle={{
                     right: {
-                    color: 'white',
+                    color: 'black',
                 },
                     left: {
-                    color: '#24204F',
+                    color: 'black',
                 },
             }}
                 wrapperStyle={{
                     left: {
-                    backgroundColor: '#E6F5F3',
+                    backgroundColor: '#A7A5A5',
                 },
                     right: {
-                    backgroundColor: "red",
+                    backgroundColor: "#DEDBDB",
                 },
             }}
         />

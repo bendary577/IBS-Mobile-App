@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import getFlipForRTLStyle from '../../../utils/utilFunctions';
 let sendIcon = '../../../assets/icons/Support/send.png';
 
@@ -15,19 +15,28 @@ const ChatSendButton = (props) => {
     }
 
     return(
-        <TouchableOpacity {...props} onPress= {()=>{ send()}} style={styles.sendButton}>
-            <Image style={[styles.icon, getFlipForRTLStyle()]} source={require(sendIcon)} />
+        <TouchableOpacity {...props} onPress= {()=>{ send()}} style={styles.sendButton} >
+
+                <Image style={[styles.icon, getFlipForRTLStyle()]} source={require(sendIcon)} />
+
         </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
-    container : {
-        flex : 2
+    sendButton : {
+        flex : 1,
+        justifyContent : 'center',
+        alignItems : "center",
+       /*
+        position : 'absolute',
+        top : 15,
+        right : 15
+        */
     },
     icon : {
-        width : 45,
-        height : 45,
+        width : 60,
+        height : 60,
     },
 })
 

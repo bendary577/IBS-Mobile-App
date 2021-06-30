@@ -1,7 +1,7 @@
 import React from 'react'
 import {InputToolbar} from 'react-native-gifted-chat';
 
-const ChatInputToolbar = (props) => {
+const ClosedChatInputToolbar = (props) => {
     return (
         <InputToolbar
         {...props} 
@@ -14,11 +14,11 @@ const ChatInputToolbar = (props) => {
             flex : 1,
             maxHeight: 80,
             minHeight : 80,
-            marginTop : 25,
+            padding : 20
         }}
         />
     )
 }
 
 
-export default ChatInputToolbar;
+export default ClosedChatInputToolbar;

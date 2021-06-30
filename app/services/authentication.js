@@ -2,22 +2,41 @@ import * as SecureStore from 'expo-secure-store';
 import {LOGIN_API, SIGNUP_API, LOGOUT_API, FORGET_PASSWORD_API, RESET_PASSWORD_API, UPDATE_PASSWORD_API} from './apis';
 import axios from 'axios';
 
-let errorMessage = "something went wrong";
+
+
+
 //--------------------------------------- sign in api end point ------------------------------
-export const signIn = async (data) => {
+export const signIn = (data) => {
   try {
-      console.log("username is " + data.username);
-      console.log("password is "+ data.password);
-      const resp = await axios.post(LOGIN_API,data);  
+    const response = await axios.post(LOGIN_API, data)
+    console.log(response)
+    return response;
+} catch (error) {
+    return { status: 500, error: error.message }
+}
+  /*try {
+      const resp = axios.post(LOGIN_API,data).then(resp=>{
+        console.log(resp);
+      }
+      ).catch(err =>{
+        console.log(err);
+      }); 
+      /*
+      console.log(resp); 
       if(resp.status === 200){
           storeToken(resp.data.token);
-          console.log(resp.data.data.user.name.en);
           storeUserInfo(resp.data.data);
           return resp.data.status;
-     } 
+     }else if(resp.status === 401){
+       console.log("bendary");
+       console.log(resp);
+     }
+     console.log(resp);
   } catch (err) {
-      console.error(err);
+      console.log("bendary 2")
+      console.log(err.message);
   }
+  */
 };
 
 
@@ -108,6 +127,7 @@ export const storeToken = (token) => {
   SecureStore.setItemAsync('token', token);
 };
 
+
 //--------------------------------------- store user token  ------------------------------
 export const getToken = async () => {
   //retrieve the value of the token
@@ -128,9 +148,9 @@ export const deleteToken = () => {
 //--------------------------------------- store user id  ------------------------------
 export const storeUserInfo = (data) => {
   console.log("set user info")
-  SecureStore.setItemAsync('id', data.id);
-  SecureStore.setItemAsync('name', data.user.name.en);
-  SecureStore.setItemAsync('photo', data.photo);
+  SecureStore.setItemAsync('id', JSON.stringify(data.id));
+  SecureStore.setItemAsync('name', JSON.stringify(data.user.name.en));
+  //SecureStore.setItemAsync('photo', data.photo);
 };
 
 

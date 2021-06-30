@@ -15,7 +15,8 @@ class MyProfile extends Component {
         super(props);
         const { t } = this.props;
         this.state = {  
-            tab : t(`myInformations`)
+            tab : t(`myInformations`),
+            image : null
         }
     }
 
@@ -26,17 +27,22 @@ class MyProfile extends Component {
         })
     }
 
+    setImage = (uploadedImage) =>{
+        this.setState({
+            image : uploadedImage
+        });
+    }
 
     render(){
-        const {tab} = this.state;
+        const {tab, image} = this.state;
         const { t } = this.props;
 
         return (
             <SafeAreaView style={styles.conatiner}>
                 <View style={styles.fixedView}>
                     <View>
-                        <ImageBackground style={styles.avatarView} source={require(avatarImage)} >
-                            <UploadImageButton />
+                        <ImageBackground style={styles.avatarView} source={image === null ? require(avatarImage) : {uri : image}} >
+                            <UploadImageButton setImage={this.setImage}/>
                         </ImageBackground>
                     </View>
                     <View style={styles.tabs}>

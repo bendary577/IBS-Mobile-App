@@ -1,7 +1,6 @@
 import i18n  from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import {I18nManager} from 'react-native';
-import {RNRestart} from 'react-native-restart';
 
 //-------------------------------------------------------------------- Past -----------------------------------------------
 //import * as config from '../config/i18n';
@@ -134,6 +133,7 @@ const resources = {
             "confirm" : "Confirm",
             "recieveCode" : "Didn't Receive Code ?",
             "resend" : "Resend",
+            "resendText" : "resend after",
             "home" : "Home",
             "myPayments" : "My Payments",
             "paymentDescription" : "View all your payments details from this tap",
@@ -210,7 +210,12 @@ const resources = {
             "about_description_2" : "And with hard work and dedication IBS has become on of Egypt’s top leading Outsourcing firms in the country.",
             "about_description_3" : "IBS was founded in 1984 and distinguished itself quickly within the market compared to the traditional labor contractor that existed.",
             "about_description_4" : "Over a period of 37 years, IBS has flourished with a client base of around 350 local and multinational companies and an outsourced headcount of around 45,000 employees across the country in a variety of fields.",
-            "aboutUs" : "About Us"
+            "aboutUs" : "About Us",
+            "sendMessage" : "Send Message",
+            "reopen" : "Reopn",
+            "chatClosed_1" : "You Can’t send any message because",
+            "chatClosed_2" : "this ticket Is ",
+            "chatClosed" : "Closed"
         },
     },
     ar: {
@@ -250,7 +255,8 @@ const resources = {
            "confirmationCode" : "كود التأكيد",
            "confirm" : "أكد",
            "recieveCode" : "لم تستلم كود التأكيد ؟",
-           "resend" : "أعد الإرسال",
+           "resend" : "أرسل",
+           "resendText" : "أعد الإرسال بعد",
             "route" : "الرئيسية",
             "home" : "الرئيسية",
             "myPayments" : "مدفوعاتي",
@@ -330,6 +336,11 @@ const resources = {
             "about_description_3" : "تأسست IBS في عام 1984 وميزت نفسها بسرعة داخل السوق مقارنة بمقاول العمل التقليدي الموجود.",
             "about_description_4" : "على مدار 37 عامًا ، ازدهرت IBS مع قاعدة عملاء تضم حوالي 350 شركة محلية ومتعددة الجنسيات وعدد موظفي الاستعانة بمصادر خارجية لحوالي 45000 موظف في جميع أنحاء البلاد في مجموعة متنوعة من المجالات.",
             "aboutUs" : "عن الشركة",
+            "sendMessage" : "أرسل رسالة",
+            "reopen" : "إعادة فتح",
+            "chatClosed_1" : "لا يمكنك إرسال أي رسائل لأن",
+            "chatClosed_2" : "هذه المحادثة ",
+            "chatClosed" : "مغلقة"
         },
     },
   };

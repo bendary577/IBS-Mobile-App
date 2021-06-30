@@ -1,15 +1,20 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Composer} from 'react-native-gifted-chat';
+import {useTranslation} from 'react-i18next';
 
 const ChatComposer = (props) => {
+
+    const {t} = useTranslation();
+
     return (
         <Composer
         {...props} 
         multiline={true}
+        textInputStyle={{maxHeight: 100}}
         textInputStyle={styles.composer}
         //onTextChanged={(text) => console.log(text)}
-        placeholder="Send Message"
+        placeholder={t(`sendMessage`)}
         />
     )
 }
@@ -25,7 +30,8 @@ const styles = StyleSheet.create({
         marginTop:15,
         marginBottom:10,
         paddingLeft: 10,
-        flex : 4
+        flexDirection : 'row',
+        flex : 5,
       },
 })
 

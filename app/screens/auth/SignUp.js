@@ -28,17 +28,29 @@ const SignUp = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const {setAuthenticated} = useAuth();
     const {t} = useTranslation();
 
+    const validate = () => {
+        if(password !== '' && passwordConfirm !='' && password === passwordConfirm && checked === 'checked'){
+            handleSignup();
+        }else{
+            setError(true);
+            setErrorMessage("please validate your inputs");
+        }
+    }
+
     const handleSignup = async () =>{
+
         let data = {
           identityNumber : nationalId,
           phone : phone,
           password : password,
         };
+
         setLoading(true);
         let resp = await signupRequest(data);
         if(resp === "success"){
@@ -46,12 +58,9 @@ const SignUp = () => {
             setAuthenticated(true)
         }else{
             setLoading(false);
-            setError("sorry, something went wrong")
+            setError(true);
+            setErrorMessage("sorry, something went wrong")
         }
-    }
-
-    const navigatHome = () =>{
-        navigation.navigate("Home");
     }
 
     const navigateLogin = () =>{
@@ -96,7 +105,7 @@ const SignUp = () => {
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                         <View style={styles.middle}>
                             <View style={styles.loginForm}>
-                                { error !== '' ? <Text>{error}</Text> : <></>}
+                                { error === true ? <Text style={{color : 'red', margin : 2}}>{errorMessage}</Text> : <></>}
                                 <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeNationalId}/>
                                 <IBSInputText placeholder={t(`phone`)} onChangeText={handleOnChangePhone}/>
                                 <IBSPasswordText placeholder={t(`setPassword`)} onChangeText={handleOnChangePassword}/>
@@ -114,7 +123,7 @@ const SignUp = () => {
                                         <Text style={styles.rightText}>{t(`terms`)}</Text>
                                     </View>
                                 </View>
-                                <IBSButtonLargeRed value={t(`createAccount`)} action={false} onHandlePress={handleSignup} />
+                                <IBSButtonLargeRed value={t(`createAccount`)} action={false} onHandlePress={validate} />
                                 <IBSButtonLargeGray value={t(`haveAccount`)} action={true} actionText={t(`login`)} onHandlePress={navigateLogin}/>
                             </View>
                         </View>
