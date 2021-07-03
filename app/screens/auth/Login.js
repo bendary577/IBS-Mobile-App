@@ -20,7 +20,7 @@ let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 //------------------------ screen ---------------------
 const Login = (props) => {
 
-    const [username, setUsername] = useState('');
+    const [identityNumber, setIdentityNumber] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -29,14 +29,19 @@ const Login = (props) => {
 
     const handleLogin = async () =>{
         let data = {
-            username : username,
+            identityNumber : identityNumber,
             password : password
         }
         setLoading(true);
         let response = await signIn(data);
-        if(response === "success"){
+        console.log(response.status);
+        if(response.status === "success"){
             setLoading(false)
-            setAuthenticated(true);
+            if(response.data.user.isVerified !== true){
+                props.navigation.navigate("PhoneVerification");
+            }else{
+                setAuthenticated(true);
+            }
         }else{
             setLoading(false);
             setError("invalid credentials")
@@ -47,8 +52,8 @@ const Login = (props) => {
         props.navigation.navigate("SignUp");
     }
 
-    const handleOnChangeUsername = (userInput) => {
-       setUsername(userInput)
+    const handleOnChangeIdentificationNumber = (userInput) => {
+       setIdentityNumber(userInput)
     }
 
     const handleOnChangePassword = (userInput) => {
@@ -74,7 +79,7 @@ const Login = (props) => {
                         </View>
                         <View style={styles.loginForm}>
                             { error !== '' ? <Text style={{color :'red', textAlign : 'center'}}>{error}</Text> : <></>}
-                            <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeUsername}/>
+                            <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeIdentificationNumber}/>
                             <IBSPasswordText placeholder={t(`passwordPlaceholder`)} hasChild={true} onChangeText={handleOnChangePassword}/>
                             <IBSButtonLargeRed value={t(`login`)} action={true} onHandlePress={handleLogin} />
                             <IBSButtonLargeGray value={t(`noAccount`)} action={true} actionText={t(`create`)} onHandlePress={handleCreateAccount}/>
@@ -127,7 +132,7 @@ const styles = StyleSheet.create({
     },
     bottom : {
         flex : 1,
-        right : I18nManager.isRTL ?  -100 : 100
+        right : I18nManager.isRTL ?  -100 : 80
     },
 });
 

@@ -24,7 +24,9 @@ class Support extends Component {
             modalVisible : false,
             tickets : [],
             isLoading : false,
-            problem : null
+            problem : null,
+            newTicketSubject : '',
+            newTicketDescription : ''
         }
     }
 
@@ -32,7 +34,7 @@ class Support extends Component {
         this.setState({isLoading : true});
         let data = await authorizeRequest(getUserTickets);
         this.setState({
-            tickets : data
+            tickets : data.tickets
         });
         this.setState({isLoading : false});
     }
@@ -44,11 +46,16 @@ class Support extends Component {
         })
     }
 
-    setModalText = (data) => {
+    setNewTicketSubject = (data) => {
         this.setState({
-            problem : data
+            newTicketSubject : data
         })
-        console.log("user problem is : " + this.state.problem);
+    }
+
+    setNewTicketDescription = (data) => {
+        this.setState({
+            newTicketDescription : data
+        })
     }
     
     navigateToChat = (id, number, status) => {
@@ -59,9 +66,12 @@ class Support extends Component {
 
     createNewTicket = async () => {
         console.log("create new ticket");
-        //Send user id
-        let data = await authorizeRequestWithData(addTicket, id);
-        this.navigateToChat(data._id, data.uid, data.statusFormatted);
+        data = {
+            "subject" : this.state.newTicketSubject,
+            "description" : this.state.newTicketSubject
+        }
+        let data = await authorizeRequestWithData(addTicket, data);
+        //this.navigateToChat(data._id, data.uid, data.statusFormatted);
     }
 
     render () {
@@ -73,12 +83,8 @@ class Support extends Component {
                 <Loading action={t(`loading`)}/>
             : 
 
-            this.state.tickets.length === 0 ? 
-                <NoContent />
-            : 
+            <SafeAreaView style={styles.conatiner}>
 
-                <SafeAreaView style={styles.conatiner}>
-                    {/* -------------------------------- upper secion --------------------------------------- */}
                     <View style={styles.upperView}>
                         <View style={styles.titleView}>
                             <TitleText value={t(`myTickets`)}/>
@@ -95,7 +101,7 @@ class Support extends Component {
                             }}
                         >
                             <View  style={styles.centeredView}>
-                                <SupportMessageModal onClose={this.setModalVisible} onChangeText={this.setModalText} onHandlePress={this.createNewTicket}/>
+                                <SupportMessageModal onClose={this.setModalVisible} onChangeSubject={this.setNewTicketSubject} onChangeDescription={this.setNewTicketDescription} onHandlePress={this.createNewTicket}/>
                             </View>
                         </Modal>
                         <View style={{marginTop : 30}}>
@@ -113,15 +119,22 @@ class Support extends Component {
                                 />
                         </View>
                     </View>
+                        {
+                        this.state.tickets.length === 0 ? 
 
-                    {/* -------------------------------- support tickets secion --------------------------------------- */}
-                    <View style={styles.supportTicketsView}>
-                        <FlatList
-                            data={this.state.tickets}
-                            renderItem={({item})=>(<TransactionMessage item={item} onHandlePress={this.navigateToChat} transaction={true}/>)}
-                            keyExtractor={(item) => item._id}
-                        />
-                    </View>
+                        <View style={styles.supportTicketsView}>
+                                <NoContent />
+                        </View>
+                        
+                        :      
+                            <View style={styles.supportTicketsView}>
+                                <FlatList
+                                    data={this.state.tickets}
+                                    renderItem={({item})=>(<TransactionMessage item={item} onHandlePress={this.navigateToChat} transaction={true}/>)}
+                                    keyExtractor={(item) => item._id}
+                                />
+                            </View>
+                        }
                 </SafeAreaView>
         )
     }

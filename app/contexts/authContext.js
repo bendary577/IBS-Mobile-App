@@ -24,7 +24,7 @@ const AuthProvider = ({children}) => {
   const checkAuthentication = async () => {
     try {
       //Try get the data from Async Storage
-      const authState = await SecureStore.getItemAsync('token');
+      const authState = await SecureStore.getItemAsync('access_token');
       if (authState) {
         //If there is a token, we will update the authentication state
         console.log("change auth state to true")

@@ -7,6 +7,7 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
 import io.github.elyx0.reactnativedocumentpicker.DocumentPickerPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.imagepicker.ImagePickerPackage;

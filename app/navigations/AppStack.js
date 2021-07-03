@@ -15,13 +15,17 @@ import MyTransactions from '../screens/account/Payments/MyTransactions';
 import MyProfile from '../screens/account/Profile/MyProfile';
 import MessagesForYou from '../screens/account/Messages/MessagesForYou';
 import {useTranslation} from 'react-i18next';
+import UpdatePassword from '../screens/account/Profile/UpdatePassword';
+import Information from '../screens/home/Information';
+import FAQ from '../screens/home/FAQ';
 
 const Stack = createStackNavigator();
 
 const HomeStack = () => {
 
   const common = getCommon(Stack);
-
+  const {t} = useTranslation();
+  
   return (
     <Stack.Navigator initialRouteName="Home">
 
@@ -43,8 +47,41 @@ const HomeStack = () => {
       }}
       /> 
 
+        <Stack.Screen
+              name="FAQ" 
+              component={FAQ}
+              options={{
+                title : "FAQ",
+                headerStyle: {
+                  backgroundColor: "#D8D8D8",
+                  borderBottomRightRadius : 20,
+                  borderBottomLeftRadius : 20
+                },
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerRight : ()=>(  <NotificationsButton />),
+                headerLeft : () =>( <BackButton /> )
+            }}
+            />
 
-
+          <Stack.Screen
+              name="Information" 
+              component={Information}
+              options={{
+                title : "My Information",
+                headerStyle: {
+                  backgroundColor: "#D8D8D8",
+                  borderBottomRightRadius : 20,
+                  borderBottomLeftRadius : 20
+                },
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerRight : ()=>(  <NotificationsButton />),
+                headerLeft : () =>( <BackButton /> )
+            }}
+            />
        {common}
 
     </Stack.Navigator>
@@ -120,6 +157,24 @@ const ProfileStack = () => {
                 },
                 headerRight : ()=>(  <NotificationsButton />),
                 headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value={t(`myProfile`)} /></View>)
+            }}
+            />
+
+          <Stack.Screen
+              name="Update Password" 
+              component={UpdatePassword}
+              options={{
+                title : "Update Password",
+                headerStyle: {
+                  backgroundColor: "#D8D8D8",
+                  borderBottomRightRadius : 20,
+                  borderBottomLeftRadius : 20
+                },
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerRight : ()=>(  <NotificationsButton />),
+                headerLeft : ()=>( <BackButton /> )
             }}
             />
     </Stack.Navigator>

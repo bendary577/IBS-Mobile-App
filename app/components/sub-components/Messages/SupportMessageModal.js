@@ -12,6 +12,7 @@ const SupportMessageModal = (props) => {
 
     return (
         <View style={styles.container}>
+
            <View style={styles.titleView}>
                <View style={styles.left}>
                     <Image style={styles.icon} source={require(supportIcon)} />
@@ -23,11 +24,18 @@ const SupportMessageModal = (props) => {
            </View>
            <View style={styles.messageView}>
                 <TextInput  
-                    style={styles.inputText}
-                    placeholder={t(`problem`)} 
+                    style={styles.subjectInputText}
+                    placeholder="what is the new ticket subject ?" 
                     placeholderTextColor="#B9B9B9"
                     textAlign={'center'}
-                    onChangeText={text => props.onChangeText(text)}
+                    onChangeText={text => props.onChangeSubject(text)}
+                />
+                <TextInput  
+                    style={styles.discriptionInputText}
+                    placeholder="please provide a description to your ticket" 
+                    placeholderTextColor="#B9B9B9"
+                    textAlign={'center'}
+                    onChangeText={text => props.onChangeDescription(text)}
                 />
            </View>
            <View style={styles.buttonView}>
@@ -45,7 +53,7 @@ const styles = StyleSheet.create({
         backgroundColor : 'white',
         borderRadius : 15,
         width : 270,
-        height : 270,
+        height : 310,
         padding : 10
     },
     titleView : {
@@ -62,12 +70,22 @@ const styles = StyleSheet.create({
     titleText : {
         marginTop : 3
     },
-    inputText : {
+    subjectInputText : {
+        width : "100%",
+        height : 50,
+        borderWidth  : 2,
+        borderColor : 'gray',
+        marginTop : 10,
+        borderRadius : 15,
+        padding : 2,
+        textAlign : 'left'
+    },
+    discriptionInputText : {
         width : "100%",
         height : 130,
         borderWidth  : 2,
         borderColor : 'gray',
-        marginTop : 20,
+        marginTop : 10,
         borderRadius : 15,
         padding : 2,
         textAlign : 'left'
@@ -79,7 +97,7 @@ const styles = StyleSheet.create({
         alignItems : 'center',
         backgroundColor : 'red',
         borderRadius : 10,
-        marginTop : 20
+        marginTop : 10
 
     },
     buttonText : {

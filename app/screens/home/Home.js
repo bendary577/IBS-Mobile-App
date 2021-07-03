@@ -6,6 +6,7 @@ import SmallMap from '../../components/sub-components/Maps/SmallMap';
 import {primaryRedColor} from '../../config/colors';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {useTranslation} from 'react-i18next';
+import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 
 let blackElipse = '../../assets/images/Home/black-elipse.png';
 
@@ -14,6 +15,14 @@ let blackElipse = '../../assets/images/Home/black-elipse.png';
 const Home = ({navigation}) => {
 
     const {t} = useTranslation();
+
+    const navigateToFAQ = () => {
+        navigation.navigate("FAQ")
+    }
+
+    const navigateToInformation = () => {
+        navigation.navigate("Information")
+    }
 
         return (
             <SafeAreaView style={styles.container}>
@@ -41,6 +50,45 @@ const Home = ({navigation}) => {
                                 <Text>{t(`aboutDesctiption`)}</Text>
                                 <TouchableOpacity onPress={()=>{navigation.navigate("AboutUs")}}>
                                     <Text style={styles.seeMoreTxt}>{t(`seeMore`)}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                        {/* -------------------------------------- FAQ -------------------------------- */}
+                        <View style={styles.aboutIbs}>
+                            <View style={styles.header}>
+                                <View style={styles.card}>
+                                    <Image
+                                        style={styles.icon}
+                                        source={require('../../assets/icons/aboutUs/about.png')}
+                                    />  
+                                </View>
+                                <TitleText value="FAQ"/>
+                            </View>
+                            
+                            <View style={styles.description}>
+                                <IBSButtonLargeGray value="get a look at common issues" action={false} actionText={t(`login`)} onHandlePress={navigateToFAQ}/>
+                            </View>
+                        </View>
+
+
+                        {/* -------------------------------------- my information -------------------------------- */}
+                        <View style={styles.aboutIbs}>
+
+                            <View style={styles.header}>
+                                <View style={styles.card}>
+                                    <Image
+                                        style={styles.icon}
+                                        source={require('../../assets/icons/aboutUs/about.png')}
+                                    />  
+                                </View>
+                                <TitleText value={t(`myInformations`)}/>
+                            </View>
+                            
+                            <View style={styles.description}>
+                                <Text>all our employees clients are grouped in one place, access your info anywhere any time</Text>
+                                <TouchableOpacity onPress={navigateToInformation}>
+                                    <Text style={styles.seeInfoTxt}>See More Insights about your info</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -125,6 +173,12 @@ const styles = StyleSheet.create({
     seeMoreTxt : {
         marginTop : 5,
         fontSize : 16
+    },
+    seeInfoTxt : {
+        marginTop : 5,
+        fontSize : 16,
+        color : 'black',
+        fontWeight : 'bold'
     },
 });
 

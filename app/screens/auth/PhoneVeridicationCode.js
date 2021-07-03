@@ -86,8 +86,8 @@ const PhoneVerificationCode =()=> {
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value={t(`enter`)} />
-                            <TitleText value={t(`confirmationCode`)} />
+                            <TitleText value="Please Verify" />
+                            <TitleText value="Your Phone Number" />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>

@@ -4,6 +4,8 @@ import ProfileInfoCard from '../../../components/sub-components/cards/ProfileInf
 import {getUserInfo} from '../../../services/api_requests';
 import {authorizeRequest} from '../../../services/authentication';
 import { withTranslation } from 'react-i18next';
+import IBSButtonLargeGray from '../../primitive-components/IBSButtonLargeGray';
+
 
 class ProfileInfoSection extends Component {
 
@@ -29,20 +31,20 @@ class ProfileInfoSection extends Component {
 
     componentDidMount = async () =>{
         let data = await authorizeRequest(getUserInfo);
-        console.log("data is " + data.company.name.en);
-        this.setData(data.name.en, 
-                data.identityNumber,
-                data.phone,
-                data.email,
-                data.address.en,
-                data.company.name.en,
-                data.nationality.en,
-                data.bank.name.en,
-                data.hiringDate,
-                data.ibsNumber,
-                data.job.en,
-                data.gender.en,
-                data.insuranceNumber);
+        this.setData(
+                data.user.emp.name.en, 
+                data.user.identityNumber,
+                data.user.phone,
+                data.user.emp.email,
+                data.user.emp.address.en,
+                data.user.emp.bank.name.en,
+                data.user.emp.nationality.en,
+                data.user.emp.bank.name.en,
+                data.user.emp.hiringDate,
+                data.user.emp.clientEmpNumber,
+                data.user.emp.job.en,
+                data.user.emp.gender,
+                data.user.emp.insuranceNumber);
     }
 
     setData = (username, identityNumber,phone, email,address,company, nationality, bank, hiringDate, ibsNumber, job, gender, insuranceNumber) => {
@@ -63,11 +65,16 @@ class ProfileInfoSection extends Component {
         })
     }
 
+    navigateToUpdatePassword = () => {
+        this.props.navigation.navigate("Update Password")
+    }
+
     render(){
         const { t } = this.props;
 
         return (
             <View style={styles.conatiner}>
+                <IBSButtonLargeGray value="Update Password" action={false} onHandlePress={this.navigateToUpdatePassword}/>
                 <ScrollView>
                     <ProfileInfoCard title={t(`username`)} value={this.state.username} />
                     <ProfileInfoCard title={t(`nationaiID`)} value={this.state.nationaiID}/>

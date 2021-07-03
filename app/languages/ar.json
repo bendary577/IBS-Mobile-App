@@ -18,6 +18,7 @@
        "setPassword" : "أنشيء كلمة السر",
        "confirmPassword" : "تأكيد كلمة السر",
        "cangePassword" : "تغيير كلمة السر",
+       "updatePassword" : "تحديث كلمة السر",
        "phone" : "رقم الهاتف المحمول",
        "login" : "سجل الدخول",
        "noAccount" : "لا تملك حساب ؟",
@@ -75,7 +76,9 @@
         "myTickets" : "تذاكري",
         "newTicket" : "تذكرة دعم جديدة",
         "problem" : "ماهي مشكلتك ؟",
-        "startChat" : "ابدأ محادثة مع الدعم"
+        "startChat" : "ابدأ محادثة مع الدعم",
+        "ticketSucject" : "ما هو عنوان التذكرة الجديدة ؟",
+        "ticketDescription" : "يرجي ادخال وصف للتذكرة الجديدة"
     },
     "messages" : {
         "myMessages" : "رسائلي",
@@ -103,6 +106,14 @@
         "insuranceNumber" : "رقم التأمين",
         "changeLanguage" : "التغيير إلي الإنجليزية",
         "signout" : "تسجيل الخروج"
+    },
+    "faq" : {
+        "faq" : "الأسئلة الشائعة",
+        "seeFAQ" : "تابع الأسئلة الشائعة"
+    },
+    "information" : {
+        "information" : "معلوماتي",
+        "getInfo" : "معلوماتك كلها في مكان واحد"
     },
     "general" : {
         "skip" : "تخطي",

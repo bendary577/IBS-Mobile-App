@@ -11,6 +11,7 @@ import ContactUsUnAuth from '../screens/home/ContactUsUnAuth';
 import BackButton from '../components/sub-components/buttons/BackButton';
 import {getCommon} from './CommonStackScreens';
 import {useTranslation} from 'react-i18next';
+import PhoneVerificationCode from '../screens/auth/PhoneVeridicationCode';
 
 export default AuthStackNavigation = () => {
 
@@ -51,6 +52,14 @@ export default AuthStackNavigation = () => {
         }}
 
       />  
+
+      <Stack.Screen  
+        name="PhoneVerification" 
+        component={PhoneVerificationCode}
+        options={{
+          headerShown: false
+        }}
+      /> 
 
       <Stack.Screen  
         name="ConfirmNewPassword" 

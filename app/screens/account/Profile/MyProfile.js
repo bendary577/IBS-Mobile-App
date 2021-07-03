@@ -53,11 +53,10 @@ class MyProfile extends Component {
                 <View style={styles.changingView}>
                     {
                         tab === t(`myInformations`) ? 
-                            <ProfileInfoSection />
+                            <ProfileInfoSection navigation={this.props.navigation}/>
                         : 
                             <ProfileSettingsSection />
                     }
-
                 </View>
             </SafeAreaView>
         )
