@@ -1,5 +1,5 @@
 import React, { useState , useEffect} from 'react';
-import {Image, Text, View, StyleSheet} from 'react-native';
+import {SafeAreaView, Image, Text,ScrollView, View, StyleSheet} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import {primaryRedColor} from '../../config/colors';
 import {useTranslation} from 'react-i18next';
@@ -7,6 +7,7 @@ import {getClientInformation} from '../../services/api_requests';
 import Loading from '../../components/sub-components/general/Loading';
 import {authorizeRequest} from '../../services/authentication';
 import NoContent from '../../components/sub-components/general/NoContent';
+import InformationCard from '../../components/sub-components/cards/InformationCard';
 
 //------------------------ screen ---------------------
 const Information = ({navigation}) => {
@@ -16,13 +17,13 @@ const Information = ({navigation}) => {
     const {t} = useTranslation();
 
     useEffect(() => {
-        fetchFAQ();
-    }, [fetchFAQ]);
+        fetchInfo();
+    }, [fetchInfo]);
 
-    const fetchFAQ = async () => {
+    const fetchInfo = async () => {
         setLoading(true);
         let data = await authorizeRequest(getClientInformation);
-        //setInformation(data);
+        setInformation(data);
         setLoading(false)
     }
 
@@ -38,7 +39,7 @@ const Information = ({navigation}) => {
             <NoContent />
         :
 
-	    <View style={styles.container}>
+	    <SafeAreaView style={styles.container}>
             {/* ------------------------------------- header section ------------------------------------ */}
             <View style={styles.header}>
                 <View style={styles.card}>
@@ -47,45 +48,34 @@ const Information = ({navigation}) => {
                         source={require('../../assets/icons/aboutUs/about.png')}
                     />  
                 </View>
-                <TitleText value={t(`aboutIBS`)}/>
+                <TitleText value="My Information"/>
             </View>
 
             {/* ------------------------------------- about text section ------------------------------------ */}
-            <View>
-                <Text style={styles.text}>
-                    {t(`about_description_1`)}
-                </Text>
-
-                <Text style={styles.text}>
-                    {t(`about_description_2`)}
-                </Text>
-
-                <Text style={styles.text}>
-                    {t(`about_description_3`)}
-                </Text>
-                
-                <Text style={styles.text}>
-                    {t(`about_description_4`)}
-                </Text>
-            </View>
-        </View>
+            <ScrollView>
+                <View style={styles.supportTicketsView}>
+                    {
+                        information.map((info)=>{
+                            return <InformationCard key={info._id} item={info} />
+                        })
+                    }
+                </View>
+            </ScrollView>
+        </SafeAreaView>
 	);
 }
 
 //----------------------- screen styling ---------------------
 const styles = StyleSheet.create({
     container : {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        paddingVertical: 50,
-        paddingHorizontal: 20
+        flex : 1,
+        flexDirection : 'column',
     },
-    header : {
+    header: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginVertical : 20,
+        marginLeft : 10,
         marginBottom: 20
     },
     card : {
@@ -97,14 +87,9 @@ const styles = StyleSheet.create({
         borderRadius : 8,
         marginRight : 5
     },
-    icon : {
-        width : 20,
-        height : 20
+    supportTicketsView : {
+        flex : 4,
     },
-    text : {
-        marginTop : 15,
-        marginBottom : 15
-    }
 });
 
 

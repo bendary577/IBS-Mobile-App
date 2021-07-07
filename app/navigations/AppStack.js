@@ -17,7 +17,9 @@ import MessagesForYou from '../screens/account/Messages/MessagesForYou';
 import {useTranslation} from 'react-i18next';
 import UpdatePassword from '../screens/account/Profile/UpdatePassword';
 import Information from '../screens/home/Information';
+import SingleInformation from '../screens/home/SingleInformation';
 import FAQ from '../screens/home/FAQ';
+import SingleFAQ from '../screens/home/SingleFAQ';
 
 const Stack = createStackNavigator();
 
@@ -66,6 +68,24 @@ const HomeStack = () => {
             />
 
           <Stack.Screen
+              name="SingleFAQ" 
+              component={SingleFAQ}
+              options={({route})=>({
+                title : `#${route.params.title}`,
+                headerStyle: {
+                  backgroundColor: "#D8D8D8",
+                  borderBottomRightRadius : 20,
+                  borderBottomLeftRadius : 20
+                },
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerRight : ()=>(  <NotificationsButton />),
+                headerLeft : () =>( <BackButton /> )
+              })}
+            />
+
+          <Stack.Screen
               name="Information" 
               component={Information}
               options={{
@@ -82,6 +102,25 @@ const HomeStack = () => {
                 headerLeft : () =>( <BackButton /> )
             }}
             />
+
+          <Stack.Screen
+              name="SingleInformation" 
+              component={SingleInformation}
+              options={({route})=>({
+                title : `#${route.params.title}`,
+                headerStyle: {
+                  backgroundColor: "#D8D8D8",
+                  borderBottomRightRadius : 20,
+                  borderBottomLeftRadius : 20
+                },
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerRight : ()=>(  <NotificationsButton />),
+                headerLeft : () =>( <BackButton /> )
+              })}
+            />  
+            
        {common}
 
     </Stack.Navigator>

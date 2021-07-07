@@ -17,21 +17,21 @@ export const UPLOAD_USER_IMAGE = `${BASE_API}/api/users/me/`;
 export const USER_NOTIFICATION_TOKEN = `${BASE_API}/api/users/set-notification-token`;
 
 //----------------------------------- REST API Tickets endpoints -------------------------------
-export const GET_USER_TICKETS = `${BASE_API}/user/tickets?q&page=0&sort=createdAt&limit=50&status=0`;
-export const CREATE_TICKET = `${BASE_API}/tickets`;
-export const GET_TICKETS_ISSUES_CATEGORIES = `${BASE_API}/tickets/issues/categories`;
+export const GET_USER_TICKETS = `${BASE_API}user/tickets?q&page=0&sort=createdAt&limit=50&status=0`;
+export const GET_USER_SINGLE_TICKET = `${BASE_API}user/tickets/`;
+export const CREATE_TICKET = `${BASE_API}tickets`;
+export const GET_TICKETS_ISSUES_CATEGORIES = `${BASE_API}tickets/issues/categories`;
 
 //----------------------------------- REST API Payments endpoints -------------------------------
 export const GET_USER_PAYMENTS = `${BASE_API}/api/users/me/payments`;
 
-
 //----------------------------------- REST API FAQ endpoints -------------------------------
-export const GET_FAQ = `${BASE_API}/faq?page=0&sort=priority&limit=50`;
-export const GET_SINGLE_FAQ = `${BASE_API}/faq/`;
+export const GET_FAQ = `${BASE_API}faq?page=0&sort=priority&limit=50`;
+export const GET_SINGLE_FAQ = `${BASE_API}faq/`;
 
 //----------------------------------- REST API Information endpoints -------------------------------
-export const GET_CLIENT_INFORMATION = `${BASE_API}/information?client=42`;
-export const GET_SINGLE_INFORMATION = `${BASE_API}/information/60c2a37fa352075cbb546d5a`;
+export const GET_CLIENT_INFORMATION = `${BASE_API}information?client=*`;
+export const GET_SINGLE_INFORMATION = `${BASE_API}information/`;
 
 //--------------------------------------- TEST API endpoints -------------------------
 export const PAYMENTS_API = `${BASE_API}/api/payments`;

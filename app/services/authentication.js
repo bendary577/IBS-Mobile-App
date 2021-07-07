@@ -153,6 +153,7 @@ export const authorizeRequest = async (callback) => {
 //--------------------------------------- store user token  ------------------------------
 export const authorizeRequestWithData = async (callback, data) => {
   const userToken = await SecureStore.getItemAsync('access_token');
+  console.log("SISI $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" + data);
   let response = await callback(userToken, data);
   return response;
 };

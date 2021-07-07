@@ -44,7 +44,7 @@ class Chat extends Component {
         };
         this.setState({
             ticket : data,
-            messages : data.comments,
+            messages : data.conversation,
             user
         });
         let chatMessages = this.formatMessages();

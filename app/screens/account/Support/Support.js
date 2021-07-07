@@ -71,7 +71,7 @@ class Support extends Component {
             "description" : this.state.newTicketSubject
         }
         let data = await authorizeRequestWithData(addTicket, data);
-        //this.navigateToChat(data._id, data.uid, data.statusFormatted);
+        this.navigateToChat(data._id, data.id, data.statusFormatted);
     }
 
     render () {

@@ -1,5 +1,5 @@
 import React, { useState , useEffect} from 'react';
-import {Image, Text, View, StyleSheet} from 'react-native';
+import {Image, SafeAreaView,Dimensions,ScrollView, Text, View, FlatList, StyleSheet} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import {primaryRedColor} from '../../config/colors';
 import {useTranslation} from 'react-i18next';
@@ -15,6 +15,10 @@ const FAQ = ({navigation}) => {
     const [faqs, setFAQ] = useState(null);
     const [loading , setLoading] = useState([]);
     const {t} = useTranslation();
+
+    const dimensions = Dimensions.get('window');
+    const screenWidth = dimensions.width;
+
 
     useEffect(() => {
         fetchFAQ();
@@ -39,7 +43,7 @@ const FAQ = ({navigation}) => {
             <NoContent />
         :
 
-	    <View style={styles.container}>
+	    <SafeAreaView style={styles.container}>
             {/* ------------------------------------- header section ------------------------------------ */}
             <View style={styles.header}>
                 <View style={styles.card}>
@@ -52,16 +56,23 @@ const FAQ = ({navigation}) => {
             </View>
 
             {/* ------------------------------------- about text section ------------------------------------ */}
-            <View>
+            <ScrollView>
                 <View style={styles.supportTicketsView}>
+                    {/*
                     <FlatList
                         data={faqs}
-                        renderItem={({item})=>(<FAQCard item={item} onHandlePress={navigateToSingleFAQ} />)}
+                        renderItem={({item})=>( <FAQCard key={item._id} item={item} />)}
                         keyExtractor={(item) => item._id}
                     />
+                    */}
+                    {
+                        faqs.map((faq)=>{
+                            return <FAQCard key={faq._id} item={faq} />
+                        })
+                    }
                 </View>
-            </View>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
 	);
 }
 
@@ -70,6 +81,22 @@ const styles = StyleSheet.create({
     container : {
         flex : 1,
         flexDirection : 'column',
+    },
+    header: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginVertical : 20,
+        marginLeft : 10,
+        marginBottom: 20
+    },
+    card : {
+        width : 30,
+        height: 30,
+        backgroundColor : primaryRedColor,
+        justifyContent: 'center',
+        alignItems : 'center',
+        borderRadius : 8,
+        marginRight : 5
     },
     supportTicketsView : {
         flex : 4,

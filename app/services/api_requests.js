@@ -3,13 +3,16 @@ import {GET_USER_API,
         GET_USER_PAYMENTS,
         GET_USER_TICKETS, 
         PAYMENTS_API, 
-        TICKETS_API, 
+        TICKETS_API,
+        GET_USER_SINGLE_TICKET, 
         CREATE_TICKET,
         GET_TICKETS_ISSUES_CATEGORIES,
         UPLOAD_USER_IMAGE,
         USER_NOTIFICATION_TOKEN,
         GET_FAQ,
-        GET_CLIENT_INFORMATION} from './apis';
+        GET_CLIENT_INFORMATION,
+        GET_SINGLE_INFORMATION,
+        GET_SINGLE_FAQ} from './apis';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -98,7 +101,6 @@ export const getUserTickets = async (token) => {
             }
         });
         if(resp.status === 200){
-            console.log("tickets results is " + resp.data )
             return resp.data;
         }
     } catch (err) {
@@ -117,11 +119,9 @@ export const getUserTicketsCategories = async (token) => {
             }
         });
         if(resp.status === 200){
-            console.log("tickets categories results is " + resp.data )
             return resp.data;
         }
     } catch (err) {
-        //Handle Error Here
         console.error(err);
     }
 }
@@ -129,14 +129,15 @@ export const getUserTicketsCategories = async (token) => {
 //--------------------------------------- get user tickets api end point ------------------------------
 export const getSingleTicket = async (token, id) => {
     try {
-        let jwt = "jwt="+token;
-        console.log("ticket id is " + id )
-        const resp = await axiosInstance.get(`${TICKETS_API}/${id}`,{
+        let jwt = token;
+        const resp = await axiosInstance.get(GET_USER_SINGLE_TICKET+`/`+id,{
             headers: {
-                Cookie : jwt
+                Authorization : jwt
             }
         });
-        return resp.data.data;
+        if(resp.status === 200){
+            return resp.data.ticket;
+        }
     } catch (err) {
         //Handle Error Here
         console.error(err);
@@ -147,16 +148,19 @@ export const getSingleTicket = async (token, id) => {
 export const addTicket = async (token, data) => {
     try {
         let jwt = token;
-        console.log("token is hamada" + token)
+        console.log("subjeeeeeeeeeeeect" + data.subject)
+        console.log("desccccccccccccccccc" + data.description)
+        console.log("appi" + CREATE_TICKET)
         const resp = await axiosInstance.post(CREATE_TICKET, data, {
             headers: {
                 Authorization : jwt
             }
         });
-        if(resp.status === 200){
-            return resp.data;
+        if(resp.status === 201){
+            console.log(resp.data.ticket);
+            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HAMADA");
+            return resp.data.ticket;
         }
-        console.log(resp);
     } catch (err) {
         console.error(err);
     }
@@ -165,10 +169,10 @@ export const addTicket = async (token, data) => {
 //--------------------------------------- get user tickets api end point ------------------------------
 export const uploadUserImage = async (token, data) => {
     try {
-        let jwt = "jwt="+token;
+        let jwt = token;
         const resp = await axiosInstance.put(UPLOAD_USER_IMAGE,data,{
             headers: {
-                Cookie : jwt
+                Authorization : jwt
             }
         });
         return resp.data.data;
@@ -210,8 +214,7 @@ export const setUserNotificationToken = async (token, data) => {
                 }
             });
             if(resp.status === 200){
-                console.log("FAQ results is " + resp.data )
-                return resp.data;
+                return resp.data.faq;
             }
         } catch (err) {
             //Handle Error Here
@@ -223,14 +226,15 @@ export const setUserNotificationToken = async (token, data) => {
         export const getSingleFAQ = async (token, id) => {
             try {
                 let jwt = token;
+                console.log("request is " + GET_SINGLE_FAQ+id)
                 const resp = await axiosInstance.get(GET_SINGLE_FAQ+id, {
                     headers: {
                         Authorization : jwt
                     }
                 });
                 if(resp.status === 200){
-                    console.log("FAQ results is " + resp.data )
-                    return resp.data;
+                    console.log("Bendary results is " + resp.data.faq.title )
+                    return resp.data.faq;
                 }
             } catch (err) {
                 //Handle Error Here
@@ -249,11 +253,30 @@ export const setUserNotificationToken = async (token, data) => {
             });
             if(resp.status === 200){
                 console.log("client info results is " + resp.data )
-                return resp.data;
+                return resp.data.information;
             }
         } catch (err) {
             //Handle Error Here
             console.error(err);
         }
     }
+
+        //--------------------------------------- get information api end point ------------------------------
+        export const getClientSingleInformation = async (token) => {
+            try {
+                let jwt = token;
+                const resp = await axiosInstance.get(GET_SINGLE_INFORMATION,{
+                    headers: {
+                        Authorization : jwt
+                    }
+                });
+                if(resp.status === 200){
+                    console.log("client info results is " + resp.data )
+                    return resp.data.information;
+                }
+            } catch (err) {
+                //Handle Error Here
+                console.error(err);
+            }
+        }
 

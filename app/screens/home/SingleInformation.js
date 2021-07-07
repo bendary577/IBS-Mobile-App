@@ -1,28 +1,28 @@
 import React, { useState , useEffect} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {getSingleFAQ} from '../../services/api_requests';
+import {getClientSingleInformation} from '../../services/api_requests';
 import Loading from '../../components/sub-components/general/Loading';
 import {authorizeRequestWithData} from '../../services/authentication';
 import NoContent from '../../components/sub-components/general/NoContent';
 import { WebView } from 'react-native-webview';
 
 //------------------------ screen ---------------------
-const SingleFAQ = ({route, navigation}) => {
+const SingleInformation = ({route, navigation}) => {
 
-    const [faq, setFAQ] = useState(null);
+    const [information, setInformation] = useState(null);
     const [loading , setLoading] = useState([]);
     const {t} = useTranslation();
 
     useEffect(() => {
-        fetchFAQ();
-    }, [fetchFAQ]);
+        fetchInformation();
+    }, [fetchInformation]);
 
-    const fetchFAQ = async () => {
+    const fetchInformation = async () => {
         setLoading(true);
-        let data = await authorizeRequestWithData(getSingleFAQ, route.params.faq_id);
+        let data = await authorizeRequestWithData(getClientSingleInformation, route.params.info_id);
         console.log("faq title is " + data.title)
-        setFAQ(data);
+        setInformation(data);
         setLoading(false)
     }
 
@@ -32,7 +32,7 @@ const SingleFAQ = ({route, navigation}) => {
 
         <Loading action={t(`loading`)}/>
         :
-        faq === null ? 
+        information === null ? 
             <NoContent />
         :
         <WebView
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
 
 
 
-export default SingleFAQ;
+export default SingleInformation;

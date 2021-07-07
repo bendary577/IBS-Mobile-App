@@ -1,29 +1,28 @@
 import React, { useState , useEffect} from 'react';
-import {Image, Text, View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import { useNavigation } from '@react-navigation/native';
 
 //------------------------ screen ---------------------
-const FAQCard = (props) => {
+const InformationCard = (props) => {
 
     const {t} = useTranslation();
     const navigation = useNavigation();
 
-    navigateToSingleFAQ = (id, value) => {
-        navigation.navigate('SingleFAQ',  {faq_id : id, title : value})
-        //console.log("hamada");
+    navigateToSingleInformation = (id, value) => {
+        navigation.navigate('SingleInformation',  {info_id : id, title : value})
     }
 
 	return (
-                <TouchableOpacity style={styles.conatinerClosed} onPress={()=>{ navigateToSingleFAQ(props.item._id, props.item.title) }}>
+                <TouchableOpacity style={styles.conatinerClosed} onPress={()=>{ navigateToSingleInformation(props.item._id, props.item.title) }}>
                     <ScrollView>
                         <View style={styles.view}>
                         <View style={styles.leftView}>
                             <Text style={styles.title}>{props.item.title}</Text>
                         </View>
                         <View style={styles.rightView}>
-                            <Text style={styles.number}>{props.item.priority}</Text>
+                            <Text style={styles.number}>{props.item.client}</Text>
                         </View>
                     </View>
                     <View style={styles.view}>
@@ -98,4 +97,4 @@ const styles = StyleSheet.create({
 
 
 
-export default FAQCard;
+export default InformationCard;
