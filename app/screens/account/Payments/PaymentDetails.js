@@ -69,14 +69,14 @@ class PaymentDetails extends Component {
                         {/* ---------------------------- transaction info ------------------------ */}
                         <View>
                             <Image style={styles.bankIcon} source={require(bankIcon)} />
-                            <Text style={styles.bankTitle}>Commercial International Bank</Text>
+                            <Text style={styles.bankTitle}>{payment.bank.name.en}</Text>
                             <View style={styles.transactionView}>
                                 <View>
-                                    <Text style={styles.transactionAmmountText}>14351.48 LE</Text>
+                                    <Text style={styles.transactionAmmountText}>{payment.total}</Text>
                                 </View>
                                 <View style={styles.transactionDateView}>
                                     <Image style={styles.dateIcon} source={require(dataIcon)} />
-                                    <Text style={styles.transactionDateText}>Jul’ 2019</Text>
+                                    <Text style={styles.transactionDateText}>{payment.createdAt.slice(0,3)}</Text>
                                 </View>
                             </View>
                         </View>

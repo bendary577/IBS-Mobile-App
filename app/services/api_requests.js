@@ -12,7 +12,10 @@ import {GET_USER_API,
         GET_FAQ,
         GET_CLIENT_INFORMATION,
         GET_SINGLE_INFORMATION,
-        GET_SINGLE_FAQ} from './apis';
+        GET_SINGLE_FAQ,
+        GET_USER_EMPLOYMENT_HISTORY,
+        GET_USER_CLIENT_PAYMENTS,
+        GET_USER_CLIENT_SINGLE_PAYMENT} from './apis';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -59,16 +62,39 @@ export const getUserInfo = async (token) => {
     }
 }
 
+
+//--------------------------------------- get user payments api end point ------------------------------
+export const getUserEmploymentHistory = async (token) => {
+    try {
+        let jwt = token;
+        const resp = await axiosInstance.get(GET_USER_EMPLOYMENT_HISTORY,{
+            headers: {
+                Authorization : jwt
+            }
+        });
+        if(resp.status === 200 ){
+            console.log(resp.data.employmentHistory)
+            return resp.data.employmentHistory;
+        }
+    } catch (err) {
+        //Handle Error Here
+        console.error(err);
+    }
+}
+
 //--------------------------------------- get user payments api end point ------------------------------
 export const getUserPayments = async (token) => {
     try {
-        let jwt = "jwt="+token;
-        const resp = await axiosInstance.get(PAYMENTS_API,{
+        let jwt = token;
+        const resp = await axiosInstance.get(GET_USER_CLIENT_PAYMENTS,{
             headers: {
-                Cookie : jwt
+                Authorization : jwt
             }
         });
-        return resp.data.data;
+        if(resp.status === 200 ){
+            console.log(resp.data.payments)
+            return resp.data.payments;
+        }
     } catch (err) {
         //Handle Error Here
         console.error(err);
@@ -78,13 +104,16 @@ export const getUserPayments = async (token) => {
 //--------------------------------------- get user single payment api end point ------------------------------
 export const getSiglePayment = async (token, id) => {
     try {
-        let jwt = "jwt="+token;
-        const resp = await axiosInstance.get(`${PAYMENTS_API}/${id}`,{
+        let jwt = token;
+        const resp = await axiosInstance.get(GET_USER_CLIENT_SINGLE_PAYMENT,{
             headers: {
-                Cookie : jwt
+                Authorization : jwt
             }
         });
-        return resp.data.data;
+        if(resp.status === 200 ){
+            console.log(resp.data.payment)
+            return resp.data.payment;
+        }
     } catch (err) {
         //Handle Error Here
         console.error(err);
@@ -130,12 +159,14 @@ export const getUserTicketsCategories = async (token) => {
 export const getSingleTicket = async (token, id) => {
     try {
         let jwt = token;
-        const resp = await axiosInstance.get(GET_USER_SINGLE_TICKET+`/`+id,{
+        console.log("api is " + GET_USER_SINGLE_TICKET+id)
+        const resp = await axiosInstance.get(GET_USER_SINGLE_TICKET+id,{
             headers: {
                 Authorization : jwt
             }
         });
         if(resp.status === 200){
+            console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& " + resp.data.ticket.status)
             return resp.data.ticket;
         }
     } catch (err) {
@@ -262,16 +293,17 @@ export const setUserNotificationToken = async (token, data) => {
     }
 
         //--------------------------------------- get information api end point ------------------------------
-        export const getClientSingleInformation = async (token) => {
+        export const getClientSingleInformation = async (token, id) => {
             try {
                 let jwt = token;
-                const resp = await axiosInstance.get(GET_SINGLE_INFORMATION,{
+                console.log(GET_SINGLE_INFORMATION)
+                const resp = await axiosInstance.get(GET_SINGLE_INFORMATION+id,{
                     headers: {
                         Authorization : jwt
                     }
                 });
                 if(resp.status === 200){
-                    console.log("client info results is " + resp.data )
+                    console.log("client info results is " + resp.data.information )
                     return resp.data.information;
                 }
             } catch (err) {

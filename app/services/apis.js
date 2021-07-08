@@ -17,13 +17,15 @@ export const UPLOAD_USER_IMAGE = `${BASE_API}/api/users/me/`;
 export const USER_NOTIFICATION_TOKEN = `${BASE_API}/api/users/set-notification-token`;
 
 //----------------------------------- REST API Tickets endpoints -------------------------------
-export const GET_USER_TICKETS = `${BASE_API}user/tickets?q&page=0&sort=createdAt&limit=50&status=0`;
+export const GET_USER_TICKETS = `${BASE_API}user/tickets?q&page=0&sort=createdAt&limit=50&status=`;
 export const GET_USER_SINGLE_TICKET = `${BASE_API}user/tickets/`;
 export const CREATE_TICKET = `${BASE_API}tickets`;
 export const GET_TICKETS_ISSUES_CATEGORIES = `${BASE_API}tickets/issues/categories`;
 
 //----------------------------------- REST API Payments endpoints -------------------------------
-export const GET_USER_PAYMENTS = `${BASE_API}/api/users/me/payments`;
+export const GET_USER_EMPLOYMENT_HISTORY = `${BASE_API}user/employment-history`;
+export const GET_USER_CLIENT_PAYMENTS = `${BASE_API}employees/1/payments?page=0&sort=createdAt&limit=50&fields=-paymentDetails`;
+export const GET_USER_CLIENT_SINGLE_PAYMENT = `${BASE_API}employees/1/payments/33`;
 
 //----------------------------------- REST API FAQ endpoints -------------------------------
 export const GET_FAQ = `${BASE_API}faq?page=0&sort=priority&limit=50`;

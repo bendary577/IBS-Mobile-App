@@ -6,6 +6,7 @@ import Loading from '../../components/sub-components/general/Loading';
 import {authorizeRequestWithData} from '../../services/authentication';
 import NoContent from '../../components/sub-components/general/NoContent';
 import { WebView } from 'react-native-webview';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 //------------------------ screen ---------------------
 const SingleInformation = ({route, navigation}) => {
@@ -35,22 +36,39 @@ const SingleInformation = ({route, navigation}) => {
         information === null ? 
             <NoContent />
         :
-        <WebView
-            originWhitelist={['*']}
-            source={{ html: '<h1 style=\" color : blue\">TEST html</h1>'}}
-            style={{ marginTop: 20 }}
-        />
+        <SafeAreaView style={styles.container}>
+            <View style={styles.heading}>
+                <Text style={{padding : 15, fontSize:20, fontWeight : 'bold'}}>{information.title}</Text>
+                <Text style={{paddingHorizontal : 15, fontSize:16, color : '#70706f'}}>{information.description}</Text>
+                <View style={{justifyContent : 'center', alignItems : 'center', marginBottom : 10}}>
+                    <View style={{backgroundColor : '#c4c4c4', borderRadius : 10, width : '90%', height: 40, justifyContent : 'center',padding : 5}}>
+                        <Text>Ahmed Haron Fawy Mohamed</Text>
+                    </View>
+                </View>
+
+            </View>
+            <WebView
+                originWhitelist={['*']}
+                source={{ html: '<h1 style=\" color : blue\">TEST html</h1>'}}
+                style={styles.webView}
+            />
+        </SafeAreaView>
+
 	);
 }
 
 //----------------------- screen styling ---------------------
 const styles = StyleSheet.create({
     container : {
+        flex : 1,
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        paddingVertical: 50,
-        paddingHorizontal: 20
+        flexDirection : 'column',
+    },
+    heading : {
+
+    },
+    webView : {
+
     },
 });
 

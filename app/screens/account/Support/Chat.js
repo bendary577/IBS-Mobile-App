@@ -34,13 +34,13 @@ class Chat extends Component {
       componentDidMount = async () => {
         this.setState({isLoading : true});
         let data = await authorizeRequestWithData(getSingleTicket, this.props.route.params.id);
-        let userId = await SecureStore.getItemAsync('id');
-        let userName = await SecureStore.getItemAsync('name');
-        let userAvatar = await SecureStore.getItemAsync('photo');
+        //let userId = await SecureStore.getItemAsync('id');
+        //let userName = await SecureStore.getItemAsync('name');
+        //let userAvatar = await SecureStore.getItemAsync('photo');
         let user = {
-          _id : userId,
-          name : userName,
-          avatar : userAvatar
+          _id : data.createdBy._id,
+          name : data.createdBy.emp.name.en,
+          avatar : require(userAvatar)
         };
         this.setState({
             ticket : data,
@@ -61,11 +61,11 @@ class Chat extends Component {
         let chatMessages = this.state.messages.map((chatMessage) => {
             let gcm = {
               _id: chatMessage._id,
-              text: chatMessage.comment,
+              text: chatMessage.message,
               createdAt: chatMessage.createdAt,
               user: {
                 _id: chatMessage.owner,
-                name: this.state.ticket.owner.name.en,
+                name: this.state.ticket.createdBy.emp.name.en,
                 avatar: 'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
               }
             };

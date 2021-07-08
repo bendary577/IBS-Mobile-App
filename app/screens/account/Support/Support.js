@@ -26,11 +26,15 @@ class Support extends Component {
             isLoading : false,
             problem : null,
             newTicketSubject : '',
-            newTicketDescription : ''
+            newTicketDescription : '',
         }
     }
 
     componentDidMount = async () =>{
+        this.fetcTickets();
+    }
+
+    fetcTickets = async () => {
         this.setState({isLoading : true});
         let data = await authorizeRequest(getUserTickets);
         this.setState({
@@ -38,7 +42,6 @@ class Support extends Component {
         });
         this.setState({isLoading : false});
     }
-
 
     setModalVisible = (bool) => {
         this.setState({
@@ -71,8 +74,10 @@ class Support extends Component {
             "description" : this.state.newTicketSubject
         }
         let data = await authorizeRequestWithData(addTicket, data);
-        this.navigateToChat(data._id, data.id, data.statusFormatted);
+        this.setModalVisible(false)
+        this.fetcTickets();//this.navigateToChat(data._id, data.id, data.statusFormatted);
     }
+
 
     render () {
 

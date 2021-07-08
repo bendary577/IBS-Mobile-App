@@ -20,6 +20,7 @@ import Information from '../screens/home/Information';
 import SingleInformation from '../screens/home/SingleInformation';
 import FAQ from '../screens/home/FAQ';
 import SingleFAQ from '../screens/home/SingleFAQ';
+import UserEmploymentHistory from '../screens/account/Payments/UserEmploymentHistory';
 
 const Stack = createStackNavigator();
 
@@ -127,15 +128,33 @@ const HomeStack = () => {
   );
 }
 
-//----------------------------------- Transactions Stack -----------------------------------------------------
-const TransactionsStack = () => {
 
+
+//----------------------------------- Profile Stack -----------------------------------------------------
+const EmploymentPaymentsStack = () => {
   const {t} = useTranslation();
-  
+
   return (
     <Stack.Navigator>
-
             <Stack.Screen
+              name="EmploymentHistory" 
+              component={UserEmploymentHistory}
+              options={{
+                title : false,
+                headerStyle: {
+                  backgroundColor: "#D8D8D8",
+                  borderBottomRightRadius : 20,
+                  borderBottomLeftRadius : 20
+                },
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerRight : ()=>(  <NotificationsButton />),
+                headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value="Employment Payment" /></View>)
+            }}
+            />
+
+          <Stack.Screen
               name="MyTransactions"
               component={MyTransactions}
               options={{
@@ -170,9 +189,12 @@ const TransactionsStack = () => {
                 headerBackImage : () =>( <BackButton /> )
             }}
             /> 
+
+
     </Stack.Navigator>
   );
 }
+
 
 
 //----------------------------------- Profile Stack -----------------------------------------------------
@@ -321,4 +343,4 @@ const MessagesForYouStack = () => {
 
 
 
-export { HomeStack, TransactionsStack, ProfileStack, SupportStack, ContactUsAuthStack, MessagesForYouStack};
+export { HomeStack, ProfileStack,EmploymentPaymentsStack, SupportStack, ContactUsAuthStack, MessagesForYouStack};
