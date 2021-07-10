@@ -21,7 +21,6 @@ import { authenticatedAxiosInstance } from './axios';
 
 export const getUserInfo = async () => {
     try {
-        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ethiopia")
         const resp = await authenticatedAxiosInstance.get(GET_USER_API);
         if(resp.status === 200 ){
             console.log(resp.data)

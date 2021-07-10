@@ -32,7 +32,7 @@ const PaymentCard = (props) => {
                         <Text style={styles.title}>{t(`myPayments`)}</Text>
                     </View>
                     <View style={styles.arrow}>
-                        <TouchableOpacity onPress={()=>{navigation.navigate("MyTransactions")}}>
+                        <TouchableOpacity onPress={()=>{navigation.navigate("EmploymentHistory")}}>
                             <Image style={[styles.arrowIcon, getFlipForRTLStyle()]} source={require(arrowIcon)} />
                         </TouchableOpacity>
                     </View>
