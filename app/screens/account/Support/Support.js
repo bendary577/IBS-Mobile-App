@@ -5,12 +5,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TransactionMessage from '../../../components/sub-components/Messages/TransactionMessage';
 import SupportMessageModal from '../../../components/sub-components/Messages/SupportMessageModal';
-//import { t } from '../../../languages/i18Manager';
-import {authorizeRequest} from '../../../services/authentication';
 import {getUserTickets} from '../../../services/api_requests';
 import NoContent from '../../../components/sub-components/general/NoContent';
 import Loading from '../../../components/sub-components/general/Loading';
-import {authorizeRequestWithData} from '../../../services/authentication';
 import {addTicket} from '../../../services/api_requests';
 import { withTranslation } from 'react-i18next';
 
@@ -36,7 +33,7 @@ class Support extends Component {
 
     fetcTickets = async () => {
         this.setState({isLoading : true});
-        let data = await authorizeRequest(getUserTickets);
+        let data = await getUserTickets();
         this.setState({
             tickets : data.tickets
         });
@@ -73,7 +70,7 @@ class Support extends Component {
             "subject" : this.state.newTicketSubject,
             "description" : this.state.newTicketSubject
         }
-        let data = await authorizeRequestWithData(addTicket, data);
+        let data = await addTicket(data);
         this.setModalVisible(false)
         this.fetcTickets();//this.navigateToChat(data._id, data.id, data.statusFormatted);
     }

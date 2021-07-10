@@ -13,7 +13,7 @@ const ContactUsCard = (props) => {
 
 	return (
 	    <View style={styles.container}>
-            <TouchableHighlight underlayColor="white">
+            <TouchableHighlight underlayColor="white" onPress={()=> {props.onHandlePress()}}>
                 <View style={styles.card}>
                     {
                         props.type === "hotline" ? 

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "589271775085",
+    "project_id": "ibs-app-c89e6",
+    "storage_bucket": "ibs-app-c89e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589271775085:android:4b2b67da847ec4bf81cc64",
+        "android_client_info": {
+          "package_name": "com.ibsmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589271775085-ts6amjs3c2vn335p6k8vcrvp30hgmv0q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ibsmobile",
+            "certificate_hash": "14b860cc3e6bf7185de43d9a93e863191753d8f9"
+          }
+        },
+        {
+          "client_id": "589271775085-4pjpdvc6qu868h7c8f7lj9eqgpdg6i46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjlDtFyaYyyc2Af1flN4CCdhLwYqsjg3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589271775085-4pjpdvc6qu868h7c8f7lj9eqgpdg6i46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,8 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import ContactUsCard from '../../components/sub-components/cards/ContactUsCard';
 import {useTranslation} from 'react-i18next';
-
-let email = '../../assets/icons/contactUs/email.png';
+import {openEmail, openWebsite, openFacebookLink, openHotline} from '../../utils/IBSContacts'
 
 //------------------------ screen ---------------------
 const ContactUsUnAuth = ({navigation}) => {
@@ -13,12 +12,12 @@ const ContactUsUnAuth = ({navigation}) => {
 	return (
 	    <View style={styles.container}>
             <View style={styles.cardsRow}>
-                <ContactUsCard type="hotline" title={t(`hotline`)}/>
-                <ContactUsCard type="email" title={t(`email`)}/>
+                <ContactUsCard type="hotline" title={t(`hotline`)} onHandlePress={openHotline}/>
+                <ContactUsCard type="email" title={t(`email`)} onHandlePress={openEmail}/>
             </View>
             <View style={styles.cardsRow}>
-                <ContactUsCard type="website" title={t(`website`)}/>
-                <ContactUsCard type="facebook" title={t(`facebook`)}/>
+                <ContactUsCard type="website" title={t(`website`)}  onHandlePress={openWebsite}/>
+                <ContactUsCard type="facebook" title={t(`facebook`)} onHandlePress={openFacebookLink}/>
             </View>
         </View>
 	);

@@ -3,7 +3,6 @@ import {Text, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {getClientSingleInformation} from '../../services/api_requests';
 import Loading from '../../components/sub-components/general/Loading';
-import {authorizeRequestWithData} from '../../services/authentication';
 import NoContent from '../../components/sub-components/general/NoContent';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,7 +20,7 @@ const SingleInformation = ({route, navigation}) => {
 
     const fetchInformation = async () => {
         setLoading(true);
-        let data = await authorizeRequestWithData(getClientSingleInformation, route.params.info_id);
+        let data = await getClientSingleInformation(route.params.info_id);
         console.log("faq title is " + data.title)
         setInformation(data);
         setLoading(false)

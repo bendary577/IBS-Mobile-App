@@ -4,9 +4,10 @@ import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSConfirmationButton from '../../components/primitive-components/IBSConfirmationButton';
 import IBSConfirmationText from '../../components/primitive-components/IBSConfirmationText';
-import {resetPassword} from '../../services/authentication';
+import {checkResetPasswordCode} from '../../services/authentication';
 import {useTranslation} from 'react-i18next';
 import CountDown from 'react-native-countdown-component';
+import { useNavigation } from '@react-navigation/native';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -14,7 +15,7 @@ let ibsImage = '../../assets/images/Login/ibs.png';
 let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 
 //------------------------ screen ---------------------
-const ConfirmNewPassword =()=> {
+const ConfirmNewPassword =({route})=> {
 
         const [firstCellCode, setFirstCellCode] = useState("");
         const [secondCellCode, setSecondCellCode] = useState("");
@@ -22,7 +23,7 @@ const ConfirmNewPassword =()=> {
         const [fourthCellCode, setFourthCellCode] = useState("");
         const [confirm, setConfirm] = useState(false);
         const {t} = useTranslation();
-
+        const navigation = useNavigation();
 
     React.useEffect(() => {
         incrementCompleteInputs();
@@ -68,9 +69,11 @@ const ConfirmNewPassword =()=> {
     const handleConfirmPassword = () => {
         let _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
         let data = {
-            code : _code
+            code : _code,
+            phone : route.params.phone
         };
-        resetPassword(data);
+        checkResetPasswordCode(data);
+        navigation.navigate("CreateNewPassword", { phone : route.params.phone})
     }
 
         return (

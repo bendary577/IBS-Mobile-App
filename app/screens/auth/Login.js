@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Text,SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
+import {Text,SafeAreaView, Image,ScrollView, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
@@ -35,7 +35,7 @@ const Login = (props) => {
         setLoading(true);
         let response = await signIn(data);
         console.log(response.status);
-        if(response.status === "success"){
+        if(response === "success"){
             setLoading(false)
             if(response.data.user.isVerified !== true){
                 props.navigation.navigate("PhoneVerification");
@@ -44,7 +44,8 @@ const Login = (props) => {
             }
         }else{
             setLoading(false);
-            setError("invalid credentials")
+            console.log(response);
+            setError(response);
         }
     }
 
@@ -67,6 +68,7 @@ const Login = (props) => {
             <Loading action={t(`logging`)}/>
             :
             <SafeAreaView style={styles.container}>
+                <ScrollView>
                 <View style={styles.top}>
                     <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                 </View>
@@ -78,7 +80,7 @@ const Login = (props) => {
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            { error !== '' ? <Text style={{color :'red', textAlign : 'center'}}>{error}</Text> : <></>}
+                            { error !== '' ? <Text style={{color :'red', textAlign : 'center', marginBottom : 5}}>{error}</Text> : <></>}
                             <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeIdentificationNumber}/>
                             <IBSPasswordText placeholder={t(`passwordPlaceholder`)} hasChild={true} onChangeText={handleOnChangePassword}/>
                             <IBSButtonLargeRed value={t(`login`)} action={true} onHandlePress={handleLogin} />
@@ -91,6 +93,7 @@ const Login = (props) => {
                         </View>
                     </View>
                 </ImageBackground>
+                </ScrollView>
             </SafeAreaView>
         );
     }
@@ -132,7 +135,8 @@ const styles = StyleSheet.create({
     },
     bottom : {
         flex : 1,
-        right : I18nManager.isRTL ?  -100 : 80
+        right : I18nManager.isRTL ?  -100 : 80,
+        marginTop : 40
     },
 });
 

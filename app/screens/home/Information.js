@@ -5,7 +5,6 @@ import {primaryRedColor} from '../../config/colors';
 import {useTranslation} from 'react-i18next';
 import {getClientInformation} from '../../services/api_requests';
 import Loading from '../../components/sub-components/general/Loading';
-import {authorizeRequest} from '../../services/authentication';
 import NoContent from '../../components/sub-components/general/NoContent';
 import InformationCard from '../../components/sub-components/cards/InformationCard';
 
@@ -22,7 +21,7 @@ const Information = ({navigation}) => {
 
     const fetchInfo = async () => {
         setLoading(true);
-        let data = await authorizeRequest(getClientInformation);
+        let data = await getClientInformation();
         setInformation(data);
         setLoading(false)
     }

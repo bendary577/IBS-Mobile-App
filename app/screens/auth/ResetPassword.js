@@ -6,7 +6,7 @@ import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLa
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
-import {forgetPassword} from '../../services/authentication';
+import {requestResetPassword} from '../../services/authentication';
 import { withTranslation } from 'react-i18next';
 
 let {width, height} = Dimensions.get('window'); 
@@ -39,14 +39,17 @@ class ResetPassword extends Component {
         let data = {
             phone : this.state.phone
         }
-        let responseMessage = await forgetPassword(data);
+        let responseMessage = await requestResetPassword(data);
         console.log("in reset password" + responseMessage);
-        this.setState({
-            message : responseMessage
-        });
-        setTimeout(()=>{ 
-            this.props.navigation.navigate("ConfirmNewPassword");
-        }, 2000);
+        if(responseMessage === "success"){
+            this.setState({
+                message : responseMessage
+            });
+            setTimeout(()=>{ 
+                this.props.navigation.navigate("ConfirmNewPassword");
+            }, 2000);
+        }
+        this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone }); 
     }
 
     render(){
@@ -69,7 +72,7 @@ class ResetPassword extends Component {
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={this.handleChangeText}/>
+                            <IBSInputText placeholder={t(`phone`)} onChangeText={this.handleChangeText}/>
                             <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
                             <IBSButtonLargeGray value={t(`backtoLogin`)} action={false} onHandlePress={this.navigateLogin}/>
                             {

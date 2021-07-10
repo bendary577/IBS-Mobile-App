@@ -1,41 +1,45 @@
 import * as SecureStore from 'expo-secure-store';
-import {LOGIN_API, SIGNUP_API, LOGOUT_API, FORGET_PASSWORD_API, RESET_PASSWORD_API, UPDATE_PASSWORD_API} from './apis';
-import axios from 'axios';
-
-
+import {LOGIN_API,
+       SIGNUP_API,
+       LOGOUT_API,
+       RESET_PASSWORD_API,
+       UPDATE_PASSWORD_API,
+       VERIFY_PHONE,
+       CHECK_PHONE_VERIFICATION_CODE,
+       REQUEST_RESET_PASSWORD_API,
+       CHECK_RESET_PASSWORD_API
+      } from './apis';
+import { axiosInstance, authenticatedAxiosInstance } from './axios';
 
 
 //--------------------------------------- sign in api end point ------------------------------
 export const signIn = async (data) => {
   try {
-    const response = await axios.post(LOGIN_API, data)
-    console.log(response.data)
-    storeToken(response.data.access_token);
-    //storeUserInfo(resp.data.data);
-    return response.data;
-  } catch (error) {
-      return { status: 500, error: error.message }
+    const response = await axiosInstance.post(LOGIN_API, data)
+      if(response.status === 200){
+      storeToken(response.data.access_token);
+      return response.data.status;
+    }else{
+      return response.data.error;
+    }
+  } catch (error){
+    console.error(error);
   }
- 
 };
 
 
 //--------------------------------------- signup api end point ------------------------------
 export const signupRequest = async (data) => {
   try {
-    console.log("identity is " + data.identityNumber);
-    console.log("phone is " + data.phone);
-    console.log("password is " + data.password);
-    const resp = await axios.post(SIGNUP_API,data);  
-    console.log("after signup");
-    if(resp.status === 200){
-      console.log("token is " + response.data.token);
-      console.log("status is " + response.data.status);
-      storeToken(response.data.token);
+    const response = await axiosInstance.post(SIGNUP_API,data);  
+    if(response.status === 200){
+      storeToken(response.data.access_token);
       return response.data.status
-    } 
+    }else {
+      console.log("ya bendaaaaaaaaaary " + response)
+      //return response.data.error;
+    }
   } catch (err) {
-      //Handle Error Here
       console.error(err);
   }
 };
@@ -43,7 +47,7 @@ export const signupRequest = async (data) => {
 //--------------------------------------- signout api end point ------------------------------
 export const signout = async () => {
   try {
-    const resp = await axios.post(LOGOUT_API);  
+    const resp = await axiosInstance.post(LOGOUT_API);  
     if(resp.status === 200){
         deleteToken();
         return resp.data.status;
@@ -54,52 +58,85 @@ export const signout = async () => {
   }
 };
 
-//--------------------------------------- forget password api end point ------------------------------
-export const forgetPassword = async (data) => {
+//--------------------------------------- verify phone api end point ------------------------------
+export const verifyPhoneNumber = async () => {
   try {
-    const resp = await axios.post(FORGET_PASSWORD_API,data);  
-    console.log("hamada is heeeeeeeeeeere :" + resp.json())
-    if(resp.status === 200){
-      return resp.data.message;
-    }
-    return errorMessage;
+      const resp = await authenticatedAxiosInstance.get(VERIFY_PHONE);
+      if(resp.status === 200){
+          console.log(resp.data);
+      }
   } catch (err) {
-      //Handle Error Here
       console.error(err);
   }
-};
+}
 
-
-//--------------------------------------- reset password api end point ------------------------------
-export const resetPassword = (data) => {
+//--------------------------------------- verify phone api end point ------------------------------
+export const checkVerificationCode = async (data) => {
   try {
-      axios.post(RESET_PASSWORD_API, data)
-        .then(response => {
-          if (response) {
-           console.log("response is " + response);
-         } 
-        }).catch(error => {console.log(error)});
+      let jwt = token;
+      const resp = await authenticatedAxiosInstance.post(CHECK_PHONE_VERIFICATION_CODE,data);
+      if(resp.status === 200){
+          console.log(resp.data);
+      }
   } catch (err) {
-      //Handle Error Here
       console.error(err);
   }
-};
+}
 
-//--------------------------------------- update password api end point ------------------------------
-export const updatePassword = (data) => {
+//--------------------------------------- verify phone api end point ------------------------------
+export const updatePassword = async (data) => {
   try {
-      axios.post(UPDATE_PASSWORD_API, data)
-        .then(response => {
-          if (response) {
-            console.log("response is " + response);
-         } 
-        }).catch(error => {console.log(error)});
+      const resp = await authenticatedAxiosInstance.post(UPDATE_PASSWORD_API,data);
+      if(resp.status === 200){
+          console.log(resp.data);
+      }
   } catch (err) {
-      //Handle Error Here
       console.error(err);
   }
-};
+}
 
+
+//--------------------------------------- verify phone api end point ------------------------------
+export const requestResetPassword = async (data) => {
+  try {
+      const resp = await axiosInstance.post(REQUEST_RESET_PASSWORD_API,data);
+      if(resp.status === 200){
+          console.log(resp.data);
+      }else{
+        return resp.data.error
+      }
+  } catch (err) {
+      console.error(err);
+  }
+}
+
+
+//--------------------------------------- verify phone api end point ------------------------------
+export const checkResetPasswordCode = async (data) => {
+  try {
+      console.log(data.code + data.phone)
+      const resp = await axiosInstance.post(CHECK_RESET_PASSWORD_API,data);
+      if(resp.status === 200){
+          console.log(resp.data);
+      }
+  } catch (err) {
+      console.error(err);
+  }
+}
+
+
+//--------------------------------------- verify phone api end point ------------------------------
+export const resetPassword = async (data) => {
+  try {
+      let reset_password_token = await SecureStore.getItemAsync('reset_password_token');
+      const resp = await axiosInstance.post(RESET_PASSWORD_API+reset_password_token, data);
+      if(resp.status === 200){
+          console.log(resp.data);
+      }
+  } catch (err) {
+      console.error(err);
+  }
+}
 
 //--------------------------------------- store user token  ------------------------------
 export const storeToken = (token) => {
@@ -138,22 +175,7 @@ export const storeUserInfo = (data) => {
 export const isLoggedIn = async () => {
   //retrieve the value of the token
   const userToken = await SecureStore.getItemAsync('token');
-  console.log("check authentication " + userToken);
   if(userToken) return true;
   return false;
 }
 
-//--------------------------------------- store user token  ------------------------------
-export const authorizeRequest = async (callback) => {
-  const userToken = await SecureStore.getItemAsync('access_token');
-  let response = await callback(userToken);
-  return response;
-};
-
-//--------------------------------------- store user token  ------------------------------
-export const authorizeRequestWithData = async (callback, data) => {
-  const userToken = await SecureStore.getItemAsync('access_token');
-  console.log("SISI $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" + data);
-  let response = await callback(userToken, data);
-  return response;
-};

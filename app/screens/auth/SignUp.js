@@ -44,11 +44,11 @@ const SignUp = () => {
     }
 
     const handleSignup = async () =>{
-
         let data = {
           identityNumber : nationalId,
           phone : phone,
           password : password,
+          passwordConfirmation : passwordConfirm
         };
 
         setLoading(true);
@@ -59,7 +59,8 @@ const SignUp = () => {
         }else{
             setLoading(false);
             setError(true);
-            setErrorMessage("sorry, something went wrong")
+            console.log(resp + "ya hamaaaaaaaaaaaaaaada")
+            setErrorMessage(resp)
         }
     }
 

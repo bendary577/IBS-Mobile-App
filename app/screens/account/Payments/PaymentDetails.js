@@ -5,7 +5,6 @@ import AccountTabButton from '../../../components/sub-components/navigationTabs/
 import EaringsSection from '../../../components/sub-components/Payment/EarningsSection';
 import DeductionsSection from '../../../components/sub-components/Payment/DeductionsSection';
 import OtherInfoSection from '../../../components/sub-components/Payment/OtherInfoSection';
-import {authorizeRequestWithData} from '../../../services/authentication';
 import {getSiglePayment} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
 import NoContent from '../../../components/sub-components/general/NoContent';
@@ -30,7 +29,7 @@ class PaymentDetails extends Component {
     //make api request when screen is mounted
     componentDidMount = async () =>{
         this.setState({isLoading : true});
-        let data = await authorizeRequestWithData(getSiglePayment, this.props.route.params.paymentId);
+        let data = await getSiglePayment(this.props.route.params.paymentId);
         this.setState({
             payment : data
         });

@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {StyleSheet, View, ScrollView } from 'react-native'
 import ProfileInfoCard from '../../../components/sub-components/cards/ProfileInfoCard';
 import {getUserInfo} from '../../../services/api_requests';
-import {authorizeRequest} from '../../../services/authentication';
 import { withTranslation } from 'react-i18next';
 import IBSButtonLargeGray from '../../primitive-components/IBSButtonLargeGray';
 
@@ -30,16 +29,17 @@ class ProfileInfoSection extends Component {
 
 
     componentDidMount = async () =>{
-        let data = await authorizeRequest(getUserInfo);
+        let data = await getUserInfo();
+        console.log("^^^^^^^^^^^^^^^^^^^ egypt " + data.user.emp.name.en);
         this.setData(
                 data.user.emp.name.en, 
                 data.user.identityNumber,
                 data.user.phone,
                 data.user.emp.email,
                 data.user.emp.address.en,
-                data.user.emp.bank.name.en,
-                data.user.emp.nationality.en,
-                data.user.emp.bank.name.en,
+                data.user.emp.bank.name,
+                data.user.nationality,
+                data.user.emp.bank.name,
                 data.user.emp.hiringDate,
                 data.user.emp.clientEmpNumber,
                 data.user.emp.job.en,

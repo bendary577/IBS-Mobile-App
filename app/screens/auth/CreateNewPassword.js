@@ -5,8 +5,9 @@ import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLa
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
-import {updatePassword} from '../../services/authentication';
+import {resetPassword} from '../../services/authentication';
 import { withTranslation } from 'react-i18next';
+import { TabRouter } from 'react-navigation';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -44,14 +45,15 @@ class CreateNewPassword extends Component {
         return false;
     }
 
-    handleUpdatePassword = () => {
+    handleUpdatePassword = async () => {
         let validation = validate(this.state.newPassword, this.state.newPasswordConfirmation);
         if(validation){
             let data = {
-                currentPassword : this.state.newPassword,
-                newPassword : this.state.newPasswordConfirmation
+                phone : this.props.route.phone,
+                password : this.state.newPassword,
+                passwordConfirmation : this.state.newPasswordConfirmation
             }
-            updatePassword(data);
+            let resp = await resetPassword(data);
         }
     }
 

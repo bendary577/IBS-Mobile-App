@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import { GiftedChat} from 'react-native-gifted-chat'
 import ChatSendButton from '../../../components/sub-components/Chat/ChatSendButton';
-import {authorizeRequestWithData} from '../../../services/authentication';
 import {getSingleTicket} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
 import NoContent from '../../../components/sub-components/general/NoContent';
@@ -14,6 +13,10 @@ import * as SecureStore from 'expo-secure-store';
 import { withTranslation } from 'react-i18next';
 import ChatClosedToolbar from '../../../components/sub-components/Chat/ChatClosedToolbar';
 import OpenChatButton from '../../../components/sub-components/Chat/OpenChatButton';
+window.navigator.userAgent = 'react-native';
+import io from 'socket.io-client/dist/socket.io';
+import { SOCKET_IO_SERVER } from '../../../services/apis';
+import {addTicketMessage} from '../../../services/api_requests';
 
 let userAvatar = '../../../assets/icons/Support/userAvatar.png';
 let supportAvatar = '../../../assets/icons/Support/supportAvatar.png';
@@ -25,18 +28,26 @@ class Chat extends Component {
         this.state = {  
             ticket : {},
             messages : [],
+            message : "",
             isLoading : false,
             user : {}
         }
+      //connect to socket server 
+      this.socket = io(SOCKET_IO_SERVER, {jsonp: false,  transports: ['websocket'] });
+      this.socket.on('connect', () => { 
+        console.log('connected to socket server'); 
+      }); 
+      this.socket.join(`ticket:${this.state.ticket._id}`)
+      this.socket.on("ticketMessage", this.onReply)
     }
      
       //------------------------------- call the ticket's api to get comments ---------------------
       componentDidMount = async () => {
+       
+
+        //reload chat messages
         this.setState({isLoading : true});
-        let data = await authorizeRequestWithData(getSingleTicket, this.props.route.params.id);
-        //let userId = await SecureStore.getItemAsync('id');
-        //let userName = await SecureStore.getItemAsync('name');
-        //let userAvatar = await SecureStore.getItemAsync('photo');
+        let data = await getSingleTicket(this.props.route.params.id);
         let user = {
           _id : data.createdBy._id,
           name : data.createdBy.emp.name.en,
@@ -75,18 +86,25 @@ class Chat extends Component {
       }
      
       //----------------------------------- when user sends a message ----------------------
-      onSend(messages = []) {
+      onSend = async (message = {}) => {
+        let data = await addTicketMessage(this.state.ticket._id);
+        console.log("$$$$$$$$$$$$$$$$$$$$$4 in on send message chat room");
         this.setState(previousState => ({
-          messages: GiftedChat.append(previousState.messages, messages),
-        }))
-        //send messages to api end point
+          messages: GiftedChat.append(previousState.messages, message),
+        }));
       }
 
+            //----------------------------------- when user sends a message ----------------------
+      onReply = (message) => {
+        console.log("$$$$$$$$$$$$$$$$$$$$$4 in on reply message chat room");
+        this.setState(previousState => ({
+          messages: GiftedChat.append(previousState.messages, message),
+        }));
+      }
       //----------------------------------- open chat ----------------------
       openChat = ()=>{
         this.state.ticket.statusFormatted = "opened"
       }
-
 
       //----------------------------------- render chat view --------------------------------
       render() {
@@ -121,7 +139,7 @@ class Chat extends Component {
                     renderComposer={props=>{return( ticket.statusFormatted == "closed" ? <ChatClosedToolbar {...props} onHandlePress={this.openChat} />  : <ChatComposer {...props} />);}}
                     renderBubble={props => {return(<ChatMessageBubble {...props} />);}}  
                     renderSend={(props)=>{return ( ticket.statusFormatted == "closed" ? <OpenChatButton {...props} onHandlePress={this.openChat}/> : <ChatSendButton {...props} />);}} 
-                    onSend={messages => this.onSend(messages)}
+                    onSend={message => this.onSend(message)}
                     showUserAvatar={true}
                     showAvatarForEveryMessage={true}
                     keyboardShouldPersistTaps={'never'}

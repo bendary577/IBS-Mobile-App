@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView , ScrollView, View,Text, StyleSheet, TouchableHighlight, Image, Dimensions} from 'react-native';
 import ContactUsCard from '../../components/sub-components/cards/ContactUsCard';
 import {useTranslation} from 'react-i18next';
+import {openEmail, openWebsite, openFacebookLink, openHotline, openMedicalEmail, openPaymentEmail} from '../../utils/IBSContacts'
 
 let customerSupport = '../../assets/icons/contactUs/support.png';
 let width = Dimensions.get('window').width; 
@@ -10,21 +11,23 @@ let width = Dimensions.get('window').width;
 const ContactUsAuth = ({navigation}) => {
 
     const {t} = useTranslation();
+
+
 	return (
         <ScrollView >
             <SafeAreaView  style={styles.container}>   
                     <View style={styles.upper}>
                         <View style={styles.cardsRow}>
-                            <ContactUsCard type="hotline" title={t(`hotline`)}/>
-                            <ContactUsCard type="email" title={t(`email`)}/>
+                            <ContactUsCard type="hotline" title={t(`hotline`)} onHandlePress={openHotline}/>
+                            <ContactUsCard type="email" title={t(`email`)} onHandlePress={openEmail}/>
                         </View>
                         <View style={styles.cardsRow}>
-                            <ContactUsCard type="email" title={t(`paymentMail`)}/>
-                            <ContactUsCard type="email" title={t(`medicalMail`)}/>
+                            <ContactUsCard type="email" title={t(`paymentMail`)} onHandlePress={openPaymentEmail}/>
+                            <ContactUsCard type="email" title={t(`medicalMail`)} onHandlePress={openMedicalEmail}/>
                         </View>
                         <View style={styles.cardsRow}>
-                            <ContactUsCard type="website" title={t(`website`)}/>
-                            <ContactUsCard type="facebook" title={t(`facebook`)}/>
+                            <ContactUsCard type="website" title={t(`website`)} onHandlePress={openWebsite}/>
+                            <ContactUsCard type="facebook" title={t(`facebook`)} onHandlePress={openFacebookLink}/>
                         </View>
                     </View>
                     {/* ---------------------------------------- customer support card ---------------------- */}

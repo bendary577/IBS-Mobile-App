@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import TitleText from '../../../components/primitive-components/TitleText';
-import {authorizeRequest} from '../../../services/authentication';
 import {getUserEmploymentHistory} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
 import NoContent from '../../../components/sub-components/general/NoContent';
@@ -28,7 +27,7 @@ class UserEmploymentHistory extends Component {
     //make api request when screen is mounted
     componentDidMount = async () =>{
         this.setState({isLoading : true});
-        let data = await authorizeRequest(getUserEmploymentHistory);
+        let data = await getUserEmploymentHistory();
         this.setState({
             employmentHistory : data
         });

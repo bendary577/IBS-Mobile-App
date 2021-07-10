@@ -5,7 +5,6 @@ import {primaryRedColor} from '../../config/colors';
 import {useTranslation} from 'react-i18next';
 import {getFAQ} from '../../services/api_requests';
 import Loading from '../../components/sub-components/general/Loading';
-import {authorizeRequest} from '../../services/authentication';
 import NoContent from '../../components/sub-components/general/NoContent';
 import FAQCard from '../../components/sub-components/cards/FAQCard';
 
@@ -26,7 +25,7 @@ const FAQ = ({navigation}) => {
 
     const fetchFAQ = async () => {
         setLoading(true);
-        let data = await authorizeRequest(getFAQ);
+        let data = await getFAQ();
         setFAQ(data);
         setLoading(false)
     }

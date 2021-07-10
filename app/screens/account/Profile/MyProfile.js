@@ -4,7 +4,6 @@ import ProfileInfoSection from '../../../components/sub-components/Profile/Profi
 import ProfileSettingsSection from '../../../components/sub-components/Profile/ProfileSettingsSection';
 import AccountTabButtonLong from '../../../components/sub-components/navigationTabs/AccountTabButtonLong';
 import { ImageBackground } from 'react-native';
-import UploadImageButton from '../../../components/sub-components/buttons/UploadImageButton';
 import { withTranslation } from 'react-i18next';
 
 let avatarImage = '../../../assets/icons/Profile/avatar.png';
@@ -16,7 +15,6 @@ class MyProfile extends Component {
         const { t } = this.props;
         this.state = {  
             tab : t(`myInformations`),
-            image : null
         }
     }
 
@@ -27,22 +25,14 @@ class MyProfile extends Component {
         })
     }
 
-    setImage = (uploadedImage) =>{
-        this.setState({
-            image : uploadedImage
-        });
-    }
-
     render(){
-        const {tab, image} = this.state;
         const { t } = this.props;
-
+        const {tab} = this.state;
         return (
             <SafeAreaView style={styles.conatiner}>
                 <View style={styles.fixedView}>
                     <View>
-                        <ImageBackground style={styles.avatarView} source={image === null ? require(avatarImage) : {uri : image}} >
-                            <UploadImageButton setImage={this.setImage}/>
+                        <ImageBackground style={styles.avatarView} source={require(avatarImage)}>
                         </ImageBackground>
                     </View>
                     <View style={styles.tabs}>

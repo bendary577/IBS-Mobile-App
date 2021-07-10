@@ -2,18 +2,19 @@
 let BASE_API = `http://api.ibsns.com/v1/`;
 
 //-------------------------------- Auth API endpoints --------------------------
-export const LOGIN_API = `${BASE_API}/login`;
-export const SIGNUP_API = `${BASE_API}/register`;
+export const LOGIN_API = `${BASE_API}login`;
+export const SIGNUP_API = `${BASE_API}register`;
 export const LOGOUT_API = `${BASE_API}/logout`;
-export const FORGET_PASSWORD_API = `${BASE_API}/api/forget-password`;
-export const RESET_PASSWORD_API = `${BASE_API}/reset-password`; //send the mobile phone first
-export const CHECK_RESET_PASSWORD_API = `${BASE_API}/check-reset-password`; //then get code, send it to confirm
-export const UPDATE_PASSWORD_API = `${BASE_API}/reset-password`; // then update password, this api is appended by password reset token
+export const VERIFY_PHONE = `${BASE_API}verify-phone`;
+export const CHECK_PHONE_VERIFICATION_CODE = `${BASE_API}check-verification-code`;
+export const UPDATE_PASSWORD_API = `${BASE_API}update-password`;
+export const REQUEST_RESET_PASSWORD_API = `${BASE_API}reset-password`; //send the mobile phone first
+export const CHECK_RESET_PASSWORD_API = `${BASE_API}check-reset-password`; //then get code, send it to confirm
+export const RESET_PASSWORD_API = `${BASE_API}reset-password/`; // then update password, this api is appended by password reset token
 
 
 //----------------------------------- REST API User endpoints -------------------------------
 export const GET_USER_API = `${BASE_API}/user/`;
-export const UPLOAD_USER_IMAGE = `${BASE_API}/api/users/me/`;
 export const USER_NOTIFICATION_TOKEN = `${BASE_API}/api/users/set-notification-token`;
 
 //----------------------------------- REST API Tickets endpoints -------------------------------
@@ -21,6 +22,7 @@ export const GET_USER_TICKETS = `${BASE_API}user/tickets?q&page=0&sort=createdAt
 export const GET_USER_SINGLE_TICKET = `${BASE_API}user/tickets/`;
 export const CREATE_TICKET = `${BASE_API}tickets`;
 export const GET_TICKETS_ISSUES_CATEGORIES = `${BASE_API}tickets/issues/categories`;
+export const CREATE_TICKET_MESSAGE = `${BASE_API}tickets/id/message`;
 
 //----------------------------------- REST API Payments endpoints -------------------------------
 export const GET_USER_EMPLOYMENT_HISTORY = `${BASE_API}user/employment-history`;
@@ -35,6 +37,11 @@ export const GET_SINGLE_FAQ = `${BASE_API}faq/`;
 export const GET_CLIENT_INFORMATION = `${BASE_API}information?client=*`;
 export const GET_SINGLE_INFORMATION = `${BASE_API}information/`;
 
-//--------------------------------------- TEST API endpoints -------------------------
-export const PAYMENTS_API = `${BASE_API}/api/payments`;
-export const TICKETS_API = `${BASE_API}/api/tickets`;
+//--------------------------------------- SOCKET IO SERVER -------------------------
+export const SOCKET_IO_SERVER = `http://api.ibsns.com/socket.io`;
+
+//--------------------------------------- Notifications API endpoints -------------------------
+export const GET_USER_NOTIFICATIONS = `notifications?unread=1&page=0&limit=20&sort=-createdAt`;
+export const SET_USER_NOTIFICATION_TOKEN = `notifications/token`;
+export const MARK_NOTIFICATION_AS_READ = `notifications/60b760da35dc460f4d7aed40`;
+export const CLEAR_ALL_NOTIFICATIONS = `notifications/`;

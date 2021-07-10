@@ -7,6 +7,10 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import io.invertase.firebase.app.RNFirebaseAppPackage;
 import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
 import io.github.elyx0.reactnativedocumentpicker.DocumentPickerPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
@@ -54,6 +58,11 @@ public class MainApplication extends Application implements ReactApplication {
 
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
       packages.add(new RestartPackage());
+      packages.add(new ReactNativeFirebaseMessagingPackage());
+      packages.add(new ReactNativeFirebaseAppPackage());
+      packages.add(new RNFirebaseAppPackage());
+      packages.add(new RNFirebaseMessagingPackage());
+      packages.add(new RNFirebaseNotificationsPackage());
       //packages.add(new ReactNativeRestartPackage());
       return packages;
     }

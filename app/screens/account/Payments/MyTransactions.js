@@ -3,7 +3,6 @@ import {SafeAreaView,View, Text, StyleSheet, ScrollView ,FlatList} from 'react-n
 import TitleText from '../../../components/primitive-components/TitleText';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Transaction from '../../../components/sub-components/Payment/Transaction';
-import {authorizeRequest} from '../../../services/authentication';
 import {getUserPayments} from '../../../services/api_requests';
 import NoContent from '../../../components/sub-components/general/NoContent';
 import Loading from '../../../components/sub-components/general/Loading';
@@ -21,7 +20,7 @@ class MyTransactions extends Component {
 
     componentDidMount = async () =>{
         this.setState({isLoading : true});
-        let data = await authorizeRequest(getUserPayments);
+        let data = await getUserPayments();
         this.setState({
             transactions : data
         });

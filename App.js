@@ -9,6 +9,7 @@ import {useAuth} from './app/contexts/authContext';
 import * as SecureStore from 'expo-secure-store';
 import registerForPushNotificationsAsync from './app/notifications/registeration';
 
+
 const App = () => {
 
   //const [isI18nInitialized, setI18nInitialized] = useState(false);
@@ -32,7 +33,6 @@ const App = () => {
         })
         .catch((error) => console.warn(error));
         */
-
 
         //check if there is a token registered
         let token = SecureStore.getItemAsync('token');
