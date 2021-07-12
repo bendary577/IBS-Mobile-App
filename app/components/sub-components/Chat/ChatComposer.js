@@ -9,12 +9,11 @@ const ChatComposer = (props) => {
 
     return (
         <Composer
-        {...props} 
-        multiline={true}
-        textInputStyle={{maxHeight: 100}}
-        textInputStyle={styles.composer}
-        //onTextChanged={(text) => console.log(text)}
-        placeholder={t(`sendMessage`)}
+            {...props} 
+            multiline={true}
+            textInputStyle={{maxHeight: 100}}
+            textInputStyle={styles.composer}
+            placeholder={t(`sendMessage`)}
         />
     )
 }
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
         marginBottom:10,
         paddingLeft: 10,
         flexDirection : 'row',
-        flex : 5,
+        flex : 3,
       },
 })
 

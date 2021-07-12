@@ -18,10 +18,9 @@ export const signIn = async (data) => {
     const response = await axiosInstance.post(LOGIN_API, data)
       if(response.status === 200){
       storeToken(response.data.access_token);
-      return response.data.status;
-    }else{
-      return response.data.error;
+      return response;
     }
+      return response;
   } catch (error){
     console.error(error);
   }
@@ -32,13 +31,7 @@ export const signIn = async (data) => {
 export const signupRequest = async (data) => {
   try {
     const response = await axiosInstance.post(SIGNUP_API,data);  
-    if(response.status === 200){
-      storeToken(response.data.access_token);
-      return response.data.status
-    }else {
-      console.log("ya bendaaaaaaaaaary " + response)
-      //return response.data.error;
-    }
+    return response;
   } catch (err) {
       console.error(err);
   }
@@ -86,10 +79,13 @@ export const checkVerificationCode = async (data) => {
 //--------------------------------------- verify phone api end point ------------------------------
 export const updatePassword = async (data) => {
   try {
-      const resp = await authenticatedAxiosInstance.post(UPDATE_PASSWORD_API,data);
-      if(resp.status === 200){
-          console.log(resp.data);
-      }
+    console.log("in update password")
+    console.log(UPDATE_PASSWORD_API)
+    console.log(data.currentPassword)
+    console.log(data.password)
+    console.log(data.passwordConfirmation)
+      const response = await authenticatedAxiosInstance.post(UPDATE_PASSWORD_API, data);
+      return response
   } catch (err) {
       console.error(err);
   }
@@ -99,12 +95,8 @@ export const updatePassword = async (data) => {
 //--------------------------------------- verify phone api end point ------------------------------
 export const requestResetPassword = async (data) => {
   try {
-      const resp = await axiosInstance.post(REQUEST_RESET_PASSWORD_API,data);
-      if(resp.status === 200){
-          console.log(resp.data);
-      }else{
-        return resp.data.error
-      }
+      const response = await axiosInstance.post(REQUEST_RESET_PASSWORD_API,data);
+      return response;
   } catch (err) {
       console.error(err);
   }

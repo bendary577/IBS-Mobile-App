@@ -12,7 +12,9 @@ import {GET_USER_API,
         GET_USER_EMPLOYMENT_HISTORY,
         GET_USER_CLIENT_PAYMENTS,
         GET_USER_CLIENT_SINGLE_PAYMENT,
-        CREATE_TICKET_MESSAGE} from './apis';
+        CREATE_TICKET_MESSAGE,
+        GET_USER_NOTIFICATIONS,
+        MARK_NOTIFICATION_AS_READ} from './apis';
 import * as SecureStore from 'expo-secure-store';
 import { authenticatedAxiosInstance } from './axios';
 
@@ -126,13 +128,12 @@ export const addTicket = async (data) => {
 }
 
 //--------------------------------------- add new ticket api end point ------------------------------
-export const addTicketMessage = async (id) => {
+export const addTicketMessage = async (id, data) => {
     try {
-        CREATE_TICKET_MESSAGE.replace("id", id);
-        console.log(CREATE_TICKET_MESSAGE);
-        const resp = await authenticatedAxiosInstance.post(CREATE_TICKET_MESSAGE, data);
+        console.log(`${CREATE_TICKET_MESSAGE}${id}/message`);
+        const resp = await authenticatedAxiosInstance.post(`${CREATE_TICKET_MESSAGE}${id}/message`, data);
         if(resp.status === 201){
-            console.log(resp.data.message);
+            console.log(resp.data.status);
             return resp.data.message;
         }
     } catch (err) {
@@ -141,6 +142,33 @@ export const addTicketMessage = async (id) => {
 }
 
 
+//--------------------------------------- get user notification api end point ------------------------------
+    export const getUserNotifications = async () => {
+        try {
+            const response = await authenticatedAxiosInstance.get(GET_USER_NOTIFICATIONS);
+            if(response.status === 200){
+                return response.data.notifications;
+            }
+        } catch (err) {
+            //Handle Error Here
+            console.error(err);
+        }
+    }
+
+    
+//--------------------------------------- get user notification api end point ------------------------------
+export const markNotificationsAsRead = async (id) => {
+    try {
+        console.log("in mark as read");
+        const response = await authenticatedAxiosInstance.delete(MARK_NOTIFICATION_AS_READ+id);
+        if(response.status === 200){
+            //return response.data.employee;
+        }
+    } catch (err) {
+        //Handle Error Here
+        console.error(err);
+    }
+}
 //--------------------------------------- get user tickets api end point ------------------------------
 export const setUserNotificationToken = async (token, data) => {
     try {

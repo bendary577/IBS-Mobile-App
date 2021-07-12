@@ -3,10 +3,10 @@ import { TouchableOpacity } from 'react-native';
 import {Image, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
+import {getUserNotifications} from '../../../services/api_requests';
 
 let notificationsIcon = '../../../assets/icons/Home/notifications.png';
 let newNotificationIcon = '../../../assets/icons/Home/newNotification.png';
-
 
 const NotificationsButton = () => {
 
@@ -27,12 +27,16 @@ const NotificationsButton = () => {
     useEffect(()=>{
         //get users notifications from rest api
         //....
+        /*
         Notifications.addNotificationReceivedListener(notification => { 
             setNewNotification(notification); 
         });
+        */
     }, []);
 
-    const onPressHandle = () => {
+    const onPressHandle =async  () => {
+        let response = await getUserNotifications();
+        setNotifications(response);
         setNewNotification({});
         navigation.navigate("Notifications",{notifications})
     }

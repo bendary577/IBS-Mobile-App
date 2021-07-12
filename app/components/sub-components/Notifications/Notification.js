@@ -1,13 +1,19 @@
 import React from 'react'
 import {StyleSheet, Text, View,Image, TouchableOpacity} from 'react-native'
+import { markNotificationsAsRead } from '../../../services/api_requests';
 
 let replyIcon = '../../../assets/icons/Notifications/reply.png';
 let messageIcon = '../../../assets/icons/Notifications/message.png';
 let paymentIcon = '../../../assets/icons/Notifications/payment.png';
 
 const Notification = (props) => {
+
+    const markAsRead = async (id) => {
+        let response = await markNotificationsAsRead(id);
+    }
+
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={()=> {markAsRead(props.id)}}>
             <View style={styles.iconView}>
                 <Image style={styles.icon} source={
                     props.type==="reply" ? 
@@ -36,7 +42,7 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
         borderColor : '#D8D8D8',
         borderWidth : 2,
-        height : 80,
+        alignSelf: 'center',
         padding : 8,
     },
     iconView : {
@@ -52,7 +58,7 @@ const styles = StyleSheet.create({
         flex : 2
     },
     titleRead : {
-        color : 'black'
+        color : 'gray'
     },
     titleUnread : {
         color : 'red'

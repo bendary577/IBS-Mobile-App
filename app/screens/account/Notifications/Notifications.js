@@ -1,15 +1,20 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView,View, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Notification from '../../../components/sub-components/Notifications/Notification';
+import NoContent from '../../../components/sub-components/general/NoContent';
 //import messaging from '@react-native-firebase/messaging';
 
-const Notifications = () => {
+const Notifications = ({route}) => {
 
+    const [notifications, setNotifications] = useState([]);
     const navigation = useNavigation();
 
-    /*
+
     useEffect(() => {
+        console.log("set notifications");
+        setNotifications(route.params.notifications);
+        /*
         messaging().onMessage(async remoteMessage => {
           console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
         });
@@ -28,9 +33,9 @@ const Notifications = () => {
             );
             }
         });
-
-    }, []);
     */
+    }, []);
+
    
     const navigate = () => {
       navigation.navigate("MessageDetails");
@@ -40,13 +45,14 @@ const Notifications = () => {
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.transactionsView}>
                 <ScrollView>
-                    <Notification read={false} title="New Message For you" body="Hello Ahmed how are you ? I hop…" date ="Dec’ 2020" type="message"/>
-                    <Notification read={true} title="New Message For you" body="Hello Ahmed how are you ? I hop…" date ="Dec’ 2020" type="reply"/>
-                    <Notification read={false} title="New Message For you" body="Hello Ahmed how are you ? I hop…" date ="Dec’ 2020" type="message"/>
-                    <Notification read={false} title="New Message For you" body="Hello Ahmed how are you ? I hop…" date ="Dec’ 2020" type="payment"/>
-                    <Notification read={true} title="New Message For you" body="Hello Ahmed how are you ? I hop…" date ="Dec’ 2020" type="message"/>
-                    <Notification read={false} title="New Message For you" body="Hello Ahmed how are you ? I hop…" date ="Dec’ 2020" type="reply"/>
-                    <Notification read={false} title="New Message For you" body="Hello Ahmed how are you ? I hop…" date ="Dec’ 2020" type="message"/>
+                    {
+                        notifications.length === 0 ? 
+                        <NoContent />
+                        :
+                        notifications.map((notification) => {
+                            return <Notification id={notification._id} read={!notification.unread} title={notification.title} body="Hello Ahmed how are you ? I hop…" date ={notification.message} type={notification.type}/>
+                        })
+                    }
                 </ScrollView>
             </View>
         </SafeAreaView>

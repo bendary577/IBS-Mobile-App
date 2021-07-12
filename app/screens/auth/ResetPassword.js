@@ -21,11 +21,18 @@ class ResetPassword extends Component {
         super(props);
         this.state = { 
             phone : '',
-            message : '',
+            errorMessage : '',
         };
     }
 
+    clearInputs = () => {
+        this.setState({
+            errorMessage : ''
+        });
+    }
+
     navigateLogin = () =>{
+        this.clearInputs();
         this.props.navigation.navigate("Login");
     }
 
@@ -36,20 +43,26 @@ class ResetPassword extends Component {
     }
 
     handleSendConfirmation = async () => {
+        this.clearInputs();
         let data = {
             phone : this.state.phone
         }
-        let responseMessage = await requestResetPassword(data);
-        console.log("in reset password" + responseMessage);
-        if(responseMessage === "success"){
-            this.setState({
-                message : responseMessage
-            });
+        let response = await requestResetPassword(data);
+        if(response.status === 200 ){
             setTimeout(()=>{ 
-                this.props.navigation.navigate("ConfirmNewPassword");
+                this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
             }, 2000);
+        }else if (response.status === 422){
+            response.data.errors.map( error => {
+                this.setState({
+                    errorMessage : error.msg
+                });
+            });
+        }else{
+            this.setState({
+                errorMessage : response.data.error
+            });
         }
-        this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone }); 
     }
 
     render(){
@@ -72,17 +85,17 @@ class ResetPassword extends Component {
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            <IBSInputText placeholder={t(`phone`)} onChangeText={this.handleChangeText}/>
-                            <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
-                            <IBSButtonLargeGray value={t(`backtoLogin`)} action={false} onHandlePress={this.navigateLogin}/>
                             {
-                                this.state.message !== '' ? 
+                                this.state.errorMessage !== '' ? 
                                     <View style={{justifyContent:'center', alignItems:'center'}}>
-                                        <Text style={{marginTop : 20, color : 'red'}}>{this.state.message}</Text>
+                                        <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
                                     </View>
                                 :   
                                     <></>
                             }
+                            <IBSInputText placeholder={t(`phone`)} onChangeText={this.handleChangeText}/>
+                            <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
+                            <IBSButtonLargeGray value={t(`backtoLogin`)} action={false} onHandlePress={this.navigateLogin}/>
                         </View>
                     </View>
                 </ImageBackground>
@@ -133,6 +146,10 @@ const styles = StyleSheet.create({
     loginForm : {
         marginTop : 20,
     },
+    errorMessage : {
+        marginVertical : 5,
+        color : 'red'
+    }
 });
 
 

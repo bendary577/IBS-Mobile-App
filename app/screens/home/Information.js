@@ -49,7 +49,6 @@ const Information = ({navigation}) => {
                 </View>
                 <TitleText value="My Information"/>
             </View>
-
             {/* ------------------------------------- about text section ------------------------------------ */}
             <ScrollView>
                 <View style={styles.supportTicketsView}>

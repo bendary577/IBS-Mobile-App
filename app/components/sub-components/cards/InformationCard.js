@@ -22,15 +22,12 @@ const InformationCard = (props) => {
                             <Text style={styles.title}>{props.item.title}</Text>
                         </View>
                         <View style={styles.rightView}>
-                            <Text style={styles.number}>{props.item.client}</Text>
+                            <Text style={styles.number}>Client {props.item.client}</Text>
                         </View>
                     </View>
                     <View style={styles.view}>
                         <View style={styles.leftView}>
-                            <Text style={styles.body} numberOfLines={1}>{props.item._id}</Text>
-                        </View>
-                        <View style={styles.rightView}>
-                            <Text style={styles.date}>{props.item.createdAt.slice(0,4)}</Text>
+                            <Text style={styles.date}>{props.item.createdAt.slice(0,10)}</Text>
                         </View>
                     </View>
                     </ScrollView>

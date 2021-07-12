@@ -22,7 +22,7 @@ export const GET_USER_TICKETS = `${BASE_API}user/tickets?q&page=0&sort=createdAt
 export const GET_USER_SINGLE_TICKET = `${BASE_API}user/tickets/`;
 export const CREATE_TICKET = `${BASE_API}tickets`;
 export const GET_TICKETS_ISSUES_CATEGORIES = `${BASE_API}tickets/issues/categories`;
-export const CREATE_TICKET_MESSAGE = `${BASE_API}tickets/id/message`;
+export const CREATE_TICKET_MESSAGE = `${BASE_API}tickets/`;
 
 //----------------------------------- REST API Payments endpoints -------------------------------
 export const GET_USER_EMPLOYMENT_HISTORY = `${BASE_API}user/employment-history`;
@@ -41,7 +41,7 @@ export const GET_SINGLE_INFORMATION = `${BASE_API}information/`;
 export const SOCKET_IO_SERVER = `http://api.ibsns.com/socket.io`;
 
 //--------------------------------------- Notifications API endpoints -------------------------
-export const GET_USER_NOTIFICATIONS = `notifications?unread=1&page=0&limit=20&sort=-createdAt`;
-export const SET_USER_NOTIFICATION_TOKEN = `notifications/token`;
-export const MARK_NOTIFICATION_AS_READ = `notifications/60b760da35dc460f4d7aed40`;
-export const CLEAR_ALL_NOTIFICATIONS = `notifications/`;
+export const GET_USER_NOTIFICATIONS = `${BASE_API}notifications?unread=1&page=0&limit=20&sort=-createdAt`;
+export const SET_USER_NOTIFICATION_TOKEN = `${BASE_API}notifications/token`;
+export const MARK_NOTIFICATION_AS_READ = `${BASE_API}notifications/`;
+export const CLEAR_ALL_NOTIFICATIONS = `${BASE_API}notifications/`;

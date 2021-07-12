@@ -23,33 +23,46 @@ const Login = (props) => {
     const [identityNumber, setIdentityNumber] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setErrorMessage] = useState('');
+    const [nationalIdErrorMessage, setNationalIdErrorMessage] = useState('');
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
     const {setAuthenticated} = useAuth();
     const {t} = useTranslation();
 
+    const clearInputs = () => {
+        setErrorMessage('');
+        setNationalIdErrorMessage('');
+        setPasswordErrorMessage('');
+    }
+
     const handleLogin = async () =>{
+        clearInputs();
         let data = {
             identityNumber : identityNumber,
             password : password
         }
         setLoading(true);
         let response = await signIn(data);
-        console.log(response.status);
-        if(response === "success"){
-            setLoading(false)
-            if(response.data.user.isVerified !== true){
-                props.navigation.navigate("PhoneVerification");
-            }else{
-                setAuthenticated(true);
-            }
+        if(response.status === 200 ){
+            setLoading(false);
+            setAuthenticated(true)
+        }else if (response.status === 422){
+            setLoading(false);
+            response.data.errors.map( error => {
+                if(error.param === 'password'){
+                    setPasswordErrorMessage(error.msg)
+                }else if (error.param === 'nationalIdentity'){
+                    setNationalIdErrorMessage(error.msg)
+                }
+            });
         }else{
             setLoading(false);
-            console.log(response);
-            setError(response);
+            setErrorMessage(response.data.error)
         }
     }
 
     const handleCreateAccount = () =>{
+        clearInputs();
         props.navigation.navigate("SignUp");
     }
 
@@ -68,7 +81,6 @@ const Login = (props) => {
             <Loading action={t(`logging`)}/>
             :
             <SafeAreaView style={styles.container}>
-                <ScrollView>
                 <View style={styles.top}>
                     <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                 </View>
@@ -80,8 +92,9 @@ const Login = (props) => {
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            { error !== '' ? <Text style={{color :'red', textAlign : 'center', marginBottom : 5}}>{error}</Text> : <></>}
+                            { error !== '' ? <Text style={styles.errorMessage}>{error}</Text> : <></>}
                             <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeIdentificationNumber}/>
+                            { passwordErrorMessage !== '' ? <Text style={styles.passwordErrorMessage}>{error}</Text> : <></>}
                             <IBSPasswordText placeholder={t(`passwordPlaceholder`)} hasChild={true} onChangeText={handleOnChangePassword}/>
                             <IBSButtonLargeRed value={t(`login`)} action={true} onHandlePress={handleLogin} />
                             <IBSButtonLargeGray value={t(`noAccount`)} action={true} actionText={t(`create`)} onHandlePress={handleCreateAccount}/>
@@ -93,7 +106,6 @@ const Login = (props) => {
                         </View>
                     </View>
                 </ImageBackground>
-                </ScrollView>
             </SafeAreaView>
         );
     }
@@ -114,7 +126,7 @@ const styles = StyleSheet.create({
     },
     backgroundImage : {
         width : width ,
-        height : height-100
+        height : height-80
         //width : 360,
         //height : 500
     },
@@ -137,6 +149,11 @@ const styles = StyleSheet.create({
         flex : 1,
         right : I18nManager.isRTL ?  -100 : 80,
         marginTop : 40
+    },
+    errorMessage : {
+        color : 'red',
+        marginVertical : 2,
+        textAlign : 'center'
     },
 });
 

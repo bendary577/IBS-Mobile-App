@@ -20,6 +20,7 @@ import {addTicketMessage} from '../../../services/api_requests';
 
 let userAvatar = '../../../assets/icons/Support/userAvatar.png';
 let supportAvatar = '../../../assets/icons/Support/supportAvatar.png';
+//'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 
 class Chat extends Component {
   
@@ -32,19 +33,18 @@ class Chat extends Component {
             isLoading : false,
             user : {}
         }
+
       //connect to socket server 
       this.socket = io(SOCKET_IO_SERVER, {jsonp: false,  transports: ['websocket'] });
       this.socket.on('connect', () => { 
         console.log('connected to socket server'); 
       }); 
-      this.socket.join(`ticket:${this.state.ticket._id}`)
+      //this.socket.join(`ticket:${this.state.ticket._id}`)
       this.socket.on("ticketMessage", this.onReply)
     }
      
       //------------------------------- call the ticket's api to get comments ---------------------
       componentDidMount = async () => {
-       
-
         //reload chat messages
         this.setState({isLoading : true});
         let data = await getSingleTicket(this.props.route.params.id);
@@ -60,7 +60,7 @@ class Chat extends Component {
         });
         let chatMessages = this.formatMessages();
         this.setState({
-            messages : chatMessages
+            messages : chatMessages.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
         })
         this.setState({isLoading : false});
       }
@@ -75,9 +75,9 @@ class Chat extends Component {
               text: chatMessage.message,
               createdAt: chatMessage.createdAt,
               user: {
-                _id: chatMessage.owner,
+                _id: chatMessage.createdBy,
                 name: this.state.ticket.createdBy.emp.name.en,
-                avatar: 'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+                avatar: chatMessage.createdBy === this.state.user._id ? require(userAvatar) : require(supportAvatar)
               }
             };
             return gcm;
@@ -86,21 +86,22 @@ class Chat extends Component {
       }
      
       //----------------------------------- when user sends a message ----------------------
-      onSend = async (message = {}) => {
-        let data = await addTicketMessage(this.state.ticket._id);
-        console.log("$$$$$$$$$$$$$$$$$$$$$4 in on send message chat room");
+      onSend = async (message) => {
+       let data = { message : message[0].text }
+        let response = await addTicketMessage(this.state.ticket._id, data);
         this.setState(previousState => ({
           messages: GiftedChat.append(previousState.messages, message),
         }));
       }
 
-            //----------------------------------- when user sends a message ----------------------
+      //----------------------------------- when user sends a message ----------------------
       onReply = (message) => {
         console.log("$$$$$$$$$$$$$$$$$$$$$4 in on reply message chat room");
         this.setState(previousState => ({
           messages: GiftedChat.append(previousState.messages, message),
         }));
       }
+
       //----------------------------------- open chat ----------------------
       openChat = ()=>{
         this.state.ticket.statusFormatted = "opened"
@@ -116,23 +117,20 @@ class Chat extends Component {
             isLoading === true ? 
                 <Loading action={t(`loading`)}/>
             :
-
-            messages.length !== 0 && isLoading === false ?
                 <>
                 <View style={styles.chatHeader}>
                     <View style={styles.top}>
-                        <Text style={styles.titleText}>{ticket.issue}</Text>
-                        <Text>#{ticket.uid}</Text>
+                        <Text style={styles.titleText}>{ticket.statusFormatted}</Text>
+                        <Text>#{ticket._id}</Text>
                     </View>
                     <View style={styles.bottom}>
-                        <Text style={styles.dateText}>opened in {ticket.createdAt.slice(0,4)}</Text>
+                        <Text style={styles.dateText}>{ticket.subject}</Text>
                     </View>
                 </View>
                 <GiftedChat
                     messages={messages}
                     textInputStyle={styles.composer}
                     minComposerHeight={45}
-
                     maxComposerHeight={45}
                     minInputToolbarHeight={80}
                     renderInputToolbar={props => { return( ticket.statusFormatted == "closed" ? <ClosedChatInputToolbar {...props} /> : <ChatInputToolbar {...props} />);}}
@@ -141,18 +139,15 @@ class Chat extends Component {
                     renderSend={(props)=>{return ( ticket.statusFormatted == "closed" ? <OpenChatButton {...props} onHandlePress={this.openChat}/> : <ChatSendButton {...props} />);}} 
                     onSend={message => this.onSend(message)}
                     showUserAvatar={true}
-                    showAvatarForEveryMessage={true}
+                    showAvatarForEveryMessage={false}
                     keyboardShouldPersistTaps={'never'}
                     user={{
                         _id: user._id,
                         name: user.name,
-                        avatar: user.avatar === null ? 
-                          'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' : user.avatar 
+                        avatar: user.avatar 
                     }}
                 />
-              </>
-            :
-            <NoContent />    
+              </> 
         )
     }
 }

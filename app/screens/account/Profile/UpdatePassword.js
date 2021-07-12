@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
+import {SafeAreaView,Text, Image, ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText'
 import IBSButtonLargeRed from '../../../components/primitive-components/IBSButtonLargeRed';
 import BackButton from '../../../components/sub-components/buttons/BackButton';
@@ -19,11 +19,29 @@ class UpdatePassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentPassword : '',
             newPassword : '',
-            newPasswordConfirmation : ''
+            newPasswordConfirmation : '',
+            message : '',
+            currentPasswordErrorMessage : '',
+            passwordErrorMessage : '',
+            passwordConfirmationErrorMessage : ''
          };
     }
 
+    clearInputs = () => {
+        this.setState({
+            message : '',
+            passwordErrorMessage : '',
+            passwordConfirmationErrorMessage : ''
+        });
+    }
+
+    handleCurrentPassword = (userInput) => {
+        this.setState({
+            currentPassword : userInput
+        });
+    }
 
     handleNewPasswordChange = (userInput) => {
         this.setState({
@@ -44,19 +62,44 @@ class UpdatePassword extends Component {
         return false;
     }
 
-    handleUpdatePassword = () => {
-        let validation = validate(this.state.newPassword, this.state.newPasswordConfirmation);
+    handleUpdatePassword = async () => {
+        this.clearInputs();
+        let validation = this.validate(this.state.newPassword, this.state.newPasswordConfirmation);
+        console.log("hamaaaaaaaaaaaaada " + validation)
         if(validation){
             let data = {
-                currentPassword : this.state.newPassword,
-                newPassword : this.state.newPasswordConfirmation
+                currentPassword : this.state.currentPassword,
+                password : this.state.newPassword,
+                passwordConfirmation : this.state.newPasswordConfirmation
             }
-            updatePassword(data);
+            let response = await updatePassword(data);
+            if(response.status === 200 ){
+                this.setState({
+                    message : response.data.message
+                });
+            }else if (response.status === 422){
+                response.data.errors.map( error => {
+                    if(error.param === 'password'){
+                        this.setState({
+                            passwordErrorMessage : error.msg
+                        });
+                    }else if(error.param === 'passwordConfirmation'){
+                        this.setState({
+                            passwordConfirmationErrorMessage : error.msg
+                        });
+                    }
+                });
+            }else{
+                this.setState({
+                    currentPasswordErrorMessage : response.data.error
+                });
+            }
         }
     }
 
     render(){
         const { t } = this.props;
+        const {message, passwordConfirmationErrorMessage, passwordErrorMessage, currentPasswordErrorMessage} = this.state;
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.backgroundImage} >
@@ -67,7 +110,12 @@ class UpdatePassword extends Component {
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
+                            { message !== '' ? <Text style={styles.errorMessage}>{message}</Text> : <></>}
+                            { currentPasswordErrorMessage !== '' ? <Text style={styles.errorMessage}>{currentPasswordErrorMessage}</Text> : <></>}
+                            <IBSPasswordText placeholder="Current Password" onChangeText={this.handleCurrentPassword}/>
+                            { passwordErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordErrorMessage}</Text> : <></>}
                             <IBSPasswordText placeholder={t(`newPassword`)} onChangeText={this.handleNewPasswordChange}/>
+                            { passwordConfirmationErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordConfirmationErrorMessage}</Text> : <></>}
                             <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={this.handleNewPasswordConfirmationChange}/>
                             <IBSButtonLargeRed value="Update Password" action={false}  onHandlePress={this.handleUpdatePassword}/>
                         </View>
@@ -119,6 +167,11 @@ const styles = StyleSheet.create({
     },
     loginForm : {
         marginTop : 15
+    },
+    errorMessage : {
+        color : 'red',
+        marginVertical : 2,
+        textAlign : 'center'
     },
 });
 

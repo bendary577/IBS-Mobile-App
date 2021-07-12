@@ -28,9 +28,12 @@ const SignUp = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [nationalIdErrorMessage, setNationalIdErrorMessage] = useState('');
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+    const [phoneErrorMessage, setPhoneErrorMessage] = useState('');
+    const [passwordConfirmationErrorMessage, setPasswordConfirmationErrorMessage] = useState('');
     const {setAuthenticated} = useAuth();
     const {t} = useTranslation();
 
@@ -44,6 +47,7 @@ const SignUp = () => {
     }
 
     const handleSignup = async () =>{
+        clearInputs();
         let data = {
           identityNumber : nationalId,
           phone : phone,
@@ -52,19 +56,37 @@ const SignUp = () => {
         };
 
         setLoading(true);
-        let resp = await signupRequest(data);
-        if(resp === "success"){
+        let response = await signupRequest(data);
+        if(response.status === 200 ){
             setLoading(false);
             setAuthenticated(true)
-        }else{
+        }else if (response.status === 422){
             setLoading(false);
-            setError(true);
-            console.log(resp + "ya hamaaaaaaaaaaaaaaada")
-            setErrorMessage(resp)
-        }
+            response.data.errors.map( error => {
+                if(error.param === 'phone'){
+                    setPhoneErrorMessage(error.msg)
+                }else if(error.param === 'password'){
+                    setPasswordErrorMessage(error.msg)
+                }else if(error.param === 'passwordConfirmation'){
+                    setPasswordConfirmationErrorMessage(error.msg)
+                }
+            })
+       }else{
+            setLoading(false);
+            setErrorMessage(response.data.error)
+       }
+    }
+
+    const clearInputs = () => {
+        setErrorMessage('');
+        setNationalIdErrorMessage('');
+        setPasswordErrorMessage('');
+        setPasswordConfirmationErrorMessage('');
+        setPhoneErrorMessage('');
     }
 
     const navigateLogin = () =>{
+        clearInputs();
         navigation.navigate("Login");
     }
 
@@ -106,10 +128,13 @@ const SignUp = () => {
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                         <View style={styles.middle}>
                             <View style={styles.loginForm}>
-                                { error === true ? <Text style={{color : 'red', margin : 2}}>{errorMessage}</Text> : <></>}
+                                { errorMessage !== '' ? <Text style={styles.errorMessage}>{errorMessage}</Text> : <></>}
                                 <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeNationalId}/>
+                                { phoneErrorMessage !== '' ? <Text style={styles.errorMessage}>{phoneErrorMessage}</Text> : <></>}
                                 <IBSInputText placeholder={t(`phone`)} onChangeText={handleOnChangePhone}/>
+                                { passwordErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordErrorMessage}</Text> : <></>}
                                 <IBSPasswordText placeholder={t(`setPassword`)} onChangeText={handleOnChangePassword}/>
+                                { passwordConfirmationErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordConfirmationErrorMessage}</Text> : <></>}
                                 <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={handleOnChangePasswordConfirm}/>
                                 <View style={styles.radioView}>
                                     <View style={styles.RadioButton}>
@@ -164,7 +189,7 @@ const styles = StyleSheet.create({
     },
     backgroundImage : {
         width : width ,
-        height : height
+        height : height+90
     },
     middle : {
         flex : 4,
@@ -177,8 +202,8 @@ const styles = StyleSheet.create({
         marginTop : 3
     },
     loginForm : {
-        marginTop : 20,
-        marginBottom : 20
+        height : '80%',
+        marginVertical : 20,
     },
     radioView : {
         flexDirection : 'row',
@@ -200,8 +225,14 @@ const styles = StyleSheet.create({
     bottom : {
         flex : 1,
         alignItems : 'flex-start',
-        paddingTop : 10,
+        marginTop : 10,
     },
+    errorMessage : {
+        color : 'red',
+        marginVertical : 2,
+        textAlign : 'center'
+    },
+    
 });
 
 

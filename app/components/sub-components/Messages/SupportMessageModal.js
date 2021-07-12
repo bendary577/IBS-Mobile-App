@@ -32,7 +32,7 @@ const SupportMessageModal = (props) => {
                 />
                 <TextInput  
                     style={styles.discriptionInputText}
-                    placeholder="please provide a description to your ticket" 
+                    placeholder="descripe your ticket" 
                     placeholderTextColor="#B9B9B9"
                     textAlign={'center'}
                     onChangeText={text => props.onChangeDescription(text)}
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         borderColor : 'gray',
         marginTop : 10,
         borderRadius : 15,
-        padding : 5
+        padding : 10
     },
     button : {
         width : "100%",
