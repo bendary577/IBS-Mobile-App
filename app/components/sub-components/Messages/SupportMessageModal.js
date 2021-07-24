@@ -25,14 +25,14 @@ const SupportMessageModal = (props) => {
            <View style={styles.messageView}>
                 <TextInput  
                     style={styles.subjectInputText}
-                    placeholder="what is the new ticket subject ?" 
+                    placeholder={t(`support_model_subject`)} 
                     placeholderTextColor="#B9B9B9"
                     textAlign={'center'}
                     onChangeText={text => props.onChangeSubject(text)}
                 />
                 <TextInput  
                     style={styles.discriptionInputText}
-                    placeholder="descripe your ticket" 
+                    placeholder={t(`support_model_description`)}
                     placeholderTextColor="#B9B9B9"
                     textAlign={'center'}
                     onChangeText={text => props.onChangeDescription(text)}

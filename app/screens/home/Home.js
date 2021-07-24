@@ -63,11 +63,11 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TitleText value="FAQ"/>
+                                <TitleText value={t(`faq`)}/>
                             </View>
                             
                             <View style={styles.description}>
-                                <IBSButtonLargeGray value="get a look at common issues" action={false} actionText={t(`login`)} onHandlePress={navigateToFAQ}/>
+                                <IBSButtonLargeGray value={t(`faq_description`)} action={false} actionText={t(`login`)} onHandlePress={navigateToFAQ}/>
                             </View>
                         </View>
 
@@ -82,13 +82,13 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TitleText value={t(`myInformations`)}/>
+                                <TitleText value={t(`information`)}/>
                             </View>
                             
                             <View style={styles.description}>
-                                <Text>all our employees clients are grouped in one place, access your info anywhere any time</Text>
+                                <Text>{t(`information_description`)}</Text>
                                 <TouchableOpacity onPress={navigateToInformation}>
-                                    <Text style={styles.seeInfoTxt}>See More Insights about your info</Text>
+                                    <Text style={styles.seeInfoTxt}>{t(`information_action`)}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

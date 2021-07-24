@@ -17,6 +17,7 @@ import {GET_USER_API,
         MARK_NOTIFICATION_AS_READ} from './apis';
 import * as SecureStore from 'expo-secure-store';
 import { authenticatedAxiosInstance } from './axios';
+import { ResourceStore } from 'i18next';
 
 
 //--------------------------------------- get user api end point ------------------------------
@@ -82,6 +83,8 @@ export const getUserTickets = async () => {
         const resp = await authenticatedAxiosInstance.get(GET_USER_TICKETS);
         if(resp.status === 200){
             return resp.data;
+        }else{
+            console.log("^^^^^^^^^^^^^^^^^ response 3")
         }
     } catch (err) {
         //Handle Error Here

@@ -8,7 +8,6 @@ import {SafeAreaView, Image,ScrollView, View, StyleSheet} from 'react-native';
 import {primaryRedColor} from '../../../config/colors';
 import ClientCard from '../../../components/sub-components/cards/ClientCard';
 
-
 let bankIcon = '../../../assets/icons/Payment/bank.png';
 let dataIcon = '../../../assets/icons/Payment/date.png';
 
@@ -35,14 +34,14 @@ class UserEmploymentHistory extends Component {
     }
 
     render(){
-
+        const { t } = this.props;
         return (
 
         this.state.isLoading === true ? 
                 <Loading />
             :
 
-            Object.keys(this.state.employmentHistory).length !== 0 && this.state.isLoading === false ?
+            this.state.employmentHistory !== {} && Object.keys(this.state.employmentHistory).length !== 0 && this.state.isLoading === false ?
 
             <SafeAreaView style={styles.container}>
                 {/* ------------------------------------- header section ------------------------------------ */}
@@ -53,7 +52,7 @@ class UserEmploymentHistory extends Component {
                             source={require('../../../assets/icons/aboutUs/about.png')}
                         />  
                     </View>
-                    <TitleText value="My Employment History"/>
+                    <TitleText value={t(`employment_history`)}/>
                 </View>
 
                 {/* ------------------------------------- about text section ------------------------------------ */}
@@ -61,7 +60,7 @@ class UserEmploymentHistory extends Component {
                     <View style={styles.supportTicketsView}>
                         {
                             this.state.employmentHistory.map((client)=>{
-                                return <ClientCard key={client.client._id} item={client} />
+                                return <ClientCard key={client.client._id.toString()} item={client} />
                             })
                         }
                     </View>

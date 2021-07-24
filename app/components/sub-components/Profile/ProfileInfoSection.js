@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, ScrollView } from 'react-native'
+import {StyleSheet, View, ScrollView, I18nManager } from 'react-native'
 import ProfileInfoCard from '../../../components/sub-components/cards/ProfileInfoCard';
 import {getUserInfo} from '../../../services/api_requests';
 import { withTranslation } from 'react-i18next';
@@ -30,19 +30,18 @@ class ProfileInfoSection extends Component {
 
     componentDidMount = async () =>{
         let data = await getUserInfo();
-        console.log("^^^^^^^^^^^^^^^^^^^ egypt " + data.user.emp.name.en);
         this.setData(
-                data.user.emp.name.en, 
+                I18nManager.isRTL ? data.user.emp.name.ar :  data.user.emp.name.en, 
                 data.user.identityNumber,
                 data.user.phone,
                 data.user.emp.email,
-                data.user.emp.address.en,
+                I18nManager.isRTL ? data.user.emp.address.ar : data.user.emp.address.en,
                 data.user.emp.bank.name,
                 data.user.nationality,
                 data.user.emp.bank.name,
                 data.user.emp.hiringDate,
                 data.user.emp.clientEmpNumber,
-                data.user.emp.job.en,
+                I18nManager.isRTL ? data.user.emp.job.ar : data.user.emp.job.en,
                 data.user.emp.gender,
                 data.user.emp.insuranceNumber);
     }
@@ -74,7 +73,7 @@ class ProfileInfoSection extends Component {
 
         return (
             <View style={styles.conatiner}>
-                <IBSButtonLargeGray value="Update Password" action={false} onHandlePress={this.navigateToUpdatePassword}/>
+                <IBSButtonLargeGray value={t(`update_password`)} action={false} onHandlePress={this.navigateToUpdatePassword}/>
                 <ScrollView>
                     <ProfileInfoCard title={t(`username`)} value={this.state.username} />
                     <ProfileInfoCard title={t(`nationaiID`)} value={this.state.nationaiID}/>

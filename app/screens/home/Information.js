@@ -47,7 +47,7 @@ const Information = ({navigation}) => {
                         source={require('../../assets/icons/aboutUs/about.png')}
                     />  
                 </View>
-                <TitleText value="My Information"/>
+                <TitleText value={t(`information`)}/>
             </View>
             {/* ------------------------------------- about text section ------------------------------------ */}
             <ScrollView>
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     container : {
         flex : 1,
         flexDirection : 'column',
+        
     },
     header: {
         display: 'flex',

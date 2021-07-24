@@ -51,7 +51,7 @@ const FAQ = ({navigation}) => {
                         source={require('../../assets/icons/aboutUs/about.png')}
                     />  
                 </View>
-                <TitleText value="FAQ"/>
+                <TitleText value={t(`faq`)}/>
             </View>
 
             {/* ------------------------------------- about text section ------------------------------------ */}

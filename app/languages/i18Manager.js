@@ -215,12 +215,23 @@ const resources = {
             "reopen" : "Reopn",
             "chatClosed_1" : "You Can’t send any message because",
             "chatClosed_2" : "this ticket Is ",
-            "chatClosed" : "Closed"
+            "chatClosed" : "Closed",
+            "faq" : "FAQ",
+            "faq_description" : "get a look at common issues",
+            "information" : "My Information",
+            "information_description" : "all our employees clients are grouped in one place, access your info anywhere any time",
+            "information_action" : "See More Insights about your info",
+            "support_model_subject" : "what is the new ticket subject ?",
+            "support_model_description" : "descripe your ticket",
+            "set_new" : "Set New",
+            "current_password" : "Current Password",
+            "update_password" : "Update Password",
+            "employment_history" : "My Employment History"
         },
     },
     ar: {
       translation: {
-        'Hello world': 'مرحبا بالعالم',
+            'Hello world': 'مرحبا بالعالم',
             "getStarted": "أبــــدأ",
             "ibsAccount" : "حساب IBS",
             "getInTouch" : "ابق على تواصل",
@@ -340,7 +351,18 @@ const resources = {
             "reopen" : "إعادة فتح",
             "chatClosed_1" : "لا يمكنك إرسال أي رسائل لأن",
             "chatClosed_2" : "هذه المحادثة ",
-            "chatClosed" : "مغلقة"
+            "chatClosed" : "مغلقة",
+            "faq" : "الأسئلة الشائعة",
+            "faq_description" : "ألق نظرة علي الأسئلة الشائعة بين المستخدمين",
+            "information" : "معلوماتي",
+            "information_description" : "كل المعلومات الخاصة بموظفينا في مكان واحد, يمكنك الاطلاع عليها بأي وقت",
+            "information_action" : "اعرف أكثر عن معلوماتك",
+            "support_model_subject" : "ماهو عنوان التذكرة الجديدة ؟",
+            "support_model_description" : "برجاء كتابة وصف للتذكرة",
+            "set_new" : "تحديث",
+            "current_password" : "كلمة السر الحالية",
+            "update_password" : "حدث كلمة السر",
+            "employment_history" : "تاريخي الوظيفي"
         },
     },
   };

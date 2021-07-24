@@ -25,7 +25,7 @@ const Welcome = (props) => {
         if(language !== null){
             setTimeout(() => {
                 props.navigation.navigate('WelcomeAnimation');
-            }, 2000);
+            }, 4000);
         }
     }, []);
 

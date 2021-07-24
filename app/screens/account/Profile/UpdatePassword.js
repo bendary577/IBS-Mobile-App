@@ -105,19 +105,19 @@ class UpdatePassword extends Component {
                 <View style={styles.backgroundImage} >
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value="Set New" />
-                            <TitleText value="Password" />
+                            <TitleText value={t(`set_new`)} />
+                            <TitleText value={t(`password`)} />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
                             { message !== '' ? <Text style={styles.errorMessage}>{message}</Text> : <></>}
                             { currentPasswordErrorMessage !== '' ? <Text style={styles.errorMessage}>{currentPasswordErrorMessage}</Text> : <></>}
-                            <IBSPasswordText placeholder="Current Password" onChangeText={this.handleCurrentPassword}/>
+                            <IBSPasswordText placeholder={t(`current_password`)} onChangeText={this.handleCurrentPassword}/>
                             { passwordErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordErrorMessage}</Text> : <></>}
                             <IBSPasswordText placeholder={t(`newPassword`)} onChangeText={this.handleNewPasswordChange}/>
                             { passwordConfirmationErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordConfirmationErrorMessage}</Text> : <></>}
                             <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={this.handleNewPasswordConfirmationChange}/>
-                            <IBSButtonLargeRed value="Update Password" action={false}  onHandlePress={this.handleUpdatePassword}/>
+                            <IBSButtonLargeRed value={t(`update_password`)} action={false}  onHandlePress={this.handleUpdatePassword}/>
                         </View>
                     </View>
                 </View>

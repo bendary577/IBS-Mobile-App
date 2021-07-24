@@ -54,7 +54,7 @@ const HomeStack = () => {
               name="FAQ" 
               component={FAQ}
               options={{
-                title : "FAQ",
+                title : t(`faq`),
                 headerStyle: {
                   backgroundColor: "#D8D8D8",
                   borderBottomRightRadius : 20,
@@ -150,7 +150,7 @@ const EmploymentPaymentsStack = () => {
                   fontWeight: 'bold',
                 },
                 headerRight : ()=>(  <NotificationsButton />),
-                headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value="Employment Payment" /></View>)
+                headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value={t(`employment_history`)} /></View>)
             }}
             />
 
