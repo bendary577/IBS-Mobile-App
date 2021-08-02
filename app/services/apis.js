@@ -12,13 +12,12 @@ export const REQUEST_RESET_PASSWORD_API = `${BASE_API}reset-password`; //send th
 export const CHECK_RESET_PASSWORD_API = `${BASE_API}check-reset-password`; //then get code, send it to confirm
 export const RESET_PASSWORD_API = `${BASE_API}reset-password/`; // then update password, this api is appended by password reset token
 
-
 //----------------------------------- REST API User endpoints -------------------------------
 export const GET_USER_API = `${BASE_API}/user/`;
 export const USER_NOTIFICATION_TOKEN = `${BASE_API}/api/users/set-notification-token`;
 
 //----------------------------------- REST API Tickets endpoints -------------------------------
-export const GET_USER_TICKETS = `${BASE_API}user/tickets?q&page=0&sort=createdAt&limit=50&status=0`;
+export const GET_USER_TICKETS = `${BASE_API}user/tickets?q&page=0&sort=createdAt&limit=50&status=1`;
 export const GET_USER_SINGLE_TICKET = `${BASE_API}user/tickets/`;
 export const CREATE_TICKET = `${BASE_API}tickets`;
 export const GET_TICKETS_ISSUES_CATEGORIES = `${BASE_API}tickets/issues/categories`;

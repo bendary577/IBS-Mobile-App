@@ -57,7 +57,7 @@ const Login = (props) => {
             });
         }else{
             setLoading(false);
-            setErrorMessage(response.data.error)
+            response.data.error === null || response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
         }
     }
 

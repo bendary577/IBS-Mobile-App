@@ -15,11 +15,14 @@ import { axiosInstance, authenticatedAxiosInstance } from './axios';
 //--------------------------------------- sign in api end point ------------------------------
 export const signIn = async (data) => {
   try {
+    console.log("hamada 0")
     const response = await axiosInstance.post(LOGIN_API, data)
       if(response.status === 200){
+        console.log("hamada 1")
       storeToken(response.data.access_token);
       return response;
     }
+    console.log("hamada 2")
       return response;
   } catch (error){
     console.error(error);

@@ -8,7 +8,7 @@ import { Updates } from 'expo';
 import {useAuth} from './app/contexts/authContext';
 import * as SecureStore from 'expo-secure-store';
 import registerForPushNotificationsAsync from './app/notifications/registeration';
-
+import PushController from './app/notifications/PushController';
 
 const App = () => {
 

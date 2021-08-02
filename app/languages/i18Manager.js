@@ -226,7 +226,8 @@ const resources = {
             "set_new" : "Set New",
             "current_password" : "Current Password",
             "update_password" : "Update Password",
-            "employment_history" : "My Employment History"
+            "employment_history" : "My Employment History",
+            "something_wrong" : "Sorry, something went wrong, try login later",
         },
     },
     ar: {
@@ -362,7 +363,8 @@ const resources = {
             "set_new" : "تحديث",
             "current_password" : "كلمة السر الحالية",
             "update_password" : "حدث كلمة السر",
-            "employment_history" : "تاريخي الوظيفي"
+            "employment_history" : "تاريخي الوظيفي",
+            "something_wrong" : "عذرا حدث خطأ ما, يرجي محاولة تسجيل الدخول لاحقا",
         },
     },
   };
