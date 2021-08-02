@@ -1,20 +1,28 @@
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
 const Message = (props) => {
+
+    const navigation = useNavigation();
+
+    navigateToSingleBankMessage = (id) => {
+        navigation.navigate('MessageDetails',  {id})
+    }
+
     return (
-        <TouchableOpacity style={ props.open === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{props.onHandlePress()}}>
+        <TouchableOpacity style={ props.open === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{ navigateToSingleBankMessage(props.message._id) }}>
             <View style={styles.view}>
                 <View style={styles.leftView}>
-                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.title}>{props.message.title}</Text>
                 </View>
             </View>
             <View style={styles.view}>
                 <View style={[styles.leftView, styles.textContainer]}>
-                    <Text style={styles.body} numberOfLines={2}>{props.body}</Text>
+                    <Text style={styles.body} numberOfLines={2}>{props.message.body}</Text>
                 </View>
                 <View style={styles.rightView}>
-                    <Text style={styles.date}>{props.date}</Text>
+                    <Text style={styles.date}>{props.message.createdAt.slice(0,10)}</Text>
                 </View>
             </View>
         </TouchableOpacity>

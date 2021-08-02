@@ -14,10 +14,10 @@ import {GET_USER_API,
         GET_USER_CLIENT_SINGLE_PAYMENT,
         CREATE_TICKET_MESSAGE,
         GET_USER_NOTIFICATIONS,
-        MARK_NOTIFICATION_AS_READ} from './apis';
+        MARK_NOTIFICATION_AS_READ,
+        GET_BANK_MESSAGES} from './apis';
 import * as SecureStore from 'expo-secure-store';
 import { authenticatedAxiosInstance } from './axios';
-import { ResourceStore } from 'i18next';
 
 
 //--------------------------------------- get user api end point ------------------------------
@@ -249,3 +249,17 @@ export const setUserNotificationToken = async (token, data) => {
             }
         }
 
+        //------------------------------------ get bank messages api endpoint -------------------
+        export const getBankMessages = async () => {
+            try {
+                const resp = await authenticatedAxiosInstance.get(GET_BANK_MESSAGES);
+                if(resp.status === 200){
+                    return resp.data.newsfeed;
+                }else{
+                    console.log("^^^^^^^^^^^^^^^^^ response 3")
+                }
+            } catch (err) {
+                //Handle Error Here
+                console.error(err);
+            }
+        }

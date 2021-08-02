@@ -36,6 +36,9 @@ export const GET_SINGLE_FAQ = `${BASE_API}faq/`;
 export const GET_CLIENT_INFORMATION = `${BASE_API}information?client=*`;
 export const GET_SINGLE_INFORMATION = `${BASE_API}information/`;
 
+//----------------------------------- REST API Bank Messages ----------------------------
+export const GET_BANK_MESSAGES = `${BASE_API}newsfeed/`;
+
 //--------------------------------------- SOCKET IO SERVER -------------------------
 export const SOCKET_IO_SERVER = `http://api.ibsns.com/socket.io`;
 
