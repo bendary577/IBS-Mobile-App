@@ -2,14 +2,16 @@ import React from 'react';
 import {SafeAreaView,View, Text, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import MessageDetailsCard from '../../../components/sub-components/cards/MessageDetailsCard';
-//import {t} from '../../../languages/i18Manager';
 import {useTranslation} from 'react-i18next';
+
 
 const MessageDetails = () => {
 
+
+    const [loading , setLoading] = useState([]);
     const navigation = useNavigation();
     const {t} = useTranslation();
-    
+
     const navigate = () => {
       navigation.navigate("MessageDtails");
     }

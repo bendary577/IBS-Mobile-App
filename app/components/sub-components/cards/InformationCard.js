@@ -1,7 +1,6 @@
 import React, { useState , useEffect} from 'react';
 import {Text, View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
-
 import { useNavigation } from '@react-navigation/native';
 
 //------------------------ screen ---------------------

@@ -1,38 +1,52 @@
 import React from 'react';
-import {SafeAreaView,View, Text, StyleSheet, ScrollView } from 'react-native';
+import {SafeAreaView,View, StyleSheet, ScrollView } from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText';
-import { useNavigation } from '@react-navigation/native';
 import IBSSearchBar from '../../../components/sub-components/inputs/IBSSearchBar';
 import Message from '../../../components/sub-components/Messages/Message';
-//import { t } from '../../../languages/i18Manager';
 import {useTranslation} from 'react-i18next';
-
+import { getBankMessages } from '../../../services/api_requests';
 
 const MessagesForYou = () => {
 
-    const navigation = useNavigation();
+    const [bankMessages, setBankMessages] = useState(null);
     const {t} = useTranslation();
 
-    const navigate = () => {
-      navigation.navigate("MessageDetails");
+    useEffect(() => {
+        fetchInfo();
+    }, [fetchInfo]);
+
+    const fetchInfo = async () => {
+        setLoading(true);
+        let data = await getBankMessages();
+        setBankMessages(data);
+        setLoading(false)
     }
 
     return (
+        loading === true ? 
+
+        <Loading action={t(`loading`)}/>
+
+        :
+
+        bankMessages === null ? 
+            <NoContent />
+        :
+        
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.titleView}>
                <TitleText value={t(`myMessages`)}/>
-               <View style={{marginTop : 30, justifyContent : 'center', alignItems : 'center'}}>
+               <View style={styles.searchContainer}>
                    <IBSSearchBar />
                </View>
             </View>
             <View style={styles.transactionsView}>
                 <ScrollView>
-                    <Message open={false} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
-                    <Message open={true} title="QNB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
-                    <Message open={false} title="NBA" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
-                    <Message open={true} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
-                    <Message open={false} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
-                    <Message open={false} title="CIB" body="Please wait while we transfer you to…" date="Dec’ 2020" onHandlePress={navigate} />
+                    {
+                        bankMessages.map((message) => {
+                            return <Message message={message}/>
+                        })
+                    }
                 </ScrollView>
             </View>
         </SafeAreaView>
@@ -49,14 +63,14 @@ const styles = StyleSheet.create({
         padding : 20,
     },
     searchContainer : {
-        backgroundColor : 'white',
-        borderRadius : 0,
-        },
+        marginTop : 30,
+        justifyContent : 'center',
+        alignItems : 'center'
+    },
     transactionsView : {
         flex : 4,
         marginTop : 20
     },
-
 })
 
 export default MessagesForYou;
