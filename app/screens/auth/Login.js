@@ -1,12 +1,11 @@
 import React,{useState} from 'react';
-import {Text,SafeAreaView, Image,ScrollView, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
+import {Text,SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import NavigationButtons from '../../components/sub-components/buttons/NaviagationButtons';
-import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {signIn} from '../../services/authentication';
 import {useAuth} from '../../contexts/authContext';
 import Loading from '../../components/sub-components/general/Loading';
@@ -43,11 +42,10 @@ const Login = (props) => {
         }
         setLoading(true);
         let response = await signIn(data);
+        setLoading(false);
         if(response.status === 200 ){
-            setLoading(false);
-            setAuthenticated(true)
+            response.data.data.user.isVerified === true ? setAuthenticated(true) : handleVerifyPhone();
         }else if (response.status === 422){
-            setLoading(false);
             response.data.errors.map( error => {
                 if(error.param === 'password'){
                     setPasswordErrorMessage(error.msg)
@@ -56,7 +54,6 @@ const Login = (props) => {
                 }
             });
         }else{
-            setLoading(false);
             response.data.error === null || response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
         }
     }
@@ -64,6 +61,11 @@ const Login = (props) => {
     const handleCreateAccount = () =>{
         clearInputs();
         props.navigation.navigate("SignUp");
+    }
+
+    const handleVerifyPhone = () =>{
+        clearInputs();
+        props.navigation.navigate("PhoneVerification");
     }
 
     const handleOnChangeIdentificationNumber = (userInput) => {
@@ -93,8 +95,9 @@ const Login = (props) => {
                         </View>
                         <View style={styles.loginForm}>
                             { error !== '' ? <Text style={styles.errorMessage}>{error}</Text> : <></>}
+                            { nationalIdErrorMessage !== '' ? <Text style={styles.errorMessage}>{nationalIdErrorMessage}</Text> : <></>}
                             <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeIdentificationNumber}/>
-                            { passwordErrorMessage !== '' ? <Text style={styles.passwordErrorMessage}>{error}</Text> : <></>}
+                            { passwordErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordErrorMessage}</Text> : <></>}
                             <IBSPasswordText placeholder={t(`passwordPlaceholder`)} hasChild={true} onChangeText={handleOnChangePassword}/>
                             <IBSButtonLargeRed value={t(`login`)} action={true} onHandlePress={handleLogin} />
                             <IBSButtonLargeGray value={t(`noAccount`)} action={true} actionText={t(`create`)} onHandlePress={handleCreateAccount}/>
@@ -147,7 +150,7 @@ const styles = StyleSheet.create({
     },
     bottom : {
         flex : 1,
-        right : I18nManager.isRTL ?  -100 : 80,
+        right : I18nManager.isRTL ?  -80 : 80,
         marginTop : 40
     },
     errorMessage : {
@@ -156,9 +159,6 @@ const styles = StyleSheet.create({
         textAlign : 'center'
     },
 });
-
-
-
 
 
 export default Login;

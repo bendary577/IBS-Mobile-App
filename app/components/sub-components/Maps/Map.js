@@ -19,8 +19,8 @@ export default function Map(props) {
     <View style={styles.container}>
           <MapView style={styles.map} 
             initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
+              latitude: 29.969648271435027,
+              longitude: 31.274970942328,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}

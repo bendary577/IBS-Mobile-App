@@ -1,12 +1,12 @@
 import React,{Component} from 'react';
-import {SafeAreaView,View, Text, StyleSheet, ScrollView ,FlatList} from 'react-native';
+import {SafeAreaView,View, StyleSheet ,FlatList, I18nManager} from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText';
-import DropDownPicker from 'react-native-dropdown-picker';
 import Transaction from '../../../components/sub-components/Payment/Transaction';
 import {getUserPayments} from '../../../services/api_requests';
 import NoContent from '../../../components/sub-components/general/NoContent';
 import Loading from '../../../components/sub-components/general/Loading';
 import { withTranslation } from 'react-i18next';
+import IBSDropDownMenu from '../../../components/sub-components/inputs/IBSDropDownMenu';
 
 class MyTransactions extends Component {
 
@@ -14,19 +14,52 @@ class MyTransactions extends Component {
         super(props);
         this.state = {  
             transactions : [],
-            isLoading : false
+            renderedTransactions : [],
+            isLoading : false,
+            bankNames : [],
+            dropDownLabels : []
         }
     }
 
     componentDidMount = async () =>{
         this.setState({isLoading : true});
-        let data = await getUserPayments();
-        this.setState({
-            transactions : data
-        });
+        let response = await getUserPayments();
+        if(response.status === 200){
+            //fetch the returned payments transactions
+            this.setState({
+                transactions : response.data.payments,
+                renderedTransactions : response.data.payments
+            });
+            //get all payments banks names
+            let banks  = response.data.payments.map((payment) => {
+                return I18nManager.isRTL ? payment.bank.name.ar : payment.bank.name.en 
+            })
+            //filter the bank names to be unique
+            banks = banks.filter((item, index, list) => {
+                return list.indexOf(item) === index
+            })
+            this.setState({bankNames : banks})
+            //set the dropdown filter labels as banks namespace
+            banks.map((bank) => {
+                let filterLabel = {
+                    label : bank,
+                    value : bank
+                }
+                this.state.dropDownLabels.push(filterLabel);
+            })
+        }else{}
         this.setState({isLoading : false});
     }
 
+    filterTickets = async (value) => {
+        let bankname = this.state.bankNames.filter((bankName)=>{
+            return bankName === value;
+        })
+        let payments = this.state.transactions.filter( transaction => {
+            return transaction.bank.name.ar == bankname 
+        })
+        this.setState({renderedTransactions : payments})
+    }
 
     navigateToPaymentDetails = (route, id) => {
       this.props.navigation.navigate(route, id);
@@ -38,32 +71,24 @@ class MyTransactions extends Component {
             this.state.isLoading === true ? 
             <Loading action={t(`loading`)}/>
                 :
-            this.state.transactions.length === 0 ? 
+            this.state.renderedTransactions.length === 0 ? 
                 <NoContent />
                 : 
                 <SafeAreaView style={styles.conatiner}>
                     <View style={styles.titleView}>
-                    <TitleText value={t(`myTransactions`)}/>
-                    <View style={{marginTop : 30}}>
-                            <DropDownPicker
-                                items={[
-                                    {label: 'Item 1', value: 'item1'},
-                                    {label: 'Item 2', value: 'item2'},
-                                ]}
-                                defaultValue="item1"
-                                containerStyle={{height: 45}}
-                                style={styles.dropdown}
-                                dropDownStyle={{backgroundColor: '#fafafa'}}
-                                onChangeItem={item => console.log(item.label, item.value)}
-                                placeholder={t(`filter`)}
-                            />
+                        {/* ----------------------- screen title ---------------------------------------- */}
+                        <TitleText value={t(`myTransactions`)}/>
+                        {/* ----------------------- drop down menu ------------------------------------ */}
+                        <View style={{marginTop : 30}}>
+                            <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels} />
+                        </View>
                     </View>
-                    </View>
+                        {/* ----------------------- transaction messages list ------------------------- */}
                     <View style={styles.transactionsView}>
                         <FlatList
-                            data={this.state.transactions}
+                            data={this.state.renderedTransactions}
                             renderItem={({item})=>(<Transaction item={item} middle={false} onHandlePress={this.navigateToPaymentDetails}/>)}
-                            keyExtractor={(item) => item._id}
+                            keyExtractor={(item) => item._id.toString()}
                          />
                     </View>
                 </SafeAreaView>

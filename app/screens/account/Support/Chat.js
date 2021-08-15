@@ -4,12 +4,10 @@ import { GiftedChat} from 'react-native-gifted-chat'
 import ChatSendButton from '../../../components/sub-components/Chat/ChatSendButton';
 import {getSingleTicket} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
-import NoContent from '../../../components/sub-components/general/NoContent';
 import ChatMessageBubble from '../../../components/sub-components/Chat/ChatMessageBubble';
 import ChatInputToolbar from '../../../components/sub-components/Chat/ChatInputToolbar';
 import ClosedChatInputToolbar from '../../../components/sub-components/Chat/ClosedChatInputToolbar';
 import ChatComposer from '../../../components/sub-components/Chat/ChatComposer';
-import * as SecureStore from 'expo-secure-store';
 import { withTranslation } from 'react-i18next';
 import ChatClosedToolbar from '../../../components/sub-components/Chat/ChatClosedToolbar';
 import OpenChatButton from '../../../components/sub-components/Chat/OpenChatButton';
@@ -33,18 +31,21 @@ class Chat extends Component {
             isLoading : false,
             user : {}
         }
-
-      //connect to socket server 
-      this.socket = io(SOCKET_IO_SERVER, {jsonp: false,  transports: ['websocket'] });
-      this.socket.on('connect', () => { 
-        console.log('connected to socket server'); 
-      }); 
-      //this.socket.join(`ticket:${this.state.ticket._id}`)
-      this.socket.on("ticketMessage", this.onReply)
     }
      
       //------------------------------- call the ticket's api to get comments ---------------------
       componentDidMount = async () => {
+
+         //connect to socket server 
+        this.socket = io(SOCKET_IO_SERVER, {jsonp: false,  transports: ['websocket'] });
+        this.socket.connect();
+        this.socket.on('connection', () => { 
+          console.log('connected to socket server'); 
+        });
+        this.socket.emit("join", this.state.ticket._id)
+        this.socket.on("ticketMessage", this.onReply)
+
+
         //reload chat messages
         this.setState({isLoading : true});
         let data = await getSingleTicket(this.props.route.params.id);
@@ -87,16 +88,16 @@ class Chat extends Component {
      
       //----------------------------------- when user sends a message ----------------------
       onSend = async (message) => {
-       let data = { message : message[0].text }
+        let data = { message : message[0].text }
         let response = await addTicketMessage(this.state.ticket._id, data);
         this.setState(previousState => ({
           messages: GiftedChat.append(previousState.messages, message),
         }));
+        //this.socket.emit("ticketMessage", message[0].text);
       }
 
       //----------------------------------- when user sends a message ----------------------
       onReply = (message) => {
-        console.log("$$$$$$$$$$$$$$$$$$$$$4 in on reply message chat room");
         this.setState(previousState => ({
           messages: GiftedChat.append(previousState.messages, message),
         }));

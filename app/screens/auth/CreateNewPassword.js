@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
+import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import BackButton from '../../components/sub-components/buttons/BackButton';
@@ -7,12 +7,11 @@ import IBSPasswordText from '../../components/primitive-components/IBSPasswordTe
 import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {resetPassword} from '../../services/authentication';
 import { withTranslation } from 'react-i18next';
-import { TabRouter } from 'react-navigation';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
-
+let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 
 //------------------------ screen ---------------------
 class CreateNewPassword extends Component {
@@ -21,7 +20,8 @@ class CreateNewPassword extends Component {
         super(props);
         this.state = {
             newPassword : '',
-            newPasswordConfirmation : ''
+            newPasswordConfirmation : '',
+            error : '',
          };
     }
 
@@ -53,7 +53,14 @@ class CreateNewPassword extends Component {
                 password : this.state.newPassword,
                 passwordConfirmation : this.state.newPasswordConfirmation
             }
-            let resp = await resetPassword(data);
+            let response = await resetPassword(data);
+            if(response.status === 200){
+                setTimeout(()=>{ 
+                    this.props.navigation.navigate("Login");
+                }, 1000);
+            }else{
+                this.setState(response.data.error ? {error : response.data.error} : {error : t(`something_wrong`)})  
+            }
         }
     }
 
@@ -66,7 +73,7 @@ class CreateNewPassword extends Component {
                         <BackButton />
                     </View>
                     <View style={styles.rightLogo}>
-                        <Image style={[styles.topImage, getFlipForRTLStyle()]} source={require(ibsImage)} />
+                        <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>

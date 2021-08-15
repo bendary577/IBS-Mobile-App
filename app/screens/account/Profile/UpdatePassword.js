@@ -9,9 +9,6 @@ import {updatePassword} from '../../../services/authentication';
 import { withTranslation } from 'react-i18next';
 
 let {width, height} = Dimensions.get('window'); 
-let loginBackground = '../../../assets/images/Login/loginBackground.png';
-let ibsImage = '../../../assets/images/Login/ibs.png';
-
 
 //------------------------ screen ---------------------
 class UpdatePassword extends Component {
@@ -65,7 +62,6 @@ class UpdatePassword extends Component {
     handleUpdatePassword = async () => {
         this.clearInputs();
         let validation = this.validate(this.state.newPassword, this.state.newPasswordConfirmation);
-        console.log("hamaaaaaaaaaaaaada " + validation)
         if(validation){
             let data = {
                 currentPassword : this.state.currentPassword,
@@ -94,6 +90,8 @@ class UpdatePassword extends Component {
                     currentPasswordErrorMessage : response.data.error
                 });
             }
+        }else{
+            this.setState({message : t(`passwords_not_identical`)})
         }
     }
 

@@ -22,6 +22,7 @@ const ConfirmNewPassword =({route})=> {
         const [thirdCellCode, setThirdCellCode] = useState("");
         const [fourthCellCode, setFourthCellCode] = useState("");
         const [confirm, setConfirm] = useState(false);
+        const [error, setErrorMessage] = useState('');
         const {t} = useTranslation();
         const navigation = useNavigation();
 
@@ -66,14 +67,19 @@ const ConfirmNewPassword =({route})=> {
         setFourthCellCode(userInput);
     }
 
-    const handleConfirmPassword = () => {
+    const handleConfirmPassword = async () => {
         let _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
         let data = {
             code : _code,
             phone : route.params.phone
         };
-        checkResetPasswordCode(data);
-        navigation.navigate("CreateNewPassword", { phone : route.params.phone})
+        let response = await checkResetPasswordCode(data);
+        if(response.status === 200){
+            //set the reset_password_token
+            navigation.navigate("CreateNewPassword", { phone : route.params.phone});
+        }else{
+            response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
+        }
     }
 
         return (
@@ -93,6 +99,7 @@ const ConfirmNewPassword =({route})=> {
                             <TitleText value={t(`confirmationCode`)} />
                             <View style={styles.redLine}></View>
                         </View>
+                        { error !== '' ? <Text style={styles.errorMessage}>{error}</Text> : <></>}
                         <View style={styles.loginForm}>
                             <View style={styles.confirmationInputs}>
                                 <IBSConfirmationText ChangeText={handleFirstCell} value={firstCellCode}/>
@@ -206,7 +213,12 @@ const styles = StyleSheet.create({
     },
     rightTextInactive : {
         color : 'gray'
-    }
+    },
+    errorMessage : {
+        color : 'red',
+        marginVertical : 2,
+        textAlign : 'center'
+    },
 });
 
 

@@ -1,4 +1,4 @@
-package com.ibsmobile;
+package com.ibs;
 
 import android.app.Application;
 import android.content.Context;
@@ -12,6 +12,8 @@ import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.app.RNFirebaseAppPackage;
 import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.github.elyx0.reactnativedocumentpicker.DocumentPickerPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -57,13 +59,14 @@ public class MainApplication extends Application implements ReactApplication {
       List<ReactPackage> packages = new PackageList(this).getPackages();
 
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
+      new MainReactPackage();
+      new ReactNativeFirebaseAppPackage();
       packages.add(new RestartPackage());
       packages.add(new ReactNativeFirebaseMessagingPackage());
       packages.add(new ReactNativeFirebaseAppPackage());
       packages.add(new RNFirebaseAppPackage());
       packages.add(new RNFirebaseMessagingPackage());
       packages.add(new RNFirebaseNotificationsPackage());
-      //packages.add(new ReactNativeRestartPackage());
       return packages;
     }
 

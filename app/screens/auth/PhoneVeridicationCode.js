@@ -4,9 +4,11 @@ import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSConfirmationButton from '../../components/primitive-components/IBSConfirmationButton';
 import IBSConfirmationText from '../../components/primitive-components/IBSConfirmationText';
-import {resetPassword} from '../../services/authentication';
 import {useTranslation} from 'react-i18next';
 import CountDown from 'react-native-countdown-component';
+import {verifyPhoneNumber, checkVerificationCode} from '../../services/authentication';
+import Loading from '../../components/sub-components/general/Loading';
+import {useAuth} from '../../contexts/authContext';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -21,8 +23,25 @@ const PhoneVerificationCode =()=> {
         const [thirdCellCode, setThirdCellCode] = useState("");
         const [fourthCellCode, setFourthCellCode] = useState("");
         const [confirm, setConfirm] = useState(false);
+        const [error, setErrorMessage] = useState('');
+        const [loading, setLoading] = useState(false);
+        const {setAuthenticated} = useAuth();
         const {t} = useTranslation();
 
+    
+    React.useEffect(() => {
+        verifyUserPhoneNumber();
+    }, []);  
+    
+    //call the api endpoint to send verification code to the user
+    const verifyUserPhoneNumber = async () => {
+        let response = await verifyPhoneNumber();
+        if(response.status === 200){
+            setErrorMessage(t(`code_sent`));
+        }else{
+            response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
+        }
+    }
 
     React.useEffect(() => {
         incrementCompleteInputs();
@@ -65,15 +84,28 @@ const PhoneVerificationCode =()=> {
         setFourthCellCode(userInput);
     }
 
-    const handleConfirmPassword = () => {
+    const handleConfirmPassword = async () => {
         let _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
         let data = {
             code : _code
         };
-        resetPassword(data);
+        setLoading(true);
+        let response = await checkVerificationCode(data);
+        setLoading(false);
+        if(response.status === 200 ){
+            setAuthenticated(true);
+        }else{
+            response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
+        }
     }
 
         return (
+            loading === true ? 
+
+            <Loading action={t(`checking_code`)}/>
+
+            :
+
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
                     <View style={styles.leftBackBtn}>
@@ -86,10 +118,11 @@ const PhoneVerificationCode =()=> {
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value="Please Verify" />
-                            <TitleText value="Your Phone Number" />
+                            <TitleText value={t(`please_verify`)} />
+                            <TitleText value={t(`phone_number`)} />
                             <View style={styles.redLine}></View>
                         </View>
+                        { error !== '' ? <Text style={styles.errorMessage}>{error}</Text> : <></>}
                         <View style={styles.loginForm}>
                             <View style={styles.confirmationInputs}>
                                 <IBSConfirmationText ChangeText={handleFirstCell} value={firstCellCode}/>
@@ -102,7 +135,7 @@ const PhoneVerificationCode =()=> {
                             <View style={styles.confirmationText}>
                                 <View style={{marginLeft : 10, color : 'black'}}>
                                     {confirm ?
-                                        <View style={{flexDirection : 'row',width:200}}>
+                                        <View style={{flexDirection : 'row', width:200}}>
                                             <View style={{flex : 1}}>
                                                 <Text>{t(`resendText`)}</Text>
                                             </View>
@@ -203,7 +236,12 @@ const styles = StyleSheet.create({
     },
     rightTextInactive : {
         color : 'gray'
-    }
+    },
+    errorMessage : {
+        color : 'red',
+        marginVertical : 2,
+        textAlign : 'center'
+    },
 });
 
 

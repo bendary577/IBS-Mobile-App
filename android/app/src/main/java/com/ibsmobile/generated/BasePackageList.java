@@ -1,4 +1,4 @@
-package com.ibsmobile.generated;
+package com.ibs.generated;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,6 @@ public class BasePackageList {
         new expo.modules.filesystem.FileSystemPackage(),
         new expo.modules.font.FontLoaderPackage(),
         new expo.modules.imageloader.ImageLoaderPackage(),
-        new expo.modules.imagepicker.ImagePickerPackage(),
         new expo.modules.keepawake.KeepAwakePackage(),
         new expo.modules.localization.LocalizationPackage(),
         new expo.modules.notifications.NotificationsPackage(),

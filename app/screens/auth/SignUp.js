@@ -1,12 +1,11 @@
 import React,{useState} from 'react';
-import {SafeAreaView, Image, ImageBackground,Text, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
+import {SafeAreaView, Image, ImageBackground,Text, View, StyleSheet, Dimensions, I18nManager, ScrollView} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import NavigationButtons from '../../components/sub-components/buttons/NaviagationButtons';
-import { ScrollView } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { signupRequest } from '../../services/authentication';
 import {useAuth} from '../../contexts/authContext';
@@ -41,8 +40,7 @@ const SignUp = () => {
         if(password !== '' && passwordConfirm !='' && password === passwordConfirm && checked === 'checked'){
             handleSignup();
         }else{
-            setError(true);
-            setErrorMessage("please validate your inputs");
+            setErrorMessage(t(`validate_inputs`));
         }
     }
 
@@ -59,7 +57,8 @@ const SignUp = () => {
         let response = await signupRequest(data);
         if(response.status === 200 ){
             setLoading(false);
-            setAuthenticated(true)
+            //setAuthenticated(true)
+            //navigatePhoneVerification();
         }else if (response.status === 422){
             setLoading(false);
             response.data.errors.map( error => {
@@ -90,6 +89,11 @@ const SignUp = () => {
         navigation.navigate("Login");
     }
 
+    const navigatePhoneVerification = () =>{
+        clearInputs();
+        navigation.navigate("PhoneVerification");
+    }
+
     const handleOnChangeNationalId = (userInput) => {
         setNationalId(userInput);
     }
@@ -113,6 +117,7 @@ const SignUp = () => {
             :
             <SafeAreaView style={styles.container}>
                 <ScrollView>
+                {/* --------------------------- top section [title] -------------------- */}
                 <View style={styles.top}>
                     <View style={styles.topLeft}>
                         <View style={styles.title}>
@@ -125,6 +130,7 @@ const SignUp = () => {
                         <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                     </View>
                 </View>
+                 {/* ---------------------------  registration form ----------------------- */}
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                         <View style={styles.middle}>
                             <View style={styles.loginForm}>
@@ -224,7 +230,7 @@ const styles = StyleSheet.create({
     },
     bottom : {
         flex : 1,
-        alignItems : 'flex-start',
+        right : I18nManager.isRTL ?  -80 : 80,
         marginTop : 10,
     },
     errorMessage : {

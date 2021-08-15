@@ -2,98 +2,6 @@ import i18n  from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import {I18nManager} from 'react-native';
 
-//-------------------------------------------------------------------- Past -----------------------------------------------
-//import * as config from '../config/i18n';
-//import { I18nManager as RNI18nManager, NativeModules} from 'react-native';
-//import languageDetector from './language-detector';
-//import translationLoader from './translation-loader';
-//import { Updates } from 'expo';
-
-/*
-const i18n = {
-
-    init: () => {
-        return new Promise((resolve, reject) => {
-            i18next
-                .use(languageDetector)
-                .use(translationLoader)
-                .init({
-                    fallbackLng: config.fallback,
-                    ns: config.namespaces,
-                    defaultNS: config.defaultNamespace,
-                    interpolation: {
-                        escapeValue: false,
-                    },
-                }, (error) => {
-                    if (error) { return reject(error)}
-                })
-        })
-    },
-
-  
-    t: (key, options) => i18next.t(key, options),
-
-    get locale() { return i18next.language; },
-
-    get dir() {
-        return i18next.dir().toUpperCase();
-    },
-
-    get isRTL() {
-        return RNI18nManager.isRTL;
-    },
-
-    select(map) {
-        const key = this.isRTL ? 'rtl' : 'ltr';
-        return map[key];
-    },
-
-    changeLanguage : (languageKey)=>{
-        i18next.locale = 'ar';
-        console.log("lamguage is " + languageKey)
-        console.log("i18n language is " + i18n.locale)
-        console.log("i18n direction is " + i18n.dir)
-        console.log("react native direction is " + RNI18nManager.isRTL)
-        i18next
-            .changeLanguage(languageKey)
-            .then(() => {
-                if(languageKey === 'ar'){
-                    RNI18nManager.forceRTL(true);
-                    //Updates.reloadFromCache();
-                }else if(languageKey === 'en'){
-
-                    RNI18nManager.forceRTL(false);
-                    //Updates.reloadFromCache();
-                }
-                /*
-                if(languageKey === 'ar'){
-                    console.log("lamguage is " + languageKey)
-                    console.log("i18n language is " + i18n.locale)
-                    console.log("i18n direction is " + i18n.dir)
-                    console.log("react native direction is " + RNI18nManager.isRTL)
-                    if (i18n.dir !== 'RTL') {
-                        i18n.dir === 'RTL';
-                    }else if(RNI18nManager.isRTL === false){
-                        console.log("rtl is false")
-                        RNI18nManager.forceRTL(true);
-                        //Updates.reloadFromCache();
-                    }
-                }else if(languageKey === 'en'){
-                    if (i18n.dir !== 'LTR') {
-                        i18n.dir === 'LTR';
-                    }else if(RNI18nManager.isRTL === true){
-                        RNI18nManager.forceRTL(false);
-                       // Updates.reloadFromCache();
-                    }
-                }
-                //Updates.reloadFromCache();
-            });
-    }
-};
-export const t = i18n.t;
-export default i18n;
-*/
-//---------------------------------------------------------------------- end past -----------------------------------------------------
 const resources = {
     en : {
         translation : {
@@ -228,6 +136,15 @@ const resources = {
             "update_password" : "Update Password",
             "employment_history" : "My Employment History",
             "something_wrong" : "Sorry, something went wrong, try login later",
+            "code_sent" : "a verification code was sent to you",
+            "checking_code" : "checking the verification code",
+            "please_verify" : "Please Verify",
+            "phone_number" : "Your Phone Number",
+            "validate_inputs" : "please validate your inputs",
+            "passwords_not_identical" : "passwords are not identical",
+            "all_tickets" : "All Tickets",
+            "closed_tickets" : "Closed Tickets",
+            "open_tickets" : "Open Tickets",
         },
     },
     ar: {
@@ -365,6 +282,15 @@ const resources = {
             "update_password" : "حدث كلمة السر",
             "employment_history" : "تاريخي الوظيفي",
             "something_wrong" : "عذرا حدث خطأ ما, يرجي محاولة تسجيل الدخول لاحقا",
+            "code_sent" : "تم إرسال كود التفعيل",
+            "checking_code" : "جاري التحقق من كود التفعيل",
+            "please_verify" : "برجاء تفعيل",
+            "phone_number" : "رقم الهاتف",
+            "validate_inputs" : "رجاء التحقق من صحة البيانات",
+            "passwords_not_identical" : "كلمات السر غير متطابقة",
+            "all_tickets" : "كل تذاكر الدعم",
+            "closed_tickets" : "تذاكر الدعم المغلقة",
+            "open_tickets" : "تذاكر الدعم المتاحة",
         },
     },
   };

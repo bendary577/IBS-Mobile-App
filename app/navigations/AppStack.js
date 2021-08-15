@@ -225,7 +225,7 @@ const ProfileStack = () => {
               name="Update Password" 
               component={UpdatePassword}
               options={{
-                title : "Update Password",
+                title : false,
                 headerStyle: {
                   backgroundColor: "#D8D8D8",
                   borderBottomRightRadius : 20,

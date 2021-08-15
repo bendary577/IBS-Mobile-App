@@ -1,4 +1,4 @@
-package com.ibsmobile;
+package com.ibs;
 
 import android.os.Bundle;
 

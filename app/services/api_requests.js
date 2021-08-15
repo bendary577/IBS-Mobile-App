@@ -14,7 +14,8 @@ import {GET_USER_API,
         GET_USER_CLIENT_SINGLE_PAYMENT,
         CREATE_TICKET_MESSAGE,
         GET_USER_NOTIFICATIONS,
-        MARK_NOTIFICATION_AS_READ} from './apis';
+        MARK_NOTIFICATION_AS_READ,
+        SET_USER_NOTIFICATION_TOKEN} from './apis';
 import * as SecureStore from 'expo-secure-store';
 import { authenticatedAxiosInstance } from './axios';
 import { ResourceStore } from 'i18next';
@@ -52,11 +53,8 @@ export const getUserEmploymentHistory = async () => {
 //--------------------------------------- get user payments api end point ------------------------------
 export const getUserPayments = async () => {
     try {
-        const resp = await authenticatedAxiosInstance.get(GET_USER_CLIENT_PAYMENTS);
-        if(resp.status === 200 ){
-            console.log(resp.data.payments)
-            return resp.data.payments;
-        }
+        const response = await authenticatedAxiosInstance.get(GET_USER_CLIENT_PAYMENTS);
+        return response;
     } catch (err) {
         //Handle Error Here
         console.error(err);
@@ -172,22 +170,18 @@ export const markNotificationsAsRead = async (id) => {
         console.error(err);
     }
 }
-//--------------------------------------- get user tickets api end point ------------------------------
-export const setUserNotificationToken = async (token, data) => {
+
+//--------------------------------------- set user notifications token api end point ------------------------------
+export const setUserNotificationToken = async (token) => {
     try {
-        console.log("storing user token")
-        //get user id saved in local storage
-        const userId = await SecureStore.getItemAsync('id');
-        //set new url
-        const url = new URL(USER_NOTIFICATION_TOKEN);
-        url.searchParams.set('userId', userId);
-        let jwt = "jwt="+token;
-        const resp = await authenticatedAxiosInstance.put(url,data,{
-            headers: {
-                Cookie : jwt
-            }
-        });
-        return resp.data.data;
+        console.log("storing user notification token");
+        const response = await authenticatedAxiosInstance.post(SET_USER_NOTIFICATION_TOKEN,  { notificationToken : token });
+        if(response.status === 200){
+            //return response.data.employee;
+            console.log("notification success")
+        }else{
+            console.log("notification fail")
+        }
     } catch (err) {
         //Handle Error Here
         console.error(err);

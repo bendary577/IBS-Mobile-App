@@ -14,9 +14,10 @@
       "buildNumber": "1.0.0"
     },
     "android": {  
-      "package": "com.ibs.mobile",
+      "package": "com.ibs",
       "versionCode": 1 ,
       "softwareKeyboardLayoutMode":"pan",
+      "googleServicesFile": "./google-services.json",
       "config":{
         "googleMaps":{
           "apiKey":"AIzaSyC81e2oX48iixXivgl_dUQ1LTd5-_Z52io"

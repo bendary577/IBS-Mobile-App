@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: false
+    enableHermes: true
 ]
 
 apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
@@ -133,7 +133,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.ibsmobile"
+        applicationId "com.ibs"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -186,6 +186,9 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-firebase')
+    implementation "com.google.firebase:firebase-messaging:12.1.0"
+
     implementation project(':react-native-restart')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion

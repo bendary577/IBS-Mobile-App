@@ -4,11 +4,15 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 
+# React Native Maps dependencies
+rn_maps_path = '../node_modules/react-native-maps'
+pod 'react-native-google-maps', :path => rn_maps_path
+
 target 'ibsmobile' do
   use_unimodules!
   config = use_native_modules!
 
-  use_react_native!(:path => config["reactNativePath"])
+  use_react_native!(:path => config["reactNativePath"], :hermes_enabled => true)
 
   # Uncomment to opt-in to using Flipper
   #
@@ -27,5 +31,7 @@ target 'ibsmobile' do
   pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
 
   pod 'RNFBMessaging', :path => '../node_modules/@react-native-firebase/messaging'
+
+
 
 end

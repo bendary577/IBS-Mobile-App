@@ -1,43 +1,41 @@
 
-import {Notifications} from 'expo';
+import * as Notifications from "expo-notifications";
 import Constants from 'expo-constants';
-import {authorizeRequestWithData} from '../services/authentication';
 import {setUserNotificationToken} from '../services/api_requests';
-/*
-const registerForPushNotificationsAsync = async () => { 
-    try {
-       const permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-       if (!permission.granted) return;
-       const token = await Notifications.getExpoPushTokenAsync();
-    console.log(token);
-    } catch (error) {
-      console.log('Error getting a token', error);
-    }
-  }
-*/
- 
+import {Alert, Platform, Linking } from 'react-native';
+
 const registerForPushNotificationsAsync = async () => {
     //must be real device not an emulator
     if (Constants.isDevice) {
       const { status: existingStatus } = await Notifications.getPermissionsAsync();
+
       let finalStatus = existingStatus;
       if (existingStatus !== 'granted') {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
       if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
+        Alert.alert(
+          'Warning',
+          'You will not receive reminders if you do not enable push notifications. If you would like to receive reminders, please enable push notifications for Fin in your settings.',
+          [
+            { text: 'Cancel' },
+            // If they said no initially and want to change their mind,
+            // we can automatically open our app in their settings
+            // so there's less friction in turning notifications on
+            { text: 'Enable Notifications', onPress: () => Platform.OS === 'ios' ? Linking.openURL('app-settings:') : Linking.openSettings() }
+          ]
+        )
+        return false;
       }
       const token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
+
       //save token to backend
-      let data = await authorizeRequestWithData(setUserNotificationToken, {token});
+      let data = await setUserNotificationToken(token);
     } else {
       alert('Must use physical device for Push Notifications');
     }
   
-    /*
     if (Platform.OS === 'android') {
       Notifications.setNotificationChannelAsync('default', {
         name: 'default',
@@ -46,7 +44,7 @@ const registerForPushNotificationsAsync = async () => {
         lightColor: '#FF231F7C',
       });
     }
-    */
+    
 };
 
 

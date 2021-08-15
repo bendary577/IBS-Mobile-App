@@ -6,7 +6,7 @@ const TransactionMessage = (props) => {
         <TouchableOpacity style={ props.item.statusFormatted === "open" ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{props.onHandlePress(props.item._id, props.item.id, props.item.statusFormatted)}}>
             <View style={styles.view}>
                 <View style={styles.leftView}>
-                    <Text style={styles.title}>{props.item.description}</Text>
+                    <Text style={styles.title} numberOfLines={1}>{props.item.description}</Text>
                 </View>
                 <View style={styles.rightView}>
                     <Text style={styles.number}>#{props.item.status}</Text>
