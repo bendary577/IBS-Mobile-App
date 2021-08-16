@@ -15,11 +15,8 @@ import {GET_USER_API,
         CREATE_TICKET_MESSAGE,
         GET_USER_NOTIFICATIONS,
         MARK_NOTIFICATION_AS_READ,
-<<<<<<< HEAD
-        SET_USER_NOTIFICATION_TOKEN} from './apis';
-=======
+        SET_USER_NOTIFICATION_TOKEN,
         GET_BANK_MESSAGES} from './apis';
->>>>>>> 52a48a0929cd3146065d637a8ddb9bf3ecbc3526
 import * as SecureStore from 'expo-secure-store';
 import { authenticatedAxiosInstance } from './axios';
 
