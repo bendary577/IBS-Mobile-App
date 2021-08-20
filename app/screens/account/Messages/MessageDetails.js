@@ -3,14 +3,30 @@ import {SafeAreaView,View, Text, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import MessageDetailsCard from '../../../components/sub-components/cards/MessageDetailsCard';
 import {useTranslation} from 'react-i18next';
+import {getSingleBankMessage} from '../../../services/api_requests';
 
-
-const MessageDetails = () => {
-
+const MessageDetails = (props) => {
 
     const [loading , setLoading] = useState([]);
+    const [bankMessage, setBankMessage] = useState(null);
+    const [error, setError] = useState('');
     const navigation = useNavigation();
     const {t} = useTranslation();
+
+    useEffect(() => {
+        fetchInfo();
+    }, [fetchInfo]);
+
+    const fetchInfo = async () => {
+        setLoading(true);
+        let response = await getSingleBankMessage(props.route.params.id);
+        if(response.status===200){
+            setBankMessage(response.data.newsfeed)
+        }else{
+            setBankMessages.data(response.data.error)
+        }
+        setLoading(false)
+    }
 
     const navigate = () => {
       navigation.navigate("MessageDtails");

@@ -4,7 +4,6 @@ import {GET_USER_API,
         GET_USER_SINGLE_TICKET, 
         CREATE_TICKET,
         GET_TICKETS_ISSUES_CATEGORIES,
-        USER_NOTIFICATION_TOKEN,
         GET_FAQ,
         GET_CLIENT_INFORMATION,
         GET_SINGLE_INFORMATION,
@@ -16,7 +15,9 @@ import {GET_USER_API,
         GET_USER_NOTIFICATIONS,
         MARK_NOTIFICATION_AS_READ,
         SET_USER_NOTIFICATION_TOKEN,
-        GET_BANK_MESSAGES} from './apis';
+        GET_BANK_MESSAGES,
+        GET_SINGLE_BANK_MESSAGE,
+        MARK_MESSAGE_AS_READ} from './apis';
 import * as SecureStore from 'expo-secure-store';
 import { authenticatedAxiosInstance } from './axios';
 
@@ -246,12 +247,30 @@ export const setUserNotificationToken = async (token) => {
         //------------------------------------ get bank messages api endpoint -------------------
         export const getBankMessages = async () => {
             try {
-                const resp = await authenticatedAxiosInstance.get(GET_BANK_MESSAGES);
-                if(resp.status === 200){
-                    return resp.data.newsfeed;
-                }else{
-                    console.log("^^^^^^^^^^^^^^^^^ response 3")
-                }
+                const response = await authenticatedAxiosInstance.get(GET_BANK_MESSAGES);
+                return response;
+            } catch (err) {
+                //Handle Error Here
+                console.error(err);
+            }
+        }
+
+        //------------------------------------ get single bank message api endpoint -------------------
+        export const getSingleBankMessage = async (id) => {
+            try {
+                const response = await authenticatedAxiosInstance.get(`${GET_SINGLE_BANK_MESSAGE}/${id}`);
+                return response;
+            } catch (err) {
+                //Handle Error Here
+                console.error(err);
+            }
+        }
+
+        //------------------------------------ get single bank message api endpoint -------------------
+        export const markMessageAsRead = async (id) => {
+            try {
+                const response = await authenticatedAxiosInstance.get(`${MARK_MESSAGE_AS_READ}${id}/markAsRead`);
+                return response;
             } catch (err) {
                 //Handle Error Here
                 console.error(err);

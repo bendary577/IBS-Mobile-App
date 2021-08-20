@@ -36,13 +36,17 @@ class Chat extends Component {
       //------------------------------- call the ticket's api to get comments ---------------------
       componentDidMount = async () => {
 
-         //connect to socket server 
+        //connect to socket server 
         this.socket = io(SOCKET_IO_SERVER, {jsonp: false,  transports: ['websocket'] });
         this.socket.connect();
-        this.socket.on('connection', () => { 
+        this.socket.on('connect', () => { 
           console.log('connected to socket server'); 
         });
-        this.socket.emit("join", this.state.ticket._id)
+        console.log("nowwwwwwwwwwwwwwwwwwwwwwwww")
+        this.socket.on('hello', () => { 
+          console.log('hello to socket server'); 
+        });
+        this.socket.emit("join", `ticket:${this.state.ticket._id}`)
         this.socket.on("ticketMessage", this.onReply)
 
 

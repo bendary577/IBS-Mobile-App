@@ -1,17 +1,25 @@
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import {markMessageAsRead} from '../../../services/api_requests';
 
 const Message = (props) => {
 
     const navigation = useNavigation();
+    const [error, setError] = useState('');
 
-    navigateToSingleBankMessage = (id) => {
-        navigation.navigate('MessageDetails',  {id})
+    handleMessageUserClick = async (id) => {
+        const response = await markMessageAsRead(id);
+        if(response.status === 200){
+            navigation.navigate('MessageDetails',  {id})
+        }else{
+            setError(response.data.error)
+        }
     }
 
+
     return (
-        <TouchableOpacity style={ props.open === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{ navigateToSingleBankMessage(props.message._id) }}>
+        <TouchableOpacity style={ props.open === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{ handleMessageUserClick(props.message._id) }}>
             <View style={styles.view}>
                 <View style={styles.leftView}>
                     <Text style={styles.title}>{props.message.title}</Text>

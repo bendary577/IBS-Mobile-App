@@ -9,6 +9,7 @@ import { getBankMessages } from '../../../services/api_requests';
 const MessagesForYou = () => {
 
     const [bankMessages, setBankMessages] = useState(null);
+    const [error, setError] = useState('');
     const {t} = useTranslation();
 
     useEffect(() => {
@@ -17,8 +18,12 @@ const MessagesForYou = () => {
 
     const fetchInfo = async () => {
         setLoading(true);
-        let data = await getBankMessages();
-        setBankMessages(data);
+        let response = await getBankMessages();
+        if(response.status===200){
+            setBankMessages(response.data.newsfeed)
+        }else{
+            setBankMessages.data(response.data.error)
+        }
         setLoading(false)
     }
 

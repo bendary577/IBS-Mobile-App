@@ -37,10 +37,12 @@ export const GET_CLIENT_INFORMATION = `${BASE_API}information?client=*`;
 export const GET_SINGLE_INFORMATION = `${BASE_API}information/`;
 
 //----------------------------------- REST API Bank Messages ----------------------------
-export const GET_BANK_MESSAGES = `${BASE_API}newsfeed/`;
+export const GET_BANK_MESSAGES = `${BASE_API}newsfeed`;
+export const GET_SINGLE_BANK_MESSAGE = `${BASE_API}newsfeed`;
+export const MARK_MESSAGE_AS_READ = `${BASE_API}/`
 
 //--------------------------------------- SOCKET IO SERVER -------------------------
-export const SOCKET_IO_SERVER = `http://api.ibsns.com/socket.io`;
+export const SOCKET_IO_SERVER = `http://api.ibsns.com`;
 
 //--------------------------------------- Notifications API endpoints -------------------------
 export const GET_USER_NOTIFICATIONS = `${BASE_API}notifications?unread=1&page=0&limit=20&sort=-createdAt`;
