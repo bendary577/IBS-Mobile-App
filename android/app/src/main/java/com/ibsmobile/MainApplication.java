@@ -13,9 +13,12 @@ import io.invertase.firebase.app.RNFirebaseAppPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 
-import io.github.elyx0.reactnativedocumentpicker.DocumentPickerPackage;
+import org.unimodules.adapters.react.ModuleRegistryAdapter;
+import org.unimodules.adapters.react.ReactAdapterPackage;
+import org.unimodules.adapters.react.ReactModuleRegistryProvider;
+import org.unimodules.core.interfaces.Package;
+
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
-import com.imagepicker.ImagePickerPackage;
 import com.reactnativerestart.RestartPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -45,6 +48,7 @@ import javax.annotation.Nullable;
 public class MainApplication extends Application implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
     new BasePackageList().getPackageList()
+    new ReactAdapterPackage()
   );
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -63,6 +67,7 @@ public class MainApplication extends Application implements ReactApplication {
       packages.add(new RNFirebaseAppPackage());
       packages.add(new RNFirebaseMessagingPackage());
       packages.add(new RNFirebaseNotificationsPackage());
+      new ModuleRegistryAdapter(mModuleRegistryProvider);
       return packages;
     }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image , TouchableOpacity} from 'react-native';
-
+import moment from 'moment';
 
 let bankIcon = '../../../assets/icons/Payment/bank.png';
 let dataIcon = '../../../assets/icons/Payment/date.png';
@@ -24,7 +24,7 @@ const Transaction = (props) => {
                         <Image style={styles.dateIcon} source={require(dataIcon)} />
                     </View>
                     <View style={styles.dateValueView}>
-                        <Text style={styles.dateValue}>{props.item.createdAt.slice(0,4)}</Text>
+                        <Text style={styles.dateValue}>{moment(props.item.createdAt).format("YYYY")}</Text>
                     </View>
                 </View>
         </TouchableOpacity>

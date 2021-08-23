@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useTranslation} from 'react-i18next';
@@ -8,6 +8,10 @@ const IBSDropDownMenu = (props) => {
     const [filterDropDownOpen, setFilterDropDownOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState(null);
     const {t} = useTranslation();
+
+    useEffect(()=>{
+        //console.log("dropdown " + props.labels[0].label)
+    },[]);
 
     const toggleFilterDropDown = () => {
         setFilterDropDownOpen(!filterDropDownOpen);
@@ -21,7 +25,6 @@ const IBSDropDownMenu = (props) => {
         <SafeAreaView>
             <DropDownPicker
                 items={props.labels}
-                //defaultValue={props.labels[0].value}
                 value={selectedValue}
                 open={filterDropDownOpen}
                 containerStyle={styles.dropdown}

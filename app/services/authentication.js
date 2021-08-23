@@ -18,6 +18,10 @@ export const signIn = async (data) => {
       const response = await axiosInstance.post(LOGIN_API, data)
       if(response.status === 200){
         storeToken(response.data.access_token);
+        if(response.data.data.user.emp._id){
+          storeEmployeeId(response.data.data.user.emp._id);
+        }
+        let id = SecureStore.getItemAsync('employee_id')
     }
       return response;
   } catch (error){
@@ -29,7 +33,17 @@ export const signIn = async (data) => {
 //--------------------------------------- signup api end point ------------------------------
 export const signupRequest = async (data) => {
   try {
-    const response = await axiosInstance.post(SIGNUP_API,data);  
+    const response = await axiosInstance.post(SIGNUP_API, data);
+    if(response.status === 200){
+      /*
+      storeToken(response.data.access_token);
+      if(response.data.data.user.emp._id){
+        storeEmployeeId(response.data.data.user.emp._id);
+      }
+      let id = SecureStore.getItemAsync('employee_id')
+      */
+     console.log(response.data)
+    }  
     return response;
   } catch (err) {
       console.error(err);
@@ -118,6 +132,12 @@ export const resetPassword = async (data) => {
 export const storeToken = (token) => {
   //set the value of the token
   SecureStore.setItemAsync('access_token', token);
+};
+
+//--------------------------------------- store employee id  ------------------------------
+export const storeEmployeeId = (id) => {
+  //set the value of the token
+  SecureStore.setItemAsync('employee_id', JSON.stringify(id));
 };
 
 

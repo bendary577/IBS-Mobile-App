@@ -6,7 +6,7 @@ import {AuthProvider} from './app/contexts/authContext';
 import {useAuth} from './app/contexts/authContext';
 import * as SecureStore from 'expo-secure-store';
 import registerForPushNotificationsAsync from './app/notifications/registeration';
-//import messaging from '@react-native-firebase/messaging';
+import { Platform } from 'react-native';
 
 const App = () => {
 
@@ -14,7 +14,6 @@ const App = () => {
 
   useEffect (() => {
         registerForPushNotificationsAsync();
-
         /*
         messaging().onNotificationOpenedApp(remoteMessage => {
           console.log(

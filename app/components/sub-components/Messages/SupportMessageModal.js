@@ -1,6 +1,5 @@
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity,TextInput, Image } from 'react-native';
-//import {t} from '../../../languages/i18Manager';
 import {useTranslation} from 'react-i18next';
 
 let closeIcon = '../../../assets/icons/Support/close.png';

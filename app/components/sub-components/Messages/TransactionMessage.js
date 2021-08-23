@@ -1,5 +1,6 @@
 import React from 'react'
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
+import {StyleSheet, Text, View, TouchableOpacity, I18nManager} from 'react-native'
+import moment from 'moment';
 
 const TransactionMessage = (props) => {
     return (
@@ -17,7 +18,7 @@ const TransactionMessage = (props) => {
                     <Text style={styles.body} numberOfLines={1}>{props.item.description}</Text>
                 </View>
                 <View style={styles.rightView}>
-                    <Text style={styles.date}>{props.item.createdAt.slice(0,4)}</Text>
+                    <Text style={styles.date}>{moment(props.item.createdAt).format("MMM Do YY")}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -59,6 +60,9 @@ const styles = StyleSheet.create({
     body : {
         fontSize : 14,
         color : 'black',
+    },
+    textAlign : {
+        textAlign : I18nManager.isRTL ? 'left' : 'right', 
     },
     rightView : {
         flex : 2,

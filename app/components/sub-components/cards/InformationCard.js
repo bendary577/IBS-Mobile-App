@@ -1,5 +1,5 @@
 import React, { useState , useEffect} from 'react';
-import {Text, View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, ScrollView, StyleSheet, TouchableOpacity, I18nManager} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
@@ -21,11 +21,11 @@ const InformationCard = (props) => {
                             <Text style={styles.title}>{props.item.title}</Text>
                         </View>
                         <View style={styles.rightView}>
-                            <Text style={styles.number}>Client {props.item.client}</Text>
+                            <Text style={[styles.number, styles.textAlign]}>{t(`client`)} {props.item.client}</Text>
                         </View>
                     </View>
                     <View style={styles.view}>
-                        <View style={styles.leftView}>
+                        <View style={styles.bottomView}>
                             <Text style={styles.date}>{props.item.createdAt.slice(0,10)}</Text>
                         </View>
                     </View>
@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
     view : {
         flexDirection : 'row',
     },
+    textAlign : {
+        textAlign : I18nManager.isRTL ? 'left' : 'right', 
+    },
     title : {
         fontSize : 16,
         color : 'red'
@@ -57,6 +60,9 @@ const styles = StyleSheet.create({
         color : 'black'
     },
     leftView : {
+        alignItems : I18nManager.isRTL ? 'flex-start' : 'flex-end',
+    },
+    bottomView : {
         flex : 4
     },
     body : {

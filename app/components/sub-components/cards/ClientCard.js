@@ -1,7 +1,7 @@
-import React, { useState , useEffect} from 'react';
-import {Text, View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {Text, View, ScrollView, StyleSheet, TouchableOpacity, I18nManager} from 'react-native';
 import {useTranslation} from 'react-i18next';
-
+import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 
 //------------------------ screen ---------------------
@@ -19,18 +19,18 @@ const ClientCard = (props) => {
                     <ScrollView>
                         <View style={styles.view}>
                         <View style={styles.leftView}>
-                            <Text style={styles.title}>{props.item.job.en}</Text>
+                            <Text style={styles.title}>{I18nManager.isRTL ? props.item.job.ar : props.item.job.en}</Text>
                         </View>
                         <View style={styles.rightView}>
-                            <Text style={styles.number}>{props.item.client.name.ar}</Text>
+                            <Text style={styles.number}>{I18nManager.isRTL ? props.item.client.name.ar : props.item.client.name.en}</Text>
                         </View>
                     </View>
                     <View style={styles.view}>
                         <View style={styles.leftView}>
-                            <Text style={styles.body} numberOfLines={1}>{props.item._id}</Text>
+                            <Text style={styles.body} >{props.item._id}</Text>
                         </View>
                         <View style={styles.rightView}>
-                            <Text style={styles.date}>{props.item.hiringDate.slice(0,4)}</Text>
+                            <Text style={[styles.date, styles.textAlign]}>{moment(props.item.hiringDate).format("MMM Do YY")}</Text>
                         </View>
                     </View>
                     </ScrollView>
@@ -56,11 +56,15 @@ const styles = StyleSheet.create({
         fontSize : 16,
         color : 'red'
     },
+    textAlign : {
+        textAlign : I18nManager.isRTL ? 'left' : 'right', 
+    },
     number : {
         fontSize : 16,
         color : 'black'
     },
     leftView : {
+        alignItems : 'flex-start',
         flex : 4
     },
     body : {

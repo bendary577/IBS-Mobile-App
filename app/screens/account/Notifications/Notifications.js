@@ -3,7 +3,7 @@ import {SafeAreaView,View, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Notification from '../../../components/sub-components/Notifications/Notification';
 import NoContent from '../../../components/sub-components/general/NoContent';
-import messaging from '@react-native-firebase/messaging';
+//import messaging from '@react-native-firebase/messaging';
 
 const Notifications = ({route}) => {
 
@@ -12,6 +12,7 @@ const Notifications = ({route}) => {
 
 
     useEffect(() => {
+        /*
         console.log("set notifications");
         setNotifications(route.params.notifications);
 
@@ -33,7 +34,7 @@ const Notifications = ({route}) => {
             );
             }
         });
-
+        */
     }, []);
 
    

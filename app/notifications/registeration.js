@@ -28,6 +28,7 @@ const registerForPushNotificationsAsync = async () => {
         )
         return false;
       }
+
       const token = (await Notifications.getExpoPushTokenAsync()).data;
 
       //save token to backend

@@ -1,12 +1,15 @@
 import React from 'react'
 import {StyleSheet, Text, View} from 'react-native'
+import {useTranslation} from 'react-i18next';
 
 const ProfileInfoCard = (props) => {
+
+    const {t} = useTranslation();
 
     return (
         <View style={styles.conatiner}>
             <Text style={styles.title}>{props.title}</Text>
-            <Text style={styles.info}>{props.value}</Text>
+            <Text style={styles.info}>{props.value === '' || props.value === null || props.value === undefined ? t(`no_info`) : props.value}</Text>
         </View>
     )
 }

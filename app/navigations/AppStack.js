@@ -90,7 +90,7 @@ const HomeStack = () => {
               name="Information" 
               component={Information}
               options={{
-                title : "My Information",
+                title : t(`information`),
                 headerStyle: {
                   backgroundColor: "#D8D8D8",
                   borderBottomRightRadius : 20,

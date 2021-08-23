@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import MessageDetailsCard from '../../../components/sub-components/cards/MessageDetailsCard';
 import {useTranslation} from 'react-i18next';
 import {getSingleBankMessage} from '../../../services/api_requests';
+import Loading from '../../../components/sub-components/general/Loading';
 
 const MessageDetails = (props) => {
 
@@ -28,11 +29,14 @@ const MessageDetails = (props) => {
         setLoading(false)
     }
 
-    const navigate = () => {
-      navigation.navigate("MessageDtails");
-    }
-
     return (
+
+        loading === true ? 
+
+        <Loading action={t(`loading`)}/>
+
+        :
+
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.detailsView}>
                 <View style={styles.fromView}>

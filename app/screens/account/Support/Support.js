@@ -26,7 +26,7 @@ class Support extends Component {
             newTicketDescription : '',
             filterDropDownOpen : false,
             filterOption : '',
-            dummy : '',
+            error : '',
             dropDownLabels : [
                 {label: this.props.t(`all_tickets`), value:'all'},
                 {label: this.props.t(`closed_tickets`), value: 'closed'},
@@ -42,11 +42,18 @@ class Support extends Component {
     //-------------- call the api endpoint to fetch user tickets -----------
     fetcTickets = async () => {
         this.setState({isLoading : true});
-        let data = await getUserTickets();
-        this.setState({
-            tickets : data.tickets,
-            renderedTickets : data.tickets
-        });
+        let response = await getUserTickets();
+        if(response.status === 200){
+            this.setState({
+                tickets : response.data.tickets,
+                renderedTickets : response.data.tickets
+            });
+        }else{
+            this.setState({
+                error : response.data.error
+            });
+        }
+
         this.setState({isLoading : false});
     }
 
@@ -73,13 +80,19 @@ class Support extends Component {
     
     //-------------- call the api endpoint to create new ticket -----------
     createNewTicket = async () => {
-        data = {
+        let data = {
             subject : this.state.newTicketSubject,
             description : this.state.newTicketSubject
         }
-        let data = await addTicket(data);
         this.setModalVisible(false)
-        this.fetcTickets();
+        let response = await addTicket(data);
+        if(response.status == 201){
+            this.fetcTickets();
+        }else{
+            this.setState({
+                error : response.data.error
+            });
+        }
     }
 
 
@@ -120,7 +133,7 @@ class Support extends Component {
                     <View style={styles.upperView}>
                         <View style={styles.titleView}>
                             <TitleText value={t(`myTickets`)}/>
-                            <Text>{this.state.dummy}</Text>
+                            <Text style={styles.error}>{this.state.error !='' ? this.state.error : <></>}</Text>
                             <TouchableOpacity onPress={() => this.setModalVisible(true)}>
                                 <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
                             </TouchableOpacity>
@@ -191,6 +204,11 @@ const styles = StyleSheet.create({
     },
     supportTicketsView : {
         flex : 4,
+    },
+    errorMessage : {
+        color : 'red',
+        marginVertical : 2,
+        textAlign : 'center'
     },
 
 })

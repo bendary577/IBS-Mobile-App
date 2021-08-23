@@ -1,5 +1,5 @@
 import React, { useState , useEffect} from 'react';
-import {Image, Text, View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, Text, View, ScrollView, StyleSheet, TouchableOpacity, I18nManager} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import { useNavigation } from '@react-navigation/native';
@@ -12,25 +12,24 @@ const FAQCard = (props) => {
 
     navigateToSingleFAQ = (id, value) => {
         navigation.navigate('SingleFAQ',  {faq_id : id, title : value})
-        //console.log("hamada");
     }
 
 	return (
                 <TouchableOpacity style={styles.conatinerClosed} onPress={()=>{ navigateToSingleFAQ(props.item._id, props.item.title) }}>
                     <ScrollView>
                         <View style={styles.view}>
-                        <View style={styles.leftView}>
-                            <Text style={styles.title}>{props.item.title}</Text>
+                            <View style={styles.leftView}>
+                                <Text style={styles.title}>{props.item.title}</Text>
+                            </View>
+                            <View style={styles.rightView}>
+                                <Text style={styles.number}>{props.item.priority}</Text>
+                            </View>
                         </View>
-                        <View style={styles.rightView}>
-                            <Text style={styles.number}>{props.item.priority}</Text>
+                        <View style={styles.view}>
+                            <View style={styles.bottomView}>
+                                <Text style={styles.date}>{props.item.createdAt.slice(0,10)}</Text>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.view}>
-                        <View style={styles.leftView}>
-                            <Text style={styles.date}>{props.item.createdAt.slice(0,10)}</Text>
-                        </View>
-                    </View>
                     </ScrollView>
                 </TouchableOpacity>
 	    );
@@ -59,6 +58,9 @@ const styles = StyleSheet.create({
         color : 'black'
     },
     leftView : {
+        alignItems : I18nManager.isRTL ? 'flex-start' : 'flex-end',
+    },
+    bottomView : {
         flex : 4
     },
     body : {

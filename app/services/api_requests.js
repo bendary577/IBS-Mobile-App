@@ -3,7 +3,6 @@ import {GET_USER_API,
         GET_USER_TICKETS, 
         GET_USER_SINGLE_TICKET, 
         CREATE_TICKET,
-        GET_TICKETS_ISSUES_CATEGORIES,
         GET_FAQ,
         GET_CLIENT_INFORMATION,
         GET_SINGLE_INFORMATION,
@@ -23,7 +22,6 @@ import { authenticatedAxiosInstance } from './axios';
 
 
 //--------------------------------------- get user api end point ------------------------------
-
 export const getUserInfo = async () => {
     try {
         const resp = await authenticatedAxiosInstance.get(GET_USER_API);
@@ -40,11 +38,8 @@ export const getUserInfo = async () => {
 //--------------------------------------- get user payments api end point ------------------------------
 export const getUserEmploymentHistory = async () => {
     try {
-        const resp = await authenticatedAxiosInstance.get(GET_USER_EMPLOYMENT_HISTORY);
-        if(resp.status === 200 ){
-            console.log(resp.data.employmentHistory)
-            return resp.data.employmentHistory;
-        }
+        let response = await authenticatedAxiosInstance.get(GET_USER_EMPLOYMENT_HISTORY);
+        return response;
     } catch (err) {
         //Handle Error Here
         console.error(err);
@@ -52,9 +47,10 @@ export const getUserEmploymentHistory = async () => {
 }
 
 //--------------------------------------- get user payments api end point ------------------------------
-export const getUserPayments = async () => {
+export const getUserPayments = async (year) => {
     try {
-        const response = await authenticatedAxiosInstance.get(GET_USER_CLIENT_PAYMENTS);
+        let id = await SecureStore.getItemAsync('employee_id');
+        const response = await authenticatedAxiosInstance.get(`${GET_USER_CLIENT_PAYMENTS}${id}/payments?q=${year}&page=0&sort=createdAt&limit=50&fields=-paymentDetails`);
         return response;
     } catch (err) {
         //Handle Error Here
@@ -65,11 +61,9 @@ export const getUserPayments = async () => {
 //--------------------------------------- get user single payment api end point ------------------------------
 export const getSiglePayment = async (id) => {
     try {
-        const resp = await authenticatedAxiosInstance.get(GET_USER_CLIENT_SINGLE_PAYMENT);
-        if(resp.status === 200 ){
-            console.log(resp.data.payment)
-            return resp.data.payment;
-        }
+        let employee_id = await SecureStore.getItemAsync('employee_id');
+        const response = await authenticatedAxiosInstance.get(`${GET_USER_CLIENT_SINGLE_PAYMENT+employee_id}/payments/${id}`);
+        return response;
     } catch (err) {
         //Handle Error Here
         console.error(err);
@@ -79,37 +73,20 @@ export const getSiglePayment = async (id) => {
 //--------------------------------------- get user tickets api end point ------------------------------
 export const getUserTickets = async () => {
     try {
-        const resp = await authenticatedAxiosInstance.get(GET_USER_TICKETS);
-        if(resp.status === 200){
-            return resp.data;
-        }else{
-            console.log("^^^^^^^^^^^^^^^^^ response 3")
-        }
+        const response = await authenticatedAxiosInstance.get(GET_USER_TICKETS);
+        return response;
     } catch (err) {
         //Handle Error Here
         console.error(err);
     }
 }
 
-//--------------------------------------- get user tickets api end point ------------------------------
-export const getUserTicketsCategories = async () => {
-    try {
-        const resp = await authenticatedAxiosInstance.get(GET_TICKETS_ISSUES_CATEGORIES);
-        if(resp.status === 200){
-            return resp.data;
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
 
 //--------------------------------------- get user tickets api end point ------------------------------
 export const getSingleTicket = async (id) => {
     try {
-        const resp = await authenticatedAxiosInstance.get(GET_USER_SINGLE_TICKET+id);
-        if(resp.status === 200){
-            return resp.data.ticket;
-        }
+        const response = await authenticatedAxiosInstance.get(GET_USER_SINGLE_TICKET+id);
+        return response;
     } catch (err) {
         //Handle Error Here
         console.error(err);
@@ -119,11 +96,8 @@ export const getSingleTicket = async (id) => {
 //--------------------------------------- add new ticket api end point ------------------------------
 export const addTicket = async (data) => {
     try {
-        const resp = await authenticatedAxiosInstance.post(CREATE_TICKET, data);
-        if(resp.status === 201){
-            console.log(resp.data.ticket);
-            return resp.data.ticket;
-        }
+        let response = await authenticatedAxiosInstance.post(CREATE_TICKET, data);
+        return response;
     } catch (err) {
         console.error(err);
     }
@@ -132,12 +106,8 @@ export const addTicket = async (data) => {
 //--------------------------------------- add new ticket api end point ------------------------------
 export const addTicketMessage = async (id, data) => {
     try {
-        console.log(`${CREATE_TICKET_MESSAGE}${id}/message`);
-        const resp = await authenticatedAxiosInstance.post(`${CREATE_TICKET_MESSAGE}${id}/message`, data);
-        if(resp.status === 201){
-            console.log(resp.data.status);
-            return resp.data.message;
-        }
+        const response = await authenticatedAxiosInstance.post(`${CREATE_TICKET_MESSAGE}${id}/message`, data);
+        return response;
     } catch (err) {
         console.error(err);
     }
@@ -192,10 +162,8 @@ export const setUserNotificationToken = async (token) => {
     //--------------------------------------- get FAQ api end point ------------------------------
     export const getFAQ = async () => {
         try {
-            const resp = await authenticatedAxiosInstance.get(GET_FAQ);
-            if(resp.status === 200){
-                return resp.data.faq;
-            }
+            const response = await authenticatedAxiosInstance.get(GET_FAQ);
+            return response;
         } catch (err) {
             //Handle Error Here
             console.error(err);
@@ -205,11 +173,8 @@ export const setUserNotificationToken = async (token) => {
     //--------------------------------------- get FAQ api end point ------------------------------
         export const getSingleFAQ = async (id) => {
             try {
-                const resp = await authenticatedAxiosInstance.get(GET_SINGLE_FAQ+id);
-                if(resp.status === 200){
-                    console.log("Bendary results is " + resp.data.faq.title )
-                    return resp.data.faq;
-                }
+                const response = await authenticatedAxiosInstance.get(GET_SINGLE_FAQ+id);
+                return response;
             } catch (err) {
                 //Handle Error Here
                 console.error(err);
@@ -219,11 +184,8 @@ export const setUserNotificationToken = async (token) => {
     //--------------------------------------- get information api end point ------------------------------
     export const getClientInformation = async () => {
         try {
-            const resp = await authenticatedAxiosInstance.get(GET_CLIENT_INFORMATION);
-            if(resp.status === 200){
-                console.log("client info results is " + resp.data )
-                return resp.data.information;
-            }
+            const response = await authenticatedAxiosInstance.get(GET_CLIENT_INFORMATION);
+            return response;
         } catch (err) {
             //Handle Error Here
             console.error(err);
@@ -233,11 +195,8 @@ export const setUserNotificationToken = async (token) => {
         //--------------------------------------- get information api end point ------------------------------
         export const getClientSingleInformation = async (id) => {
             try {
-                const resp = await authenticatedAxiosInstance.get(GET_SINGLE_INFORMATION+id);
-                if(resp.status === 200){
-                    console.log("client info results is " + resp.data.information )
-                    return resp.data.information;
-                }
+                const response = await authenticatedAxiosInstance.get(GET_SINGLE_INFORMATION+id);
+                return response;
             } catch (err) {
                 //Handle Error Here
                 console.error(err);

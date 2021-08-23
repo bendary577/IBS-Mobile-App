@@ -14,51 +14,47 @@ class MyTransactions extends Component {
         super(props);
         this.state = {  
             transactions : [],
-            renderedTransactions : [],
             isLoading : false,
-            bankNames : [],
-            dropDownLabels : []
+            dropDownLabels : [],
         }
     }
 
-    componentDidMount = async () =>{
+    componentDidMount = async () => {
+        this.fetchPayments();
+        this.initializeFiltrationLabels();
+    }
+
+    fetchPayments = async (year = 2021) => {
         this.setState({isLoading : true});
-        let response = await getUserPayments();
+        let response = await getUserPayments(year);
         if(response.status === 200){
-            //fetch the returned payments transactions
             this.setState({
                 transactions : response.data.payments,
-                renderedTransactions : response.data.payments
             });
-            //get all payments banks names
-            let banks  = response.data.payments.map((payment) => {
-                return I18nManager.isRTL ? payment.bank.name.ar : payment.bank.name.en 
-            })
-            //filter the bank names to be unique
-            banks = banks.filter((item, index, list) => {
-                return list.indexOf(item) === index
-            })
-            this.setState({bankNames : banks})
-            //set the dropdown filter labels as banks namespace
-            banks.map((bank) => {
-                let filterLabel = {
-                    label : bank,
-                    value : bank
-                }
-                this.state.dropDownLabels.push(filterLabel);
-            })
         }else{}
         this.setState({isLoading : false});
     }
 
-    filterTickets = async (value) => {
-        let bankname = this.state.bankNames.filter((bankName)=>{
-            return bankName === value;
+    initializeFiltrationLabels = () => {
+        let years = this.generateArrayOfYears();
+        let yearsLabels = years.map((year)=>{
+            return {label : year, value : year}
         })
-        let payments = this.state.transactions.filter( transaction => {
-            return transaction.bank.name.ar == bankname 
-        })
-        this.setState({renderedTransactions : payments})
+        this.setState({dropDownLabels : yearsLabels})
+    }
+
+    generateArrayOfYears = () => {
+        let max = new Date().getFullYear()
+        let min = max - 9
+        let years = []
+        for (let i = max; i >= min; i--) {
+            years.push(i)
+        }
+        return years
+    }
+
+    filterTickets = async (year) => {
+        this.fetchPayments(year);
     }
 
     navigateToPaymentDetails = (route, id) => {
@@ -70,9 +66,6 @@ class MyTransactions extends Component {
         return (
             this.state.isLoading === true ? 
             <Loading action={t(`loading`)}/>
-                :
-            this.state.renderedTransactions.length === 0 ? 
-                <NoContent />
                 : 
                 <SafeAreaView style={styles.conatiner}>
                     <View style={styles.titleView}>
@@ -80,17 +73,27 @@ class MyTransactions extends Component {
                         <TitleText value={t(`myTransactions`)}/>
                         {/* ----------------------- drop down menu ------------------------------------ */}
                         <View style={{marginTop : 30}}>
-                            <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels} />
+                            {
+                                (this.state.dropDownLabels.length > 0 && 
+                                    <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels} />
+                                ) 
+                            }
+                              
                         </View>
                     </View>
                         {/* ----------------------- transaction messages list ------------------------- */}
-                    <View style={styles.transactionsView}>
-                        <FlatList
-                            data={this.state.renderedTransactions}
-                            renderItem={({item})=>(<Transaction item={item} middle={false} onHandlePress={this.navigateToPaymentDetails}/>)}
-                            keyExtractor={(item) => item._id.toString()}
-                         />
-                    </View>
+                        <View style={styles.transactionsView}>
+                            {
+                            this.state.transactions.length === 0 ? 
+                            <NoContent />
+                            :
+                            <FlatList
+                                data={this.state.transactions}
+                                renderItem={({item})=>(<Transaction item={item} middle={false} onHandlePress={this.navigateToPaymentDetails}/>)}
+                                keyExtractor={(item) => item._id.toString()}
+                            />
+                            }
+                        </View>
                 </SafeAreaView>
         )
     }

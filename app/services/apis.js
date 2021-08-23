@@ -20,13 +20,12 @@ export const USER_NOTIFICATION_TOKEN = `${BASE_API}/api/users/set-notification-t
 export const GET_USER_TICKETS = `${BASE_API}user/tickets?q&page=0&sort=createdAt&limit=50&status=1`;
 export const GET_USER_SINGLE_TICKET = `${BASE_API}user/tickets/`;
 export const CREATE_TICKET = `${BASE_API}tickets`;
-export const GET_TICKETS_ISSUES_CATEGORIES = `${BASE_API}tickets/issues/categories`;
 export const CREATE_TICKET_MESSAGE = `${BASE_API}tickets/`;
 
 //----------------------------------- REST API Payments endpoints -------------------------------
 export const GET_USER_EMPLOYMENT_HISTORY = `${BASE_API}user/employment-history`;
-export const GET_USER_CLIENT_PAYMENTS = `${BASE_API}employees/1/payments?page=0&sort=createdAt&limit=50&fields=-paymentDetails`;
-export const GET_USER_CLIENT_SINGLE_PAYMENT = `${BASE_API}employees/1/payments/33`;
+export const GET_USER_CLIENT_PAYMENTS = `${BASE_API}employees/`;
+export const GET_USER_CLIENT_SINGLE_PAYMENT = `${BASE_API}employees/`;
 
 //----------------------------------- REST API FAQ endpoints -------------------------------
 export const GET_FAQ = `${BASE_API}faq?page=0&sort=priority&limit=50`;
@@ -39,7 +38,7 @@ export const GET_SINGLE_INFORMATION = `${BASE_API}information/`;
 //----------------------------------- REST API Bank Messages ----------------------------
 export const GET_BANK_MESSAGES = `${BASE_API}newsfeed`;
 export const GET_SINGLE_BANK_MESSAGE = `${BASE_API}newsfeed`;
-export const MARK_MESSAGE_AS_READ = `${BASE_API}/`
+export const MARK_MESSAGE_AS_READ = `${BASE_API}/`;
 
 //--------------------------------------- SOCKET IO SERVER -------------------------
 export const SOCKET_IO_SERVER = `http://api.ibsns.com`;

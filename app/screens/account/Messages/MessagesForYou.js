@@ -1,14 +1,17 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import {SafeAreaView,View, StyleSheet, ScrollView } from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText';
 import IBSSearchBar from '../../../components/sub-components/inputs/IBSSearchBar';
 import Message from '../../../components/sub-components/Messages/Message';
 import {useTranslation} from 'react-i18next';
 import { getBankMessages } from '../../../services/api_requests';
+import Loading from '../../../components/sub-components/general/Loading';
+import NoContent from '../../../components/sub-components/general/NoContent';
 
 const MessagesForYou = () => {
 
     const [bankMessages, setBankMessages] = useState(null);
+    const [loading, setLoading] = useState(null);
     const [error, setError] = useState('');
     const {t} = useTranslation();
 
@@ -34,7 +37,7 @@ const MessagesForYou = () => {
 
         :
 
-        bankMessages === null ? 
+        bankMessages === null || bankMessages.length === 0 ? 
             <NoContent />
         :
         

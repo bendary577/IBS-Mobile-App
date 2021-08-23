@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {SafeAreaView,View, Text, StyleSheet,Image} from 'react-native';
+import {SafeAreaView,View, Text, StyleSheet,Image, I18nManager} from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText';
 import AccountTabButton from '../../../components/sub-components/navigationTabs/AccountTabButton';
 import EaringsSection from '../../../components/sub-components/Payment/EarningsSection';
@@ -9,6 +9,7 @@ import {getSiglePayment} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
 import NoContent from '../../../components/sub-components/general/NoContent';
 import { withTranslation } from 'react-i18next';
+import moment from 'moment';
 
 let bankIcon = '../../../assets/icons/Payment/bank.png';
 let dataIcon = '../../../assets/icons/Payment/date.png';
@@ -22,6 +23,7 @@ class PaymentDetails extends Component {
         this.state = {  
             tab : t(`earnings`),
             isLoading : false,
+            error : '',
             payment : {}
         }
     }
@@ -29,10 +31,16 @@ class PaymentDetails extends Component {
     //make api request when screen is mounted
     componentDidMount = async () =>{
         this.setState({isLoading : true});
-        let data = await getSiglePayment(this.props.route.params.paymentId);
-        this.setState({
-            payment : data
-        });
+        let response = await getSiglePayment(this.props.route.params.paymentId);
+        if(response.status === 200){
+            this.setState({
+                payment : response.data.payment
+            });
+        }else{
+            this.setState({
+                error : response.data.error
+            });
+        }
         this.setState({isLoading : false});
     }
 
@@ -55,10 +63,15 @@ class PaymentDetails extends Component {
                 <Loading />
             :
 
+            this.state.error !== '' ?
+
+            <Text style={styles.error}>{this.state.error}</Text>
+
+            :
+
             Object.keys(payment).length !== 0 && isLoading === false ?
 
                 <SafeAreaView style={styles.conatiner}>
-                    {/* ---------------------------- fixed section of the screen ------------------------ */}
                     <View style={styles.fixedView}>
                         {/* ---------------------------- title ------------------------ */}
                         <View>
@@ -68,14 +81,14 @@ class PaymentDetails extends Component {
                         {/* ---------------------------- transaction info ------------------------ */}
                         <View>
                             <Image style={styles.bankIcon} source={require(bankIcon)} />
-                            <Text style={styles.bankTitle}>{payment.bank.name.en}</Text>
+                            <Text style={[styles.bankTitle, styles.textAlign]}>{I18nManager.isRTL ? payment.bank.name.ar : payment.bank.name.en}</Text>
                             <View style={styles.transactionView}>
                                 <View>
                                     <Text style={styles.transactionAmmountText}>{payment.total}</Text>
                                 </View>
                                 <View style={styles.transactionDateView}>
                                     <Image style={styles.dateIcon} source={require(dataIcon)} />
-                                    <Text style={styles.transactionDateText}>{payment.createdAt.slice(0,3)}</Text>
+                                    <Text style={styles.transactionDateText}>{moment(payment.createdAt).format("MMM Do YY")}</Text>
                                 </View>
                             </View>
                         </View>
@@ -119,6 +132,9 @@ const styles = StyleSheet.create({
     bankIcon : {
         marginTop : 10,
     },
+    textAlign : {
+        textAlign : 'left', 
+    },
     bankTitle : {
         fontSize : 18,
         marginTop : 10
@@ -128,7 +144,16 @@ const styles = StyleSheet.create({
         justifyContent : 'space-between',
         marginTop : 15
     },
-
+    error : {
+        flex : 1,
+        flexDirection : 'column',
+        fontSize : 20,
+        textAlign : 'center',
+        justifyContent : 'center',
+        alignItems : 'center',
+        color : 'red',
+        marginTop : "40%",
+    },
     transactionAmmountText : {
         fontSize : 18,
         color : 'red'

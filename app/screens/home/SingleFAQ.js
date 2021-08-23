@@ -1,16 +1,18 @@
 import React, { useState , useEffect} from 'react';
-import {Text, View, SafeAreaView, StyleSheet} from 'react-native';
+import {Text, View, SafeAreaView, StyleSheet, I18nManager} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {getSingleFAQ} from '../../services/api_requests';
 import Loading from '../../components/sub-components/general/Loading';
 import NoContent from '../../components/sub-components/general/NoContent';
 import { WebView } from 'react-native-webview';
+import moment from 'moment';
 
 //------------------------ screen ---------------------
 const SingleFAQ = ({route, navigation}) => {
 
     const [faq, setFAQ] = useState(null);
     const [loading , setLoading] = useState([]);
+    const [error, setError] = useState('');
     const {t} = useTranslation();
 
     useEffect(() => {
@@ -19,9 +21,12 @@ const SingleFAQ = ({route, navigation}) => {
 
     const fetchFAQ = async () => {
         setLoading(true);
-        let data = await getSingleFAQ(route.params.faq_id);
-        console.log("faq title is " + data.title)
-        setFAQ(data);
+        let response = await getSingleFAQ(route.params.faq_id);
+        if(response.status === 200) {
+            setFAQ(response.data.faq);
+        }else{
+            setError(response.data.error);
+        }
         setLoading(false)
     }
 
@@ -31,17 +36,22 @@ const SingleFAQ = ({route, navigation}) => {
 
         <Loading action={t(`loading`)}/>
         :
+
+        error !== '' ? 
+        <Text style={styles.error}>{error}</Text>
+        :
+
         faq === null ? 
             <NoContent />
         :
         <View style={styles.container}>
             <View style={styles.heading}>
-                <Text style={styles.title}>{faq.title}</Text>
+                <Text style={[styles.title, styles.textAlign]}>{faq.title}</Text>
                 <View style={styles.redLine}></View>
-                <Text style={styles.createdAt}>created at {faq.createdAt.slice(0,10)}</Text>
+                <Text style={[styles.createdAt, styles.textAlign]}> {t(`created_at`)} {moment(faq.createdAt).format("MMM Do YY")}</Text>
                 <View style={styles.employeeView}>
                     <View style={styles.employeeNameView}>
-                        <Text>{faq.createdBy.emp.name.en}</Text>
+                        <Text>{I18nManager.isRTL ? faq.createdBy.emp.name.ar : faq.createdBy.emp.name.en}</Text>
                     </View>
                 </View>
             </View>
@@ -67,6 +77,9 @@ const styles = StyleSheet.create({
     },
     heading : {
 
+    },
+    textAlign : {
+        textAlign : 'left', 
     },
     redLine : {
         height : 4,
@@ -99,7 +112,17 @@ const styles = StyleSheet.create({
         borderWidth : 2,
         borderRadius : 5,
         borderColor : '#bfbfbd'
-    }
+    },
+    error : {
+        flex : 1,
+        flexDirection : 'column',
+        fontSize : 20,
+        textAlign : 'center',
+        justifyContent : 'center',
+        alignItems : 'center',
+        color : 'red',
+        marginTop : "40%",
+    },
 });
 
 

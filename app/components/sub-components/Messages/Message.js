@@ -2,6 +2,7 @@ import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import {markMessageAsRead} from '../../../services/api_requests';
+import moment from 'moment';
 
 const Message = (props) => {
 
@@ -17,9 +18,8 @@ const Message = (props) => {
         }
     }
 
-
     return (
-        <TouchableOpacity style={ props.open === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{ handleMessageUserClick(props.message._id) }}>
+        <TouchableOpacity style={ props.unread === true ? styles.conatinerOpened : styles.conatinerClosed} /*onPress={()=>{ handleMessageUserClick(props.message._id) }}*/>
             <View style={styles.view}>
                 <View style={styles.leftView}>
                     <Text style={styles.title}>{props.message.title}</Text>
@@ -30,7 +30,7 @@ const Message = (props) => {
                     <Text style={styles.body} numberOfLines={2}>{props.message.body}</Text>
                 </View>
                 <View style={styles.rightView}>
-                    <Text style={styles.date}>{props.message.createdAt.slice(0,10)}</Text>
+                    <Text style={styles.date}>{moment(props.message.createdAt).format("MMM Do YY")}</Text>
                 </View>
             </View>
         </TouchableOpacity>

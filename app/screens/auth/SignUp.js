@@ -8,10 +8,10 @@ import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonL
 import NavigationButtons from '../../components/sub-components/buttons/NaviagationButtons';
 import { RadioButton } from 'react-native-paper';
 import { signupRequest } from '../../services/authentication';
-import {useAuth} from '../../contexts/authContext';
 import Loading from '../../components/sub-components/general/Loading';
 import { useNavigation } from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import {useAuth} from '../../contexts/authContext';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -45,7 +45,7 @@ const SignUp = () => {
     }
 
     const handleSignup = async () =>{
-        clearInputs();
+        //clearInputs();
         let data = {
           identityNumber : nationalId,
           phone : phone,
@@ -56,11 +56,8 @@ const SignUp = () => {
         setLoading(true);
         let response = await signupRequest(data);
         if(response.status === 200 ){
-            setLoading(false);
-            //setAuthenticated(true)
-            //navigatePhoneVerification();
+            response.data.data.user.isVerified === true ? setAuthenticated(true) : navigatePhoneVerification();
         }else if (response.status === 422){
-            setLoading(false);
             response.data.errors.map( error => {
                 if(error.param === 'phone'){
                     setPhoneErrorMessage(error.msg)
@@ -70,10 +67,10 @@ const SignUp = () => {
                     setPasswordConfirmationErrorMessage(error.msg)
                 }
             })
-       }else{
-            setLoading(false);
+        }else{
             setErrorMessage(response.data.error)
-       }
+        }
+        setLoading(false);
     }
 
     const clearInputs = () => {
@@ -135,6 +132,7 @@ const SignUp = () => {
                         <View style={styles.middle}>
                             <View style={styles.loginForm}>
                                 { errorMessage !== '' ? <Text style={styles.errorMessage}>{errorMessage}</Text> : <></>}
+                                { nationalIdErrorMessage !== '' ? <Text style={styles.nationalIdErrorMessage}>{errorMessage}</Text> : <></>}
                                 <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeNationalId}/>
                                 { phoneErrorMessage !== '' ? <Text style={styles.errorMessage}>{phoneErrorMessage}</Text> : <></>}
                                 <IBSInputText placeholder={t(`phone`)} onChangeText={handleOnChangePhone}/>

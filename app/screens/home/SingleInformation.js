@@ -1,17 +1,19 @@
 import React, { useState , useEffect} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, I18nManager} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {getClientSingleInformation} from '../../services/api_requests';
 import Loading from '../../components/sub-components/general/Loading';
 import NoContent from '../../components/sub-components/general/NoContent';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import moment from 'moment';
 
 //------------------------ screen ---------------------
 const SingleInformation = ({route, navigation}) => {
 
     const [information, setInformation] = useState(null);
     const [loading , setLoading] = useState([]);
+    const [error, setError] = useState('');
     const {t} = useTranslation();
 
     useEffect(() => {
@@ -20,9 +22,12 @@ const SingleInformation = ({route, navigation}) => {
 
     const fetchInformation = async () => {
         setLoading(true);
-        let data = await getClientSingleInformation(route.params.info_id);
-        console.log("faq title is " + data.title)
-        setInformation(data);
+        let response = await getClientSingleInformation(route.params.info_id);
+        if(response.status === 200) {
+            setInformation(response.data.information);
+        }else{
+            setError(response.data.error)
+        }
         setLoading(false)
     }
 
@@ -32,18 +37,23 @@ const SingleInformation = ({route, navigation}) => {
 
         <Loading action={t(`loading`)}/>
         :
+
+        error !== '' ? 
+        <Text style={styles.error}>{error}</Text>
+        :
+
         information === null ? 
             <NoContent />
         :
         <SafeAreaView style={styles.container}>
             <View style={styles.heading}>
-                <Text style={styles.title}>{information.title}</Text>
+                <Text style={[styles.title, styles.textAlign]}>{information.title}</Text>
                 <View style={styles.redLine}></View>
-                <Text style={styles.createdAt}>created at {information.createdAt.slice(0,10)}</Text>
-                <Text style={styles.description}>{information.description}</Text>
+                <Text style={[styles.createdAt, styles.textAlign]}>{t(`created_at`)} {moment(information.createdAt).format("MMM Do YY")}</Text>
+                <Text style={[styles.description, styles.textAlign]}>{information.description}</Text>
                 <View style={styles.employeeView}>
                     <View style={styles.employeeNameView}>
-                        <Text>{information.createdBy.emp.name.en}</Text>
+                        <Text>{I18nManager.isRTL ? information.createdBy.emp.name.ar : information.createdBy.emp.name.en}</Text>
                     </View>
                 </View>
             </View>
@@ -73,11 +83,14 @@ const styles = StyleSheet.create({
         height : 4,
         width : 30,
         backgroundColor : 'red',
-        marginTop : 3
+        marginTop : 3,
     },
     title : {
         fontSize:20, 
-        fontWeight : 'bold'
+        fontWeight : 'bold',
+    },
+    textAlign : {
+        textAlign : 'left', 
     },
     description : {
         fontSize:16, 
@@ -105,7 +118,17 @@ const styles = StyleSheet.create({
         borderWidth : 2,
         borderRadius : 5,
         borderColor : '#bfbfbd'
-    }
+    },
+    error : {
+        flex : 1,
+        flexDirection : 'column',
+        fontSize : 20,
+        textAlign : 'center',
+        justifyContent : 'center',
+        alignItems : 'center',
+        color : 'red',
+        marginTop : "40%",
+    },
 });
 
 

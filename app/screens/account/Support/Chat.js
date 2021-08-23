@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, I18nManager} from 'react-native';
 import { GiftedChat} from 'react-native-gifted-chat'
 import ChatSendButton from '../../../components/sub-components/Chat/ChatSendButton';
 import {getSingleTicket} from '../../../services/api_requests';
@@ -28,6 +28,7 @@ class Chat extends Component {
             ticket : {},
             messages : [],
             message : "",
+            error : "",
             isLoading : false,
             user : {}
         }
@@ -35,40 +36,51 @@ class Chat extends Component {
      
       //------------------------------- call the ticket's api to get comments ---------------------
       componentDidMount = async () => {
+        this.connectToSocketServer();
+        this.fetchSingleTicket();
+      }
 
-        //connect to socket server 
-        this.socket = io(SOCKET_IO_SERVER, {jsonp: false,  transports: ['websocket'] });
-        this.socket.connect();
-        this.socket.on('connect', () => { 
-          console.log('connected to socket server'); 
-        });
-        console.log("nowwwwwwwwwwwwwwwwwwwwwwwww")
-        this.socket.on('hello', () => { 
-          console.log('hello to socket server'); 
-        });
-        this.socket.emit("join", `ticket:${this.state.ticket._id}`)
-        this.socket.on("ticketMessage", this.onReply)
+    connectToSocketServer = () => {
+      //connect to socket server 
+      this.socket = io(SOCKET_IO_SERVER, {jsonp: false,  transports: ['websocket'] });
+      this.socket.connect();
+      this.socket.on('connection', () => { 
+        console.log('connected to socket server'); 
+      });
+      this.socket.on('hello', () => { 
+        console.log('hello to socket server'); 
+      });
+      this.socket.emit("join", `ticket:${this.state.ticket._id}`)
+      this.socket.on("ticketMessage", this.onReply)
+    }
 
-
+    
+    fetchSingleTicket = async () => {
         //reload chat messages
         this.setState({isLoading : true});
-        let data = await getSingleTicket(this.props.route.params.id);
-        let user = {
-          _id : data.createdBy._id,
-          name : data.createdBy.emp.name.en,
-          avatar : require(userAvatar)
-        };
-        this.setState({
-            ticket : data,
-            messages : data.conversation,
-            user
-        });
-        let chatMessages = this.formatMessages();
-        this.setState({
-            messages : chatMessages.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-        })
+        let response = await getSingleTicket(this.props.route.params.id);
+        if(response.status === 200){
+            let user = {
+              _id : response.data.ticket.createdBy._id,
+              name : I18nManager.isRTL ? response.data.ticket.createdBy.emp.name.ar : response.data.ticket.createdBy.emp.name.en,
+              avatar : require(userAvatar)
+            };
+            this.setState({
+                ticket : response.data.ticket,
+                messages : response.data.ticket.conversation,
+                user
+            });
+            let chatMessages = this.formatMessages();
+            this.setState({
+                messages : chatMessages.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+            })
+        }else{
+          this.setState({
+            error : response.data.error
+          })
+        }
         this.setState({isLoading : false});
-      }
+    }
 
 
     //----------------------------------- format messages returned from api ----------------------
@@ -94,9 +106,17 @@ class Chat extends Component {
       onSend = async (message) => {
         let data = { message : message[0].text }
         let response = await addTicketMessage(this.state.ticket._id, data);
-        this.setState(previousState => ({
-          messages: GiftedChat.append(previousState.messages, message),
-        }));
+        if(response.status === 201){
+          console.log("hamada")
+            //response.data.message
+            this.setState(previousState => ({
+              messages: GiftedChat.append(previousState.messages, message),
+            }));
+        }else{
+          this.setState({
+            error : response.data.error
+          })
+        }
         //this.socket.emit("ticketMessage", message[0].text);
       }
 
@@ -116,11 +136,14 @@ class Chat extends Component {
       render() {
         
         const { t } = this.props;
-        const {isLoading,ticket, messages, user} = this.state;
+        const {isLoading,ticket,error, messages, user} = this.state;
 
         return (
             isLoading === true ? 
                 <Loading action={t(`loading`)}/>
+            :
+            error !== '' ? 
+                <Text style={styles.error}>{error}</Text>
             :
                 <>
                 <View style={styles.chatHeader}>
@@ -201,7 +224,17 @@ const styles = StyleSheet.create({
       },
       dateText : {
           color : "gray"
-      }
+      },
+      error : {
+        flex : 1,
+        flexDirection : 'column',
+        fontSize : 20,
+        textAlign : 'center',
+        justifyContent : 'center',
+        alignItems : 'center',
+        color : 'red',
+        marginTop : "40%",
+    },
 })
 
 export default withTranslation()(Chat);

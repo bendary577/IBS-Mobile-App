@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView,View, Text, StyleSheet} from 'react-native';
+import {SafeAreaView,View, Text, StyleSheet, I18nManager} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 const OtherInfoSection = (props) => {
@@ -10,19 +10,19 @@ const OtherInfoSection = (props) => {
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`invoice`)}</Text>
-                <Text style={styles.text}>{props.item.values[0].value.en}</Text>
+                <Text style={styles.text}>{I18nManager.isRTL ? props.item.values[0].value.ar : props.item.values[0].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`hourRate`)}</Text>
-                <Text style={styles.text}>{props.item.values[1].value.en}</Text>
+                <Text style={styles.text}>{I18nManager.isRTL ? props.item.values[1].value.ar : props.item.values[1].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`bankName`)}</Text>
-                <Text style={styles.text}>{props.item.values[2].value.en}</Text>
+                <Text style={styles.text}>{I18nManager.isRTL ? props.item.values[2].value.ar : props.item.values[2].value.en}</Text>
             </View>
             <View style={styles.view}>
                 <Text style={styles.text}>{t(`accountNumber`)}</Text>
-                <Text style={styles.text}>{props.item.values[3].value.en}</Text>
+                <Text style={styles.text}>{I18nManager.isRTL ? props.item.values[3].value.ar : props.item.values[3].value.en}</Text>
             </View>
         </SafeAreaView>
     )

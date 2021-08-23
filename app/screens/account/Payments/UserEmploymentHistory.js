@@ -8,6 +8,7 @@ import {SafeAreaView, Image,ScrollView, View, StyleSheet} from 'react-native';
 import {primaryRedColor} from '../../../config/colors';
 import ClientCard from '../../../components/sub-components/cards/ClientCard';
 
+
 let bankIcon = '../../../assets/icons/Payment/bank.png';
 let dataIcon = '../../../assets/icons/Payment/date.png';
 
@@ -26,10 +27,15 @@ class UserEmploymentHistory extends Component {
     //make api request when screen is mounted
     componentDidMount = async () =>{
         this.setState({isLoading : true});
-        let data = await getUserEmploymentHistory();
-        this.setState({
-            employmentHistory : data
-        });
+        let response = await getUserEmploymentHistory();
+        if(response.status === 200){
+            this.setState({
+                employmentHistory : response.data.employmentHistory
+            });
+        }else{
+
+        }
+
         this.setState({isLoading : false});
     }
 
@@ -41,7 +47,7 @@ class UserEmploymentHistory extends Component {
                 <Loading />
             :
 
-            this.state.employmentHistory !== {} && Object.keys(this.state.employmentHistory).length !== 0 && this.state.isLoading === false ?
+            this.state.employmentHistory !== {} && Object.keys(this.state.employmentHistory).length !== 0  && this.state.isLoading === false ?
 
             <SafeAreaView style={styles.container}>
                 {/* ------------------------------------- header section ------------------------------------ */}

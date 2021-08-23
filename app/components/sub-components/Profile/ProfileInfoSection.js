@@ -4,7 +4,7 @@ import ProfileInfoCard from '../../../components/sub-components/cards/ProfileInf
 import {getUserInfo} from '../../../services/api_requests';
 import { withTranslation } from 'react-i18next';
 import IBSButtonLargeGray from '../../primitive-components/IBSButtonLargeGray';
-
+import moment from 'moment';
 
 class ProfileInfoSection extends Component {
 
@@ -83,7 +83,7 @@ class ProfileInfoSection extends Component {
                     <ProfileInfoCard title={t(`company`)} value={this.state.company}/>
                     <ProfileInfoCard title={t(`nationality`)} value={this.state.nationality}/>
                     <ProfileInfoCard title={t(`bank`)} value={this.state.bank}/>
-                    <ProfileInfoCard title={t(`hiringDate`)} value={this.state.hiringDate}/>
+                    <ProfileInfoCard title={t(`hiringDate`)} value={moment(this.state.hiringDate).format("MMM Do YY")}/>
                     <ProfileInfoCard title={t(`ibsNumber`)} value={this.state.ibsNumber}/>
                     <ProfileInfoCard title={t(`jobTitle`)} value={this.state.jobTitle}/>
                     <ProfileInfoCard title={t(`gender`)} value={this.state.gender}/>

@@ -13,6 +13,7 @@ const FAQ = ({navigation}) => {
 
     const [faqs, setFAQ] = useState(null);
     const [loading , setLoading] = useState([]);
+    const [error, setError] = useState('');
     const {t} = useTranslation();
 
     const dimensions = Dimensions.get('window');
@@ -25,8 +26,13 @@ const FAQ = ({navigation}) => {
 
     const fetchFAQ = async () => {
         setLoading(true);
-        let data = await getFAQ();
-        setFAQ(data);
+        setError('');
+        let response = await getFAQ();
+        if(response.status === 200) {
+            setFAQ(response.data.faq);
+        }else{
+            setError(response.data.error);
+        }
         setLoading(false)
     }
 
@@ -36,6 +42,12 @@ const FAQ = ({navigation}) => {
 
         <Loading action={t(`loading`)}/>
 
+        :
+
+        error !== '' ? 
+        
+        <Text style={styles.error}>{error}</Text>
+        
         :
 
         faqs === null ? 
@@ -99,6 +111,16 @@ const styles = StyleSheet.create({
     },
     supportTicketsView : {
         flex : 4,
+    },
+    error : {
+        flex : 1,
+        flexDirection : 'column',
+        fontSize : 20,
+        textAlign : 'center',
+        justifyContent : 'center',
+        alignItems : 'center',
+        color : 'red',
+        marginTop : "40%",
     },
 });
 

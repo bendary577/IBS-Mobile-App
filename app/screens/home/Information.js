@@ -13,6 +13,7 @@ const Information = ({navigation}) => {
 
     const [information, setInformation] = useState(null);
     const [loading , setLoading] = useState([]);
+    const [error, setError] = useState('');
     const {t} = useTranslation();
 
     useEffect(() => {
@@ -21,8 +22,14 @@ const Information = ({navigation}) => {
 
     const fetchInfo = async () => {
         setLoading(true);
-        let data = await getClientInformation();
-        setInformation(data);
+        setError('');
+        let response = await getClientInformation();
+        if(response.status === 200) {
+            console.log('information')
+            setInformation(response.data.information);
+        }else{
+            setError(response.data.error)
+        }
         setLoading(false)
     }
 
@@ -32,6 +39,12 @@ const Information = ({navigation}) => {
 
         <Loading action={t(`loading`)}/>
 
+        :
+
+        error !== '' ? 
+        
+        <Text style={styles.error}>{error}</Text>
+        
         :
 
         information === null ? 
@@ -88,6 +101,16 @@ const styles = StyleSheet.create({
     },
     supportTicketsView : {
         flex : 4,
+    },
+    error : {
+        flex : 1,
+        flexDirection : 'column',
+        fontSize : 20,
+        textAlign : 'center',
+        justifyContent : 'center',
+        alignItems : 'center',
+        color : 'red',
+        marginTop : "40%",
     },
 });
 
