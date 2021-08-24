@@ -1,12 +1,22 @@
-import React from 'react'
+import React,{useState, useEffect, useRef} from 'react'
 import {StyleSheet, Text, View,Image, TouchableOpacity} from 'react-native'
 import { markNotificationsAsRead } from '../../../services/api_requests';
+import * as Notifications from 'expo-notifications';
 
 let replyIcon = '../../../assets/icons/Notifications/reply.png';
 let messageIcon = '../../../assets/icons/Notifications/message.png';
 let paymentIcon = '../../../assets/icons/Notifications/payment.png';
 
 const Notification = (props) => {
+
+    const notificationListener = useRef();
+    const [notification, setNotification] = useState(false);
+    const responseListener = useRef();
+
+    useEffect(() => {
+    
+
+      }, []);
 
     const markAsRead = async (id) => {
         let response = await markNotificationsAsRead(id);

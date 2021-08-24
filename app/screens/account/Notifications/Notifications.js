@@ -3,7 +3,6 @@ import {SafeAreaView,View, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Notification from '../../../components/sub-components/Notifications/Notification';
 import NoContent from '../../../components/sub-components/general/NoContent';
-//import messaging from '@react-native-firebase/messaging';
 
 const Notifications = ({route}) => {
 
@@ -12,29 +11,7 @@ const Notifications = ({route}) => {
 
 
     useEffect(() => {
-        /*
-        console.log("set notifications");
-        setNotifications(route.params.notifications);
-
-        messaging().onMessage(async remoteMessage => {
-          console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
-        });
-    
-        messaging().onNotificationOpenedApp(remoteMessage => {
-            console.log('Notification caused app to open from background state:', JSON.stringify(remoteMessage))});
-
-        //Check whether an initial notification is available
-        messaging()
-        .getInitialNotification()
-        .then(remoteMessage => {
-            if (remoteMessage) {
-            console.log(
-                'Notification caused app to open from quit state:',
-                JSON.stringify(remoteMessage),
-            );
-            }
-        });
-        */
+        //get notifications
     }, []);
 
    
