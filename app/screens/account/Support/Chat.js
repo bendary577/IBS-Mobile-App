@@ -42,7 +42,7 @@ class Chat extends Component {
 
     connectToSocketServer = () => {
       //connect to socket server 
-      this.socket = io(SOCKET_IO_SERVER, {jsonp: false,  transports: ['websocket'] });
+      this.socket = io(SOCKET_IO_SERVER, {jsonp: false,  transports: ['websocket', 'polling'] });
       this.socket.connect();
       this.socket.on('connection', () => { 
         console.log('connected to socket server'); 
