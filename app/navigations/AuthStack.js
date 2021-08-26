@@ -12,6 +12,7 @@ import BackButton from '../components/sub-components/buttons/BackButton';
 import {getCommon} from './CommonStackScreens';
 import {useTranslation} from 'react-i18next';
 import PhoneVerificationCode from '../screens/auth/PhoneVeridicationCode';
+import PrivacyPolicy from '../screens/auth/PrivacyPolicy';
 
 export default AuthStackNavigation = () => {
 
@@ -90,6 +91,23 @@ export default AuthStackNavigation = () => {
         component={ContactUsUnAuth}
         options={({navigation})=>({
           title: t(`contactUs`),
+          headerStyle: {
+            backgroundColor: "#D8D8D8",
+            borderBottomRightRadius : 20,
+            borderBottomLeftRadius : 20
+          },
+            headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerBackImage : () =>( <BackButton /> )
+        })}
+    />
+
+    <Stack.Screen
+        name="PrivacyPolicy" 
+        component={PrivacyPolicy}
+        options={({navigation})=>({
+          title: t(`privacy_policy`),
           headerStyle: {
             backgroundColor: "#D8D8D8",
             borderBottomRightRadius : 20,

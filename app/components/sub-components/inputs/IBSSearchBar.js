@@ -10,6 +10,8 @@ const IBSSearchBar = (props) => {
     const offset = (Platform.OS === 'android') ? -500 : 0;
     const {t} = useTranslation();
 
+
+
     return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={offset} >
             <View style={styles.container}>
@@ -17,10 +19,10 @@ const IBSSearchBar = (props) => {
                     <TextInput  
                         placeholder={t(`search`)} 
                         placeholderTextColor="#B9B9B9"
-                        //onChangeText={}
+                        onChangeText={value => props.setKeywordValue(value)}
                     />
                 </View>
-                <TouchableOpacity style={styles.searchIcon}>
+                <TouchableOpacity style={styles.searchIcon} onPress={()=> props.search()}>
                     <Image source={require(searchIcon)} style={styles.icon} />
                 </TouchableOpacity>
             </View>

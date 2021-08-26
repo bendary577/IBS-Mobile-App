@@ -118,9 +118,7 @@ export const addTicketMessage = async (id, data) => {
     export const getUserNotifications = async () => {
         try {
             const response = await authenticatedAxiosInstance.get(GET_USER_NOTIFICATIONS);
-            if(response.status === 200){
-                return response.data.notifications;
-            }
+            return response;
         } catch (err) {
             //Handle Error Here
             console.error(err);

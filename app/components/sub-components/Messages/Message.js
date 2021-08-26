@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import {markMessageAsRead} from '../../../services/api_requests';
@@ -9,27 +9,35 @@ const Message = (props) => {
     const navigation = useNavigation();
     const [error, setError] = useState('');
 
-    handleMessageUserClick = async (id) => {
-        const response = await markMessageAsRead(id);
+    useEffect(()=>{
+        handleMessageUserClick();
+    }, [])
+
+    //mark message as read once screen is opened
+    const handleMessageUserClick = async () => {
+        const response = await markMessageAsRead(props.message._id);
         if(response.status === 200){
-            navigation.navigate('MessageDetails',  {id})
+            
         }else{
             setError(response.data.error)
         }
     }
 
+    //open message when user clicks on it
+    const openMessage = () => {
+        navigation.navigate('MessageDetails',  { id : props.message._id})
+    }
+
     return (
-        <TouchableOpacity style={ props.unread === true ? styles.conatinerOpened : styles.conatinerClosed} /*onPress={()=>{ handleMessageUserClick(props.message._id) }}*/>
+        <TouchableOpacity style={ props.unread === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{ openMessage() }} >
             <View style={styles.view}>
                 <View style={styles.leftView}>
                     <Text style={styles.title}>{props.message.title}</Text>
                 </View>
             </View>
             <View style={styles.view}>
-                <View style={[styles.leftView, styles.textContainer]}>
-                    <Text style={styles.body} numberOfLines={2}>{props.message.body}</Text>
-                </View>
-                <View style={styles.rightView}>
+ 
+                <View style={styles.leftView}>
                     <Text style={styles.date}>{moment(props.message.createdAt).format("MMM Do YY")}</Text>
                 </View>
             </View>
