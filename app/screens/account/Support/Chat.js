@@ -34,9 +34,20 @@ class Chat extends Component {
   }
 
   //------------------------------- call the ticket's api to get comments ---------------------
-  componentDidMount = async () => {
+  componentDidMount = () => {
+    console.log("component did mount")
     this.connectToSocketServer();
+    console.log("between join and reply 0")
     this.fetchSingleTicket();
+    this.socket.emit("join", `ticket:1`);
+    console.log("between join and reply")
+    this.socket.on("ticketMessage", (message)=>{
+        console.log("on reply >>> " + message)
+        this.setState((previousState) => ({
+          messages: GiftedChat.append(previousState.messages, message),
+        }));
+        
+    });
   };
 
   connectToSocketServer = () => {
@@ -45,16 +56,16 @@ class Chat extends Component {
       jsonp: false,
       transports: ["websocket", "polling"],
     });
-    // this.socket.connect();
+    //this.socket.connect();
+    this.socket.on("hello", () => {
+      console.log("hello")
+    });
+
     this.socket.on("connect", () => {
+      console.log("socket server is done")
       console.log("connected to socket server");
     });
 
-    this.socket.emit("join", `ticket:1`);
-    this.socket.on("ticketMessage", (message) => {
-      console.log(message);
-      // this.onReply
-    });
   };
 
   fetchSingleTicket = async () => {
@@ -69,6 +80,7 @@ class Chat extends Component {
           : response.data.ticket.createdBy.emp.name.en,
         avatar: require(userAvatar),
       };
+      console.log(response.data.ticket._id)
       this.setState({
         ticket: response.data.ticket,
         messages: response.data.ticket.conversation,
@@ -119,13 +131,11 @@ class Chat extends Component {
 
   //----------------------------------- when user sends a message ----------------------
   onSend = async (message) => {
+    console.log("on send tttttttttttttttt")
     let data = { message: message[0].text };
     let response = await addTicketMessage(this.state.ticket._id, data);
     if (response.status === 201) {
-      //response.data.message
-      this.setState((previousState) => ({
-        messages: GiftedChat.append(previousState.messages, message),
-      }));
+      console.log("on send hhhhhhhhhh")
     } else {
       this.setState({
         error: response.data.error,
@@ -136,6 +146,7 @@ class Chat extends Component {
 
   //----------------------------------- when user sends a message ----------------------
   onReply = (message) => {
+    console.log("on reply >>> " + message)
     this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, message),
     }));
