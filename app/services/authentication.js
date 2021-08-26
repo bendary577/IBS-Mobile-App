@@ -67,7 +67,7 @@ export const signout = async () => {
 //--------------------------------------- verify phone api end point ------------------------------
 export const verifyPhoneNumber = async () => {
   try {
-      const response = await authenticatedAxiosInstance.get(VERIFY_PHONE);
+      const response = await authenticatedAxiosInstance.post(VERIFY_PHONE);
       return response;
   } catch (err) {
       console.error(err);
@@ -109,6 +109,7 @@ export const requestResetPassword = async (data) => {
 //--------------------------------------- verify phone api end point ------------------------------
 export const checkResetPasswordCode = async (data) => {
   try {
+      console.log("%%%%%%%%%%%%%%%%%%erer " + data.code)
       const response = await axiosInstance.post(CHECK_RESET_PASSWORD_API, data);
       return response;
   } catch (err) {

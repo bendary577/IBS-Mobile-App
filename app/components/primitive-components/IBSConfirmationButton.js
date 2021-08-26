@@ -12,7 +12,7 @@ const IBSConfirmationButton = (props) => {
     return (
         props.active ? 
         <TouchableOpacity style={styles.buttonActive} onPress={()=>{props.onHandlePress()}}>
-                <Text style={styles.textActive}>Send Confirmation</Text>
+                <Text style={styles.textActive}>{t(`sendConfirmation`)}</Text>
          </TouchableOpacity>
          : 
          <TouchableOpacity style={styles.button} onPress={()=>{}}>

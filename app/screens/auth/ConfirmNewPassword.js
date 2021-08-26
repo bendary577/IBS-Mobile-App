@@ -8,6 +8,7 @@ import {checkResetPasswordCode} from '../../services/authentication';
 import {useTranslation} from 'react-i18next';
 import CountDown from 'react-native-countdown-component';
 import { useNavigation } from '@react-navigation/native';
+import * as SecureStore from 'expo-secure-store';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -23,7 +24,7 @@ const ConfirmNewPassword =({route})=> {
         const [fourthCellCode, setFourthCellCode] = useState("");
         const [confirm, setConfirm] = useState(false);
         const [error, setErrorMessage] = useState('');
-        const {t} = useTranslation();
+        const {t, i18n} = useTranslation();
         const navigation = useNavigation();
 
     React.useEffect(() => {
@@ -68,14 +69,20 @@ const ConfirmNewPassword =({route})=> {
     }
 
     const handleConfirmPassword = async () => {
-        let _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
+        let _code;
+        if(I18nManager.isRTL){
+            _code = fourthCellCode + thirdCellCode + secondCellCode +  + firstCellCode;
+        }else{
+            _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
+        }
+        console.log("bbbbbbbbbbbbbbbb" + _code)
         let data = {
             code : _code,
             phone : route.params.phone
         };
         let response = await checkResetPasswordCode(data);
         if(response.status === 200){
-            //set the reset_password_token
+            let reset_password_token = await SecureStore.getItemAsync('reset_password_token');
             navigation.navigate("CreateNewPassword", { phone : route.params.phone});
         }else{
             response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))

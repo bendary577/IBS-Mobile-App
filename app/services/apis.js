@@ -41,6 +41,7 @@ export const GET_SINGLE_BANK_MESSAGE = `${BASE_API}newsfeed`;
 export const MARK_MESSAGE_AS_READ = `${BASE_API}/`;
 
 //--------------------------------------- SOCKET IO SERVER -------------------------
+//http://api.ibsns.com
 export const SOCKET_IO_SERVER = `http://api.ibsns.com`;
 
 //--------------------------------------- Notifications API endpoints -------------------------

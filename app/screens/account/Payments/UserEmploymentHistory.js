@@ -65,9 +65,12 @@ class UserEmploymentHistory extends Component {
                 <ScrollView>
                     <View style={styles.supportTicketsView}>
                         {
+                            this.state.employmentHistory.client === null ? 
                             this.state.employmentHistory.map((client)=>{
                                 return <ClientCard key={client.client._id.toString()} item={client} />
                             })
+                            :
+                            <NoContent />
                         }
                     </View>
                 </ScrollView>
