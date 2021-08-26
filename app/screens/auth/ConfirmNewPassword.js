@@ -82,7 +82,7 @@ const ConfirmNewPassword =({route})=> {
         };
         let response = await checkResetPasswordCode(data);
         if(response.status === 200){
-            let reset_password_token = await SecureStore.getItemAsync('reset_password_token');
+            let reset_password_token = await SecureStore.getItemAsync('reset_token');
             navigation.navigate("CreateNewPassword", { phone : route.params.phone});
         }else{
             response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))

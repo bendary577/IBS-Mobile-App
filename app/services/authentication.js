@@ -121,7 +121,7 @@ export const checkResetPasswordCode = async (data) => {
 //--------------------------------------- verify phone api end point ------------------------------
 export const resetPassword = async (data) => {
   try {
-      let reset_password_token = await SecureStore.getItemAsync('reset_password_token');
+      let reset_password_token = await SecureStore.getItemAsync('reset_token');
       const response = await axiosInstance.post(RESET_PASSWORD_API+reset_password_token, data);
       return response;
   } catch (err) {
