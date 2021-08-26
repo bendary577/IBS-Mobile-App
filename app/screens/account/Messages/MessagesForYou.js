@@ -11,7 +11,9 @@ import NoContent from '../../../components/sub-components/general/NoContent';
 const MessagesForYou = () => {
 
     const [bankMessages, setBankMessages] = useState(null);
+    const [renderedBankMessages, setRenderedBankMessages] = useState(null);
     const [loading, setLoading] = useState(null);
+    const [searchKeyword, setSearchKeyword] = useState('');
     const [error, setError] = useState('');
     const {t} = useTranslation();
 
@@ -24,8 +26,26 @@ const MessagesForYou = () => {
         let response = await getBankMessages();
         if(response.status===200){
             setBankMessages(response.data.newsfeed)
+            setRenderedBankMessages(response.data.newsfeed)
         }else{
             setBankMessages.data(response.data.error)
+        }
+        setLoading(false)
+    }
+
+    const setKeywordValue = (value) => {
+        setSearchKeyword(value);
+    }
+
+    const search = () => {
+        setLoading(true)
+        if(searchKeyword === ''){
+            setRenderedBankMessages(bankMessages);
+        }else{
+            let newbBankMessages = bankMessages.filter((message)=>{
+                return message.title === searchKeyword;
+            })
+            setRenderedBankMessages(newbBankMessages);
         }
         setLoading(false)
     }
@@ -36,23 +56,22 @@ const MessagesForYou = () => {
         <Loading action={t(`loading`)}/>
 
         :
-
-        bankMessages === null || bankMessages.length === 0 ? 
-            <NoContent />
-        :
         
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.titleView}>
                <TitleText value={t(`myMessages`)}/>
                <View style={styles.searchContainer}>
-                   <IBSSearchBar />
+                   <IBSSearchBar setKeywordValue={setKeywordValue} search={search}/>
                </View>
             </View>
             <View style={styles.transactionsView}>
                 <ScrollView>
                     {
-                        bankMessages.map((message) => {
-                            return <Message message={message}/>
+                        renderedBankMessages === null || renderedBankMessages.length === 0 ? 
+                             <NoContent />
+                        : 
+                        renderedBankMessages.map((message) => {
+                            return <Message message={message} key={message._id.toString()}/>
                         })
                     }
                 </ScrollView>

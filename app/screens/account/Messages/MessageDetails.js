@@ -1,17 +1,18 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import {SafeAreaView,View, Text, StyleSheet} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import MessageDetailsCard from '../../../components/sub-components/cards/MessageDetailsCard';
 import {useTranslation} from 'react-i18next';
 import {getSingleBankMessage} from '../../../services/api_requests';
 import Loading from '../../../components/sub-components/general/Loading';
+import moment from 'moment';
+import { I18nManager } from 'react-native';
+import NoContent from '../../../components/sub-components/general/NoContent';
 
 const MessageDetails = (props) => {
 
-    const [loading , setLoading] = useState([]);
+    const [loading , setLoading] = useState(false);
     const [bankMessage, setBankMessage] = useState(null);
     const [error, setError] = useState('');
-    const navigation = useNavigation();
     const {t} = useTranslation();
 
     useEffect(() => {
@@ -22,9 +23,10 @@ const MessageDetails = (props) => {
         setLoading(true);
         let response = await getSingleBankMessage(props.route.params.id);
         if(response.status===200){
-            setBankMessage(response.data.newsfeed)
+            console.log(response.data);
+            setBankMessage(response.data.newfeed)
         }else{
-            setBankMessages.data(response.data.error)
+            setError(response.data.error)
         }
         setLoading(false)
     }
@@ -37,16 +39,27 @@ const MessageDetails = (props) => {
 
         :
 
+        bankMessage === null ? 
+        <NoContent />
+
+        :
+        
+        error !== '' ?
+        
+        <Text>error</Text>
+        
+        :
+
         <SafeAreaView style={styles.conatiner}>
             <View style={styles.detailsView}>
                 <View style={styles.fromView}>
-                    <Text style={styles.text}>{t(`from`)} : </Text>
-                    <Text style={styles.redText}>CIB</Text>
+                    {/* <Text style={styles.text}>{t(`from`)} : CIB </Text> */}
+
                 </View>
-                <Text style={styles.laseMessageText}>{t(`lastMessageOn`)} Dec’ 2020</Text>
+                <Text style={styles.laseMessageText}>{t(`lastMessageOn`)} {moment(bankMessage.createdAt).format("MMM Do YY")} </Text>
             </View>
             <View style={styles.cardView}>
-                <MessageDetailsCard message="Please wait while we transfer you to one of our customer support agent.." date="04: 16 pm" />
+                <MessageDetailsCard message={I18nManager.isRTL ? bankMessage.body.ar : bankMessage.body.en } date={moment(bankMessage.createdAt).format("MMM Do YY HH:mm:ss")} />
             </View>
         </SafeAreaView>
     )

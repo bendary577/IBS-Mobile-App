@@ -148,7 +148,17 @@ const resources = {
             "no_info" : "no information available",
             "created_at" : "created at",
             "client" : "client",
-        },
+            "privacy_policy" : "Privacy Policy",
+            "ibs_app" : "IBS Mobile App",
+            "privacy_description_1" : "IBS Mobile application is a new version from IBS for smart phones. it enables you to check your payment details. correspondence with IBS customer team and to be updated with any other upcoming releases features.",
+            "registration_by" : "Registration will be by:",
+            "id_card" : "ID card number",
+            "mobile_phone" : "Mobile phone number that is registered at IBS database.",
+            "privacy_description_2" : "once you sign in, you will revieve a text message including a code for registration",
+            "privacy_description_3" : "once you are signed in with the above data, this will be a confirmation that you areauthorized to access your data",
+            "privacy_description_4" : "it's your responsibility to keep the registration code confidential to keep your account safe and secured. please notify us promptly for any unauthorized use to breach to your account.",
+            "all_rights_reserved" : "All rights reserved to international business services"
+          },
     },
     ar: {
       translation: {
@@ -296,7 +306,17 @@ const resources = {
             "open_tickets" : "تذاكر الدعم المتاحة",
             "no_info" : "لا يوجد معلومات متاحة",
             "created_at" : "أنشئت في",
-            "client" : "العميل"
+            "client" : "العميل",
+            "privacy_policy" : "سياسة الخصوصية",
+            "ibs_app" : "تطبيق IBS Mobile",
+            "privacy_description_1" : "تطبيق IBS Mobile هو إصدار جديد من IBS للهواتف الذكية. أنها تمكنك من التحقق من تفاصيل الدفع الخاصة بك. المراسلات مع فريق عملاء IBS وتحديثها بأي ميزات إصدارات قادمة أخرى.",
+            "registration_by" : "التسجيل سيكون عن طريق:",
+            "id_card" : "رقم بطاقة الهوية",
+            "mobile_phone" : "رقم الهاتف المحمول المسجل في قاعدة بيانات IBS.",
+            "privacy_description_2" : "بمجرد تسجيل الدخول ، ستصلك رسالة نصية تتضمن رمزًا للتسجيل",
+            "privacy_description_3" : "بمجرد تسجيل الدخول بالبيانات المذكورة أعلاه ، سيكون هذا تأكيدًا على أنك مصرح لك بالوصول إلى بياناتك",
+            "privacy_description_4" : "تقع على عاتقك مسؤولية الحفاظ على سرية رمز التسجيل للحفاظ على أمان حسابك. يرجى إخطارنا على الفور بأي استخدام غير مصرح به لخرق حسابك.",
+            "all_rights_reserved" : "جميع الحقوق محفوظة لشركة IBS "
         },
     },
   };

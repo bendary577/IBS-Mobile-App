@@ -4,19 +4,27 @@ import { useNavigation } from '@react-navigation/native';
 import Notification from '../../../components/sub-components/Notifications/Notification';
 import NoContent from '../../../components/sub-components/general/NoContent';
 
-const Notifications = ({route}) => {
+const Notifications = () => {
 
     const [notifications, setNotifications] = useState([]);
+    const [error, setError] = useState('');
     const navigation = useNavigation();
 
 
     useEffect(() => {
-        //get notifications
-    }, []);
+        fetchInfo();
+    }, [fetchInfo]);
 
    
-    const navigate = () => {
-      navigation.navigate("MessageDetails");
+    const fetchInfo = async () => {
+        setLoading(true);
+        let response = await getUserNotifications();
+        if(response.status===200){
+            setNotifications(response.data.notifications)
+        }else{
+            setError(response.data.error)
+        }
+        setLoading(false)
     }
 
     return (

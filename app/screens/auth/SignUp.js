@@ -12,6 +12,7 @@ import Loading from '../../components/sub-components/general/Loading';
 import { useNavigation } from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from '../../contexts/authContext';
+import { TouchableOpacity } from 'react-native';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -91,6 +92,10 @@ const SignUp = () => {
         navigation.navigate("PhoneVerification");
     }
 
+    const navigatePrivacyPolicy = () =>{
+        navigation.navigate("PrivacyPolicy");
+    }
+
     const handleOnChangeNationalId = (userInput) => {
         setNationalId(userInput);
     }
@@ -150,7 +155,7 @@ const SignUp = () => {
                                     </View>
                                     <View style={styles.termsText}>
                                         <Text style={styles.leftText}>{t(`agree`)}</Text>
-                                        <Text style={styles.rightText}>{t(`terms`)}</Text>
+                                        <TouchableOpacity onPress={navigatePrivacyPolicy}><Text style={styles.rightText}>{t(`terms`)}</Text></TouchableOpacity>
                                     </View>
                                 </View>
                                 <IBSButtonLargeRed value={t(`createAccount`)} action={false} onHandlePress={validate} />
