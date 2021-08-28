@@ -2,21 +2,16 @@ import React from 'react';
 import MapView from 'react-native-maps';
 import { StyleSheet, View,Text, Dimensions } from 'react-native';
 import IBSButton from '../../primitive-components/IBSButton';
-import { useNavigation } from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import { openLocation } from '../../../utils/IBSContacts';
 
+export default function Map() {
 
-export default function Map(props) {
-
-  const navigation = useNavigation();
   const {t} = useTranslation();
-
-  const navigate = () => {
-    navigation.navigate("AboutUs");
-  }
 
   return (
     <View style={styles.container}>
+      
           <MapView style={styles.map} 
             initialRegion={{
               latitude: 29.969648271435027,
@@ -37,7 +32,7 @@ export default function Map(props) {
             
             {/* -------------------------------- footer button ---------------------------- */}
             <View style={styles.buttonArea}>
-              <IBSButton onHandlePress={navigate} title={t(`directions`)} />
+              <IBSButton onHandlePress={openLocation} title={t(`directions`)} />
             </View>
 
           </View>

@@ -1,6 +1,7 @@
 import {Linking, Alert } from 'react-native';
 
 const WEBSITE_LINK = `http://www.ibsns.com`;
+const LOCATION_LINK = `https://www.google.com/maps/place/IBS/@29.9695947,31.2728568,17z/data=!3m1!4b1!4m5!3m4!1s0x145839bf6a93f9e1:0x8a62a45fe12e94e2!8m2!3d29.9696018!4d31.2749924`;
 const FACEBOOK_LINK = `https://m.me/libs.hr.egypt`;
 const EMAIL = `help@ibsns.com`;
 const PAYMENT_EMAIL = `payment@ibsns.com`;
@@ -47,4 +48,14 @@ export const openMedicalEmail = () => {
 
 export const openHotline = () => {
     Alert.alert(HOTLINE)
+}
+
+export const openLocation = () => {
+    Linking.canOpenURL(LOCATION_LINK).then(supported => {
+        if (supported) {
+          Linking.openURL(LOCATION_LINK);
+        } else {
+         Alert.alert("Sorry, can't open this url")
+        }
+    });
 }

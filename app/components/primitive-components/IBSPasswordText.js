@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         height : 60,
         borderRadius : 20,
         marginBottom : 10,
-        padding : 20,
+        padding : 7,
         borderColor : '#DBDBDB',
         borderWidth : 1,
         textAlign : I18nManager.isRTL ? 'right' : 'left'
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         height : 60,
         justifyContent : 'center',
         alignItems : 'flex-start',
-        padding : 20
+        padding : 8
     },
     forgotText : {
         flex : 2,

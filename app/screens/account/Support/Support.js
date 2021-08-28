@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import {TouchableOpacity, SafeAreaView,View, Modal, StyleSheet, Image, FlatList, Text } from 'react-native';
-import TitleText from '../../../components/primitive-components/TitleText';
 import TransactionMessage from '../../../components/sub-components/Messages/TransactionMessage';
 import SupportMessageModal from '../../../components/sub-components/Messages/SupportMessageModal';
 import {getUserTickets} from '../../../services/api_requests';
@@ -120,6 +119,8 @@ class Support extends Component {
         this.props.navigation.navigate('Chat',  {id, roomNumber : number, closed : bool})
     }
 
+
+
     render () {
 
         const { t } = this.props;
@@ -137,7 +138,6 @@ class Support extends Component {
                             <TouchableOpacity style={styles.ticketView} onPress={() => this.setModalVisible(true)}>
                                 <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
                             </TouchableOpacity>
-                            <Text style={styles.error}>{this.state.error !='' ? this.state.error : <></>}</Text>
                         </View>
                         <Modal  
                             animationType="slide"
@@ -151,7 +151,10 @@ class Support extends Component {
                                 <SupportMessageModal onClose={this.setModalVisible} onChangeSubject={this.setNewTicketSubject} onChangeDescription={this.setNewTicketDescription} onHandlePress={this.createNewTicket}/>
                             </View>
                         </Modal>
+
                     </View>
+                    
+                    {this.state.error !='' ?  <Text style={styles.errorMessage}>{this.state.error}</Text>: <></>}
                         {
                         this.state.renderedTickets.length === 0 ? 
 
@@ -216,8 +219,10 @@ const styles = StyleSheet.create({
     },
     errorMessage : {
         color : 'red',
-        marginVertical : 2,
-        textAlign : 'center'
+        fontWeight : 'bold',
+        padding : 2,
+        marginVertical : '20%',
+        textAlign : 'center',
     },
 
 })

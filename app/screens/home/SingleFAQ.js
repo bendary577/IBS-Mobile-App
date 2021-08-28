@@ -51,7 +51,7 @@ const SingleFAQ = ({route, navigation}) => {
                 <Text style={[styles.createdAt, styles.textAlign]}> {t(`created_at`)} {moment(faq.createdAt).format("MMM Do YY")}</Text>
                 <View style={styles.employeeView}>
                     <View style={styles.employeeNameView}>
-                        <Text>{I18nManager.isRTL ? faq.createdBy.emp.name.ar : faq.createdBy.emp.name.en}</Text>
+                        <Text>{faq.createdBy === null ? t(`no_data`) : I18nManager.isRTL ? faq.createdBy.emp.name.ar : faq.createdBy.emp.name.en}</Text>
                     </View>
                 </View>
             </View>

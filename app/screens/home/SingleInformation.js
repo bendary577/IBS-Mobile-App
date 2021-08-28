@@ -53,7 +53,7 @@ const SingleInformation = ({route, navigation}) => {
                 <Text style={[styles.description, styles.textAlign]}>{information.description}</Text>
                 <View style={styles.employeeView}>
                     <View style={styles.employeeNameView}>
-                        <Text>{I18nManager.isRTL ? information.createdBy.emp.name.ar : information.createdBy.emp.name.en}</Text>
+                        <Text>{information.createdBy === null ? t(`no_data`) : I18nManager.isRTL ? information.createdBy.emp.name.ar : information.createdBy.emp.name.en}</Text>
                     </View>
                 </View>
             </View>

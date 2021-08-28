@@ -47,7 +47,6 @@ class ResetPassword extends Component {
             phone : this.state.phone
         }
         let response = await requestResetPassword(data);
-        console.log("heloooooooooooooooooooooooo " + response.status);
         if(response.status === 200 ){
          /*    setTimeout(()=>{ 
                 this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
@@ -99,7 +98,7 @@ class ResetPassword extends Component {
                             }
                             <IBSInputText placeholder={t(`phone`)} onChangeText={this.handleChangeText}/>
                             <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
-                            <IBSButtonLargeGray value={t(`backtoLogin`)} action={false} onHandlePress={this.navigateLogin}/>
+                            
                         </View>
                     </View>
                     </ScrollView>
@@ -155,7 +154,8 @@ const styles = StyleSheet.create({
         marginVertical : 5,
         fontWeight : 'bold',
         padding : 2,
-        color : 'red'
+        color : 'red',
+        textAlign : 'center'
     }
 });
 

@@ -98,7 +98,10 @@ const ConfirmNewPassword =({route})=> {
 
     const handleResetPassword = async () => {
         console.log("request reset password")
-        let response = await requestResetPassword(route.params.phone);
+        let data = {
+            phone  : route.params.phone
+        }
+        let response = await requestResetPassword(data);
         if(response.status === 200){
             console.log("test test" + response.status.data)
             setErrorMessage(response.data.message)

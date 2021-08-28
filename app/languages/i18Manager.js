@@ -171,7 +171,8 @@ const resources = {
             "confirm_your_password" : "please confirm your password",
             "provide_id" : "please provide a valid National Id",
             "provide_phone" : "please provide a phone number",
-            "phone_length_error" : "phone number must be 11 digits"
+            "phone_length_error" : "phone number must be 11 digits",
+            "no_data" : "no available data",
           },
     },
     ar: {
@@ -344,7 +345,8 @@ const resources = {
             "confirm_your_password" : "يجب عليك تأكيد كلمة السر",
             "provide_id" : "يجب عليك إدخال الرقم القومي",
             "provide_phone" : "يجب عليك إدخال رقم الهاتف",
-            "phone_length_error" : "رقم الهاتف يجب ان يكون 11 رقم"
+            "phone_length_error" : "رقم الهاتف يجب ان يكون 11 رقم",
+            "no_data" : "لا يوجد بيانات",
         },
     },
   };

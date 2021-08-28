@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView,View,Text, StyleSheet ,FlatList, I18nManager} from 'react-native';
-import TitleText from '../../../components/primitive-components/TitleText';
+import {SafeAreaView,View,  StyleSheet, FlatList, I18nManager} from 'react-native';
 import Transaction from '../../../components/sub-components/Payment/Transaction';
 import {getUserPayments} from '../../../services/api_requests';
 import NoContent from '../../../components/sub-components/general/NoContent';
@@ -22,7 +21,7 @@ class MyTransactions extends Component {
             yearFilterDropDownLabels : [],
             historyFilterDropDownLabels : [],
             employmentHistory : [],
-            error : ''
+            error : '',
         }
     }
 

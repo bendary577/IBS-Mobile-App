@@ -4,7 +4,8 @@ import { StyleSheet, View,Text, Dimensions } from 'react-native';
 import IBSButton from '../../primitive-components/IBSButton';
 import { useNavigation } from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-
+import { WebView } from 'react-native-webview';
+import { openLocation } from '../../../utils/IBSContacts';
 
 export default function SmallMap(props) {
 
@@ -17,14 +18,26 @@ export default function SmallMap(props) {
 
   return (
     <View style={styles.container}>
-          <MapView style={styles.map} 
+           <MapView style={styles.map} 
             initialRegion={{
               latitude: 29.969648271435027,
               longitude: 31.274970942328,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
-            }}
-          />
+            }} />
+
+
+{/*                <View style={styles.map}>
+                <WebView
+                  geolocationEnabled={true}
+                    originWhitelist={['*']}
+                    source={{ uri: `https://www.google.com/maps/embed/v1/place
+                    ?key=AIzaSyC81e2oX48iixXivgl_dUQ1LTd5-_Z52io
+                    &q=Eiffel+Tower,Paris+France`}}
+                    style={{ marginTop: 20 }}
+                />
+              </View> */}
+
           {/* -------------------------------- map footer ---------------------------- */}
           <View style={styles.footer}>
 
@@ -37,7 +50,7 @@ export default function SmallMap(props) {
             
             {/* -------------------------------- footer button ---------------------------- */}
             <View style={styles.buttonArea}>
-              <IBSButton onHandlePress={navigate} title={t(`directions`)}/>
+              <IBSButton onHandlePress={openLocation} title={t(`directions`)}/>
             </View>
 
           </View>
@@ -80,5 +93,11 @@ const styles = StyleSheet.create({
   buttonTxt: {
     fontSize: 18,
     color: 'white'
-  }
+  },
+  WebView : {
+    flex : 1,
+    borderWidth : 2,
+    borderRadius : 5,
+    borderColor : '#bfbfbd'
+},
 });

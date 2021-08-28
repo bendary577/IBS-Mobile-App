@@ -15,7 +15,7 @@ import {useAuth} from '../../contexts/authContext';
 import { TouchableOpacity } from 'react-native';
 
 let {width, height} = Dimensions.get('window'); 
-let loginBackground = '../../assets/images/Login/loginBackground.png';
+let loginBackground = '../../assets/images/Login/loginBackground3.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
 let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 
@@ -203,10 +203,10 @@ const styles = StyleSheet.create({
     },
     backgroundImage : {
         width : width ,
-        height : height+140
+        height : height+80
     },
     middle : {
-        flex : 4,
+        flex : 1,
         paddingLeft : 20,
     },
     redLine : {
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
         marginTop : 3
     },
     loginForm : {
-        height : '80%',
+        height : '100%',
         marginVertical : 20,
     },
     radioView : {
@@ -238,8 +238,16 @@ const styles = StyleSheet.create({
     },
     bottom : {
         flex : 1,
-        right : I18nManager.isRTL ?  -80 : 80,
-        marginTop : 10,
+        flexDirection : 'column',
+        justifyContent : 'flex-end',
+        alignItems : 'flex-start',
+
+    },
+    fixed : {
+        marginStart : I18nManager.isRTL ? '45%' : '2%',
+        marginEnd : I18nManager.isRTL ? '2%' : '45%',
+        alignItems : 'flex-end',
+        marginBottom : '15%'
     },
     errorMessage : {
         color : 'red',

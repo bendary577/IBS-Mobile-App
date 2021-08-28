@@ -8,6 +8,7 @@ import {getUserNotifications} from '../../../services/api_requests';
 const Notifications = () => {
 
     const [notifications, setNotifications] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigation = useNavigation();
 

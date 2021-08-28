@@ -58,6 +58,14 @@ const Login = (props) => {
         }
     }
 
+    const validate = () => {
+        identityNumber === '' ? setNationalIdErrorMessage(t(`provide_id`)) : setNationalIdErrorMessage('');
+        password === '' ? setPasswordErrorMessage(t(`provide_password`)) : setPasswordErrorMessage('');
+        if(nationalIdErrorMessage === '' && passwordErrorMessage === ''){
+            handleLogin();
+        }
+    }
+
     const handleCreateAccount = () =>{
         clearInputs();
         props.navigation.navigate("SignUp");
@@ -99,7 +107,7 @@ const Login = (props) => {
                             <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeIdentificationNumber}/>
                             { passwordErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordErrorMessage}</Text> : <></>}
                             <IBSPasswordText placeholder={t(`passwordPlaceholder`)} hasChild={true} onChangeText={handleOnChangePassword}/>
-                            <IBSButtonLargeRed value={t(`login`)} action={true} onHandlePress={handleLogin} />
+                            <IBSButtonLargeRed value={t(`login`)} action={true} onHandlePress={validate} />
                             <IBSButtonLargeGray value={t(`noAccount`)} action={true} actionText={t(`create`)} onHandlePress={handleCreateAccount}/>
                         </View>
                     </View>
@@ -129,7 +137,7 @@ const styles = StyleSheet.create({
     },
     backgroundImage : {
         width : width ,
-        height : height-80
+        height : height-50
         //width : 360,
         //height : 500
     },
@@ -151,10 +159,12 @@ const styles = StyleSheet.create({
     bottom : {
         flex : 1,
         right : I18nManager.isRTL ?  -80 : 80,
-        marginTop : 40
+        marginTop : 10
     },
     errorMessage : {
         color : 'red',
+        fontWeight : 'bold',
+        padding : 2,
         marginVertical : 2,
         textAlign : 'center'
     },
