@@ -8,11 +8,6 @@ import {SafeAreaView, Image,ScrollView, View, StyleSheet} from 'react-native';
 import {primaryRedColor} from '../../../config/colors';
 import ClientCard from '../../../components/sub-components/cards/ClientCard';
 
-
-let bankIcon = '../../../assets/icons/Payment/bank.png';
-let dataIcon = '../../../assets/icons/Payment/date.png';
-
-
 class UserEmploymentHistory extends Component {
 
     constructor(props) {
@@ -20,7 +15,8 @@ class UserEmploymentHistory extends Component {
         const {t} = this.props
         this.state = {  
             isLoading : false,
-            employmentHistory : {}
+            employmentHistory : {},
+            errot : ''
         }
     }
 
@@ -29,13 +25,15 @@ class UserEmploymentHistory extends Component {
         this.setState({isLoading : true});
         let response = await getUserEmploymentHistory();
         if(response.status === 200){
+            console.log("$$$$$$$$$$$ emp data is " +  response.data.employmentHistory._id)
             this.setState({
                 employmentHistory : response.data.employmentHistory
             });
         }else{
-
+            this.setState({
+                error : response.data.error
+            });
         }
-
         this.setState({isLoading : false});
     }
 
@@ -65,7 +63,7 @@ class UserEmploymentHistory extends Component {
                 <ScrollView>
                     <View style={styles.supportTicketsView}>
                         {
-                            this.state.employmentHistory.client === null ? 
+                            this.state.employmentHistory.client !== null ? 
                             this.state.employmentHistory.map((client)=>{
                                 return <ClientCard key={client.client._id.toString()} item={client} />
                             })

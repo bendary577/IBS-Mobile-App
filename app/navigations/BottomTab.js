@@ -8,11 +8,9 @@ import MoreTabButton from '../components/sub-components/navigationTabs/MoreTabBu
 import ProfileTabButton from '../components/sub-components/navigationTabs/ProfileTabButton';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
-import {HomeStack, TransactionsStack, ProfileStack, SupportStack, EmploymentPaymentsStack} from './AppStack';
+import {HomeStack, ProfileStack, SupportStack, EmploymentPaymentsStack} from './AppStack';
 import More from '../screens/account/Messages/More';
 import {useTranslation} from 'react-i18next';
-import MyProfile from '../screens/account/Profile/MyProfile'
-import UserEmploymentHistory from '../screens/account/Payments/UserEmploymentHistory';
 
 //------------------------------------------- bottom tab navigation ------------------------------------
 

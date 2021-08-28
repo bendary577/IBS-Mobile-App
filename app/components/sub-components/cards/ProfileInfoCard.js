@@ -9,7 +9,7 @@ const ProfileInfoCard = (props) => {
     return (
         <View style={styles.conatiner}>
             <Text style={styles.title}>{props.title}</Text>
-            <Text style={styles.info}>{props.value === '' || props.value === null || props.value === undefined ? t(`no_info`) : props.value}</Text>
+            <Text style={props.value === '' || props.value === null || props.value === undefined ? [styles.info, styles.not_available] : styles.info}> {props.value === '' || props.value === null || props.value === undefined ? t(`no_info`) : props.value}</Text>
         </View>
     )
 }
@@ -28,11 +28,14 @@ const styles = StyleSheet.create({
     },
     title : {
         fontSize : 14,
-        color : '#1A1A1A'
+        color : '#666666'
     },
     info : {
         fontSize : 16
     },
+    not_available : {
+        color : 'red'
+    }
 })
 
 export default ProfileInfoCard;

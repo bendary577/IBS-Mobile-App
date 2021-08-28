@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import {Image, StyleSheet} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 let paymentIcon = '../../../assets/icons/Home/paymentIcon.png';
 let paymentIconInactive = '../../../assets/icons/Home/paymentIconInactive.png';
@@ -8,8 +9,10 @@ let paymentIconInactive = '../../../assets/icons/Home/paymentIconInactive.png';
 
 const PaymentTabButton = (props) => {
 
+    const navigation = useNavigation();
+
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{ navigation.navigate("EmploymentHistory") }}>
             <Image style={styles.icon} source={
                 props.active === true ? 
                 require(paymentIcon)
@@ -22,8 +25,8 @@ const PaymentTabButton = (props) => {
 
 const styles = StyleSheet.create({
     icon : {
-        width : 25,
-        height : 25,
+        width : 30,
+        height : 30,
     },
 })
 

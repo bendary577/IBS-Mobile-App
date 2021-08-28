@@ -1,6 +1,7 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import {Image, StyleSheet} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 let homeIcon = '../../../assets/icons/Home/homeIcon.png';
 let homeIconInavtive = '../../../assets/icons/Home/homeIconInactive.png';
@@ -8,8 +9,10 @@ let homeIconInavtive = '../../../assets/icons/Home/homeIconInactive.png';
 
 const HomeTabIcon = (props) => {
 
+    const navigation = useNavigation();
+
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{ navigation.navigate("Home") }}>
             <Image style={styles.icon} source={
                 props.active === true ? 
                 require(homeIcon)
@@ -22,8 +25,8 @@ const HomeTabIcon = (props) => {
 
 const styles = StyleSheet.create({
     icon : {
-        width : 25,
-        height : 25,
+        width : 30,
+        height : 30,
     },
 })
 

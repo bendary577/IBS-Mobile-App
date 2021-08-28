@@ -8,7 +8,6 @@ const BottomTabStack = () => {
 
   return (
     <Stack.Navigator initialRouteName="Home">
-
       <Stack.Screen
         name="Home" 
         component={BottomTabsNavigation}

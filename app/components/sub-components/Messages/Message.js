@@ -1,35 +1,19 @@
-import React,{useState, useEffect} from 'react'
+import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import {markMessageAsRead} from '../../../services/api_requests';
 import moment from 'moment';
 
 const Message = (props) => {
 
     const navigation = useNavigation();
-    const [error, setError] = useState('');
-
-    useEffect(()=>{
-        handleMessageUserClick();
-    }, [])
-
-    //mark message as read once screen is opened
-    const handleMessageUserClick = async () => {
-        const response = await markMessageAsRead(props.message._id);
-        if(response.status === 200){
-            
-        }else{
-            setError(response.data.error)
-        }
-    }
 
     //open message when user clicks on it
-    const openMessage = () => {
-        navigation.navigate('MessageDetails',  { id : props.message._id})
+    const openMessage = (id) => {
+        navigation.navigate('MessageDetails',  { id })
     }
 
     return (
-        <TouchableOpacity style={ props.unread === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{ openMessage() }} >
+        <TouchableOpacity style={ props.unread === true ? styles.conatinerOpened : styles.conatinerClosed} onPress={()=>{ openMessage(props.message._id) }} >
             <View style={styles.view}>
                 <View style={styles.leftView}>
                     <Text style={styles.title}>{props.message.title}</Text>
@@ -53,6 +37,7 @@ const styles = StyleSheet.create({
         padding : 8,
         borderTopWidth : 2,
         borderTopColor : '#D8D8D8',
+        backgroundColor : '#ffeae6',
     },
     conatinerOpened : {
         flexDirection : 'column',

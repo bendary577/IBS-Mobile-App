@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, TouchableOpacity, I18nManager} from 'react-native';
+import React,{useState, useEffect} from 'react';
+import {SafeAreaView, ScrollView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, TouchableOpacity, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSConfirmationButton from '../../components/primitive-components/IBSConfirmationButton';
@@ -9,6 +9,7 @@ import {useTranslation} from 'react-i18next';
 import CountDown from 'react-native-countdown-component';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
+import {requestResetPassword} from '../../services/authentication';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -24,8 +25,13 @@ const ConfirmNewPassword =({route})=> {
         const [fourthCellCode, setFourthCellCode] = useState("");
         const [confirm, setConfirm] = useState(false);
         const [error, setErrorMessage] = useState('');
+        const [enableResend, setEnableResend] = useState(false);
         const {t, i18n} = useTranslation();
         const navigation = useNavigation();
+
+    useEffect(()=>{
+        console.log("phooooooone is " + props.route.phone)
+    }, [])
 
     React.useEffect(() => {
         incrementCompleteInputs();
@@ -82,10 +88,21 @@ const ConfirmNewPassword =({route})=> {
         };
         let response = await checkResetPasswordCode(data);
         if(response.status === 200){
-            let reset_password_token = await SecureStore.getItemAsync('reset_token');
+            console.log(response.status.reset_token)
+            SecureStore.setItemAsync('reset_token', response.data.reset_token);
             navigation.navigate("CreateNewPassword", { phone : route.params.phone});
         }else{
             response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
+        }
+    }
+
+    const handleResetPassword = async () => {
+        console.log("request reset password")
+        let response = await requestResetPassword(route.params.phone);
+        if(response.status === 200){
+            setErrorMessage(response.data.message)
+        }else{
+            setErrorMessage(response.data.error)
         }
     }
 
@@ -100,6 +117,7 @@ const ConfirmNewPassword =({route})=> {
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
+                    <ScrollView>
                     <View style={styles.middle}>
                         <View style={styles.title}>
                             <TitleText value={t(`enter`)} />
@@ -126,7 +144,7 @@ const ConfirmNewPassword =({route})=> {
                                             <View style={{flex:1, alignItems:'flex-start'}}>
                                                 <CountDown  
                                                     until={65}
-                                                    onFinish={() => alert('finished')}
+                                                    onFinish={() => setEnableResend(true)}
                                                     digitStyle={{width:20,height:15}}
                                                     digitTxtStyle={{color: 'black', fontSize:14}}
                                                     separatorStyle={{color: 'black', fontSize : 14}}
@@ -144,14 +162,15 @@ const ConfirmNewPassword =({route})=> {
                                 </View>
                                 <TouchableOpacity> 
                                     {confirm ?
-                                     <Text style={styles.rightTextInactive}>{t(`resend`)}</Text> 
+                                     enableResend ? <TouchableOpacity onPress={handleResetPassword}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>  : <Text style={styles.rightTextInactive}>{t(`resend`)}</Text> 
                                      :
-                                     <Text style={styles.rightText}>{t(`resend`)}</Text>
+                                     <TouchableOpacity onPress={handleResetPassword}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>
                                     }
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </View>
+                    </ScrollView>
                 </ImageBackground>
             </SafeAreaView>
         );

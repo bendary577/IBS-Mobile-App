@@ -18,14 +18,14 @@ authenticatedAxiosInstance.interceptors.request.use(async (req) => {
     // append access token to request authorization header
     let token = await SecureStore.getItemAsync('access_token');
     req.headers.authorization = token;
-    req.headers['Accept-language'] = 'en';
+    req.headers['Accept-language'] = SecureStore.getItemAsync('lang');
     return req;
 });
 
 //--------------------------------------- axios request interceptors -------------------------------
 axiosInstance.interceptors.request.use(async (req) => {
     // append access token to request authorization header
-    req.headers['Accept-language'] = 'en';
+    req.headers['Accept-language'] = SecureStore.getItemAsync('lang');
     
     return req;
 });

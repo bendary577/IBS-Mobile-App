@@ -38,6 +38,7 @@ const Welcome = (props) => {
           //RNRestart.Restart();
           //Updates.reloadFromCache();
           SecureStore.setItemAsync('language', 'true');
+          SecureStore.setItemAsync('lang', i18n.language);
           Updates.reloadAsync();
         }).catch((error) => {
             console.log('error ' + error.message);

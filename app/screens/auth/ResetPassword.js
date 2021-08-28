@@ -1,11 +1,10 @@
 import React,{Component} from 'react';
-import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
+import {SafeAreaView, ScrollView,  Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import BackButton from '../../components/sub-components/buttons/BackButton';
-import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {requestResetPassword} from '../../services/authentication';
 import { withTranslation } from 'react-i18next';
 
@@ -78,6 +77,9 @@ class ResetPassword extends Component {
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
+                    <ScrollView>
+
+
                     <View style={styles.middle}>
                         <View style={styles.title}>
                             <TitleText value={t(`reset`)} />
@@ -98,6 +100,7 @@ class ResetPassword extends Component {
                             <IBSButtonLargeGray value={t(`backtoLogin`)} action={false} onHandlePress={this.navigateLogin}/>
                         </View>
                     </View>
+                    </ScrollView>
                 </ImageBackground>
             </SafeAreaView>
         );

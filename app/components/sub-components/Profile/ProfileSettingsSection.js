@@ -6,7 +6,7 @@ import {useAuth} from '../../../contexts/authContext';
 import Loading from '../general/Loading';
 import {useTranslation} from 'react-i18next';
 import * as Updates from "expo-updates";
-import {RNRestart} from 'react-native-restart';
+import * as SecureStore from 'expo-secure-store';
 
 let arabicIcon = '../../../assets/icons/Profile/arabic.png';
 let englishIcon = '../../../assets/icons/Profile/english.png';
@@ -34,6 +34,7 @@ const ProfileInfoSection = () => {
         .changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')
         .then(() => {
           I18nManager.forceRTL(i18n.language === 'ar');
+          SecureStore.setItemAsync('lang', i18n.language);
           Updates.reloadAsync();
           //RNRestart.Restart();
         }).catch((error) => {

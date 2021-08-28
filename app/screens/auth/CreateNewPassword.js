@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
+import {SafeAreaView,ScrollView, Image, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import BackButton from '../../components/sub-components/buttons/BackButton';
@@ -23,8 +23,8 @@ class CreateNewPassword extends Component {
             newPasswordConfirmation : '',
             error : '',
          };
+         console.log("phone is " + this.props.route.phone)
     }
-
 
     handleNewPasswordChange = (userInput) => {
         this.setState({
@@ -46,7 +46,7 @@ class CreateNewPassword extends Component {
     }
 
     handleUpdatePassword = async () => {
-        let validation = validate(this.state.newPassword, this.state.newPasswordConfirmation);
+        let validation = this.validate(this.state.newPassword, this.state.newPasswordConfirmation);
         if(validation){
             let data = {
                 phone : this.props.route.phone,
@@ -59,7 +59,7 @@ class CreateNewPassword extends Component {
                     this.props.navigation.navigate("Login");
                 }, 1000);
             }else{
-                this.setState(response.data.error ? {error : response.data.error} : {error : t(`something_wrong`)})  
+                this.setState(response.data.error)  
             }
         }
     }
@@ -77,6 +77,7 @@ class CreateNewPassword extends Component {
                     </View>
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
+                    <ScrollView>
                     <View style={styles.middle}>
                         <View style={styles.title}>
                             <TitleText value={t(`createNew`)} />
@@ -86,9 +87,10 @@ class CreateNewPassword extends Component {
                         <View style={styles.loginForm}>
                             <IBSPasswordText placeholder={t(`newPassword`)} onChangeText={this.handleNewPasswordChange}/>
                             <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={this.handleNewPasswordConfirmationChange}/>
-                            <IBSButtonLargeRed value={t(`changePassword`)} action={false}  onHandlePress={this.handleUpdatePassword}/>
+                            <IBSButtonLargeRed value={t(`update_password`)} action={false}  onHandlePress={this.handleUpdatePassword}/>
                         </View>
                     </View>
+                    </ScrollView>
                 </ImageBackground>
             </SafeAreaView>
         );

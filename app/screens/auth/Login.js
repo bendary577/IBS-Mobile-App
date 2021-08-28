@@ -35,7 +35,6 @@ const Login = (props) => {
     }
 
     const handleLogin = async () =>{
-        clearInputs();
         let data = {
             identityNumber : identityNumber,
             password : password
@@ -44,6 +43,7 @@ const Login = (props) => {
         let response = await signIn(data);
         setLoading(false);
         if(response.status === 200 ){
+            clearInputs();
             response.data.data.user.isVerified === true ? setAuthenticated(true) : handleVerifyPhone();
         }else if (response.status === 422){
             response.data.errors.map( error => {

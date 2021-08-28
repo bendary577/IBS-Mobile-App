@@ -24,11 +24,8 @@ import { authenticatedAxiosInstance } from './axios';
 //--------------------------------------- get user api end point ------------------------------
 export const getUserInfo = async () => {
     try {
-        const resp = await authenticatedAxiosInstance.get(GET_USER_API);
-        if(resp.status === 200 ){
-            console.log(resp.data)
-            return resp.data;
-        }
+        const response = await authenticatedAxiosInstance.get(GET_USER_API);
+        return response;
     } catch (err) {
         console.error(err);
     }
@@ -129,7 +126,6 @@ export const addTicketMessage = async (id, data) => {
 //--------------------------------------- get user notification api end point ------------------------------
 export const markNotificationsAsRead = async (id) => {
     try {
-        console.log("in mark as read");
         const response = await authenticatedAxiosInstance.delete(MARK_NOTIFICATION_AS_READ+id);
         if(response.status === 200){
             //return response.data.employee;
@@ -143,7 +139,6 @@ export const markNotificationsAsRead = async (id) => {
 //--------------------------------------- set user notifications token api end point ------------------------------
 export const setUserNotificationToken = async (token) => {
     try {
-        console.log("storing user notification token");
         const response = await authenticatedAxiosInstance.post(SET_USER_NOTIFICATION_TOKEN,  { notificationToken : token });
         if(response.status === 200){
             //return response.data.employee;

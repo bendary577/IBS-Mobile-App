@@ -69,8 +69,6 @@ class MyTransactions extends Component {
                 : 
                 <SafeAreaView style={styles.conatiner}>
                     <View style={styles.titleView}>
-                        {/* ----------------------- screen title ---------------------------------------- */}
-                        <TitleText value={t(`myTransactions`)}/>
                         {/* ----------------------- drop down menu ------------------------------------ */}
                         <View style={{marginTop : 30}}>
                             {

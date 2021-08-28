@@ -78,7 +78,7 @@ const resources = {
             "from" : "From",
             "lastMessageOn" : "Last message on",
             "myProfile" : "My Profile",
-            "myInformations" : "My Informations",
+            "myInformations" : "My Information",
             "settings" : "Settings",
             "username" : "Username",
             "nationaiID" : "National ID or Passport Number",
@@ -157,7 +157,9 @@ const resources = {
             "privacy_description_2" : "once you sign in, you will revieve a text message including a code for registration",
             "privacy_description_3" : "once you are signed in with the above data, this will be a confirmation that you areauthorized to access your data",
             "privacy_description_4" : "it's your responsibility to keep the registration code confidential to keep your account safe and secured. please notify us promptly for any unauthorized use to breach to your account.",
-            "all_rights_reserved" : "All rights reserved to international business services"
+            "all_rights_reserved" : "All rights reserved to international business services",
+            "user_address" : "Address",
+            "password_updated" : "password updated successfully",
           },
     },
     ar: {
@@ -316,7 +318,9 @@ const resources = {
             "privacy_description_2" : "بمجرد تسجيل الدخول ، ستصلك رسالة نصية تتضمن رمزًا للتسجيل",
             "privacy_description_3" : "بمجرد تسجيل الدخول بالبيانات المذكورة أعلاه ، سيكون هذا تأكيدًا على أنك مصرح لك بالوصول إلى بياناتك",
             "privacy_description_4" : "تقع على عاتقك مسؤولية الحفاظ على سرية رمز التسجيل للحفاظ على أمان حسابك. يرجى إخطارنا على الفور بأي استخدام غير مصرح به لخرق حسابك.",
-            "all_rights_reserved" : "جميع الحقوق محفوظة لشركة IBS "
+            "all_rights_reserved" : "جميع الحقوق محفوظة لشركة IBS ",
+            "user_address" : "العنوان",
+            "password_updated" : "تم تحديث كلمة السر بنجاح",
         },
     },
   };

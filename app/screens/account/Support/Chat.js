@@ -39,15 +39,6 @@ class Chat extends Component {
     this.connectToSocketServer();
     console.log("between join and reply 0")
     this.fetchSingleTicket();
-    this.socket.emit("join", `ticket:1`);
-    console.log("between join and reply")
-    this.socket.on("ticketMessage", (message)=>{
-        console.log("on reply >>> " + message)
-        this.setState((previousState) => ({
-          messages: GiftedChat.append(previousState.messages, message),
-        }));
-        
-    });
   };
 
   connectToSocketServer = () => {
@@ -87,11 +78,15 @@ class Chat extends Component {
         user,
       });
 
-      // this.socket.emit("join", `ticket:${this.state.ticket._id}`);
-      // this.socket.on("ticketMessage", (message) => {
-      //   console.log(message);
-      //   // this.onReply
-      // });
+      this.socket.emit("join", `ticket:${this.state.ticket._id}`);
+      console.log("between join and reply " + this.state.ticket._id)
+      this.socket.on("ticketMessage", (message)=>{
+          console.log("on reply >>> " + message.createdAt)
+          let msg = this.formatMessage(message);
+          this.setState((previousState) => ({
+            messages: GiftedChat.append(previousState.messages, msg),
+          })); 
+      });
 
       let chatMessages = this.formatMessages();
       this.setState({
@@ -128,6 +123,22 @@ class Chat extends Component {
     });
     return chatMessages;
   };
+
+  formatMessage = (message) => {
+    let msg = {
+      _id : message._id, 
+      text : message.message,
+      createdAt : message.createdAt, 
+      user : {
+        _id : message.createdBy, 
+        name : '',
+        avatar : message.createdBy === this.state.user._id
+        ? require(userAvatar)
+        : require(supportAvatar),
+      }
+    }
+    return msg;
+  }
 
   //----------------------------------- when user sends a message ----------------------
   onSend = async (message) => {

@@ -3,6 +3,7 @@ import {SafeAreaView,View, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Notification from '../../../components/sub-components/Notifications/Notification';
 import NoContent from '../../../components/sub-components/general/NoContent';
+import {getUserNotifications} from '../../../services/api_requests';
 
 const Notifications = () => {
 

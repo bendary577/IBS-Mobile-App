@@ -1,103 +1,112 @@
-import React, {Component} from 'react'
-import {StyleSheet, View, ScrollView, I18nManager } from 'react-native'
+import React, {useEffect, useState} from 'react'
+import {StyleSheet, View, Text, ScrollView, I18nManager } from 'react-native'
 import ProfileInfoCard from '../../../components/sub-components/cards/ProfileInfoCard';
 import {getUserInfo} from '../../../services/api_requests';
 import { withTranslation } from 'react-i18next';
 import IBSButtonLargeGray from '../../primitive-components/IBSButtonLargeGray';
 import moment from 'moment';
+import Loading from '../../../components/sub-components/general/Loading';
+import {useTranslation} from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
-class ProfileInfoSection extends Component {
+const ProfileInfoSection = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {  
-            username : '',
-            nationaiID : '',
-            phone : '',
-            email : '',
-            address: '',
-            company: '',
-            nationality: '',
-            bank: '',
-            hiringDate: '',
-            ibsNumber: '',
-            jobTitle: '',
-            gender: '',
-            insuranceNumber: ''
+    const [username, setUsername] = useState('');
+    const [nationalID, setNationalID] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
+    const [company, setCompany] = useState('');
+    const [nationality, setNationality] = useState('');
+    const [bank, setBank] = useState('');
+    const [hiringDate, setHiringDate] = useState('');
+    const [ibsNumber, setIbsNumber] = useState('');
+    const [jobTitle, setJobTitle] = useState('');
+    const [gender, setGender] = useState('');
+    const [insuranceNumber, setInsuranceNumber] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState('');
+    const navigation = useNavigation();
+    const {t} = useTranslation();
+
+    useEffect(()=>{
+        fetchUserData();
+    }, [fetchUserData])
+
+    const fetchUserData = async () =>{
+        setLoading(true);
+        let response = await getUserInfo();
+        if(response.status === 200){
+            setUsername(I18nManager.isRTL ? response.data.user.emp.name.ar : response.data.user.emp.name.en);
+            setNationalID(response.data.user.identityNumbe);
+            setPhone(response.data.user.phone);
+            setEmail(response.data.user.emp.email);
+            setAddress(I18nManager.isRTL ? response.data.user.emp.address.ar : response.data.user.emp.address.en);
+            setCompany(response.data.user.emp.bank.name);
+            setNationality(response.data.user.nationality);
+            setBank(response.data.user.emp.bank.name);
+            setHiringDate(response.data.user.emp.hiringDate);
+            setIbsNumber(response.data.user.emp.clientEmpNumber);
+            setJobTitle(I18nManager.isRTL ? response.data.user.emp.job.ar : response.data.user.emp.job.en);
+            setGender(response.data.user.emp.gender);
+            setInsuranceNumber(response.data.user.emp.insuranceNumber);
+        }else{
+            console.log("error")
+            //setError(response.data.error)
         }
+        setLoading(false);
     }
 
+        const navigateToUpdatePassword = () => {
+            navigation.navigate("Update Password")
+        }
 
-    componentDidMount = async () =>{
-        let data = await getUserInfo();
-        this.setData(
-                I18nManager.isRTL ? data.user.emp.name.ar :  data.user.emp.name.en, 
-                data.user.identityNumber,
-                data.user.phone,
-                data.user.emp.email,
-                I18nManager.isRTL ? data.user.emp.address.ar : data.user.emp.address.en,
-                data.user.emp.bank.name,
-                data.user.nationality,
-                data.user.emp.bank.name,
-                data.user.emp.hiringDate,
-                data.user.emp.clientEmpNumber,
-                I18nManager.isRTL ? data.user.emp.job.ar : data.user.emp.job.en,
-                data.user.emp.gender,
-                data.user.emp.insuranceNumber);
-    }
-
-    setData = (username, identityNumber,phone, email,address,company, nationality, bank, hiringDate, ibsNumber, job, gender, insuranceNumber) => {
-        this.setState({
-            username : username,
-            nationaiID : identityNumber,
-            phone : phone,
-            email : email,
-            address: address,
-            company: company,
-            nationality: nationality,
-            bank: bank,
-            hiringDate: hiringDate,
-            ibsNumber: ibsNumber,
-            jobTitle: job,
-            gender: gender,
-            insuranceNumber: insuranceNumber
-        })
-    }
-
-    navigateToUpdatePassword = () => {
-        this.props.navigation.navigate("Update Password")
-    }
-
-    render(){
-        const { t } = this.props;
 
         return (
             <View style={styles.conatiner}>
-                <IBSButtonLargeGray value={t(`update_password`)} action={false} onHandlePress={this.navigateToUpdatePassword}/>
-                <ScrollView>
-                    <ProfileInfoCard title={t(`username`)} value={this.state.username} />
-                    <ProfileInfoCard title={t(`nationaiID`)} value={this.state.nationaiID}/>
-                    <ProfileInfoCard title={t(`phone`)} value={this.state.phone}/>
-                    <ProfileInfoCard title={t(`email`)} value={this.state.email}/>
-                    <ProfileInfoCard title={t(`address`)} value={this.state.address}/>
-                    <ProfileInfoCard title={t(`company`)} value={this.state.company}/>
-                    <ProfileInfoCard title={t(`nationality`)} value={this.state.nationality}/>
-                    <ProfileInfoCard title={t(`bank`)} value={this.state.bank}/>
-                    <ProfileInfoCard title={t(`hiringDate`)} value={moment(this.state.hiringDate).format("MMM Do YY")}/>
-                    <ProfileInfoCard title={t(`ibsNumber`)} value={this.state.ibsNumber}/>
-                    <ProfileInfoCard title={t(`jobTitle`)} value={this.state.jobTitle}/>
-                    <ProfileInfoCard title={t(`gender`)} value={this.state.gender}/>
-                    <ProfileInfoCard title={t(`insuranceNumber`)} value={this.state.insuranceNumber}/>
-                </ScrollView>
+                <IBSButtonLargeGray value={t(`update_password`)} action={false} onHandlePress={navigateToUpdatePassword}/>
+                {
+                    loading === true ? 
+                    <Loading />
+                    :
+                    error !== '' ? 
+                    <Text style={styles.error}>{error}</Text>
+                    :
+                    <ScrollView>
+                        <ProfileInfoCard title={t(`username`)} value={username} />
+                        <ProfileInfoCard title={t(`nationaiID`)} value={nationalID}/>
+                        <ProfileInfoCard title={t(`phone`)} value={phone}/>
+                        <ProfileInfoCard title={t(`email`)} value={email}/>
+                        <ProfileInfoCard title={t(`user_address`)} value={address}/>
+                        <ProfileInfoCard title={t(`company`)} value={company}/>
+                        <ProfileInfoCard title={t(`nationality`)} value={nationality}/>
+                        <ProfileInfoCard title={t(`bank`)} value={bank}/>
+                        <ProfileInfoCard title={t(`hiringDate`)} value={moment(hiringDate).format("MMM Do YY")}/>
+                        <ProfileInfoCard title={t(`ibsNumber`)} value={ibsNumber}/>
+                        <ProfileInfoCard title={t(`jobTitle`)} value={jobTitle}/>
+                        <ProfileInfoCard title={t(`gender`)} value={gender}/>
+                        <ProfileInfoCard title={t(`insuranceNumber`)} value={insuranceNumber}/>
+                    </ScrollView>
+                }
+
             </View>
         )
-    }
 }
 
 const styles = StyleSheet.create({
     conatiner: {
         flex : 1,
         flexDirection : 'column',
+    },
+    error : {
+        flex : 1,
+        flexDirection : 'column',
+        fontSize : 18,
+        textAlign : 'center',
+        justifyContent : 'center',
+        alignItems : 'center',
+        color : 'red',
+        marginTop : '5%'
     },
 
 })

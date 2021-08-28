@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     },
     upperView : {
         flex : 2,
-        padding : 20,
+        padding : 10,
     },
     titleView : {
         flexDirection : 'row',

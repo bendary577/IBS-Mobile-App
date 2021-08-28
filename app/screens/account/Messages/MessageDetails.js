@@ -7,6 +7,7 @@ import Loading from '../../../components/sub-components/general/Loading';
 import moment from 'moment';
 import { I18nManager } from 'react-native';
 import NoContent from '../../../components/sub-components/general/NoContent';
+import {markMessageAsRead} from '../../../services/api_requests';
 
 const MessageDetails = (props) => {
 
@@ -17,6 +18,7 @@ const MessageDetails = (props) => {
 
     useEffect(() => {
         fetchInfo();
+        
     }, [fetchInfo]);
 
     const fetchInfo = async () => {
@@ -26,9 +28,20 @@ const MessageDetails = (props) => {
             console.log(response.data);
             setBankMessage(response.data.newfeed)
         }else{
+            console.log(response.data.error)
             setError(response.data.error)
         }
         setLoading(false)
+    }
+
+    //mark message as read once screen is opened
+    const handleMessageUserClick = async () => {
+        const response = await markMessageAsRead(props.route.params.id);
+        if(response.status === 200){
+            
+        }else{
+            setError(response.data.error)
+        }
     }
 
     return (
@@ -97,6 +110,16 @@ const styles = StyleSheet.create({
     cardView : {
         flex : 4,
         marginTop : 20
+    },
+    error : {
+        flex : 1,
+        flexDirection : 'column',
+        fontSize : 20,
+        textAlign : 'center',
+        justifyContent : 'center',
+        alignItems : 'center',
+        color : 'red',
+        marginTop : "40%",
     },
 
 })
