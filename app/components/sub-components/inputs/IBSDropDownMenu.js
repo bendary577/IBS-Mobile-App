@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useTranslation} from 'react-i18next';
 
@@ -19,29 +19,25 @@ const IBSDropDownMenu = (props) => {
     }  
 
     return (
-        <SafeAreaView>
+        <View style={{zIndex : 2000}}>
             <DropDownPicker
                 items={props.labels}
                 value={selectedValue}
                 open={filterDropDownOpen}
-                containerStyle={styles.dropdown}
-                style={styles.dropdown}
-                dropDownStyle={{backgroundColor: '#fafafa'}}
                 setValue={applyFilter}
                 onChangeValue={(value)=> props.handleFilter(value)}
                 placeholder={t(`filter`)}
                 onPress={toggleFilterDropDown}
                 closeAfterSelecting={true}
                 itemSeparator={true}
-                />
-        </SafeAreaView>
+     
+            />
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    dropdown : {
-        height: 45
-    }
+    
 
 })
 

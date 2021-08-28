@@ -70,7 +70,7 @@ class MyTransactions extends Component {
                 <SafeAreaView style={styles.conatiner}>
                     <View style={styles.titleView}>
                         {/* ----------------------- drop down menu ------------------------------------ */}
-                        <View style={{marginTop : 30}}>
+                        <View style={{marginTop : '5%', minHeight:45}}>
                             {
                                 (this.state.dropDownLabels.length > 0 && 
                                     <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels} />
@@ -105,12 +105,6 @@ const styles = StyleSheet.create({
     titleView : {
         flex : 2,
         padding : 20,
-    },
-    dropdown : {
-        flex : 1,
-        borderRadius : 15,
-        borderWidth : 1,
-        borderColor : 'black'
     },
     transactionsView : {
         flex : 4,

@@ -97,6 +97,7 @@ class Support extends Component {
 
 
     filterTickets = (value) => {
+        console.log("filteeeeeeeeeeeeer changeeeeeeeeeeeeeed")
         if(value === 'all'){
             this.setState({renderedTickets : this.state.tickets})
         }else if(value === 'closed'){
@@ -127,16 +128,16 @@ class Support extends Component {
             this.state.isLoading === true ? 
                 <Loading action={t(`loading`)}/>
             : 
-
             <SafeAreaView style={styles.conatiner}>
-
                     <View style={styles.upperView}>
                         <View style={styles.titleView}>
-                            <TitleText value={t(`myTickets`)}/>
-                            <Text style={styles.error}>{this.state.error !='' ? this.state.error : <></>}</Text>
-                            <TouchableOpacity onPress={() => this.setModalVisible(true)}>
+                            <View style={styles.filter}>
+                                <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels}/>
+                            </View>
+                            <TouchableOpacity style={styles.ticketView} onPress={() => this.setModalVisible(true)}>
                                 <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
                             </TouchableOpacity>
+                            <Text style={styles.error}>{this.state.error !='' ? this.state.error : <></>}</Text>
                         </View>
                         <Modal
                             animationType="slide"
@@ -150,9 +151,6 @@ class Support extends Component {
                                 <SupportMessageModal onClose={this.setModalVisible} onChangeSubject={this.setNewTicketSubject} onChangeDescription={this.setNewTicketDescription} onHandlePress={this.createNewTicket}/>
                             </View>
                         </Modal>
-                        <View style={{marginTop : 30}}>
-                            <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels}/>
-                        </View>
                     </View>
                         {
                         this.state.renderedTickets.length === 0 ? 
@@ -180,12 +178,20 @@ const styles = StyleSheet.create({
         flexDirection : 'column',
     },
     upperView : {
-        flex : 2,
+        flex : 1,
         padding : 10,
     },
     titleView : {
         flexDirection : 'row',
-        justifyContent : 'space-between'
+        marginTop : '4%'
+    },
+    filter : {
+        flex : 4,
+    },
+    ticketView : {
+        flex : 2,
+        justifyContent : 'center',
+        alignItems : 'center',
     },
     ticketIcon : {
         width : 50,
@@ -203,7 +209,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     supportTicketsView : {
-        flex : 4,
+        flex : 5,
     },
     errorMessage : {
         color : 'red',
