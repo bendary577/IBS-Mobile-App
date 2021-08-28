@@ -132,7 +132,7 @@ class Support extends Component {
                     <View style={styles.upperView}>
                         <View style={styles.titleView}>
                             <View style={styles.filter}>
-                                <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels}/>
+                                <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels} type="tickets"/>
                             </View>
                             <TouchableOpacity style={styles.ticketView} onPress={() => this.setModalVisible(true)}>
                                 <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
@@ -186,15 +186,15 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
     },
     filter : {
-        flex : 4,
+        flex : 5,
         justifyContent : 'center',
         alignItems : 'center',
         minHeight :45
     },
     ticketView : {
-        flex : 2,
+        flex : 1,
         justifyContent : 'center',
-        alignItems : 'center',
+        alignItems : 'flex-end',
     },
     ticketIcon : {
         width : 50,

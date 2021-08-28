@@ -67,7 +67,10 @@ const Home = ({navigation}) => {
                             </View>
                             
                             <View style={styles.description}>
-                                <IBSButtonLargeGray value={t(`faq_description`)} action={false} actionText={t(`login`)} onHandlePress={navigateToFAQ}/>
+                                <Text>{t(`faq_description`)}</Text>
+                                <TouchableOpacity onPress={()=>{navigation.navigate("FAQ")}}>
+                                    <Text style={styles.seeMoreTxt}>{t(`take_look`)}</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
 
@@ -82,7 +85,7 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TitleText value={t(`information`)}/>
+                                <TitleText value={t(`latest_information`)}/>
                             </View>
                             
                             <View style={styles.description}>

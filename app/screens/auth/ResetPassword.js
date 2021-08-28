@@ -47,10 +47,12 @@ class ResetPassword extends Component {
             phone : this.state.phone
         }
         let response = await requestResetPassword(data);
+        console.log("heloooooooooooooooooooooooo " + response.status);
         if(response.status === 200 ){
-            setTimeout(()=>{ 
+         /*    setTimeout(()=>{ 
                 this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
-            }, 2000);
+            }, 2000); */
+            this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
         }else if (response.status === 422){
             response.data.errors.map( error => {
                 this.setState({
@@ -151,6 +153,8 @@ const styles = StyleSheet.create({
     },
     errorMessage : {
         marginVertical : 5,
+        fontWeight : 'bold',
+        padding : 2,
         color : 'red'
     }
 });

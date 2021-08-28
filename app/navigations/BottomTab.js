@@ -50,7 +50,7 @@ const BottomTabsNavigation = () => {
         />
 
         <Tab.Screen
-          name="EmploymentHistory"
+          name="MyTransactions"
           component={EmploymentPaymentsStack}
           options={{
             tabBarLabel: t(`payments`),

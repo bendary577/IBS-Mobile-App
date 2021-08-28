@@ -1,128 +1,124 @@
-import React,{Component} from 'react';
-import {SafeAreaView,Text, Image, ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
+import React,{useEffect, useState} from 'react';
+import {SafeAreaView,ScrollView, Text, View, StyleSheet, Dimensions} from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText'
 import IBSButtonLargeRed from '../../../components/primitive-components/IBSButtonLargeRed';
-import BackButton from '../../../components/sub-components/buttons/BackButton';
 import IBSPasswordText from '../../../components/primitive-components/IBSPasswordText';
-import getFlipForRTLStyle from '../../../utils/utilFunctions';
 import {updatePassword} from '../../../services/authentication';
 import { withTranslation } from 'react-i18next';
+import {useAuth} from '../../../contexts/authContext';
+import {signout} from '../../../services/authentication';
+import {useTranslation} from 'react-i18next';
+import Loading from '../../../components/sub-components/general/Loading';
+
 
 let {width, height} = Dimensions.get('window'); 
 
 //------------------------ screen ---------------------
-class UpdatePassword extends Component {
+const UpdatePassword = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentPassword : '',
-            newPassword : '',
-            newPasswordConfirmation : '',
-            message : '',
-            currentPasswordErrorMessage : '',
-            passwordErrorMessage : '',
-            passwordConfirmationErrorMessage : ''
-         };
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
+    const [currentPasswordErrorMessage, setCurrentPasswordErrorMessage] = useState('');
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+    const [passwordConfirmationErrorMessage, setPasswordConfirmationErrorMessage] = useState('');
+    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const {setAuthenticated} = useAuth();
+    const {t} = useTranslation();
+
+    const logout = async () =>{
+        setLoading(true);
+        let response = await signout();
+        if(response == "success"){
+            setLoading(false);
+            setAuthenticated(false);
+        }
     }
 
-    clearInputs = () => {
-        this.setState({
-            message : '',
-            passwordErrorMessage : '',
-            passwordConfirmationErrorMessage : ''
-        });
+    const clearInputs = () => {
+        setMessage('');
+        setPasswordErrorMessage('');
+        setPasswordConfirmationErrorMessage('');
     }
 
-    handleCurrentPassword = (userInput) => {
-        this.setState({
-            currentPassword : userInput
-        });
+    const handleCurrentPassword = (userInput) => {
+        setCurrentPassword(userInput);
     }
 
-    handleNewPasswordChange = (userInput) => {
-        this.setState({
-            newPassword : userInput
-        });
+    const handleNewPasswordChange = (userInput) => {
+        setNewPassword(userInput);
     }
 
-    handleNewPasswordConfirmationChange = (userInput) => {
-        this.setState({
-            newPasswordConfirmation : userInput
-        });
+    const handleNewPasswordConfirmationChange = (userInput) => {
+        setNewPasswordConfirmation(userInput);
     }
 
-    validate = (newPassword, newPasswordConfirmation) => {
+    const validate = (newPassword, newPasswordConfirmation) => {
         if(newPassword === newPasswordConfirmation){
             return true
         }
         return false;
     }
 
-    handleUpdatePassword = async () => {
-        this.clearInputs();
-        let validation = this.validate(this.state.newPassword, this.state.newPasswordConfirmation);
+    const handleUpdatePassword = async () => {
+        let validation = validate(newPassword, newPasswordConfirmation);
         if(validation){
             let data = {
-                currentPassword : this.state.currentPassword,
-                password : this.state.newPassword,
-                passwordConfirmation : this.state.newPasswordConfirmation
+                currentPassword : currentPassword,
+                password : newPassword,
+                passwordConfirmation : newPasswordConfirmation
             }
             let response = await updatePassword(data);
             if(response.status === 200 ){
-                this.setState({
-                    message : response.data.message
-                });
+                clearInputs();
+                setMessage(t(`password_updated`))
+/*                 setTimeout(() => {
+                    logout();
+                }, 2000); */
             }else if (response.status === 422){
                 response.data.errors.map( error => {
                     if(error.param === 'password'){
-                        this.setState({
-                            passwordErrorMessage : error.msg
-                        });
+                        setPasswordErrorMessage(error.msg);
                     }else if(error.param === 'passwordConfirmation'){
-                        this.setState({
-                            passwordConfirmationErrorMessage : error.msg
-                        });
+                        setPasswordConfirmationErrorMessage(error.msg)
                     }
                 });
             }else{
-                this.setState({
-                    currentPasswordErrorMessage : response.data.error
-                });
+                setCurrentPasswordErrorMessage(response.data.error)
             }
         }else{
-            this.setState({message : t(`passwords_not_identical`)})
+            setMessage(t(`passwords_not_identical`))
         }
     }
 
-    render(){
-        const { t } = this.props;
-        const {message, passwordConfirmationErrorMessage, passwordErrorMessage, currentPasswordErrorMessage} = this.state;
         return (
+            loading === true ? 
+            <Loading action={t(`loggingOut`)}/>
+            :
             <SafeAreaView style={styles.container}>
                 <View style={styles.backgroundImage} >
                     <View style={styles.middle}>
                         <View style={styles.title}>
-                            <TitleText value={t(`set_new`)} />
-                            <TitleText value={t(`password`)} />
+                            <TitleText value={t(`set_new_password`)} />
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
                             { message !== '' ? <Text style={styles.errorMessage}>{message}</Text> : <></>}
                             { currentPasswordErrorMessage !== '' ? <Text style={styles.errorMessage}>{currentPasswordErrorMessage}</Text> : <></>}
-                            <IBSPasswordText placeholder={t(`current_password`)} onChangeText={this.handleCurrentPassword}/>
+                            <IBSPasswordText placeholder={t(`current_password`)} onChangeText={handleCurrentPassword}/>
                             { passwordErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordErrorMessage}</Text> : <></>}
-                            <IBSPasswordText placeholder={t(`newPassword`)} onChangeText={this.handleNewPasswordChange}/>
+                            <IBSPasswordText placeholder={t(`newPassword`)} onChangeText={handleNewPasswordChange}/>
                             { passwordConfirmationErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordConfirmationErrorMessage}</Text> : <></>}
-                            <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={this.handleNewPasswordConfirmationChange}/>
-                            <IBSButtonLargeRed value={t(`update_password`)} action={false}  onHandlePress={this.handleUpdatePassword}/>
+                            <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={handleNewPasswordConfirmationChange}/>
+                            <IBSButtonLargeRed value={t(`update_password`)} action={false}  onHandlePress={handleUpdatePassword}/>
                         </View>
                     </View>
                 </View>
             </SafeAreaView>
         );
     }
-}
+
 
 //----------------------- screen styling ---------------------
 const styles = StyleSheet.create({
@@ -164,11 +160,15 @@ const styles = StyleSheet.create({
         marginTop : 3
     },
     loginForm : {
-        marginTop : 15
+        marginTop : 15,
+        justifyContent : 'center',
     },
     errorMessage : {
         color : 'red',
+        fontWeight : 'bold',
         marginVertical : 2,
+        padding : 3,
+        paddingStart : 4,
         textAlign : 'center'
     },
 });

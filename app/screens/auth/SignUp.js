@@ -34,30 +34,34 @@ const SignUp = () => {
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
     const [phoneErrorMessage, setPhoneErrorMessage] = useState('');
     const [passwordConfirmationErrorMessage, setPasswordConfirmationErrorMessage] = useState('');
+    const [privacyErrorMessage, setPrivacyErrorMessage] = useState('');
     const {setAuthenticated} = useAuth();
     const {t} = useTranslation();
 
     const validate = () => {
-        if(password !== '' && passwordConfirm !='' && password === passwordConfirm && checked === 'checked'){
+        nationalId === '' ? setNationalIdErrorMessage(t(`provide_id`)) : setNationalIdErrorMessage('');
+        phone === '' ?  setPhoneErrorMessage(t(`provide_phone`)) :  setPhoneErrorMessage('')
+        phone.length != 11 ?  setPhoneErrorMessage(t(`phone_length_error`)) :  setPhoneErrorMessage('')
+        password === '' ? setPasswordErrorMessage(t(`provide_password`)) : setPasswordErrorMessage('');
+        passwordConfirm === '' ? setPasswordConfirmationErrorMessage(t(`confirm_your_password`)) : setPasswordConfirmationErrorMessage('');
+        password !== passwordConfirm ? setPasswordConfirmationErrorMessage(t(`passwords_not_identical`)) : setPasswordConfirmationErrorMessage('');
+        checked !== 'checked' ? setPrivacyErrorMessage(t(`check_privacy_policy`)) : setPrivacyErrorMessage('');
+        if(nationalIdErrorMessage === '' && passwordErrorMessage === '' && phoneErrorMessage === '' && passwordConfirmationErrorMessage === '' && privacyErrorMessage === ''){
             handleSignup();
-        }else{
-            setErrorMessage(t(`validate_inputs`));
         }
     }
 
     const handleSignup = async () =>{
-        //clearInputs();
         let data = {
           identityNumber : nationalId,
           phone : phone,
           password : password,
           passwordConfirmation : passwordConfirm
         };
-
         setLoading(true);
         let response = await signupRequest(data);
-        if(response.status === 200 ){
-            response.data.data.user.isVerified === true ? setAuthenticated(true) : navigatePhoneVerification();
+        if(response.status === 201 ){
+            navigateLogin();
         }else if (response.status === 422){
             response.data.errors.map( error => {
                 if(error.param === 'phone'){
@@ -137,7 +141,7 @@ const SignUp = () => {
                         <View style={styles.middle}>
                             <View style={styles.loginForm}>
                                 { errorMessage !== '' ? <Text style={styles.errorMessage}>{errorMessage}</Text> : <></>}
-                                { nationalIdErrorMessage !== '' ? <Text style={styles.nationalIdErrorMessage}>{errorMessage}</Text> : <></>}
+                                { nationalIdErrorMessage !== '' ? <Text style={styles.errorMessage}>{nationalIdErrorMessage}</Text> : <></>}
                                 <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeNationalId}/>
                                 { phoneErrorMessage !== '' ? <Text style={styles.errorMessage}>{phoneErrorMessage}</Text> : <></>}
                                 <IBSInputText placeholder={t(`phone`)} onChangeText={handleOnChangePhone}/>
@@ -145,6 +149,7 @@ const SignUp = () => {
                                 <IBSPasswordText placeholder={t(`setPassword`)} onChangeText={handleOnChangePassword}/>
                                 { passwordConfirmationErrorMessage !== '' ? <Text style={styles.errorMessage}>{passwordConfirmationErrorMessage}</Text> : <></>}
                                 <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={handleOnChangePasswordConfirm}/>
+                                { privacyErrorMessage !== '' ? <Text style={styles.errorMessage}>{privacyErrorMessage}</Text> : <></>}
                                 <View style={styles.radioView}>
                                     <View style={styles.RadioButton}>
                                         <RadioButton value="agree" 
@@ -198,7 +203,7 @@ const styles = StyleSheet.create({
     },
     backgroundImage : {
         width : width ,
-        height : height+90
+        height : height+140
     },
     middle : {
         flex : 4,
@@ -238,6 +243,7 @@ const styles = StyleSheet.create({
     },
     errorMessage : {
         color : 'red',
+        fontWeight : 'bold',
         marginVertical : 2,
         textAlign : 'center'
     },

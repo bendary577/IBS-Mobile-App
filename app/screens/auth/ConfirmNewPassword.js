@@ -30,7 +30,7 @@ const ConfirmNewPassword =({route})=> {
         const navigation = useNavigation();
 
     useEffect(()=>{
-        console.log("phooooooone is " + props.route.phone)
+        console.log("phooooooone is " + route.params.phone)
     }, [])
 
     React.useEffect(() => {
@@ -100,8 +100,11 @@ const ConfirmNewPassword =({route})=> {
         console.log("request reset password")
         let response = await requestResetPassword(route.params.phone);
         if(response.status === 200){
+            console.log("test test" + response.status.data)
             setErrorMessage(response.data.message)
         }else{
+            console.log("test error")
+            console.log("data ts " + response.data.message)
             setErrorMessage(response.data.error)
         }
     }
@@ -242,7 +245,9 @@ const styles = StyleSheet.create({
     },
     errorMessage : {
         color : 'red',
-        marginVertical : 2,
+        fontWeight : 'bold',
+        padding : 2,
+        marginTop : 3,
         textAlign : 'center'
     },
 });

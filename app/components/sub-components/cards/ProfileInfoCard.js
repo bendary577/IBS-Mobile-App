@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
         color : '#666666'
     },
     info : {
-        fontSize : 16
+        fontSize : 16,
+        fontWeight : 'bold'
     },
     not_available : {
         color : 'red'

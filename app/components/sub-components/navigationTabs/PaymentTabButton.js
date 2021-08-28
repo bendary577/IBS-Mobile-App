@@ -12,7 +12,7 @@ const PaymentTabButton = (props) => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity onPress={()=>{ navigation.navigate("EmploymentHistory") }}>
+        <TouchableOpacity onPress={()=>{ navigation.navigate("MyTransactions") }}>
             <Image style={styles.icon} source={
                 props.active === true ? 
                 require(paymentIcon)

@@ -47,7 +47,9 @@ export const getUserEmploymentHistory = async () => {
 export const getUserPayments = async (year) => {
     try {
         let id = await SecureStore.getItemAsync('employee_id');
-        const response = await authenticatedAxiosInstance.get(`${GET_USER_CLIENT_PAYMENTS}${id}/payments?q=${year}&page=0&sort=createdAt&limit=50&fields=-paymentDetails`);
+        id = parseInt(id);
+        console.log(`${GET_USER_CLIENT_PAYMENTS}${Number(id)}/payments?q=${year}&page=0&sort=createdAt&limit=50&fields=-paymentDetails`)
+        const response = await authenticatedAxiosInstance.get(`${GET_USER_CLIENT_PAYMENTS}${Number(id)}/payments?q=${year}&page=0&sort=createdAt&limit=50&fields=-paymentDetails`);
         return response;
     } catch (err) {
         //Handle Error Here
@@ -59,6 +61,7 @@ export const getUserPayments = async (year) => {
 export const getSiglePayment = async (id) => {
     try {
         let employee_id = await SecureStore.getItemAsync('employee_id');
+        console.log("single poayment is " + `${GET_USER_CLIENT_SINGLE_PAYMENT+employee_id}/payments/${id}`)
         const response = await authenticatedAxiosInstance.get(`${GET_USER_CLIENT_SINGLE_PAYMENT+employee_id}/payments/${id}`);
         return response;
     } catch (err) {

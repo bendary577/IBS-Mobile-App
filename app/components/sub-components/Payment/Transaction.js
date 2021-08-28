@@ -1,16 +1,19 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image , TouchableOpacity} from 'react-native';
 import moment from 'moment';
-
-let bankIcon = '../../../assets/icons/Payment/bank.png';
-let dataIcon = '../../../assets/icons/Payment/date.png';
+import { useNavigation } from '@react-navigation/native';
 
 const Transaction = (props) => {
+    const navigation = useNavigation();
+
+    const navigateToPaymentDetails = () => {
+        navigation.navigate("PaymentDetails", {paymentId : props.item._id});
+    }
     return (
-        <TouchableOpacity style={styles.conatiner} onPress={()=>{props.onHandlePress("PaymentDetails", {paymentId : props.item._id})}} >
+        <TouchableOpacity style={styles.conatiner} onPress={()=>{props.onHandlePress(props.item._id)}} >
                 {/* ---------------------------- icon section --------------------------- */}
                 <View style={styles.iconView}>
-                    <Image style={styles.bankIcon} source={require(bankIcon)} />
+                    <Image style={styles.bankIcon} source={require('../../../assets/icons/Payment/bank.png')} />
                 </View>
 
                 {/* ---------------------------- price section --------------------------- */}
@@ -21,10 +24,10 @@ const Transaction = (props) => {
                 {/* ---------------------------- date section --------------------------- */}
                 <View style={styles.dateView}>
                     <View style={styles.dateIconView}>
-                        <Image style={styles.dateIcon} source={require(dataIcon)} />
+                        <Image style={styles.dateIcon} source={require('../../../assets/icons/Payment/date.png')} />
                     </View>
                     <View style={styles.dateValueView}>
-                        <Text style={styles.dateValue}>{moment(props.item.createdAt).format("YYYY")}</Text>
+                        <Text style={styles.dateValue}>{moment(props.item.createdAt).format("MMM Do")}</Text>
                     </View>
                 </View>
         </TouchableOpacity>

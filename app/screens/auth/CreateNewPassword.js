@@ -1,12 +1,13 @@
-import React,{Component} from 'react';
+import React,{useState, useEffect} from 'react';
 import {SafeAreaView,ScrollView, Image, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
-import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {resetPassword} from '../../services/authentication';
 import { withTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -14,58 +15,51 @@ let ibsImage = '../../assets/images/Login/ibs.png';
 let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 
 //------------------------ screen ---------------------
-class CreateNewPassword extends Component {
+const CreateNewPassword = ({route}) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            newPassword : '',
-            newPasswordConfirmation : '',
-            error : '',
-         };
-         console.log("phone is " + this.props.route.phone)
+    const [newPassword, setNewPassword] = useState('');
+    const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigation = useNavigation();
+    const {t, i18n} = useTranslation();
+
+    useEffect(()=>{
+        console.log("phone is in update pass " + route.params.phone)
+    }, [])
+
+    const handleNewPasswordChange = (userInput) => {
+        setNewPassword(userInput);
     }
 
-    handleNewPasswordChange = (userInput) => {
-        this.setState({
-            newPassword : userInput
-        });
+    const handleNewPasswordConfirmationChange = (userInput) => {
+        setNewPasswordConfirmation(userInput);
     }
 
-    handleNewPasswordConfirmationChange = (userInput) => {
-        this.setState({
-            newPasswordConfirmation : userInput
-        });
-    }
-
-    validate = (newPassword, newPasswordConfirmation) => {
+    const validate = (newPassword, newPasswordConfirmation) => {
         if(newPassword === newPasswordConfirmation){
             return true
         }
         return false;
     }
 
-    handleUpdatePassword = async () => {
-        let validation = this.validate(this.state.newPassword, this.state.newPasswordConfirmation);
+    const handleUpdatePassword = async () => {
+        let validation = validate(newPassword, newPasswordConfirmation);
         if(validation){
             let data = {
-                phone : this.props.route.phone,
-                password : this.state.newPassword,
-                passwordConfirmation : this.state.newPasswordConfirmation
+                phone : route.params.phone,
+                password : newPassword,
+                passwordConfirmation : newPasswordConfirmation
             }
             let response = await resetPassword(data);
             if(response.status === 200){
-                setTimeout(()=>{ 
-                    this.props.navigation.navigate("Login");
-                }, 1000);
+                navigation.navigate("Login");
             }else{
-                this.setState(response.data.error)  
+                setError(response.data.error);
             }
         }
     }
 
-    render(){
-        const { t } = this.props;
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
@@ -85,9 +79,9 @@ class CreateNewPassword extends Component {
                             <View style={styles.redLine}></View>
                         </View>
                         <View style={styles.loginForm}>
-                            <IBSPasswordText placeholder={t(`newPassword`)} onChangeText={this.handleNewPasswordChange}/>
-                            <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={this.handleNewPasswordConfirmationChange}/>
-                            <IBSButtonLargeRed value={t(`update_password`)} action={false}  onHandlePress={this.handleUpdatePassword}/>
+                            <IBSPasswordText placeholder={t(`newPassword`)} onChangeText={handleNewPasswordChange}/>
+                            <IBSPasswordText placeholder={t(`confirmPassword`)} onChangeText={handleNewPasswordConfirmationChange}/>
+                            <IBSButtonLargeRed value={t(`update_password`)} action={false}  onHandlePress={handleUpdatePassword}/>
                         </View>
                     </View>
                     </ScrollView>
@@ -95,7 +89,7 @@ class CreateNewPassword extends Component {
             </SafeAreaView>
         );
     }
-}
+
 
 //----------------------- screen styling ---------------------
 const styles = StyleSheet.create({
@@ -145,4 +139,4 @@ const styles = StyleSheet.create({
 
 
 
-export default withTranslation()(CreateNewPassword);
+export default CreateNewPassword;

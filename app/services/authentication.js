@@ -21,7 +21,6 @@ export const signIn = async (data) => {
         if(response.data.data.user.emp._id){
           storeEmployeeId(response.data.data.user.emp._id);
         }
-        let id = SecureStore.getItemAsync('employee_id')
     }
       return response;
   } catch (error){
@@ -34,16 +33,15 @@ export const signIn = async (data) => {
 export const signupRequest = async (data) => {
   try {
     const response = await axiosInstance.post(SIGNUP_API, data);
-    if(response.status === 200){
-      /*
+/*     if(response.status === 201){
+
       storeToken(response.data.access_token);
       if(response.data.data.user.emp._id){
         storeEmployeeId(response.data.data.user.emp._id);
       }
       let id = SecureStore.getItemAsync('employee_id')
-      */
      console.log(response.data)
-    }  
+    }   */
     return response;
   } catch (err) {
       console.error(err);
@@ -87,6 +85,9 @@ export const checkVerificationCode = async (data) => {
 //--------------------------------------- verify phone api end point ------------------------------
 export const updatePassword = async (data) => {
   try {
+      console.log(" in update password " + data.currentPassword)
+      console.log(" in update password " + data.password)
+      console.log(" in update password " + data.passwordConfirmation)
       const response = await authenticatedAxiosInstance.post(UPDATE_PASSWORD_API, data);
       return response;
   } catch (err) {
@@ -94,10 +95,11 @@ export const updatePassword = async (data) => {
   }
 }
 
-
 //--------------------------------------- verify phone api end point ------------------------------
 export const requestResetPassword = async (data) => {
   try {
+    console.log("phone is " + data)
+    console.log(REQUEST_RESET_PASSWORD_API)
       const response = await axiosInstance.post(REQUEST_RESET_PASSWORD_API,data);
       return response;
   } catch (err) {
@@ -125,6 +127,7 @@ export const resetPassword = async (data) => {
     console.log(data.password);
     console.log(data.passwordConfirmation);
       let reset_password_token = await SecureStore.getItemAsync('reset_token');
+      console.log('rest is ' + reset_password_token)
       const response = await axiosInstance.post(RESET_PASSWORD_API+reset_password_token, data);
       return response;
   } catch (err) {
@@ -141,9 +144,8 @@ export const storeToken = (token) => {
 //--------------------------------------- store employee id  ------------------------------
 export const storeEmployeeId = (id) => {
   //set the value of the token
-  SecureStore.setItemAsync('employee_id', JSON.stringify(id));
+  SecureStore.setItemAsync('employee_id', id.toString());
 };
-
 
 //--------------------------------------- store user token  ------------------------------
 export const getToken = async () => {

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView,View, StyleSheet ,FlatList, I18nManager} from 'react-native';
+import {SafeAreaView,View,Text, StyleSheet ,FlatList, I18nManager} from 'react-native';
 import TitleText from '../../../components/primitive-components/TitleText';
 import Transaction from '../../../components/sub-components/Payment/Transaction';
 import {getUserPayments} from '../../../services/api_requests';
@@ -7,21 +7,29 @@ import NoContent from '../../../components/sub-components/general/NoContent';
 import Loading from '../../../components/sub-components/general/Loading';
 import { withTranslation } from 'react-i18next';
 import IBSDropDownMenu from '../../../components/sub-components/inputs/IBSDropDownMenu';
+import {getUserEmploymentHistory} from '../../../services/api_requests';
+import * as SecureStore from 'expo-secure-store';
+
 
 class MyTransactions extends Component {
 
     constructor(props) {
         super(props);
+        const {t} = this.props
         this.state = {  
             transactions : [],
             isLoading : false,
-            dropDownLabels : [],
+            yearFilterDropDownLabels : [],
+            historyFilterDropDownLabels : [],
+            employmentHistory : [],
+            error : ''
         }
     }
 
     componentDidMount = async () => {
         this.fetchPayments();
-        this.initializeFiltrationLabels();
+        this.fetchEmployeeHistory();
+        this.initializeYearFiltrationLabels();
     }
 
     fetchPayments = async (year = 2021) => {
@@ -35,12 +43,41 @@ class MyTransactions extends Component {
         this.setState({isLoading : false});
     }
 
-    initializeFiltrationLabels = () => {
+    fetchEmployeeHistory = async () => {
+        this.setState({isLoading : true});
+        let response = await getUserEmploymentHistory();
+        if(response.status === 200){
+            console.log("empl historrrrrrrry result " + response.data.employmentHistory[0]._id)
+            console.log("response lengthh" + response.data.employmentHistory.length)
+            this.setState({
+                employmentHistory : response.data.employmentHistory
+            });
+            this.initializeHistoryFiltrationLabels();
+        }else{
+            this.setState({
+                error : response.data.error
+            });
+        }
+        this.setState({isLoading : false});
+    }
+
+    initializeHistoryFiltrationLabels = () => {
+        console.log("array length is " + this.state.employmentHistory.length)
+        console.log("hotirtrtrtrt")
+        let historyClients = this.state.employmentHistory.map((client)=>{
+            console.log("1")
+            return {label : client === null || client.client === null || client.client.name === null ? I18nManager.isRTL ? "لا يوجد بيانات" : "no data" :   I18nManager.isRTL ? client.client.name.ar: client.client.name.en, value : client._id.toString()}
+        })
+        console.log("lenmgth sis sd " + historyClients.length )
+        this.setState({historyFilterDropDownLabels : historyClients})
+    }
+
+    initializeYearFiltrationLabels = () => {
         let years = this.generateArrayOfYears();
         let yearsLabels = years.map((year)=>{
             return {label : year, value : year}
         })
-        this.setState({dropDownLabels : yearsLabels})
+        this.setState({yearFilterDropDownLabels : yearsLabels})
     }
 
     generateArrayOfYears = () => {
@@ -53,35 +90,49 @@ class MyTransactions extends Component {
         return years
     }
 
-    filterTickets = async (year) => {
+    filterTicketsByYear = async (year) => {
+        SecureStore.setItemAsync('year', year.toString());
         this.fetchPayments(year);
     }
 
-    navigateToPaymentDetails = (route, id) => {
-      this.props.navigation.navigate(route, id);
+    filterTicketsByClient = async (id) => {
+        SecureStore.setItemAsync('employee_id', id.toString());
+        let year = await SecureStore.getItemAsync('year');
+        year = parseInt(year);
+        this.fetchPayments(year);
+    }
+
+    navigateToPaymentDetails = (id) => {
+      this.props.navigation.navigate("PaymentDetails",{paymentId : id});
     }
 
     render (){
         const { t } = this.props;
         return (
-            this.state.isLoading === true ? 
-            <Loading action={t(`loading`)}/>
-                : 
                 <SafeAreaView style={styles.conatiner}>
                     <View style={styles.titleView}>
                         {/* ----------------------- drop down menu ------------------------------------ */}
-                        <View style={{marginTop : 30}}>
+                        <View style={styles.yearFilter}>
                             {
-                                (this.state.dropDownLabels.length > 0 && 
-                                    <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels} />
+                                (this.state.yearFilterDropDownLabels.length > 0 && 
+                                    <IBSDropDownMenu handleFilter={this.filterTicketsByYear} labels={this.state.yearFilterDropDownLabels} type="year"/>
                                 ) 
-                            }
-                              
+                            } 
+                        </View>
+                        <View style={styles.clientFilter}>
+                            {
+                                (this.state.historyFilterDropDownLabels.length > 0 && 
+                                    <IBSDropDownMenu handleFilter={this.filterTicketsByClient} labels={this.state.historyFilterDropDownLabels} type="client"/>
+                                ) 
+                            } 
                         </View>
                     </View>
                         {/* ----------------------- transaction messages list ------------------------- */}
                         <View style={styles.transactionsView}>
                             {
+                            this.state.isLoading === true ? 
+                            <Loading action={t(`loading`)}/>
+                            : 
                             this.state.transactions.length === 0 ? 
                             <NoContent />
                             :
@@ -101,13 +152,26 @@ const styles = StyleSheet.create({
     conatiner: {
         flex : 1,
         flexDirection : 'column',
-    },
-    titleView : {
-        flex : 2,
         padding : 20,
     },
+    titleView : {
+        flex : 1,
+        flexDirection : 'row',
+    },
+    yearFilter : {
+        flex : 3,
+        justifyContent : 'center',
+        alignItems : 'center',
+        padding : 5,
+    },
+    clientFilter : {
+        flex : 3,
+        justifyContent : 'center',
+        alignItems : 'center',
+        padding : 5,
+    },
     transactionsView : {
-        flex : 4,
+        flex : 5,
     },
 
 })

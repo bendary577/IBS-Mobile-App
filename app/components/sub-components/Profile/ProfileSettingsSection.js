@@ -17,7 +17,7 @@ const ProfileInfoSection = () => {
     const navigation = useNavigation();
     const {setAuthenticated} = useAuth();
     const {t, i18n} = useTranslation();
-    [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const logout = async () =>{
         setLoading(true);

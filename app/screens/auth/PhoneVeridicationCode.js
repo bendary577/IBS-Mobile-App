@@ -1,11 +1,10 @@
 import React,{useState} from 'react';
-import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, TouchableOpacity, I18nManager} from 'react-native';
+import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSConfirmationButton from '../../components/primitive-components/IBSConfirmationButton';
 import IBSConfirmationText from '../../components/primitive-components/IBSConfirmationText';
 import {useTranslation} from 'react-i18next';
-import CountDown from 'react-native-countdown-component';
 import {verifyPhoneNumber, checkVerificationCode} from '../../services/authentication';
 import Loading from '../../components/sub-components/general/Loading';
 import {useAuth} from '../../contexts/authContext';
@@ -131,41 +130,6 @@ const PhoneVerificationCode =()=> {
                                 <IBSConfirmationText ChangeText={handleFourthCell} value={fourthCellCode}/>
                             </View>
                             <IBSConfirmationButton active={confirm} onHandlePress={handleConfirmPassword} />
-
-                            <View style={styles.confirmationText}>
-                                <View style={{marginLeft : 10, color : 'black'}}>
-                                    {confirm ?
-                                        <View style={{flexDirection : 'row', width:200}}>
-                                            <View style={{flex : 1}}>
-                                                <Text>{t(`resendText`)}</Text>
-                                            </View>
-                                            <View style={{flex:1, alignItems:'flex-start'}}>
-                                                <CountDown  
-                                                    until={65}
-                                                    onFinish={() => alert('finished')}
-                                                    digitStyle={{width:20,height:15}}
-                                                    digitTxtStyle={{color: 'black', fontSize:14}}
-                                                    separatorStyle={{color: 'black', fontSize : 14}}
-                                                    onPress={() => alert('hello')}
-                                                    timeToShow={['M', 'S']}
-                                                    size={25}
-                                                    timeLabels={{m: null, s: null}}
-                                                    showSeparator
-                                                    />
-                                            </View>
-                                        </View>
-                                            : 
-                                        <Text>{t(`recieveCode`)}</Text>        
-                                    }
-                                </View>
-                                <TouchableOpacity> 
-                                    {confirm ?
-                                     <Text style={styles.rightTextInactive}>{t(`resend`)}</Text> 
-                                     :
-                                     <Text style={styles.rightText}>{t(`resend`)}</Text>
-                                    }
-                                </TouchableOpacity>
-                            </View>
                         </View>
                     </View>
                 </ImageBackground>
@@ -239,6 +203,8 @@ const styles = StyleSheet.create({
     },
     errorMessage : {
         color : 'red',
+        fontWeight : 'bold',
+        padding : 2,
         marginVertical : 2,
         textAlign : 'center'
     },

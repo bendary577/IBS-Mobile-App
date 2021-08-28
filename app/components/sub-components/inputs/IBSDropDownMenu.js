@@ -30,7 +30,7 @@ const IBSDropDownMenu = (props) => {
                 //dropDownStyle={{backgroundColor: '#fafafa'}}
                 setValue={applyFilter}
                 onChangeValue={(value)=> props.handleFilter(value)}
-                placeholder={t(`filter`)}
+                placeholder={ props.type === 'year' ? t(`year_filter`) : props.type === 'client' ? t(`client_filter`) : t(`tickets_filter`) }
                 onPress={toggleFilterDropDown}
                 closeAfterSelecting={true}
                 itemSeparator={true}

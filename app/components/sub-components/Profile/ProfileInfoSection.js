@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, ScrollView, I18nManager } from 'react-native'
 import ProfileInfoCard from '../../../components/sub-components/cards/ProfileInfoCard';
 import {getUserInfo} from '../../../services/api_requests';
 import { withTranslation } from 'react-i18next';
-import IBSButtonLargeGray from '../../primitive-components/IBSButtonLargeGray';
+import UpdatePasswordButton from '../../sub-components/buttons/UpdatePasswordButton';
 import moment from 'moment';
 import Loading from '../../../components/sub-components/general/Loading';
 import {useTranslation} from 'react-i18next';
@@ -51,8 +51,7 @@ const ProfileInfoSection = () => {
             setGender(response.data.user.emp.gender);
             setInsuranceNumber(response.data.user.emp.insuranceNumber);
         }else{
-            console.log("error")
-            //setError(response.data.error)
+            setError(response.data.error)
         }
         setLoading(false);
     }
@@ -64,7 +63,7 @@ const ProfileInfoSection = () => {
 
         return (
             <View style={styles.conatiner}>
-                <IBSButtonLargeGray value={t(`update_password`)} action={false} onHandlePress={navigateToUpdatePassword}/>
+                <UpdatePasswordButton value={t(`update_password`)} action={false} onHandlePress={navigateToUpdatePassword}/>
                 {
                     loading === true ? 
                     <Loading />
