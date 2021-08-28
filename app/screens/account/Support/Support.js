@@ -139,7 +139,7 @@ class Support extends Component {
                             </TouchableOpacity>
                             <Text style={styles.error}>{this.state.error !='' ? this.state.error : <></>}</Text>
                         </View>
-                        <Modal
+                        <Modal  
                             animationType="slide"
                             transparent={true}
                             visible={this.state.modalVisible}
@@ -180,16 +180,16 @@ const styles = StyleSheet.create({
     upperView : {
         flex : 1,
         padding : 10,
-        zIndex : 999
     },
     titleView : {
+        flex : 1,
         flexDirection : 'row',
-        marginTop : '4%',
-        zIndex : 999
     },
     filter : {
         flex : 4,
-        zIndex : 999,
+        justifyContent : 'center',
+        alignItems : 'center',
+        minHeight :45
     },
     ticketView : {
         flex : 2,

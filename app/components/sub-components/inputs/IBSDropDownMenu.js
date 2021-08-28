@@ -27,7 +27,7 @@ const IBSDropDownMenu = (props) => {
                 open={filterDropDownOpen}
                 containerStyle={styles.dropdown}
                 style={styles.dropdown}
-                dropDownStyle={{backgroundColor: '#fafafa'}}
+                //dropDownStyle={{backgroundColor: '#fafafa'}}
                 setValue={applyFilter}
                 onChangeValue={(value)=> props.handleFilter(value)}
                 placeholder={t(`filter`)}
@@ -52,9 +52,6 @@ const styles = StyleSheet.create({
     dropdownContainer : {
         backgroundColor: "#edebeb",
         borderColor : '#bababa',
-        zIndex : 999,
-       
-
     },
     selectedItemContainer : {
         backgroundColor: "#f0afaf"
@@ -65,10 +62,6 @@ const styles = StyleSheet.create({
     itemSeparator : {
         backgroundColor: "#a4a4a6"
     },
-    modalContentContainer : {
-        
-        alignItems : 'center'
-    }
 })
 
 export default IBSDropDownMenu;
