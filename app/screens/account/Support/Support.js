@@ -180,13 +180,16 @@ const styles = StyleSheet.create({
     upperView : {
         flex : 1,
         padding : 10,
+        zIndex : 999
     },
     titleView : {
         flexDirection : 'row',
-        marginTop : '4%'
+        marginTop : '4%',
+        zIndex : 999
     },
     filter : {
         flex : 4,
+        zIndex : 999,
     },
     ticketView : {
         flex : 2,

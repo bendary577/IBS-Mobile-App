@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View,SafeAreaView, StyleSheet} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useTranslation} from 'react-i18next';
 
@@ -19,26 +19,56 @@ const IBSDropDownMenu = (props) => {
     }  
 
     return (
-        <View style={{zIndex : 2000}}>
+        <SafeAreaView>
             <DropDownPicker
+                zIndex = {2000}
                 items={props.labels}
                 value={selectedValue}
                 open={filterDropDownOpen}
+                containerStyle={styles.dropdown}
+                style={styles.dropdown}
+                dropDownStyle={{backgroundColor: '#fafafa'}}
                 setValue={applyFilter}
                 onChangeValue={(value)=> props.handleFilter(value)}
                 placeholder={t(`filter`)}
                 onPress={toggleFilterDropDown}
                 closeAfterSelecting={true}
                 itemSeparator={true}
-     
+                dropDownContainerStyle={styles.dropdownContainer}
+                selectedItemContainerStyle={styles.selectedItemContainer}
+                selectedItemLabelStyle={styles.selectedItemLabel}
+                itemSeparatorStyle={styles.itemSeparator}
+                onClose={toggleFilterDropDown}  
             />
-        </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    
+    dropdown : {
+        height: 45,
+        borderRadius : 20,
+    },
+    dropdownContainer : {
+        backgroundColor: "#edebeb",
+        borderColor : '#bababa',
+        zIndex : 999,
+       
 
+    },
+    selectedItemContainer : {
+        backgroundColor: "#f0afaf"
+    },
+    selectedItemLabel : {
+        fontWeight: "bold"
+    },
+    itemSeparator : {
+        backgroundColor: "#a4a4a6"
+    },
+    modalContentContainer : {
+        
+        alignItems : 'center'
+    }
 })
 
 export default IBSDropDownMenu;
