@@ -24,6 +24,7 @@ const UpdatePassword = () => {
     const [passwordConfirmationErrorMessage, setPasswordConfirmationErrorMessage] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [updating, setUpdating] = useState(false);
     const {setAuthenticated} = useAuth();
     const {t} = useTranslation();
 
@@ -64,6 +65,7 @@ const UpdatePassword = () => {
     const handleUpdatePassword = async () => {
         let validation = validate(newPassword, newPasswordConfirmation);
         if(validation){
+            setUpdating(true);
             let data = {
                 currentPassword : currentPassword,
                 password : newPassword,
@@ -90,10 +92,14 @@ const UpdatePassword = () => {
         }else{
             setMessage(t(`passwords_not_identical`))
         }
+        setUpdating(false);
     }
 
 
         return (
+            updating === true ? 
+            <Loading action={t(`loading`)} />
+            :
             loading === true ? 
             <Loading action={t(`loggingOut`)}/>
             :

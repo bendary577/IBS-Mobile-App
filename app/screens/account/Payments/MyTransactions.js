@@ -19,8 +19,9 @@ class MyTransactions extends Component {
             transactions : [],
             isLoading : false,
             yearFilterDropDownLabels : [],
-            historyFilterDropDownLabels : [],
+            historyFilterDropDownLabels : [{label : 'hello', value : 2}],
             employmentHistory : [],
+            refreshing : false,
             error : '',
         }
     }
@@ -46,12 +47,10 @@ class MyTransactions extends Component {
         this.setState({isLoading : true});
         let response = await getUserEmploymentHistory();
         if(response.status === 200){
-            console.log("empl historrrrrrrry result " + response.data.employmentHistory[0]._id)
-            console.log("response lengthh" + response.data.employmentHistory.length)
             this.setState({
-                employmentHistory : response.data.employmentHistory
-            });
-            this.initializeHistoryFiltrationLabels();
+                employmentHistory : response.data.employmentHistory}, () => {
+                    this.initializeHistoryFiltrationLabels();
+                });
         }else{
             this.setState({
                 error : response.data.error
@@ -61,13 +60,9 @@ class MyTransactions extends Component {
     }
 
     initializeHistoryFiltrationLabels = () => {
-        console.log("array length is " + this.state.employmentHistory.length)
-        console.log("hotirtrtrtrt")
         let historyClients = this.state.employmentHistory.map((client)=>{
-            console.log("1")
             return {label : client === null || client.client === null || client.client.name === null ? I18nManager.isRTL ? "لا يوجد بيانات" : "no data" :   I18nManager.isRTL ? client.client.name.ar: client.client.name.en, value : client._id.toString()}
         })
-        console.log("lenmgth sis sd " + historyClients.length )
         this.setState({historyFilterDropDownLabels : historyClients})
     }
 
@@ -105,6 +100,12 @@ class MyTransactions extends Component {
       this.props.navigation.navigate("PaymentDetails",{paymentId : id});
     }
 
+    handleRefresh = () => {
+        this.setState({refreshing : true}, ()=>{
+            this.fetchPayments();
+        })
+    }
+
     render (){
         const { t } = this.props;
         return (
@@ -139,6 +140,8 @@ class MyTransactions extends Component {
                                 data={this.state.transactions}
                                 renderItem={({item})=>(<Transaction item={item} middle={false} onHandlePress={this.navigateToPaymentDetails}/>)}
                                 keyExtractor={(item) => item._id.toString()}
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.handleRefresh}
                             />
                             }
                         </View>

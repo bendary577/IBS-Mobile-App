@@ -15,6 +15,8 @@ let {width, height} = Dimensions.get('window');
 let loginBackground = '../../assets/images/Login/loginBackground.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
 let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
+let loginBottom = '../../assets/images/Login/BottomBlackLtr.png';
+let loginBottomRtl = '../../assets/images/Login/bottomBlackRtl.png';
 
 //------------------------ screen ---------------------
 const Login = (props) => {
@@ -94,14 +96,8 @@ const Login = (props) => {
                 <View style={styles.top}>
                     <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                 </View>
-                <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
-                    <View style={styles.middle}>
-                        <View style={styles.title}>
-                            <TitleText value={t(`loginWith`)} />
-                            <TitleText value={t(`ibsaccount`)} />
-                            <View style={styles.redLine}></View>
-                        </View>
-                        <View style={styles.loginForm}>
+                <View style={{flex : 5, flexDirection : 'column'}}>
+                    <View style={{flex : 4, flexDirection : 'column', height : '100%',zIndex : 999, width : '95%', marginStart : 20}}>
                             { error !== '' ? <Text style={styles.errorMessage}>{error}</Text> : <></>}
                             { nationalIdErrorMessage !== '' ? <Text style={styles.errorMessage}>{nationalIdErrorMessage}</Text> : <></>}
                             <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeIdentificationNumber}/>
@@ -109,14 +105,16 @@ const Login = (props) => {
                             <IBSPasswordText placeholder={t(`passwordPlaceholder`)} hasChild={true} onChangeText={handleOnChangePassword}/>
                             <IBSButtonLargeRed value={t(`login`)} action={true} onHandlePress={validate} />
                             <IBSButtonLargeGray value={t(`noAccount`)} action={true} actionText={t(`create`)} onHandlePress={handleCreateAccount}/>
+                    </View>
+                    <View style={{flex : 3, flexDirection : 'row'}}>
+                        <View style={{flex : 4, marginTop : '5%', justifyContent : 'center', alignItems : 'flex-start', padding : 20}}>
+                                <NavigationButtons />
+                            </View>
+                            <View style={{flex : 2, justifyContent : 'center', alignItems : 'flex-end'}}>
+                                <Image style={{width : 125, height : '115%'}} source={I18nManager.isRTL ? require(loginBottomRtl) : require(loginBottom)} />
                         </View>
                     </View>
-                    <View style={styles.bottom}>
-                        <View style={styles.fixed}>
-                            <NavigationButtons />
-                        </View>
-                    </View>
-                </ImageBackground>
+                </View>
             </SafeAreaView>
         );
     }

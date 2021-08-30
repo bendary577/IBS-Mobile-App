@@ -5,7 +5,8 @@ import ProfileSettingsSection from '../../../components/sub-components/Profile/P
 import AccountTabButtonLong from '../../../components/sub-components/navigationTabs/AccountTabButtonLong';
 import { ImageBackground } from 'react-native';
 import { withTranslation } from 'react-i18next';
-
+import PTRView from 'react-native-pull-to-refresh';
+import {refresh} from '../../../utils/utilFunctions';
 let avatarImage = '../../../assets/icons/Profile/avatar.png';
 
 class MyProfile extends Component {
@@ -29,6 +30,7 @@ class MyProfile extends Component {
         const { t } = this.props;
         const {tab} = this.state;
         return (
+            <PTRView onRefresh={refresh} >
             <SafeAreaView style={styles.conatiner}>
                 <View style={styles.fixedView}>
                     <View>
@@ -49,6 +51,7 @@ class MyProfile extends Component {
                     }
                 </View>
             </SafeAreaView>
+            </PTRView>
         )
     }    
 }

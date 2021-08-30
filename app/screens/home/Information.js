@@ -1,5 +1,5 @@
 import React, { useState , useEffect} from 'react';
-import {SafeAreaView, Image, Text,ScrollView, View, StyleSheet} from 'react-native';
+import {SafeAreaView, Image,FlatList, Text,ScrollView, View, StyleSheet} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import {primaryRedColor} from '../../config/colors';
 import {useTranslation} from 'react-i18next';
@@ -13,6 +13,7 @@ const Information = ({navigation}) => {
 
     const [information, setInformation] = useState(null);
     const [loading , setLoading] = useState([]);
+    const [refreshing , setRefreshing] = useState(false);
     const [error, setError] = useState('');
     const {t} = useTranslation();
 
@@ -31,6 +32,12 @@ const Information = ({navigation}) => {
             setError(response.data.error)
         }
         setLoading(false)
+        setRefreshing(false);
+    }
+
+    const handleRefresh = () => {
+        setRefreshing(true)
+        fetchInfo();
     }
 
 	return (
@@ -54,15 +61,15 @@ const Information = ({navigation}) => {
 	    <SafeAreaView style={styles.container}>
 
             {/* ------------------------------------- about text section ------------------------------------ */}
-            <ScrollView>
                 <View style={styles.supportTicketsView}>
-                    {
-                        information.map((info)=>{
-                            return <InformationCard key={info._id} item={info} />
-                        })
-                    }
+                    <FlatList
+                            data={information}
+                            renderItem={({item})=>( <InformationCard key={item._id.toString()} item={item} />)}
+                            keyExtractor={(item) => item._id.toString()}
+                            refreshing={refreshing}
+                            onRefresh={handleRefresh}
+                        />
                 </View>
-            </ScrollView>
         </SafeAreaView>
 	);
 }

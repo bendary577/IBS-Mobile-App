@@ -8,6 +8,7 @@ import {resetPassword} from '../../services/authentication';
 import { withTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import Loading from '../../components/sub-components/general/Loading';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -51,6 +52,7 @@ const CreateNewPassword = ({route}) => {
                 password : newPassword,
                 passwordConfirmation : newPasswordConfirmation
             }
+            setLoading(true);
             let response = await resetPassword(data);
             if(response.status === 200){
                 navigation.navigate("Login");
@@ -58,9 +60,13 @@ const CreateNewPassword = ({route}) => {
                 setError(response.data.error);
             }
         }
+        setLoading(false);
     }
 
         return (
+            loading === true ? 
+            <Loading action={t(`loading`)} />
+            :
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
                     <View style={styles.leftBackBtn}>

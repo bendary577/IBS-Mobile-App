@@ -13,6 +13,7 @@ const FAQ = ({navigation}) => {
 
     const [faqs, setFAQ] = useState(null);
     const [loading , setLoading] = useState([]);
+    const [refreshing , setRefreshing] = useState(false);
     const [error, setError] = useState('');
     const {t} = useTranslation();
 
@@ -33,7 +34,13 @@ const FAQ = ({navigation}) => {
         }else{
             setError(response.data.error);
         }
-        setLoading(false)
+        setLoading(false);
+        setRefreshing(false);
+    }
+
+    const handleRefresh = () => {
+        setRefreshing(true)
+        fetchFAQ();
     }
 
 	return (
@@ -56,22 +63,17 @@ const FAQ = ({navigation}) => {
 
 	    <SafeAreaView style={styles.container}>
             {/* ------------------------------------- about text section ------------------------------------ */}
-            <ScrollView>
                 <View style={styles.supportTicketsView}>
-                    {/*
+                    
                     <FlatList
                         data={faqs}
-                        renderItem={({item})=>( <FAQCard key={item._id} item={item} />)}
-                        keyExtractor={(item) => item._id}
+                        renderItem={({item})=>( <FAQCard key={item._id.toString()} item={item} />)}
+                        keyExtractor={(item) => item._id.toString()}
+                        refreshing={refreshing}
+                        onRefresh={handleRefresh}
                     />
-                    */}
-                    {
-                        faqs.map((faq)=>{
-                            return <FAQCard key={faq._id} item={faq} />
-                        })
-                    }
+                    
                 </View>
-            </ScrollView>
         </SafeAreaView>
 	);
 }

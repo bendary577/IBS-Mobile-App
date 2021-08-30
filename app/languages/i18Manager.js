@@ -173,6 +173,7 @@ const resources = {
             "provide_phone" : "please provide a phone number",
             "phone_length_error" : "phone number must be 11 digits",
             "no_data" : "no available data",
+            "wait_sms" : "please wait a minute before sending another sms"
           },
     },
     ar: {
@@ -347,6 +348,7 @@ const resources = {
             "provide_phone" : "يجب عليك إدخال رقم الهاتف",
             "phone_length_error" : "رقم الهاتف يجب ان يكون 11 رقم",
             "no_data" : "لا يوجد بيانات",
+            "wait_sms" : "برجاء الانتظار لدقيقة قبل إرسال رسالة أخري"
         },
     },
   };

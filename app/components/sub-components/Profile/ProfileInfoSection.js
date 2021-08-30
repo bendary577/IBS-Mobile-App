@@ -71,7 +71,7 @@ const ProfileInfoSection = () => {
                     error !== '' ? 
                     <Text style={styles.error}>{error}</Text>
                     :
-                    <ScrollView>
+                    <View>
                         <ProfileInfoCard title={t(`username`)} value={username} />
                         <ProfileInfoCard title={t(`nationaiID`)} value={nationalID}/>
                         <ProfileInfoCard title={t(`phone`)} value={phone}/>
@@ -85,7 +85,7 @@ const ProfileInfoSection = () => {
                         <ProfileInfoCard title={t(`jobTitle`)} value={jobTitle}/>
                         <ProfileInfoCard title={t(`gender`)} value={gender}/>
                         <ProfileInfoCard title={t(`insuranceNumber`)} value={insuranceNumber}/>
-                    </ScrollView>
+                    </View>
                 }
 
             </View>

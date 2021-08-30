@@ -3,7 +3,6 @@ import {I18nManager} from 'react-native'
 
 //helper function to flip images when direction is RTL
 const getFlipForRTLStyle = () => {
-        console.log("$$$$$$$$$$$$$$$$$" + i18n.isRTL)
         if (!I18nManager.isRTL) { return {}; };
         return {
             transform: [{
@@ -11,5 +10,11 @@ const getFlipForRTLStyle = () => {
             }],
         };
 }
+
+export const refresh = () => {
+    return new Promise((resolve) => {
+      setTimeout(()=>{resolve()}, 2000)
+    });
+  }
 
 export default getFlipForRTLStyle;

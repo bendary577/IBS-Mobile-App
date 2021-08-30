@@ -32,7 +32,7 @@ const ContactUsAuth = ({navigation}) => {
                     </View>
                     {/* ---------------------------------------- customer support card ---------------------- */}
                     <View style={styles.lower}>
-                        <TouchableHighlight underlayColor="white">
+                        <TouchableHighlight underlayColor="white" onPress={()=>navigation.navigate("Support")}>
                             <View style={styles.card}>
                                 <View style={styles.cardLeft}>
                                     <Image style={styles.icon} source={require(customerSupport)} />

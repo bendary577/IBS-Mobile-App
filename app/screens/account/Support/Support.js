@@ -8,7 +8,6 @@ import Loading from '../../../components/sub-components/general/Loading';
 import {addTicket} from '../../../services/api_requests';
 import { withTranslation } from 'react-i18next';
 import IBSDropDownMenu from '../../../components/sub-components/inputs/IBSDropDownMenu';
-
 let newTicketIcon = '../../../assets/icons/Support/newTicket.png';
 
 class Support extends Component {
@@ -26,6 +25,7 @@ class Support extends Component {
             filterDropDownOpen : false,
             filterOption : '',
             error : '',
+            refreshing : false,
             dropDownLabels : [
                 {label: this.props.t(`all_tickets`), value:'all'},
                 {label: this.props.t(`closed_tickets`), value: 'closed'},
@@ -53,7 +53,7 @@ class Support extends Component {
             });
         }
 
-        this.setState({isLoading : false});
+        this.setState({isLoading : false, refreshing : false});
     }
 
     //-------------- toggle the "create ticket modal" between visible and unvisible -----------
@@ -120,6 +120,12 @@ class Support extends Component {
         this.props.navigation.navigate('Chat',  {id, roomNumber : number, closed : bool})
     }
 
+    handleRefresh = () => {
+        this.setState({refreshing : true}, ()=>{
+            this.fetcTickets();
+        })
+    }
+
 
 
     render () {
@@ -129,49 +135,51 @@ class Support extends Component {
         return (
             this.state.isLoading === true ? 
                 <Loading action={t(`loading`)}/>
-            : 
-            <SafeAreaView style={styles.conatiner}>
-                    <View style={styles.upperView}>
-                        <View style={styles.titleView}>
-                            <View style={styles.filter}>
-                                <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels} type="tickets"/>
+            :
+                <SafeAreaView style={styles.conatiner}>
+                        <View style={styles.upperView}>
+                            <View style={styles.titleView}>
+                                <View style={styles.filter}>
+                                    <IBSDropDownMenu handleFilter={this.filterTickets} labels={this.state.dropDownLabels} type="tickets"/>
+                                </View>
+                                <TouchableOpacity style={styles.ticketView} onPress={() => this.setModalVisible(true)}>
+                                    <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
+                                </TouchableOpacity>
                             </View>
-                            <TouchableOpacity style={styles.ticketView} onPress={() => this.setModalVisible(true)}>
-                                <Image style={styles.ticketIcon} source={require(newTicketIcon)} />
-                            </TouchableOpacity>
-                        </View>
-                        <Modal  
-                            animationType="slide"
-                            transparent={true}
-                            visible={this.state.modalVisible}
-                            onRequestClose={() => {
-                                this.setModalVisible(!this.state.modalVisible);
-                            }}
-                        >
-                            <View  style={styles.centeredView}>
-                                <SupportMessageModal onClose={this.setModalVisible} onChangeSubject={this.setNewTicketSubject} onChangeDescription={this.setNewTicketDescription} onHandlePress={this.createNewTicket}/>
-                            </View>
-                        </Modal>
+                            <Modal  
+                                animationType="slide"
+                                transparent={true}
+                                visible={this.state.modalVisible}
+                                onRequestClose={() => {
+                                    this.setModalVisible(!this.state.modalVisible);
+                                }}
+                            >
+                                <View  style={styles.centeredView}>
+                                    <SupportMessageModal onClose={this.setModalVisible} onChangeSubject={this.setNewTicketSubject} onChangeDescription={this.setNewTicketDescription} onHandlePress={this.createNewTicket}/>
+                                </View>
+                            </Modal>
 
-                    </View>
-                    
-                    {this.state.error !='' ?  <Text style={styles.errorMessage}>{this.state.error}</Text>: <></>}
-                        {
-                        this.state.renderedTickets.length === 0 ? 
-
-                        <View style={styles.supportTicketsView}>
-                                <NoContent />
                         </View>
-                        :      
+                        
+                        {this.state.error !='' ?  <Text style={styles.errorMessage}>{this.state.error}</Text>: <></>}
+                            {
+                            this.state.renderedTickets.length === 0 ? 
+
                             <View style={styles.supportTicketsView}>
-                                <FlatList
-                                    data={this.state.renderedTickets}
-                                    renderItem={({item})=>(<TransactionMessage item={item} onHandlePress={this.navigateToChat} transaction={true}/>)}
-                                    keyExtractor={(item) => item._id.toString()}
-                                />
+                                    <NoContent />
                             </View>
-                        }
-                </SafeAreaView>
+                            :      
+                                <View style={styles.supportTicketsView}>
+                                    <FlatList
+                                        data={this.state.renderedTickets}
+                                        renderItem={({item})=>(<TransactionMessage item={item} onHandlePress={this.navigateToChat} transaction={true}/>)}
+                                        keyExtractor={(item) => item._id.toString()}
+                                        refreshing={this.state.refreshing}
+                                        onRefresh={this.handleRefresh}
+                                    />
+                                </View>
+                            }
+                    </SafeAreaView>
         )
     }
 }

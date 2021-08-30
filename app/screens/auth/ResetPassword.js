@@ -53,6 +53,7 @@ class ResetPassword extends Component {
         this.setState({loading : true})
         let response = await requestResetPassword(data);
         if(response.status === 200 ){
+            this.setState({waitForSms : true})
             this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
         }else if (response.status === 422){
             this.setState({waitForSms : false})
@@ -62,6 +63,7 @@ class ResetPassword extends Component {
                 });
             });
         }else{
+            this.setState({waitForSms : true})
             this.setState({
                 errorMessage : response.data.error
             });
@@ -70,7 +72,6 @@ class ResetPassword extends Component {
     }
 
     onTimerFinish = () => {
-        Alert.alert("tomer fineshed")
         this.setState({
             waitForSms : false,
         })
@@ -114,7 +115,7 @@ class ResetPassword extends Component {
                                     <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
                                     :
                                     <>
-                                    <IBSButtonLargeGray value={t(`sendConfirmation`)} action={false} onHandlePress={()=>{Alert.alert("wait")}} />
+                                    <IBSButtonLargeGray value={t(`sendConfirmation`)} action={false} onHandlePress={()=>{Alert.alert(t(`wait_sms`))}} />
                                     <View style={{flex:1, alignItems:'flex-start'}}>
                                         <View style={{flexDirection : 'row',width:200}}>
                                             <View style={{flex : 1}}>

@@ -8,7 +8,7 @@ import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {useTranslation} from 'react-i18next';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import PTRView from 'react-native-pull-to-refresh';
-
+import {refresh} from '../../utils/utilFunctions';
 let blackElipse = '../../assets/images/Home/black-elipse.png';
 
 
@@ -25,14 +25,10 @@ const Home = ({navigation}) => {
         navigation.navigate("Information")
     }
     
-    const _refresh = () => {
-        return new Promise((resolve) => {
-          setTimeout(()=>{resolve()}, 2000)
-        });
-      }
+
 
         return (
-            <PTRView onRefresh={_refresh} >
+            <PTRView onRefresh={refresh} >
             <SafeAreaView style={styles.container}>
                 <ScrollView>
 
