@@ -76,8 +76,6 @@ const styles = StyleSheet.create({
     header : {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
         marginBottom: 20
     },
     card : {

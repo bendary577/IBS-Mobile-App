@@ -18,7 +18,8 @@ let {width, height} = Dimensions.get('window');
 let loginBackground = '../../assets/images/Login/loginBackground3.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
 let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
-
+let loginBottom = '../../assets/images/Login/BottomBlackLtr.png';
+let loginBottomRtl = '../../assets/images/Login/bottomBlackRtl.png';
 //------------------------ screen ---------------------
 const SignUp = () => {
 
@@ -137,9 +138,10 @@ const SignUp = () => {
                     </View>
                 </View>
                  {/* ---------------------------  registration form ----------------------- */}
-                <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
-                        <View style={styles.middle}>
-                            <View style={styles.loginForm}>
+                <View>
+                    <View style={{flex : 1, flexDirection : 'column'}}>
+                        <View style={{flex : 4, flexDirection : 'column' , padding : 10, zIndex : 999}}>
+                            <View style={{ height : '100%', width : '95%', marginStart : 15}}>
                                 { errorMessage !== '' ? <Text style={styles.errorMessage}>{errorMessage}</Text> : <></>}
                                 { nationalIdErrorMessage !== '' ? <Text style={styles.errorMessage}>{nationalIdErrorMessage}</Text> : <></>}
                                 <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeNationalId}/>
@@ -167,12 +169,16 @@ const SignUp = () => {
                                 <IBSButtonLargeGray value={t(`haveAccount`)} action={true} actionText={t(`login`)} onHandlePress={navigateLogin}/>
                             </View>
                         </View>
-                    <View style={styles.bottom}>
-                        <View style={styles.fixed}>
-                            <NavigationButtons />
+                        <View style={{flex : 2, flexDirection : 'row'}}>
+                            <View style={{flex : 4, justifyContent : 'center', alignItems : 'flex-start', padding : 20}}>
+                                <NavigationButtons />
+                            </View>
+                            <View style={{flex : 2, justifyContent : 'center', alignItems : 'flex-end'}}>
+                                <Image style={{width : 125, height : '220%'}} source={I18nManager.isRTL ? require(loginBottomRtl) : require(loginBottom)} />
+                            </View>
                         </View>
                     </View>
-                </ImageBackground>
+                </View>
                 </ScrollView>
             </SafeAreaView>
         );
@@ -203,7 +209,7 @@ const styles = StyleSheet.create({
     },
     backgroundImage : {
         width : width ,
-        height : height+80
+        height : height
     },
     middle : {
         flex : 1,
@@ -216,8 +222,8 @@ const styles = StyleSheet.create({
         marginTop : 3
     },
     loginForm : {
-        height : '100%',
-        marginVertical : 20,
+       
+
     },
     radioView : {
         flexDirection : 'row',
