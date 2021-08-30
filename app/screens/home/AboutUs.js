@@ -13,6 +13,7 @@ const AboutUs = ({navigation}) => {
 	return (
 	    <View style={styles.container}>
             {/* ------------------------------------- header section ------------------------------------ */}
+            {/*
             <View style={styles.header}>
                 <View style={styles.card}>
                     <Image
@@ -22,6 +23,7 @@ const AboutUs = ({navigation}) => {
                 </View>
                 <TitleText value={t(`aboutIBS`)}/>
             </View>
+            */}
 
             {/* ------------------------------------- about text section ------------------------------------ */}
             <View>
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        paddingVertical: 50,
+        paddingVertical: 20,
         paddingHorizontal: 20
     },
     header : {

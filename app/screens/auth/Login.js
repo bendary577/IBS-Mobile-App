@@ -110,9 +110,11 @@ const Login = (props) => {
                         <View style={{flex : 4, marginTop : '5%', justifyContent : 'center', alignItems : 'flex-start', padding : 20}}>
                                 <NavigationButtons />
                             </View>
+                            {/*
                             <View style={{flex : 2, justifyContent : 'center', alignItems : 'flex-end'}}>
                                 <Image style={{width : 125, height : '115%'}} source={I18nManager.isRTL ? require(loginBottomRtl) : require(loginBottom)} />
-                        </View>
+                            </View>
+                            */}
                     </View>
                 </View>
             </SafeAreaView>

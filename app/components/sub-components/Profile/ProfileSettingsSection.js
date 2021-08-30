@@ -23,9 +23,9 @@ const ProfileInfoSection = () => {
         setLoading(true);
         let response = await signout();
         if(response == "success"){
-            setLoading(false);
             setAuthenticated(false);
         }
+        setLoading(false);
     }
 
 

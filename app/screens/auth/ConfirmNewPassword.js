@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useRef} from 'react';
 import {SafeAreaView, ScrollView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, TouchableOpacity, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import {requestResetPassword} from '../../services/authentication';
 import Loading from '../../components/sub-components/general/Loading';
+import { getNotificationCategoriesAsync } from 'expo-notifications';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -28,11 +29,15 @@ const ConfirmNewPassword =({route})=> {
         const [error, setErrorMessage] = useState('');
         const [enableResend, setEnableResend] = useState(false);
         const [loading, setLoading] = useState(false);
-        const {t, i18n} = useTranslation();
+        const {t} = useTranslation();
         const navigation = useNavigation();
+        const ref_input_2 = useRef();
+        const ref_input_3 = useRef();
+        const ref_input_4 = useRef();
 
     useEffect(()=>{
         console.log("phooooooone is " + route.params.phone)
+        console.log("confirm ====== " + confirm)
     }, [])
 
     React.useEffect(() => {
@@ -74,6 +79,18 @@ const ConfirmNewPassword =({route})=> {
 
     const handleFourthCell = (userInput) => {
         setFourthCellCode(userInput);
+    }
+
+    const goToSecondInput = () => {
+        ref_input_2.current.focus();
+    }
+
+    const goToThirdInput = () => {
+        ref_input_3.current.focus();
+    }
+
+    const goToFourthInput = () => {
+        ref_input_4.current.focus();
     }
 
     const handleConfirmPassword = async () => {
@@ -130,7 +147,7 @@ const ConfirmNewPassword =({route})=> {
                         <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                     </View>
                 </View>
-                <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
+                <View style={styles.backgroundImage}>
                     <ScrollView>
                     <View style={styles.middle}>
                         <View style={styles.title}>
@@ -141,16 +158,17 @@ const ConfirmNewPassword =({route})=> {
                         { error !== '' ? <Text style={styles.errorMessage}>{error}</Text> : <></>}
                         <View style={styles.loginForm}>
                             <View style={styles.confirmationInputs}>
-                                <IBSConfirmationText ChangeText={handleFirstCell} value={firstCellCode}/>
-                                <IBSConfirmationText ChangeText={handleSecondCell} value={secondCellCode}/>
-                                <IBSConfirmationText ChangeText={handleThirdCell} value={thirdCellCode}/>
-                                <IBSConfirmationText ChangeText={handleFourthCell} value={fourthCellCode}/>
+                                <IBSConfirmationText ChangeText={handleFirstCell} value={firstCellCode} handleSubmitEditing={goToSecondInput} isFirst={true} ref={null} />
+                                <IBSConfirmationText ChangeText={handleSecondCell} value={secondCellCode} handleSubmitEditing={goToThirdInput} isFirst={false} ref={ref_input_2} />
+                                <IBSConfirmationText ChangeText={handleThirdCell} value={thirdCellCode} handleSubmitEditing={goToFourthInput} isFirst={false} ref={ref_input_3} />
+                                <IBSConfirmationText ChangeText={handleFourthCell} value={fourthCellCode} handleSubmitEditing={()=>{}} isFirst={false} ref={ref_input_4} />
                             </View>
                             <IBSConfirmationButton active={confirm} onHandlePress={handleConfirmPassword} />
 
                             <View style={styles.confirmationText}>
                                 <View style={{marginLeft : 10, color : 'black'}}>
-                                    {confirm ?
+                                    {
+                                    enableResend ===false ? 
                                         <View style={{flexDirection : 'row',width:200}}>
                                             <View style={{flex : 1}}>
                                                 <Text>{t(`resendText`)}</Text>
@@ -163,29 +181,32 @@ const ConfirmNewPassword =({route})=> {
                                                     digitTxtStyle={{color: 'black', fontSize:14}}
                                                     separatorStyle={{color: 'black', fontSize : 14}}
                                                     onPress={() => alert('hello')}
-                                                    timeToShow={['M', 'S']}
+                                                    timeToShow={['S']}
                                                     size={25}
                                                     timeLabels={{m: null, s: null}}
                                                     showSeparator
-                                                    />
+                                                />
                                             </View>
                                         </View>
-                                            : 
-                                        <Text>{t(`recieveCode`)}</Text>        
+                                        :
+                                        <View style={{width : 500}}> 
+                                            <Text>{t(`recieveCode`)}</Text>
+                                        </View>
                                     }
                                 </View>
-                                <TouchableOpacity> 
-                                    {confirm ?
-                                     enableResend ? <TouchableOpacity onPress={handleResetPassword}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>  : <Text style={styles.rightTextInactive}>{t(`resend`)}</Text> 
+                                <View> 
+                                    {
+                                     enableResend === false ?
+                                     <Text style={styles.rightTextInactive}>{t(`resend`)}</Text> 
                                      :
-                                     <TouchableOpacity onPress={handleResetPassword}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>
+                                      <TouchableOpacity onPress={handleResetPassword}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>  
                                     }
-                                </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                     </View>
                     </ScrollView>
-                </ImageBackground>
+                </View>
             </SafeAreaView>
         );
 }

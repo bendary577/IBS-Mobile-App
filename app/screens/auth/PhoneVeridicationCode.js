@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
+import {SafeAreaView,TouchableOpacity, Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSConfirmationButton from '../../components/primitive-components/IBSConfirmationButton';
@@ -8,6 +8,8 @@ import {useTranslation} from 'react-i18next';
 import {verifyPhoneNumber, checkVerificationCode} from '../../services/authentication';
 import Loading from '../../components/sub-components/general/Loading';
 import {useAuth} from '../../contexts/authContext';
+import CountDown from 'react-native-countdown-component';
+
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -21,9 +23,10 @@ const PhoneVerificationCode =()=> {
         const [secondCellCode, setSecondCellCode] = useState("");
         const [thirdCellCode, setThirdCellCode] = useState("");
         const [fourthCellCode, setFourthCellCode] = useState("");
-        const [confirm, setConfirm] = useState(false);
+        const [confirm, setConfirm] = useState(true);
         const [error, setErrorMessage] = useState('');
         const [loading, setLoading] = useState(false);
+        const [enableResend, setEnableResend] = useState(false);
         const {setAuthenticated} = useAuth();
         const {t} = useTranslation();
 
@@ -34,10 +37,15 @@ const PhoneVerificationCode =()=> {
     
     //call the api endpoint to send verification code to the user
     const verifyUserPhoneNumber = async () => {
+        console.log("in verify phone")
         let response = await verifyPhoneNumber();
+        console.log("veriphy phone status" + response.status)
         if(response.status === 200){
+            console.log("verify phone success")
+            setEnableResend(false)
             setErrorMessage(t(`code_sent`));
         }else{
+            console.log("verify phone fail")
             response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
         }
     }
@@ -98,6 +106,11 @@ const PhoneVerificationCode =()=> {
         }
     }
 
+    const onTimerFinish = () => {
+        setWaitForSms(false);
+    }
+
+
         return (
             loading === true ? 
 
@@ -131,6 +144,40 @@ const PhoneVerificationCode =()=> {
                             </View>
                             <IBSConfirmationButton active={confirm} onHandlePress={handleConfirmPassword} />
                         </View>
+                        <View style={styles.confirmationText}>
+                                <View style={{marginLeft : 10, color : 'black'}}>
+                                    {
+                                    enableResend === false ? 
+                                        <View style={{flexDirection : 'row',width:200}}>
+                                            <View style={{flex : 6 , width : '100%'}}>
+                                                <Text>{t(`resendText`)}</Text>
+                                            </View>
+                                            <View style={{flex:1, alignItems:'flex-start'}}>
+                                                <CountDown  
+                                                    until={65}
+                                                    onFinish={() => setEnableResend(true)}
+                                                    digitStyle={{width:20,height:15}}
+                                                    digitTxtStyle={{color: 'black', fontSize:14}}
+                                                    separatorStyle={{color: 'black', fontSize : 14}}
+                                                    onPress={() => alert('hello')}
+                                                    timeToShow={['S']}
+                                                    size={25}
+                                                    timeLabels={{m: null, s: null}}
+                                                    showSeparator
+                                                    />
+                                            </View>
+                                        </View>
+                                            : 
+                                        <Text>{t(`recieveCode`)}</Text>        
+                                    }
+                                </View>
+                                <TouchableOpacity> 
+                                    {
+                                    enableResend  === false?
+                                      <Text style={styles.rightTextInactive}>{t(`resend`)}</Text>  : <TouchableOpacity onPress={verifyUserPhoneNumber}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>  
+                                    }
+                                </TouchableOpacity>
+                            </View>   
                     </View>
                 </ImageBackground>
             </SafeAreaView>

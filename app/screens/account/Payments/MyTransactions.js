@@ -164,13 +164,13 @@ const styles = StyleSheet.create({
         flex : 3,
         justifyContent : 'center',
         alignItems : 'center',
-        padding : 5,
+        padding : 2,
     },
     clientFilter : {
         flex : 3,
         justifyContent : 'center',
         alignItems : 'center',
-        padding : 5,
+        padding : 2,
     },
     transactionsView : {
         flex : 5,

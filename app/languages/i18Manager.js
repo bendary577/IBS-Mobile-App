@@ -41,7 +41,7 @@ const resources = {
             "confirm" : "Confirm",
             "recieveCode" : "Didn't Receive Code ?",
             "resend" : "Resend",
-            "resendText" : "resend after",
+            "resendText" : "Didn't receive?",
             "home" : "Home",
             "myPayments" : "My Payments",
             "paymentDescription" : "View all your payments details from this tap",
@@ -173,7 +173,8 @@ const resources = {
             "provide_phone" : "please provide a phone number",
             "phone_length_error" : "phone number must be 11 digits",
             "no_data" : "no available data",
-            "wait_sms" : "please wait a minute before sending another sms"
+            "wait_sms" : "please wait a minute before sending another sms",
+            "send" : "Send",
           },
     },
     ar: {
@@ -212,9 +213,9 @@ const resources = {
            "enter" : "أدخل",
            "confirmationCode" : "كود التأكيد",
            "confirm" : "أكد",
-           "recieveCode" : "لم تستلم كود التأكيد ؟",
+           "recieveCode" : "إعادة إرسال رمز التفعيل؟ خلال",
            "resend" : "أرسل",
-           "resendText" : "أعد الإرسال بعد",
+           "resendText" : "إعادة إرسال رمز التفعيل؟ خلال",
             "route" : "الرئيسية",
             "home" : "الرئيسية",
             "myPayments" : "مدفوعاتي",
@@ -348,7 +349,8 @@ const resources = {
             "provide_phone" : "يجب عليك إدخال رقم الهاتف",
             "phone_length_error" : "رقم الهاتف يجب ان يكون 11 رقم",
             "no_data" : "لا يوجد بيانات",
-            "wait_sms" : "برجاء الانتظار لدقيقة قبل إرسال رسالة أخري"
+            "wait_sms" : "برجاء الانتظار لدقيقة قبل إرسال رسالة أخري",
+            "send" : "ارسل"
         },
     },
   };

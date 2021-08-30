@@ -15,7 +15,9 @@ const IBSInputText = (props) => {
                     placeholderTextColor="black"
                     value={props.value}
                     onChangeText = { text => props.ChangeText(text)}
-                    //defaultValue="0"
+                    onSubmitEditing = {props.handleSubmitEditing}
+                    maxLength={1}
+                    //ref={props.isFirst === true ? null : props.ref}
                 />
             </ScrollView>
         </KeyboardAvoidingView>    

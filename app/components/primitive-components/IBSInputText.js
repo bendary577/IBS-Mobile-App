@@ -8,14 +8,12 @@ const IBSInputText = (props) => {
 
     return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={offset} >
-            <ScrollView>
                 <TextInput  
                     style={styles.inputText}
                     placeholder={props.placeholder} 
                     placeholderTextColor="#B9B9B9"
                     onChangeText={text => props.onChangeText(text)}
                 />
-            </ScrollView>
         </KeyboardAvoidingView>    
     )
 }

@@ -41,7 +41,6 @@ export const openMedicalEmail = () => {
 }
 
 export const openHotline = () => {
-    Alert.alert(HOTLINE)
     let phoneNumber = null;
     if (Platform.OS !== 'android') {
         phoneNumber = `telprompt:${HOTLINE}`;

@@ -13,6 +13,7 @@ const VisitUs = ({navigation}) => {
         <ScrollView>
             <SafeAreaView style={styles.conatiner}>
                 {/* ------------------------------------- header section ------------------------------------ */}
+                {/*
                 <View style={styles.header}>
                     <View style={styles.card}>
                         <Image
@@ -22,6 +23,7 @@ const VisitUs = ({navigation}) => {
                     </View>
                     <TitleText value={t(`visitUs`)}/>
                 </View>
+                */}
                 {/* ------------------------------------ map view ------------------------------------------------ */}
                 <Map nav={navigation}/>
             </SafeAreaView>

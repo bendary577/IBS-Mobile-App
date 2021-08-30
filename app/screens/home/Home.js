@@ -39,7 +39,8 @@ const Home = ({navigation}) => {
                     </View>
                     {/* -------------------------------------- about ibs -------------------------------- */}
                     <View style={styles.middleContainer}>
-                        <View style={styles.aboutIbs}>
+                        
+                        <TouchableOpacity style={styles.aboutIbs} onPress={()=>{navigation.navigate("AboutUs")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -47,9 +48,9 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TouchableOpacity onPress={()=>{navigation.navigate("AboutUs")}}>
+                                <View >
                                     <TitleText value={t(`aboutIBS`)}/>
-                                </TouchableOpacity>
+                                </View>
 
                             </View>
                             
@@ -59,12 +60,12 @@ const Home = ({navigation}) => {
                                     <Text style={styles.seeMoreTxt}>{t(`seeMore`)}</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={styles.separatorLine}></View>
 
                         {/* -------------------------------------- FAQ -------------------------------- */}
-                        <View style={styles.aboutIbs}>
+                        <TouchableOpacity style={styles.aboutIbs} onPress={()=>{navigation.navigate("FAQ")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -72,9 +73,9 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TouchableOpacity onPress={()=>{navigation.navigate("FAQ")}}>
+                                <View>
                                     <TitleText value={t(`faq`)}/>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                             
                             <View style={styles.description}>
@@ -83,12 +84,12 @@ const Home = ({navigation}) => {
                                     <Text style={styles.seeMoreTxt}>{t(`take_look`)}</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={styles.separatorLine}></View>
 
                         {/* -------------------------------------- my information -------------------------------- */}
-                        <View style={styles.aboutIbs}>
+                        <TouchableOpacity style={styles.aboutIbs} onPress={()=>{navigation.navigate("Information")}}>
 
                             <View style={styles.header}>
                                 <View style={styles.card}>
@@ -97,9 +98,9 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TouchableOpacity onPress={()=>{navigation.navigate("Information")}}>
+                                <View >
                                     <TitleText value={t(`latest_information`)}/>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                             
                             <View style={styles.description}>
@@ -108,12 +109,12 @@ const Home = ({navigation}) => {
                                     <Text style={styles.seeInfoTxt}>{t(`information_action`)}</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={styles.separatorLine}></View>
 
                         {/* -------------------------------------- visit us -------------------------------- */}
-                        <View style={styles.visitUs}>
+                        <TouchableOpacity style={styles.visitUs} onPress={()=>{navigation.navigate("VisitUs")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -121,14 +122,14 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/VisitUs/location.png')}
                                     />  
                                 </View>
-                                <TouchableOpacity onPress={()=>{navigation.navigate("VisitUs")}}>
+                                <View>
                                     <TitleText value={t(`visitUs`)}/>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                             <View>
                                 <SmallMap />
                             </View>
-                        </View>
+                        </TouchableOpacity>
                         {/**-------------------     <BottomTabsNavigation />    -------------------- */}
                     </View>  
                 </ScrollView>

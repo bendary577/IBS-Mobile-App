@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView, ScrollView,Alert, Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
+import {SafeAreaView, ScrollView,Alert, Image, ImageBackground, View, StyleSheet,TouchableOpacity, Dimensions, Text, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
@@ -46,15 +46,18 @@ class ResetPassword extends Component {
     }
 
     handleSendConfirmation = async () => {
+        this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
         this.clearInputs();
         let data = {
             phone : this.state.phone
         }
         this.setState({loading : true})
         let response = await requestResetPassword(data);
+        //let response = {status : 200};
         if(response.status === 200 ){
             this.setState({waitForSms : true})
             this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
+            console.log("after navigation")
         }else if (response.status === 422){
             this.setState({waitForSms : false})
             response.data.errors.map( error => {
@@ -75,6 +78,24 @@ class ResetPassword extends Component {
         this.setState({
             waitForSms : false,
         })
+    }
+
+     handleResetPassword = async () => {
+        console.log("request reset password")
+        let data = {
+            phone  : this.state.phone
+        }
+        this.setState({loading : true})
+        let response = await requestResetPassword(data);
+        if(response.status === 200){
+            console.log("test test" + response.status.data)
+            this.setState({errorMessage : response.data.message})
+        }else{
+            console.log("test error")
+            console.log("data ts " + response.data.message)
+            this.setState({errorMessage : response.data.message})
+        }
+        this.setState({loading : false})
     }
 
     render(){
@@ -102,7 +123,7 @@ class ResetPassword extends Component {
                         </View>
                         <View style={styles.loginForm}>
                             {
-                                this.state.errorMessage !== '' ? 
+                                this.state.errorMessage !== '' && this.state.waitForSms === true ? 
                                     <View style={{justifyContent:'center', alignItems:'center'}}>
                                         <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
                                     </View>
@@ -110,18 +131,18 @@ class ResetPassword extends Component {
                                     <></>
                             }
                             <IBSInputText placeholder={t(`phone`)} onChangeText={this.handleChangeText}/>
-                            {
+                                {
                                 this.state.waitForSms === false ?
                                     <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
                                     :
                                     <>
-                                    <IBSButtonLargeGray value={t(`sendConfirmation`)} action={false} onHandlePress={()=>{Alert.alert(t(`wait_sms`))}} />
-                                    <View style={{flex:1, alignItems:'flex-start'}}>
-                                        <View style={{flexDirection : 'row',width:200}}>
-                                            <View style={{flex : 1}}>
+                                    <IBSButtonLargeGray value={t(`send`)} action={false} onHandlePress={()=>{Alert.alert(t(`wait_sms`))}} />
+                                    <View style={{flex:1,flexDirection : 'row', alignItems:'flex-start'}}>
+                                        <View style={{flexDirection : 'row',flex : 4}}>
+                                            <View style={{flex : 1, flex : 4 }}>
                                                 <Text>{t(`resendText`)}</Text>
                                             </View>
-                                            <View style={{flex:1, alignItems:'flex-start'}}>
+                                            <View style={{flex:2, alignItems:'flex-start'}}>
                                                 <CountDown  
                                                     until={60}
                                                     onFinish={this.onTimerFinish}
@@ -129,16 +150,28 @@ class ResetPassword extends Component {
                                                     digitTxtStyle={{color: 'black', fontSize:14}}
                                                     separatorStyle={{color: 'black', fontSize : 14}}
                                                     onPress={() => alert('hello')}
-                                                    timeToShow={['M', 'S']}
+                                                    timeToShow={['S']}
                                                     size={25}
                                                     timeLabels={{m: null, s: null}}
                                                     showSeparator
                                                 />
                                             </View>
                                         </View>
+                                        {
+                                            this.state.waitForSms === false ? 
+
+                                            <View style={{flex : 2, alignItems : 'center'}}>
+                                                <TouchableOpacity onPress={this.handleResetPassword}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>
+                                            </View>
+
+                                            :
+                                            <View style={{flex : 2, alignItems : 'center'}}>
+                                                <Text style={styles.rightText}>{t(`resend`)}</Text>
+                                            </View>  
+                                        }
                                     </View>
                                     </>
-                            }
+                                }
                         </View>
                     </View>
                     </ScrollView>
