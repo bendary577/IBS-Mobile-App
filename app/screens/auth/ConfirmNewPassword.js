@@ -10,6 +10,7 @@ import CountDown from 'react-native-countdown-component';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import {requestResetPassword} from '../../services/authentication';
+import Loading from '../../components/sub-components/general/Loading';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -26,6 +27,7 @@ const ConfirmNewPassword =({route})=> {
         const [confirm, setConfirm] = useState(false);
         const [error, setErrorMessage] = useState('');
         const [enableResend, setEnableResend] = useState(false);
+        const [loading, setLoading] = useState(false);
         const {t, i18n} = useTranslation();
         const navigation = useNavigation();
 
@@ -81,11 +83,11 @@ const ConfirmNewPassword =({route})=> {
         }else{
             _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
         }
-        console.log("bbbbbbbbbbbbbbbb" + _code)
         let data = {
             code : _code,
             phone : route.params.phone
         };
+        setLoading(true);
         let response = await checkResetPasswordCode(data);
         if(response.status === 200){
             console.log(response.status.reset_token)
@@ -94,6 +96,7 @@ const ConfirmNewPassword =({route})=> {
         }else{
             response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
         }
+        setLoading(false);
     }
 
     const handleResetPassword = async () => {
@@ -101,6 +104,7 @@ const ConfirmNewPassword =({route})=> {
         let data = {
             phone  : route.params.phone
         }
+        setLoading(true);
         let response = await requestResetPassword(data);
         if(response.status === 200){
             console.log("test test" + response.status.data)
@@ -110,9 +114,13 @@ const ConfirmNewPassword =({route})=> {
             console.log("data ts " + response.data.message)
             setErrorMessage(response.data.error)
         }
+        setLoading(false);
     }
 
         return (
+            loading === true ? 
+            <Loading action={t(`loading`)}/>
+            :
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
                     <View style={styles.leftBackBtn}>

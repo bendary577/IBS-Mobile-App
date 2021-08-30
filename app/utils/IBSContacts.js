@@ -1,4 +1,4 @@
-import {Linking, Alert } from 'react-native';
+import {Linking, Alert, Platform } from 'react-native';
 
 const WEBSITE_LINK = `http://www.ibsns.com`;
 const LOCATION_LINK = `https://www.google.com/maps/place/IBS/@29.9695947,31.2728568,17z/data=!3m1!4b1!4m5!3m4!1s0x145839bf6a93f9e1:0x8a62a45fe12e94e2!8m2!3d29.9696018!4d31.2749924`;
@@ -29,13 +29,7 @@ export const openFacebookLink = () => {
 }
 
 export const openEmail = () => {
-    Linking.canOpenURL(EMAIL).then(supported => {
-        if (supported) {
-          Linking.openURL(`mailto:${EMAIL}`);
-        } else {
-         Alert.alert("Sorry, can't open this url")
-        }
-    });
+    Linking.openURL(`mailto:${EMAIL}`);
 }
 
 export const openPaymentEmail = () => {
@@ -48,6 +42,20 @@ export const openMedicalEmail = () => {
 
 export const openHotline = () => {
     Alert.alert(HOTLINE)
+    let phoneNumber = null;
+    if (Platform.OS !== 'android') {
+        phoneNumber = `telprompt:${HOTLINE}`;
+    }
+    else  {
+        phoneNumber = `tel:${HOTLINE}`;
+    }
+    Linking.canOpenURL(phoneNumber).then(supported => {
+        if (supported) {
+          Linking.openURL(phoneNumber);
+        } else {
+            Alert.alert("Sorry, can't open this url")
+        }
+    });
 }
 
 export const openLocation = () => {
@@ -55,7 +63,7 @@ export const openLocation = () => {
         if (supported) {
           Linking.openURL(LOCATION_LINK);
         } else {
-         Alert.alert("Sorry, can't open this url")
+            Alert.alert("Sorry, can't open this url")
         }
     });
 }

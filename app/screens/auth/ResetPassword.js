@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView, ScrollView,  Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
+import {SafeAreaView, ScrollView,Alert, Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
@@ -7,6 +7,8 @@ import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonL
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import {requestResetPassword} from '../../services/authentication';
 import { withTranslation } from 'react-i18next';
+import Loading from '../../components/sub-components/general/Loading';
+import CountDown from 'react-native-countdown-component';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -21,6 +23,8 @@ class ResetPassword extends Component {
         this.state = { 
             phone : '',
             errorMessage : '',
+            loading : false,
+            waitForSms : false,
         };
     }
 
@@ -46,13 +50,12 @@ class ResetPassword extends Component {
         let data = {
             phone : this.state.phone
         }
+        this.setState({loading : true})
         let response = await requestResetPassword(data);
         if(response.status === 200 ){
-         /*    setTimeout(()=>{ 
-                this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
-            }, 2000); */
             this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
         }else if (response.status === 422){
+            this.setState({waitForSms : false})
             response.data.errors.map( error => {
                 this.setState({
                     errorMessage : error.msg
@@ -63,11 +66,22 @@ class ResetPassword extends Component {
                 errorMessage : response.data.error
             });
         }
+        this.setState({loading : false})
+    }
+
+    onTimerFinish = () => {
+        Alert.alert("tomer fineshed")
+        this.setState({
+            waitForSms : false,
+        })
     }
 
     render(){
         const { t } = this.props;
         return (
+            this.state.loading === true ? 
+            <Loading  action={t(`loading`)}/>
+            : 
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
                     <View style={styles.leftBackBtn}>
@@ -79,8 +93,6 @@ class ResetPassword extends Component {
                 </View>
                 <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
                     <ScrollView>
-
-
                     <View style={styles.middle}>
                         <View style={styles.title}>
                             <TitleText value={t(`reset`)} />
@@ -97,8 +109,35 @@ class ResetPassword extends Component {
                                     <></>
                             }
                             <IBSInputText placeholder={t(`phone`)} onChangeText={this.handleChangeText}/>
-                            <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
-                            
+                            {
+                                this.state.waitForSms === false ?
+                                    <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
+                                    :
+                                    <>
+                                    <IBSButtonLargeGray value={t(`sendConfirmation`)} action={false} onHandlePress={()=>{Alert.alert("wait")}} />
+                                    <View style={{flex:1, alignItems:'flex-start'}}>
+                                        <View style={{flexDirection : 'row',width:200}}>
+                                            <View style={{flex : 1}}>
+                                                <Text>{t(`resendText`)}</Text>
+                                            </View>
+                                            <View style={{flex:1, alignItems:'flex-start'}}>
+                                                <CountDown  
+                                                    until={60}
+                                                    onFinish={this.onTimerFinish}
+                                                    digitStyle={{width:20,height:15}}
+                                                    digitTxtStyle={{color: 'black', fontSize:14}}
+                                                    separatorStyle={{color: 'black', fontSize : 14}}
+                                                    onPress={() => alert('hello')}
+                                                    timeToShow={['M', 'S']}
+                                                    size={25}
+                                                    timeLabels={{m: null, s: null}}
+                                                    showSeparator
+                                                />
+                                            </View>
+                                        </View>
+                                    </View>
+                                    </>
+                            }
                         </View>
                     </View>
                     </ScrollView>

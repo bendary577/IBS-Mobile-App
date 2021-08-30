@@ -7,6 +7,7 @@ import {primaryRedColor} from '../../config/colors';
 import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {useTranslation} from 'react-i18next';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
+import PTRView from 'react-native-pull-to-refresh';
 
 let blackElipse = '../../assets/images/Home/black-elipse.png';
 
@@ -23,8 +24,15 @@ const Home = ({navigation}) => {
     const navigateToInformation = () => {
         navigation.navigate("Information")
     }
+    
+    const _refresh = () => {
+        return new Promise((resolve) => {
+          setTimeout(()=>{resolve()}, 2000)
+        });
+      }
 
         return (
+            <PTRView onRefresh={_refresh} >
             <SafeAreaView style={styles.container}>
                 <ScrollView>
 
@@ -43,7 +51,10 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TitleText value={t(`aboutIBS`)}/>
+                                <TouchableOpacity onPress={()=>{navigation.navigate("AboutUs")}}>
+                                    <TitleText value={t(`aboutIBS`)}/>
+                                </TouchableOpacity>
+
                             </View>
                             
                             <View style={styles.description}>
@@ -54,6 +65,8 @@ const Home = ({navigation}) => {
                             </View>
                         </View>
 
+                        <View style={styles.separatorLine}></View>
+
                         {/* -------------------------------------- FAQ -------------------------------- */}
                         <View style={styles.aboutIbs}>
                             <View style={styles.header}>
@@ -63,7 +76,9 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TitleText value={t(`faq`)}/>
+                                <TouchableOpacity onPress={()=>{navigation.navigate("FAQ")}}>
+                                    <TitleText value={t(`faq`)}/>
+                                </TouchableOpacity>
                             </View>
                             
                             <View style={styles.description}>
@@ -74,6 +89,7 @@ const Home = ({navigation}) => {
                             </View>
                         </View>
 
+                        <View style={styles.separatorLine}></View>
 
                         {/* -------------------------------------- my information -------------------------------- */}
                         <View style={styles.aboutIbs}>
@@ -85,7 +101,9 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TitleText value={t(`latest_information`)}/>
+                                <TouchableOpacity onPress={()=>{navigation.navigate("Information")}}>
+                                    <TitleText value={t(`latest_information`)}/>
+                                </TouchableOpacity>
                             </View>
                             
                             <View style={styles.description}>
@@ -95,6 +113,8 @@ const Home = ({navigation}) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
+
+                        <View style={styles.separatorLine}></View>
 
                         {/* -------------------------------------- visit us -------------------------------- */}
                         <View style={styles.visitUs}>
@@ -117,6 +137,7 @@ const Home = ({navigation}) => {
                     </View>  
                 </ScrollView>
             </SafeAreaView>
+            </PTRView>
         );
 }
 
@@ -183,6 +204,12 @@ const styles = StyleSheet.create({
         color : 'black',
         fontWeight : 'bold'
     },
+    separatorLine : {
+        borderBottomColor: '#c4c3c2',
+        borderBottomWidth: 2,
+        marginVertical : '3%',
+    }
+
 });
 
 

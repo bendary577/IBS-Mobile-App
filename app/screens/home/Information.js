@@ -52,16 +52,7 @@ const Information = ({navigation}) => {
         :
 
 	    <SafeAreaView style={styles.container}>
-            {/* ------------------------------------- header section ------------------------------------ */}
-            <View style={styles.header}>
-                <View style={styles.card}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../../assets/icons/aboutUs/about.png')}
-                    />  
-                </View>
-                <TitleText value={t(`information`)}/>
-            </View>
+
             {/* ------------------------------------- about text section ------------------------------------ */}
             <ScrollView>
                 <View style={styles.supportTicketsView}>
@@ -100,6 +91,7 @@ const styles = StyleSheet.create({
         marginRight : 5
     },
     supportTicketsView : {
+        marginTop : '10%',
         flex : 4,
     },
     error : {

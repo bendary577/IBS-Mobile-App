@@ -26,7 +26,6 @@ authenticatedAxiosInstance.interceptors.request.use(async (req) => {
 axiosInstance.interceptors.request.use(async (req) => {
     // append access token to request authorization header
     req.headers['Accept-language'] = SecureStore.getItemAsync('lang');
-    
     return req;
 });
 

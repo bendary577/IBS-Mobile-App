@@ -73,9 +73,9 @@ const UpdatePassword = () => {
             if(response.status === 200 ){
                 clearInputs();
                 setMessage(t(`password_updated`))
-/*                 setTimeout(() => {
+                setTimeout(() => {
                     logout();
-                }, 2000); */
+                }, 2000); 
             }else if (response.status === 422){
                 response.data.errors.map( error => {
                     if(error.param === 'password'){
@@ -91,6 +91,7 @@ const UpdatePassword = () => {
             setMessage(t(`passwords_not_identical`))
         }
     }
+
 
         return (
             loading === true ? 

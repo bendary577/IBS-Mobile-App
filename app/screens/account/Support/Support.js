@@ -79,6 +79,7 @@ class Support extends Component {
     
     //-------------- call the api endpoint to create new ticket -----------
     createNewTicket = async () => {
+        this.setState({isLoading : false})
         let data = {
             subject : this.state.newTicketSubject,
             description : this.state.newTicketSubject
@@ -92,11 +93,11 @@ class Support extends Component {
                 error : response.data.error
             });
         }
+        this.setState({isLoading : false})
     }
 
 
     filterTickets = (value) => {
-        console.log("filteeeeeeeeeeeeer changeeeeeeeeeeeeeed")
         if(value === 'all'){
             this.setState({renderedTickets : this.state.tickets})
         }else if(value === 'closed'){
