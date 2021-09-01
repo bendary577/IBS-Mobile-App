@@ -4,12 +4,14 @@ import * as SecureStore from 'expo-secure-store';
 //--------------------------------------- create axios instance -------------------------------
 //axios instance to send unauthenticated requests
 export const axiosInstance = axios.create({
-    withCredentials: true
+    withCredentials: true,
+    crossdomain : true
 })
 
 //axios instance to send authenticated requests
 export const authenticatedAxiosInstance = axios.create({
-    withCredentials: true
+    withCredentials: false,
+    // crossdomain : true
 })
 
 
@@ -17,8 +19,7 @@ export const authenticatedAxiosInstance = axios.create({
 authenticatedAxiosInstance.interceptors.request.use(async (req) => {
     // append access token to request authorization header
     let token = await SecureStore.getItemAsync('access_token');
-    req.headers.authorization = token;
-    console.log(req.headers.authorization);
+    req.headers.authorization = `Bearer ${token}`;
     req.headers['Accept-language'] = SecureStore.getItemAsync('lang');
     return req;
 });
