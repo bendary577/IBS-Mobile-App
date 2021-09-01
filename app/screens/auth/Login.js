@@ -47,8 +47,6 @@ const Login = (props) => {
         let response = {status : 200}
         if(response.status === 200 ){
             clearInputs();
-            //let token = await SecureStore.setItemAsync('access_token', response.data.access_token);
-            //console.log("token is in login " + await SecureStore.getItemAsync('access_token'))
             response.data.data.user.isVerified === true ? setAuthenticated(true) : handleVerifyPhone();
         }else if (response.status === 422){
             response.data.errors.map( error => {

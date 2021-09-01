@@ -36,7 +36,7 @@ const PhoneVerificationCode =()=> {
 
     
     React.useEffect(() => {
-        //verifyUserPhoneNumber();
+        verifyUserPhoneNumber();
     }, []);  
     
     //call the api endpoint to send verification code to the user
@@ -120,9 +120,8 @@ const PhoneVerificationCode =()=> {
     const goToFirstInput = () => {
         ref_input_1.current.focus();
     }
-    
+
     const goToSecondInput = () => {
-        console.log("go to second ref")
         ref_input_2.current.focus();
     }
 
