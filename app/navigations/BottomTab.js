@@ -62,9 +62,7 @@ const BottomTabsNavigation = () => {
           name="MyProfile"
           component={ProfileStack}
           options={{
-            tabBarLabel: '',
-            showIcon: true,
-            showLabel: false,
+            tabBarLabel: t(`profile`),
             tabBarIcon : ({ focused })=>(<ProfileTabButton active={focused ? true : false}/>),
           }}
         />

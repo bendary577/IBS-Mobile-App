@@ -21,12 +21,12 @@ const Welcome = (props) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
-        const language = SecureStore.getItemAsync('language');
-        if(language !== null){
-            setTimeout(() => {
+        SecureStore.getItemAsync('language').then(language => {
+            console.log(language);
+            if(language === 'true'){
                 props.navigation.navigate('WelcomeAnimation');
-            }, 4000);
-        }
+            }
+        });
     }, []);
 
     const setEnglishLanguage = (lang) =>{

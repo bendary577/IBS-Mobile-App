@@ -191,18 +191,20 @@ const styles = StyleSheet.create({
     },
     seeMoreTxt : {
         marginTop : 5,
-        fontSize : 16
+        fontSize : 16,
+        fontWeight: 'bold',
+        color: '#b70000'
     },
     seeInfoTxt : {
         marginTop : 5,
         fontSize : 16,
-        color : 'black',
-        fontWeight : 'bold'
+        fontWeight: 'bold',
+        color: '#b70000'
     },
     separatorLine : {
-        borderBottomColor: '#c4c3c2',
+        borderBottomColor: '#e2e2e2',
         borderBottomWidth: 2,
-        marginVertical : '3%',
+        marginVertical : '5%',
     },
 
 });

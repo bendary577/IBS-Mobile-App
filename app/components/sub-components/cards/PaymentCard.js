@@ -17,29 +17,25 @@ const PaymentCard = (props) => {
     const {t} = useTranslation();
 
 	return (
-	    <View style={styles.container}>
+	    <TouchableOpacity onPress={()=>{navigation.navigate("MyTransactions")}} style={styles.container}>
            <ImageBackground style={styles.paymentCardImage} source={require(paymentCard)}>
                <View style={styles.topHeader}>
                     <View style={styles.header}>
                         <View style={styles.card}>
-                            <TouchableOpacity>
-                                <Image
-                                    style={styles.icon}
-                                    source={require(paymentLogo)}
+                            <Image
+                                style={styles.icon}
+                                source={require(paymentLogo)}
                                     />  
-                            </TouchableOpacity>
                         </View>
                         <Text style={styles.title}>{t(`myPayments`)}</Text>
                     </View>
                     <View style={styles.arrow}>
-                        <TouchableOpacity onPress={()=>{navigation.navigate("MyTransactions")}}>
-                            <Image style={[styles.arrowIcon, getFlipForRTLStyle()]} source={require(arrowIcon)} />
-                        </TouchableOpacity>
+                        <Image style={[styles.arrowIcon, getFlipForRTLStyle()]} source={require(arrowIcon)} />
                     </View>
                </View>
                 <Text style={styles.description}>{t(`paymentDescription`)}</Text>
            </ImageBackground>
-        </View>
+        </TouchableOpacity>
 	);
 }
 
