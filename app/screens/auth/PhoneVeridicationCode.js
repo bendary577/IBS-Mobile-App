@@ -156,7 +156,7 @@ const PhoneVerificationCode =()=> {
             :
 
             loading === true ? 
-
+      
             <Loading action={t(`loading`)}/>
 
             :
