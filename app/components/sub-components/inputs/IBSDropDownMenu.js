@@ -20,13 +20,13 @@ const IBSDropDownMenu = (props) => {
     }  
 
     return (
-        <SafeAreaView>
+        // <SafeAreaView>
             <DropDownPicker
                 zIndex = {2000}
                 items={props.labels}
                 value={selectedValue}
                 open={filterDropDownOpen}
-                containerStyle={[styles.dropdown, textAlign()]}
+                // containerStyle={[styles.dropdown, textAlign()]}
                 style={[styles.dropdown, textAlign()]}
                 dropDownStyle={{backgroundColor: '#fafafa'}}
                 setValue={applyFilter}
@@ -34,30 +34,32 @@ const IBSDropDownMenu = (props) => {
                 placeholder={ props.type === 'year' ? t(`year_filter`) : props.type === 'client' ? t(`client_filter`) : t(`tickets_filter`) }
                 onPress={toggleFilterDropDown}
                 closeAfterSelecting={true}
-                itemSeparator={true}
+                // itemSeparator={true}
                 dropDownContainerStyle={styles.dropdownContainer}
                 selectedItemContainerStyle={styles.selectedItemContainer}
                 selectedItemLabelStyle={styles.selectedItemLabel}
                 itemSeparatorStyle={styles.itemSeparator}
                 onClose={toggleFilterDropDown}  
             />
-        </SafeAreaView>
+        // </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     dropdown : {
         height: 45,
-        borderRadius : 20,
-        zIndex : 999    
+        borderRadius : 10,
+        zIndex : 999,
+        elevation: 1,
+        borderWidth: 0,
     },
     dropdownContainer : {
-        backgroundColor: "#edebeb",
-        borderColor : '#bababa',
+        elevation: 1,
+        borderWidth: 0,
         zIndex : 999
     },
     selectedItemContainer : {
-        backgroundColor: "#f0afaf"
+        backgroundColor: "#f0afaf",
     },
     selectedItemLabel : {
         fontWeight: "bold"

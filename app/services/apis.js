@@ -4,7 +4,7 @@ let BASE_API = `http://api.ibsns.com/v1/`;
 //-------------------------------- Auth API endpoints --------------------------
 export const LOGIN_API = `${BASE_API}login`;
 export const SIGNUP_API = `${BASE_API}register`;
-export const LOGOUT_API = `${BASE_API}/logout`;
+export const LOGOUT_API = `${BASE_API}logout`;
 export const VERIFY_PHONE = `${BASE_API}verify-phone`;
 export const CHECK_PHONE_VERIFICATION_CODE = `${BASE_API}check-verification-code`;
 export const UPDATE_PASSWORD_API = `${BASE_API}update-password`;
@@ -13,7 +13,7 @@ export const CHECK_RESET_PASSWORD_API = `${BASE_API}check-reset-password`; //the
 export const RESET_PASSWORD_API = `${BASE_API}reset-password/`; // then update password, this api is appended by password reset token
 
 //----------------------------------- REST API User endpoints -------------------------------
-export const GET_USER_API = `${BASE_API}/user/`;
+export const GET_USER_API = `${BASE_API}user/`;
 export const USER_NOTIFICATION_TOKEN = `${BASE_API}/api/users/set-notification-token`;
 
 //----------------------------------- REST API Tickets endpoints -------------------------------

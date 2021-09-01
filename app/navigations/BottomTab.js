@@ -45,7 +45,7 @@ const BottomTabsNavigation = () => {
           component={HomeStack}
           options={{
             tabBarLabel: t(`home`),
-            tabBarIcon : ({ tintColor, focused })=>(<HomeTabButton active={focused ? true : false}/>),
+            tabBarIcon : ({ focused })=>(<HomeTabButton active={focused ? true : false}/>),
           }}
         />
 
@@ -54,7 +54,7 @@ const BottomTabsNavigation = () => {
           component={EmploymentPaymentsStack}
           options={{
             tabBarLabel: t(`payments`),
-            tabBarIcon : ({ tintColor, focused })=>(<PaymentTabButton active={focused ? true : false}/>),
+            tabBarIcon : ({ focused })=>(<PaymentTabButton active={focused ? true : false}/>),
           }}
         />
 
@@ -63,7 +63,9 @@ const BottomTabsNavigation = () => {
           component={ProfileStack}
           options={{
             tabBarLabel: '',
-            tabBarIcon : ({ tintColor, focused })=>(<ProfileTabButton active={focused ? true : false}/>),
+            showIcon: true,
+            showLabel: false,
+            tabBarIcon : ({ focused })=>(<ProfileTabButton active={focused ? true : false}/>),
           }}
         />
 
@@ -72,7 +74,7 @@ const BottomTabsNavigation = () => {
           component={SupportStack}
           options={{
             tabBarLabel: t(`support`),
-            tabBarIcon : ({ tintColor, focused })=>(<SupportTabButton active={focused ? true : false}/>),
+            tabBarIcon : ({ focused })=>(<SupportTabButton active={focused ? true : false}/>),
           }}
         />
 
@@ -81,7 +83,7 @@ const BottomTabsNavigation = () => {
           component={More}
           options={{
             tabBarLabel: t(`more`),
-            tabBarIcon : ({ tintColor, focused })=>(<MoreTabButton active={focused ? true : false} />),
+            tabBarIcon : ({ focused })=>(<MoreTabButton active={focused ? true : false} />),
           }}
           listeners={({navigation}) => ({
             tabPress: e => {

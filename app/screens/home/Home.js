@@ -152,8 +152,6 @@ const styles = StyleSheet.create({
      },
     paymentCard : {
         flexDirection : 'row-reverse',
-        marginBottom : 10,
-        height : 180,
     },
     card : {
         position : 'absolute',

@@ -58,8 +58,11 @@ const Login = (props) => {
     }
 
     const validate = () => {
-        identityNumber === '' ? setNationalIdErrorMessage(t(`provide_id`)) : setNationalIdErrorMessage('');
-        password === '' ? setPasswordErrorMessage(t(`provide_password`)) : setPasswordErrorMessage('');
+        const idRegex = /^[0-9]{14}$/;
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9\d@$.!%*#?&]{8,}/;
+        console.log()
+        !idRegex.test(identityNumber) ? setNationalIdErrorMessage(t(`provide_id`)) : setNationalIdErrorMessage('');
+        !passwordRegex.test(password) ? setPasswordErrorMessage(t(`provide_password`)) : setPasswordErrorMessage('');
         if(nationalIdErrorMessage === '' && passwordErrorMessage === ''){
             handleLogin();
         }   

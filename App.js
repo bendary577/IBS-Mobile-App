@@ -36,16 +36,21 @@ const App = () => {
                   console.log(response);
                 });
             
+                authenticateUser();
+                
                 return () => {
                   Notifications.removeNotificationSubscription(notificationListener.current);
                   Notifications.removeNotificationSubscription(responseListener.current);
                 };
         //check if there is a token registered
-        let token = SecureStore.getItemAsync('token');
-        if(token !== null){
-          setAuthenticated(true);
-        }
   }, [])
+
+  const authenticateUser = async () => {
+    let token = await SecureStore.getItemAsync('access_token');
+    if(token !== null){
+      setAuthenticated(true);
+    }
+  }
 
     return (
         <AuthProvider>

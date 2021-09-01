@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 15,
         right: 15,
+        height: 180
     },
     paymentCardImage : {
         width : "100%",

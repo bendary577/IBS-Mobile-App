@@ -28,10 +28,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     icon : {
-        position: 'absolute',
-        bottom: -10, 
+        // position: 'absolute',
+        bottom: 0, 
         height: 90,
         width: 90,
+        transform: [{translateY: -20}],
         borderRadius: 68,
         borderWidth : 8,
         borderColor : 'white',
