@@ -136,7 +136,7 @@ const resources = {
             "current_password" : "Current Password",
             "update_password" : "Update Password",
             "employment_history" : "My Employment History",
-            "something_wrong" : "Sorry, something went wrong, try login later",
+            "something_wrong" : "Sorry, something went wrong, try again later",
             "code_sent" : "a verification code was sent to you",
             "checking_code" : "checking the verification code",
             "please_verify" : "Please Verify",

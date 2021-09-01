@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
-import {Text,SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
-import TitleText from '../../components/primitive-components/TitleText';
+import {Text,SafeAreaView, Image, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
@@ -10,20 +9,16 @@ import {signIn} from '../../services/authentication';
 import {useAuth} from '../../contexts/authContext';
 import Loading from '../../components/sub-components/general/Loading';
 import {useTranslation} from 'react-i18next';
-import * as SecureStore from 'expo-secure-store';
 
 let {width, height} = Dimensions.get('window'); 
-let loginBackground = '../../assets/images/Login/loginBackground.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
 let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
-let loginBottom = '../../assets/images/Login/BottomBlackLtr.png';
-let loginBottomRtl = '../../assets/images/Login/bottomBlackRtl.png';
 
 //------------------------ screen ---------------------
 const Login = (props) => {
 
-    const [identityNumber, setIdentityNumber] = useState('');
-    const [password, setPassword] = useState('');
+    const [identityNumber, setIdentityNumber] = useState('888888847748');
+    const [password, setPassword] = useState('Aa$12345');
     const [loading, setLoading] = useState(false);
     const [error, setErrorMessage] = useState('');
     const [nationalIdErrorMessage, setNationalIdErrorMessage] = useState('');
@@ -39,16 +34,16 @@ const Login = (props) => {
 
     const handleLogin = async () =>{
         let data = {
-            identityNumber : identityNumber,
-            password : password
+            identityNumber,
+            password
         }
         setLoading(true);
-        //let response = await signIn(data);
-        let response = {status : 200}
-        if(response.status === 200 ){
+        let response = await signIn(data);
+        //let response = {status : 200}
+        if(response?.status === 200 ){
             clearInputs();
             response.data.data.user.isVerified === true ? setAuthenticated(true) : handleVerifyPhone();
-        }else if (response.status === 422){
+        }else if (response?.status === 422){
             response.data.errors.map( error => {
                 if(error.param === 'password'){
                     setPasswordErrorMessage(error.msg)
@@ -57,7 +52,7 @@ const Login = (props) => {
                 }
             });
         }else{
-            response.data.error === null || response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
+            response?.data.error === null || response?.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
         }
         setLoading(false);
     }
@@ -67,7 +62,7 @@ const Login = (props) => {
         password === '' ? setPasswordErrorMessage(t(`provide_password`)) : setPasswordErrorMessage('');
         if(nationalIdErrorMessage === '' && passwordErrorMessage === ''){
             handleLogin();
-        }
+        }   
     }
 
     const handleCreateAccount = () =>{

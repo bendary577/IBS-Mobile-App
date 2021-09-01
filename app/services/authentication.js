@@ -16,9 +16,7 @@ import { axiosInstance, authenticatedAxiosInstance } from './axios';
 export const signIn = async (data) => {
   try {
       const response = await axiosInstance.post(LOGIN_API, data)
-      console.log(response.status)
-      console.log(response.data)
-      if(response.status === 200){
+      if(response?.status === 200){
         storeToken(response.data.access_token);
         if(response.data.data.user.emp._id){
           storeEmployeeId(response.data.data.user.emp._id);
