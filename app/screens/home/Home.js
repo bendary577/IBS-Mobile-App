@@ -40,7 +40,7 @@ const Home = ({navigation}) => {
                     {/* -------------------------------------- about ibs -------------------------------- */}
                     <View style={styles.middleContainer}>
                         
-                        <TouchableOpacity style={styles.aboutIbs} onPress={()=>{navigation.navigate("AboutUs")}}>
+                        <TouchableOpacity activeOpacity={0.8} style={styles.aboutIbs} onPress={()=>{navigation.navigate("AboutUs")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -65,7 +65,7 @@ const Home = ({navigation}) => {
                         <View style={styles.separatorLine}></View>
 
                         {/* -------------------------------------- FAQ -------------------------------- */}
-                        <TouchableOpacity style={styles.aboutIbs} onPress={()=>{navigation.navigate("FAQ")}}>
+                        <TouchableOpacity activeOpacity={0.8} style={styles.aboutIbs} onPress={()=>{navigation.navigate("FAQ")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -89,7 +89,7 @@ const Home = ({navigation}) => {
                         <View style={styles.separatorLine}></View>
 
                         {/* -------------------------------------- my information -------------------------------- */}
-                        <TouchableOpacity style={styles.aboutIbs} onPress={()=>{navigation.navigate("Information")}}>
+                        <TouchableOpacity activeOpacity={0.8} style={styles.aboutIbs} onPress={()=>{navigation.navigate("Information")}}>
 
                             <View style={styles.header}>
                                 <View style={styles.card}>
@@ -114,7 +114,7 @@ const Home = ({navigation}) => {
                         <View style={styles.separatorLine}></View>
 
                         {/* -------------------------------------- visit us -------------------------------- */}
-                        <TouchableOpacity style={styles.visitUs} onPress={()=>{navigation.navigate("VisitUs")}}>
+                        <TouchableOpacity activeOpacity={0.9} style={styles.visitUs} onPress={()=>{navigation.navigate("VisitUs")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -190,16 +190,18 @@ const styles = StyleSheet.create({
         margin : 5
     },
     seeMoreTxt : {
-        marginTop : 5,
-        fontSize : 16,
+        marginTop : 15,
+        fontSize : 15,
         fontWeight: 'bold',
-        color: '#b70000'
+        color: '#b70000',
+        textTransform: 'capitalize'
     },
     seeInfoTxt : {
-        marginTop : 5,
+        marginTop : 15,
         fontSize : 16,
         fontWeight: 'bold',
-        color: '#b70000'
+        color: '#b70000',
+        textTransform: 'capitalize'
     },
     separatorLine : {
         borderBottomColor: '#e2e2e2',
