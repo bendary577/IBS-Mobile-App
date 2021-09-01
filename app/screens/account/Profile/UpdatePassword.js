@@ -178,6 +178,9 @@ const styles = StyleSheet.create({
         paddingStart : 4,
         textAlign : 'center'
     },
+    title : {
+        alignItems : 'flex-start'
+    }
 });
 
 export default withTranslation()(UpdatePassword);

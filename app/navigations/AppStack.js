@@ -7,7 +7,7 @@ import LogoButton from '../components/sub-components/buttons/LogoButton';
 import Support from '../screens/account/Support/Support';
 import PaymentDetails from '../screens/account/Payments/PaymentDetails';
 import TitleText from '../components/primitive-components/TitleText';
-import  {View} from 'react-native'
+import  {Platform, View} from 'react-native'
 import MessageDetails from '../screens/account/Messages/MessageDetails';
 import {getCommon} from './CommonStackScreens';
 import Home from '../screens/home/Home'
@@ -306,14 +306,15 @@ const MessagesForYouStack = () => {
             name="MessageDetails" 
             component={MessageDetails}
             options={{
-              title: 'CIB',
+              title: t(`cib`),
               headerStyle: {
                 backgroundColor: "#D8D8D8",
                 borderBottomRightRadius : 20,
-                borderBottomLeftRadius : 20
+                borderBottomLeftRadius : 20,
               },
                 headerTitleStyle: {
                 fontWeight: 'bold',
+                padding : Platform.OS == 'ios' ? 5 : 0
               },
               headerBackImage : () =>( <BackButton /> )
           }} />

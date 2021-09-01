@@ -4,7 +4,7 @@
   "expo": {
     "name": "ibs-mobile",
     "icon": "./app/assets/icons/App/app-ibs.png",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "slug": "ibs-mobile",
     "assetBundlePatterns": [
       "**/*"

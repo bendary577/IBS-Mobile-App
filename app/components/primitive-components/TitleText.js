@@ -1,11 +1,11 @@
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 import {titleTextColor} from '../../config/colors';
-
+import {textAlign} from '../../utils/utilFunctions';
 
 const TitleText = (props) => {
 	return (
-	    <Text style={styles.text}>{props.value}</Text>
+	    <Text style={[styles.text, textAlign]}>{props.value}</Text>
 	);
 }
 

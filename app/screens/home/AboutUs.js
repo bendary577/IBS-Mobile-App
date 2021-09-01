@@ -3,7 +3,7 @@ import {Image, Text, View, StyleSheet} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import {primaryRedColor} from '../../config/colors';
 import {useTranslation} from 'react-i18next';
-
+import {textAlign} from '../../utils/utilFunctions';
 
 //------------------------ screen ---------------------
 const AboutUs = ({navigation}) => {
@@ -27,19 +27,19 @@ const AboutUs = ({navigation}) => {
 
             {/* ------------------------------------- about text section ------------------------------------ */}
             <View>
-                <Text style={styles.text}>
+                <Text style={[styles.text,textAlign()]}>
                     {t(`about_description_1`)}
                 </Text>
 
-                <Text style={styles.text}>
+                <Text style={[styles.text,textAlign()]}>
                     {t(`about_description_2`)}
                 </Text>
 
-                <Text style={styles.text}>
+                <Text style={[styles.text,textAlign()]}>
                     {t(`about_description_3`)}
                 </Text>
                 
-                <Text style={styles.text}>
+                <Text style={[styles.text,textAlign()]}>
                     {t(`about_description_4`)}
                 </Text>
             </View>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-start',
         paddingVertical: 20,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     header : {
         display: 'flex',

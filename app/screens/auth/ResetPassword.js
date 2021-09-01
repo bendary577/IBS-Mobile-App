@@ -8,7 +8,7 @@ import BackButton from '../../components/sub-components/buttons/BackButton';
 import {requestResetPassword} from '../../services/authentication';
 import { withTranslation } from 'react-i18next';
 import Loading from '../../components/sub-components/general/Loading';
-import CountDown from 'react-native-countdown-component';
+import CounterComponent from '../../components/sub-components/animations/CounterComponent'
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -45,15 +45,15 @@ class ResetPassword extends Component {
         });
     }
 
-    handleSendConfirmation = async () => {
-        this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
+    handleSendSms = async () => {
+        //this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
         this.clearInputs();
         let data = {
             phone : this.state.phone
         }
         this.setState({loading : true})
-        let response = await requestResetPassword(data);
-        //let response = {status : 200};
+        //let response = await requestResetPassword(data);
+        let response = {status : 200};
         if(response.status === 200 ){
             this.setState({waitForSms : true})
             this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
@@ -74,29 +74,6 @@ class ResetPassword extends Component {
         this.setState({loading : false})
     }
 
-    onTimerFinish = () => {
-        this.setState({
-            waitForSms : false,
-        })
-    }
-
-     handleResetPassword = async () => {
-        console.log("request reset password")
-        let data = {
-            phone  : this.state.phone
-        }
-        this.setState({loading : true})
-        let response = await requestResetPassword(data);
-        if(response.status === 200){
-            console.log("test test" + response.status.data)
-            this.setState({errorMessage : response.data.message})
-        }else{
-            console.log("test error")
-            console.log("data ts " + response.data.message)
-            this.setState({errorMessage : response.data.message})
-        }
-        this.setState({loading : false})
-    }
 
     render(){
         const { t } = this.props;
@@ -113,7 +90,7 @@ class ResetPassword extends Component {
                         <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                     </View>
                 </View>
-                <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
+                <View style={styles.backgroundImage}>
                     <ScrollView>
                     <View style={styles.middle}>
                         <View style={styles.title}>
@@ -131,51 +108,18 @@ class ResetPassword extends Component {
                                     <></>
                             }
                             <IBSInputText placeholder={t(`phone`)} onChangeText={this.handleChangeText}/>
-                                {
-                                this.state.waitForSms === false ?
-                                    <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
-                                    :
-                                    <>
-                                    <IBSButtonLargeGray value={t(`send`)} action={false} onHandlePress={()=>{Alert.alert(t(`wait_sms`))}} />
-                                    <View style={{flex:1,flexDirection : 'row', alignItems:'flex-start'}}>
-                                        <View style={{flexDirection : 'row',flex : 4}}>
-                                            <View style={{flex : 1, flex : 4 }}>
-                                                <Text>{t(`resendText`)}</Text>
-                                            </View>
-                                            <View style={{flex:2, alignItems:'flex-start'}}>
-                                                <CountDown  
-                                                    until={60}
-                                                    onFinish={this.onTimerFinish}
-                                                    digitStyle={{width:20,height:15}}
-                                                    digitTxtStyle={{color: 'black', fontSize:14}}
-                                                    separatorStyle={{color: 'black', fontSize : 14}}
-                                                    onPress={() => alert('hello')}
-                                                    timeToShow={['S']}
-                                                    size={25}
-                                                    timeLabels={{m: null, s: null}}
-                                                    showSeparator
-                                                />
-                                            </View>
-                                        </View>
-                                        {
-                                            this.state.waitForSms === false ? 
-
-                                            <View style={{flex : 2, alignItems : 'center'}}>
-                                                <TouchableOpacity onPress={this.handleResetPassword}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>
-                                            </View>
-
-                                            :
-                                            <View style={{flex : 2, alignItems : 'center'}}>
-                                                <Text style={styles.rightText}>{t(`resend`)}</Text>
-                                            </View>  
-                                        }
-                                    </View>
-                                    </>
-                                }
+                            <IBSButtonLargeRed value={t(`sendSms`)} onHandlePress={this.handleSendSms} />
                         </View>
                     </View>
+                    {
+                        this.state.waitForSms === true ? 
+                        <CounterComponent handleSend={this.handleSendSms}/>
+                        :
+                        <></>
+                    }
+
                     </ScrollView>
-                </ImageBackground>
+                </View>
             </SafeAreaView>
         );
     }
@@ -229,6 +173,9 @@ const styles = StyleSheet.create({
         padding : 2,
         color : 'red',
         textAlign : 'center'
+    },
+    title : {
+        alignItems : 'flex-start'
     }
 });
 

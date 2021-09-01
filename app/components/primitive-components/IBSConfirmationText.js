@@ -1,27 +1,29 @@
-import React from 'react';
+import React , {Component} from 'react';
 import { ScrollView } from 'react-native';
 import {StyleSheet,TextInput, KeyboardAvoidingView  } from 'react-native';
 
-const IBSInputText = (props) => {
+class IBSInputText extends Component {
 
-    const offset = (Platform.OS === 'android') ? -500 : 0;
-
+    render () {
     return (
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={offset} >
-            <ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === 'android' ? -500 : 0} >
                 <TextInput  
                     style={styles.inputText}
                     placeholder="0"
+                    returnKeyType="next"
+                    autoFocus={this.props.isFirst ? true : false}
                     placeholderTextColor="black"
-                    value={props.value}
-                    onChangeText = { text => props.ChangeText(text)}
-                    onSubmitEditing = {props.handleSubmitEditing}
+                    blurOnSubmit={this.props.isFirst ? false : true}
+                    value={this.props.value}
+                    //onChangeText = { text => this.props.ChangeText(text)}
+                    onKeyPress = {(key) => this.props.onKeyPressed(key)}
                     maxLength={1}
-                    //ref={props.isFirst === true ? null : props.ref}
+                    autoCapitalize='none'
+                    ref={this.props.reference}
                 />
-            </ScrollView>
         </KeyboardAvoidingView>    
     )
+    }
 }
 
 const styles = StyleSheet.create({

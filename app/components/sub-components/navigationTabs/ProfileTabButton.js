@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
     icon : {
         position: 'absolute',
         bottom: -10, 
-        height: 85,
-        width: 85,
+        height: 90,
+        width: 90,
         borderRadius: 68,
-        borderWidth : 10,
+        borderWidth : 8,
         borderColor : 'white',
     },
 })

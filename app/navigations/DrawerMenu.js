@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import {ContactUsAuthStack, MessagesForYouStack} from './AppStack';
 import BottomTabStack from './BottomTabStack';
 import {useTranslation} from 'react-i18next';
-
+import {textAlign} from '../utils/utilFunctions';
 
 
 const Drawer = createDrawerNavigator();

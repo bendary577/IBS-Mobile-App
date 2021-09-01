@@ -19,7 +19,6 @@ export const signIn = async (data) => {
       console.log(response.status)
       console.log(response.data)
       if(response.status === 200){
-        console.log("in login response success")
         storeToken(response.data.access_token);
         if(response.data.data.user.emp._id){
           storeEmployeeId(response.data.data.user.emp._id);

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useRef} from 'react';
 import {SafeAreaView,TouchableOpacity, Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
@@ -8,8 +8,7 @@ import {useTranslation} from 'react-i18next';
 import {verifyPhoneNumber, checkVerificationCode} from '../../services/authentication';
 import Loading from '../../components/sub-components/general/Loading';
 import {useAuth} from '../../contexts/authContext';
-import CountDown from 'react-native-countdown-component';
-
+import CounterComponent from '../../components/sub-components/animations/CounterComponent';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -25,29 +24,34 @@ const PhoneVerificationCode =()=> {
         const [fourthCellCode, setFourthCellCode] = useState("");
         const [confirm, setConfirm] = useState(true);
         const [error, setErrorMessage] = useState('');
+        const [confirming, setConfirming] = useState(false);
         const [loading, setLoading] = useState(false);
         const [enableResend, setEnableResend] = useState(false);
         const {setAuthenticated} = useAuth();
         const {t} = useTranslation();
+        const ref_input_1 = useRef();
+        const ref_input_2 = useRef();
+        const ref_input_3 = useRef();
+        const ref_input_4 = useRef();
 
     
     React.useEffect(() => {
-        verifyUserPhoneNumber();
+        //verifyUserPhoneNumber();
     }, []);  
     
     //call the api endpoint to send verification code to the user
     const verifyUserPhoneNumber = async () => {
-        console.log("in verify phone")
+        setLoading(true);
         let response = await verifyPhoneNumber();
-        console.log("veriphy phone status" + response.status)
         if(response.status === 200){
-            console.log("verify phone success")
             setEnableResend(false)
-            setErrorMessage(t(`code_sent`));
+            setErrorMessage(response.data.message);
         }else{
-            console.log("verify phone fail")
+            console.log("in fail verify phone")
+            setEnableResend(true)
             response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
         }
+        setLoading(false);
     }
 
     React.useEffect(() => {
@@ -74,47 +78,87 @@ const PhoneVerificationCode =()=> {
             setConfirm(false);  
         }
     }
-
-    const handleFirstCell = (userInput) => {
-        setFirstCellCode(userInput);
+    
+    const firstCellKeyPressed = ({ nativeEvent: { key: keyValue } } ) => {
+        if(keyValue == 'Backspace'){
+            setFirstCellCode('');
+        }else{
+            setFirstCellCode(keyValue);
+            goToSecondInput();
+        }
     }
 
-    const handleSecondCell = (userInput) => {
-        setSecondCellCode(userInput);
+    const secondCellKeyPressed = ({ nativeEvent: { key: keyValue } } ) => {
+        if(keyValue == 'Backspace'){
+            setSecondCellCode('');
+            goToFirstInput();
+        }else{
+            setSecondCellCode(keyValue);
+            goToThirdInput();
+        }
     }
 
-    const handleThirdCell = (userInput) => {
-        setThirdCellCode(userInput);
+    const thirdCellKeyPressed = ({ nativeEvent: { key: keyValue } } ) => {
+        if(keyValue == 'Backspace'){
+            setThirdCellCode('');
+            goToSecondInput();
+        }else{
+            setThirdCellCode(keyValue);
+            goToFourthInput();
+        }
     }
 
-    const handleFourthCell = (userInput) => {
-        setFourthCellCode(userInput);
+    const fourthCellKeyPressed = ({ nativeEvent: { key: keyValue } } ) => {
+        if(keyValue == 'Backspace'){
+            setFourthCellCode('')
+            goToThirdInput();
+        }else{
+            setFourthCellCode(keyValue);
+        }
     }
 
-    const handleConfirmPassword = async () => {
+    const goToFirstInput = () => {
+        ref_input_1.current.focus();
+    }
+    
+    const goToSecondInput = () => {
+        console.log("go to second ref")
+        ref_input_2.current.focus();
+    }
+
+    const goToThirdInput = () => {
+        ref_input_3.current.focus();
+    }
+
+    const goToFourthInput = () => {
+        ref_input_4.current.focus();
+    }
+
+    const handleVerificationCode = async () => {
         let _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
         let data = {
             code : _code
         };
-        setLoading(true);
+        setConfirming(true);
         let response = await checkVerificationCode(data);
-        setLoading(false);
         if(response.status === 200 ){
             setAuthenticated(true);
         }else{
             response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
         }
+        setConfirming(false);
     }
-
-    const onTimerFinish = () => {
-        setWaitForSms(false);
-    }
-
 
         return (
+            confirming === true ? 
+
+            <Loading action={t(`checking_code`)}/>     
+
+            :
+
             loading === true ? 
 
-            <Loading action={t(`checking_code`)}/>
+            <Loading action={t(`loading`)}/>
 
             :
 
@@ -127,9 +171,9 @@ const PhoneVerificationCode =()=> {
                         <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                     </View>
                 </View>
-                <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
+                <View style={styles.backgroundImage}>
                     <View style={styles.middle}>
-                        <View style={styles.title}>
+                        <View style={{padding : 20, textAlign : 'flex-start'}}>
                             <TitleText value={t(`please_verify`)} />
                             <TitleText value={t(`phone_number`)} />
                             <View style={styles.redLine}></View>
@@ -137,49 +181,16 @@ const PhoneVerificationCode =()=> {
                         { error !== '' ? <Text style={styles.errorMessage}>{error}</Text> : <></>}
                         <View style={styles.loginForm}>
                             <View style={styles.confirmationInputs}>
-                                <IBSConfirmationText ChangeText={handleFirstCell} value={firstCellCode}/>
-                                <IBSConfirmationText ChangeText={handleSecondCell} value={secondCellCode}/>
-                                <IBSConfirmationText ChangeText={handleThirdCell} value={thirdCellCode}/>
-                                <IBSConfirmationText ChangeText={handleFourthCell} value={fourthCellCode}/>
+                                <IBSConfirmationText value={firstCellCode} handleSubmitEditing={goToSecondInput} isFirst={true} reference={ref_input_1} onKeyPressed={firstCellKeyPressed}/>
+                                <IBSConfirmationText value={secondCellCode} handleSubmitEditing={goToThirdInput} isFirst={false} reference={ref_input_2} onKeyPressed={secondCellKeyPressed}/>
+                                <IBSConfirmationText value={thirdCellCode} handleSubmitEditing={goToFourthInput} isFirst={false} reference={ref_input_3} onKeyPressed={thirdCellKeyPressed}/>
+                                <IBSConfirmationText value={fourthCellCode} handleSubmitEditing={()=>{}} isFirst={false} reference={ref_input_4} onKeyPressed={fourthCellKeyPressed}/>
                             </View>
-                            <IBSConfirmationButton active={confirm} onHandlePress={handleConfirmPassword} />
+                            <IBSConfirmationButton active={confirm} onHandlePress={handleVerificationCode} />
                         </View>
-                        <View style={styles.confirmationText}>
-                                <View style={{marginLeft : 10, color : 'black'}}>
-                                    {
-                                    enableResend === false ? 
-                                        <View style={{flexDirection : 'row',width:200}}>
-                                            <View style={{flex : 6 , width : '100%'}}>
-                                                <Text>{t(`resendText`)}</Text>
-                                            </View>
-                                            <View style={{flex:1, alignItems:'flex-start'}}>
-                                                <CountDown  
-                                                    until={65}
-                                                    onFinish={() => setEnableResend(true)}
-                                                    digitStyle={{width:20,height:15}}
-                                                    digitTxtStyle={{color: 'black', fontSize:14}}
-                                                    separatorStyle={{color: 'black', fontSize : 14}}
-                                                    onPress={() => alert('hello')}
-                                                    timeToShow={['S']}
-                                                    size={25}
-                                                    timeLabels={{m: null, s: null}}
-                                                    showSeparator
-                                                    />
-                                            </View>
-                                        </View>
-                                            : 
-                                        <Text>{t(`recieveCode`)}</Text>        
-                                    }
-                                </View>
-                                <TouchableOpacity> 
-                                    {
-                                    enableResend  === false?
-                                      <Text style={styles.rightTextInactive}>{t(`resend`)}</Text>  : <TouchableOpacity onPress={verifyUserPhoneNumber}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>  
-                                    }
-                                </TouchableOpacity>
-                            </View>   
                     </View>
-                </ImageBackground>
+                    <CounterComponent handleSend={verifyUserPhoneNumber} />    
+                </View>
             </SafeAreaView>
         );
 }
@@ -213,9 +224,9 @@ const styles = StyleSheet.create({
         height : height-120,
     },
     middle : {
-        flex : 4,
         paddingLeft : 20,
-        marginTop: 40,
+
+        //marginTop: 40,
     },
     redLine : {
         height : 4,
@@ -224,7 +235,10 @@ const styles = StyleSheet.create({
         marginTop : 3
     },
     loginForm : {
+        //backgroundColor : 'red',
         marginTop : 20,
+        width : '99%',  
+        //paddingHorizontal : 30  
     },
     confirmationInputs : {
         flexDirection : 'row',

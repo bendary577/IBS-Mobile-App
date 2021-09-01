@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
         borderColor : '#DBDBDB',
         borderWidth : 1,
         flexDirection : 'row',
+        textAlign : I18nManager.isRTL ? 'right' : 'left'
     },
     text : {
         color : 'red'
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
         justifyContent : 'center',
         alignItems : 'flex-start',
         padding : 8,
+        textAlign : I18nManager.isRTL ? 'right' : 'left'
     },
     forgotText : {
         flex : 1,

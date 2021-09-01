@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import {SafeAreaView,View, Text, StyleSheet} from 'react-native';
+import {SafeAreaView,View, Text, StyleSheet, Platform} from 'react-native';
 import MessageDetailsCard from '../../../components/sub-components/cards/MessageDetailsCard';
 import {useTranslation} from 'react-i18next';
 import {getSingleBankMessage} from '../../../services/api_requests';
@@ -101,7 +101,8 @@ const styles = StyleSheet.create({
     },
     laseMessageText : {
         color : 'black',
-        fontSize : 16
+        fontSize : 16,
+        padding: Platform.OS === 'ios' ? 10 : 0
     },
     searchContainer : {
         backgroundColor : 'white',
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
         },
     cardView : {
         flex : 4,
-        marginTop : 20
+        marginTop : 10,
+        paddingHorizontal: Platform.OS === 'ios' ? 10 : 0
     },
     error : {
         flex : 1,

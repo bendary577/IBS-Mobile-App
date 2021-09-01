@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Image,Text, View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import {SafeAreaView, Image,Text, View, StyleSheet, ScrollView, TouchableOpacity, I18nManager, Platform} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import PaymentCard from '../../components/sub-components/cards/PaymentCard';
 import SmallMap from '../../components/sub-components/Maps/SmallMap';
@@ -8,7 +8,7 @@ import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {useTranslation} from 'react-i18next';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import PTRView from 'react-native-pull-to-refresh';
-import {refresh} from '../../utils/utilFunctions';
+import {refresh, textAlign} from '../../utils/utilFunctions';
 let blackElipse = '../../assets/images/Home/black-elipse.png';
 
 
@@ -55,9 +55,9 @@ const Home = ({navigation}) => {
                             </View>
                             
                             <View style={styles.description}>
-                                <Text>{t(`aboutDesctiption`)}</Text>
+                                <Text style={textAlign()}>{t(`aboutDesctiption`)}</Text>
                                 <TouchableOpacity onPress={()=>{navigation.navigate("AboutUs")}}>
-                                    <Text style={styles.seeMoreTxt}>{t(`seeMore`)}</Text>
+                                    <Text style={[styles.seeMoreTxt, textAlign()]}>{t(`seeMore`)}</Text>
                                 </TouchableOpacity>
                             </View>
                         </TouchableOpacity>
@@ -79,9 +79,9 @@ const Home = ({navigation}) => {
                             </View>
                             
                             <View style={styles.description}>
-                                <Text>{t(`faq_description`)}</Text>
+                                <Text style={textAlign()}>{t(`faq_description`)}</Text>
                                 <TouchableOpacity onPress={()=>{navigation.navigate("FAQ")}}>
-                                    <Text style={styles.seeMoreTxt}>{t(`take_look`)}</Text>
+                                    <Text style={[styles.seeMoreTxt, textAlign()]}>{t(`take_look`)}</Text>
                                 </TouchableOpacity>
                             </View>
                         </TouchableOpacity>
@@ -104,9 +104,9 @@ const Home = ({navigation}) => {
                             </View>
                             
                             <View style={styles.description}>
-                                <Text>{t(`information_description`)}</Text>
+                                <Text style={textAlign()}>{t(`information_description`)}</Text>
                                 <TouchableOpacity onPress={navigateToInformation}>
-                                    <Text style={styles.seeInfoTxt}>{t(`information_action`)}</Text>
+                                    <Text style={[styles.seeInfoTxt, textAlign()]}>{t(`information_action`)}</Text>
                                 </TouchableOpacity>
                             </View>
                         </TouchableOpacity>
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#c4c3c2',
         borderBottomWidth: 2,
         marginVertical : '3%',
-    }
+    },
 
 });
 

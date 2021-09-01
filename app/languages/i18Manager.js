@@ -39,9 +39,9 @@ const resources = {
             "enter" : "Enter Your",
             "confirmationCode" : "Confirmation Code",
             "confirm" : "Confirm",
-            "recieveCode" : "Didn't Receive Code ?",
+            "recieveCode" : "Didn't Receive Code ?", 
             "resend" : "Resend",
-            "resendText" : "Didn't receive?",
+            "resendText" : "Didn't receive ?",
             "home" : "Home",
             "myPayments" : "My Payments",
             "paymentDescription" : "View all your payments details from this tap",
@@ -174,7 +174,9 @@ const resources = {
             "phone_length_error" : "phone number must be 11 digits",
             "no_data" : "no available data",
             "wait_sms" : "please wait a minute before sending another sms",
-            "send" : "Send",
+            "sendSms" : "Send SMS",
+            "receive_code_in" : "Resend code in",
+            "cib" : "CIB"
           },
     },
     ar: {
@@ -350,7 +352,9 @@ const resources = {
             "phone_length_error" : "رقم الهاتف يجب ان يكون 11 رقم",
             "no_data" : "لا يوجد بيانات",
             "wait_sms" : "برجاء الانتظار لدقيقة قبل إرسال رسالة أخري",
-            "send" : "ارسل"
+            "sendSms" :  " ارسل رسالة نصية",
+            "receive_code_in" : "اعد الارسال خلال",
+            "cib" : "البنك التجاري الدولي"
         },
     },
   };

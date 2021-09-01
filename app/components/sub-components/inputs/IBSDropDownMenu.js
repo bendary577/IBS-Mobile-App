@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View,SafeAreaView, StyleSheet} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useTranslation} from 'react-i18next';
+import {textAlign} from '../../../utils/utilFunctions';
 
 const IBSDropDownMenu = (props) => {
 
@@ -25,9 +26,9 @@ const IBSDropDownMenu = (props) => {
                 items={props.labels}
                 value={selectedValue}
                 open={filterDropDownOpen}
-                containerStyle={styles.dropdown}
-                style={styles.dropdown}
-                //dropDownStyle={{backgroundColor: '#fafafa'}}
+                containerStyle={[styles.dropdown, textAlign()]}
+                style={[styles.dropdown, textAlign()]}
+                dropDownStyle={{backgroundColor: '#fafafa'}}
                 setValue={applyFilter}
                 onChangeValue={(value)=> props.handleFilter(value)}
                 placeholder={ props.type === 'year' ? t(`year_filter`) : props.type === 'client' ? t(`client_filter`) : t(`tickets_filter`) }
@@ -48,10 +49,12 @@ const styles = StyleSheet.create({
     dropdown : {
         height: 45,
         borderRadius : 20,
+        zIndex : 999    
     },
     dropdownContainer : {
         backgroundColor: "#edebeb",
         borderColor : '#bababa',
+        zIndex : 999
     },
     selectedItemContainer : {
         backgroundColor: "#f0afaf"

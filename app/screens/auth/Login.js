@@ -10,6 +10,7 @@ import {signIn} from '../../services/authentication';
 import {useAuth} from '../../contexts/authContext';
 import Loading from '../../components/sub-components/general/Loading';
 import {useTranslation} from 'react-i18next';
+import * as SecureStore from 'expo-secure-store';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/Login/loginBackground.png';
@@ -42,10 +43,12 @@ const Login = (props) => {
             password : password
         }
         setLoading(true);
-        let response = await signIn(data);
-        setLoading(false);
+        //let response = await signIn(data);
+        let response = {status : 200}
         if(response.status === 200 ){
             clearInputs();
+            //let token = await SecureStore.setItemAsync('access_token', response.data.access_token);
+            //console.log("token is in login " + await SecureStore.getItemAsync('access_token'))
             response.data.data.user.isVerified === true ? setAuthenticated(true) : handleVerifyPhone();
         }else if (response.status === 422){
             response.data.errors.map( error => {
@@ -58,6 +61,7 @@ const Login = (props) => {
         }else{
             response.data.error === null || response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
         }
+        setLoading(false);
     }
 
     const validate = () => {
