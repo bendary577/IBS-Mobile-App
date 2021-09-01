@@ -17,8 +17,8 @@ let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
 //------------------------ screen ---------------------
 const Login = (props) => {
 
-    const [identityNumber, setIdentityNumber] = useState('888888847748');
-    const [password, setPassword] = useState('Aa$12345');
+    const [identityNumber, setIdentityNumber] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setErrorMessage] = useState('');
     const [nationalIdErrorMessage, setNationalIdErrorMessage] = useState('');
@@ -59,7 +59,7 @@ const Login = (props) => {
 
     const validate = () => {
         const idRegex = /^[0-9]{14}$/;
-        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9\d@$.!%*#?&]{8,}/;
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9\d@$.!%*#?&]{8,20}/;
         console.log()
         !idRegex.test(identityNumber) ? setNationalIdErrorMessage(t(`provide_id`)) : setNationalIdErrorMessage('');
         !passwordRegex.test(password) ? setPasswordErrorMessage(t(`provide_password`)) : setPasswordErrorMessage('');
