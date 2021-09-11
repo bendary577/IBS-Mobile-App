@@ -17,6 +17,7 @@ export const authenticatedAxiosInstance = axios.create({
 
 //--------------------------------------- axios request interceptors -------------------------------
 authenticatedAxiosInstance.interceptors.request.use(async (req) => {
+    console.log("in verify phone number 3")
     // append access token to request authorization header
     let token = await SecureStore.getItemAsync('access_token');
     req.headers.authorization = `Bearer ${token}`;

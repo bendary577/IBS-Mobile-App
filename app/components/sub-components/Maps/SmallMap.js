@@ -26,18 +26,6 @@ export default function SmallMap(props) {
               longitudeDelta: 0.0421,
             }} />
 
-
-{/*                <View style={styles.map}>
-                <WebView
-                  geolocationEnabled={true}
-                    originWhitelist={['*']}
-                    source={{ uri: `https://www.google.com/maps/embed/v1/place
-                    ?key=AIzaSyC81e2oX48iixXivgl_dUQ1LTd5-_Z52io
-                    &q=Eiffel+Tower,Paris+France`}}
-                    style={{ marginTop: 20 }}
-                />
-              </View> */}
-
           {/* -------------------------------- map footer ---------------------------- */}
           <View style={styles.footer}>
 

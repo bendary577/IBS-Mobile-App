@@ -23,7 +23,7 @@ const Welcome = (props) => {
     useEffect(()=>{
         SecureStore.getItemAsync('language').then(language => {
             console.log(language);
-            if(language === 'true'){
+            if(language){
                 props.navigation.navigate('WelcomeAnimation');
             }
         });

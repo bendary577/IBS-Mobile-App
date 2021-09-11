@@ -12,7 +12,7 @@ const HomeTabIcon = (props) => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity onPress={()=>{ navigation.navigate("Home") }}>
+        <TouchableOpacity style={{padding : 5}} onPress={()=>{ navigation.navigate("Home") }}>
             <Image style={styles.icon} source={
                 props.active === true ? 
                 require(homeIcon)

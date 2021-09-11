@@ -168,15 +168,20 @@ const styles = StyleSheet.create({
         justifyContent : 'center',
         alignItems : 'center',
         padding : 1,
+        position : 'relative',
+        zIndex : 10000
     },
     clientFilter : {
         flex : 3,
         justifyContent : 'center',
         alignItems : 'center',
         padding : 1,
+        position : 'relative',
+        zIndex : 1000,
     },
     transactionsView : {
         flex : 5,
+        zIndex : -1
     },
 
 })

@@ -52,8 +52,7 @@ class ResetPassword extends Component {
             phone : this.state.phone
         }
         this.setState({loading : true})
-        //let response = await requestResetPassword(data);
-        let response = {status : 200};
+        let response = await requestResetPassword(data);
         if(response.status === 200 ){
             this.setState({waitForSms : true})
             this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });

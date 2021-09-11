@@ -11,7 +11,7 @@ const ProfileTabButton = (props) => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity onPress={()=>{ navigation.navigate("MyTransactions") }}>
+        <TouchableOpacity onPress={()=>{ navigation.navigate("MyProfile") }}>
             <Image style={styles.icon} source={
                 props.active === true ? 
                 require(profileIcon)
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     icon : {
         width : 30,
         height : 30,
+        marginBottom : 2
     },
 })
 

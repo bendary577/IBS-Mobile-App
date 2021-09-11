@@ -14,7 +14,11 @@ const DrawerNavigation = () => {
   const {t} = useTranslation();
 
   return (
-      <Drawer.Navigator drawerPosition= {I18nManager.isRTL ? 'left' : 'right'}>
+      <Drawer.Navigator 
+      drawerPosition= {I18nManager.isRTL ? 'left' : 'right'}
+      drawerContentOptions= {{
+        labelStyle: Platform.OS === 'ios' ? textAlign() : {}
+        }}>
 
         <Drawer.Screen 
           name="More" 

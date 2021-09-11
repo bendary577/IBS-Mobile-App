@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect}  from 'react';
 import {SafeAreaView, Image,Text, View, StyleSheet, ScrollView, TouchableOpacity, I18nManager, Platform} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import PaymentCard from '../../components/sub-components/cards/PaymentCard';
@@ -10,7 +10,6 @@ import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonL
 import PTRView from 'react-native-pull-to-refresh';
 import {refresh, textAlign} from '../../utils/utilFunctions';
 let blackElipse = '../../assets/images/Home/black-elipse.png';
-
 
 //------------------------ screen ---------------------
 const Home = ({navigation}) => {
@@ -24,6 +23,10 @@ const Home = ({navigation}) => {
     const navigateToInformation = () => {
         navigation.navigate("Information")
     }
+
+    useEffect(()=>{
+        console.log("ios version is " + Platform.Version)
+    }, [])
     
 
 
@@ -34,7 +37,8 @@ const Home = ({navigation}) => {
 
                     {/* -------------------------------------- payment card ----------------------------- */}
                     <View style={styles.paymentCard}>
-                        <Image style={[styles.blackElipseImage, getFlipForRTLStyle()]} source={require(blackElipse)} />
+                        <View style={[styles.blackElipseImage, getFlipForRTLStyle()]}>
+                        </View>
                         <PaymentCard style={styles.card} navigate={navigation}/>
                     </View>
                     {/* -------------------------------------- about ibs -------------------------------- */}
@@ -88,7 +92,7 @@ const Home = ({navigation}) => {
 
                         <View style={styles.separatorLine}></View>
 
-                        {/* -------------------------------------- my information -------------------------------- */}
+                        {/* -------------------------------------- my information 
                         <TouchableOpacity activeOpacity={0.8} style={styles.aboutIbs} onPress={()=>{navigation.navigate("Information")}}>
 
                             <View style={styles.header}>
@@ -112,6 +116,7 @@ const Home = ({navigation}) => {
                         </TouchableOpacity>
 
                         <View style={styles.separatorLine}></View>
+                        -------------------------------- */}
 
                         {/* -------------------------------------- visit us -------------------------------- */}
                         <TouchableOpacity activeOpacity={0.9} style={styles.visitUs} onPress={()=>{navigation.navigate("VisitUs")}}>
@@ -191,9 +196,9 @@ const styles = StyleSheet.create({
     },
     seeMoreTxt : {
         marginTop : 15,
-        fontSize : 15,
+        fontSize : 12,
         fontWeight: 'bold',
-        color: '#b70000',
+        color: 'gray',
         textTransform: 'capitalize'
     },
     seeInfoTxt : {

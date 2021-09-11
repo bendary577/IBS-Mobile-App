@@ -20,28 +20,28 @@ const IBSDropDownMenu = (props) => {
     }  
 
     return (
-        // <SafeAreaView>
+        //<SafeAreaView>
             <DropDownPicker
-                zIndex = {2000}
+                //zIndex = {2000}
                 items={props.labels}
                 value={selectedValue}
                 open={filterDropDownOpen}
-                // containerStyle={[styles.dropdown, textAlign()]}
+                //containerStyle={[styles.dropdown, textAlign()]}
                 style={[styles.dropdown, textAlign()]}
-                dropDownStyle={{backgroundColor: '#fafafa'}}
+                dropDownStyle={{elevation : 1000, zIndex: 1000}}
                 setValue={applyFilter}
                 onChangeValue={(value)=> props.handleFilter(value)}
                 placeholder={ props.type === 'year' ? t(`year_filter`) : props.type === 'client' ? t(`client_filter`) : t(`tickets_filter`) }
                 onPress={toggleFilterDropDown}
                 closeAfterSelecting={true}
-                // itemSeparator={true}
+                itemSeparator={true}
                 dropDownContainerStyle={styles.dropdownContainer}
                 selectedItemContainerStyle={styles.selectedItemContainer}
                 selectedItemLabelStyle={styles.selectedItemLabel}
                 itemSeparatorStyle={styles.itemSeparator}
                 onClose={toggleFilterDropDown}  
             />
-        // </SafeAreaView>
+        //</SafeAreaView>
     )
 }
 
@@ -54,9 +54,8 @@ const styles = StyleSheet.create({
         borderWidth: 0,
     },
     dropdownContainer : {
-        elevation: 1,
-        borderWidth: 0,
-        zIndex : 999
+        zIndex : 1000,
+        elevation : 1000
     },
     selectedItemContainer : {
         backgroundColor: "#f0afaf",

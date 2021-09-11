@@ -20,6 +20,7 @@ import Information from '../screens/home/Information';
 import SingleInformation from '../screens/home/SingleInformation';
 import FAQ from '../screens/home/FAQ';
 import SingleFAQ from '../screens/home/SingleFAQ';
+import MoreTabButton from '../components/sub-components/navigationTabs/MoreTabButton';
 
 const Stack = createStackNavigator();
 
@@ -37,14 +38,14 @@ const HomeStack = () => {
         options={{
           title : false,
           headerStyle: {
-            backgroundColor: "#D8D8D8",
-            borderBottomRightRadius : 20,
-            borderBottomLeftRadius : 20
+            backgroundColor: "white",
+            borderBottomEndRadius : 'gray',
+            borderBottomWidth : 1,
           },
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerRight : ()=>(  <NotificationsButton />),
+          headerRight : ()=>(  <MoreTabButton />),
           headerLeft : ()=>(  <LogoButton />)
       }}
       /> 
@@ -55,14 +56,14 @@ const HomeStack = () => {
               options={{
                 title : t(`faq`),
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
             }}
             />
@@ -73,14 +74,14 @@ const HomeStack = () => {
               options={({route})=>({
                 title : `#${route.params.title}`,
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
               })}
             />
@@ -91,14 +92,14 @@ const HomeStack = () => {
               options={{
                 title : t(`information`),
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
             }}
             />
@@ -109,14 +110,14 @@ const HomeStack = () => {
               options={({route})=>({
                 title : `#${route.params.title}`,
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
               })}
             />  
@@ -141,14 +142,14 @@ const EmploymentPaymentsStack = () => {
               options={{
                 title : t(`payments`),
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerBackImage : () =>( <BackButton /> )
             }}
             /> 
@@ -159,14 +160,19 @@ const EmploymentPaymentsStack = () => {
               options={{
                 title : t(`payments`),
                 headerStyle: {
+                  /*
                   backgroundColor: "#D8D8D8",
                   borderBottomRightRadius : 20,
                   borderBottomLeftRadius : 20
+                  */
+                 backgroundColor: "white",
+                 borderBottomEndRadius : 'gray',
+                 borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerBackImage : () =>( <BackButton /> )
             }}
             /> 
@@ -190,14 +196,14 @@ const ProfileStack = () => {
               options={{
                 title : false,
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value={t(`myProfile`)} /></View>)
             }}
             />
@@ -208,14 +214,14 @@ const ProfileStack = () => {
               options={{
                 title : false,
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : ()=>( <BackButton /> )
             }}
             />
@@ -234,14 +240,14 @@ const SupportStack = () => {
               options={{
                 title : false,
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value={t(`support`)} /></View>)
             }}
             />
@@ -263,14 +269,14 @@ const ContactUsAuthStack = () => {
               options={{
                 title : t(`contactUs`),
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
             }}
             />
@@ -291,14 +297,14 @@ const MessagesForYouStack = () => {
               options={{
                 title : t(`MessagesForYou`),
                 headerStyle: {
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <NotificationsButton />),
+                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
             }}/>
 
@@ -308,9 +314,9 @@ const MessagesForYouStack = () => {
             options={{
               title: t(`cib`),
               headerStyle: {
-                backgroundColor: "#D8D8D8",
-                borderBottomRightRadius : 20,
-                borderBottomLeftRadius : 20,
+                backgroundColor: "white",
+                borderBottomEndRadius : 'gray',
+                borderBottomWidth : 1,
               },
                 headerTitleStyle: {
                 fontWeight: 'bold',

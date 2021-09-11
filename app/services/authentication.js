@@ -64,6 +64,7 @@ export const signout = async () => {
 
 //--------------------------------------- verify phone api end point ------------------------------
 export const verifyPhoneNumber = async () => {
+  console.log("in verify phone number 2")
   try {
       const response = await authenticatedAxiosInstance.post(VERIFY_PHONE);
       return response;

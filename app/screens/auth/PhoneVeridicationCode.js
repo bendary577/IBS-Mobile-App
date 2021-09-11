@@ -41,6 +41,7 @@ const PhoneVerificationCode =()=> {
     
     //call the api endpoint to send verification code to the user
     const verifyUserPhoneNumber = async () => {
+        console.log("in verify phone number 1")
         setLoading(true);
         let response = await verifyPhoneNumber();
         if(response.status === 200){
