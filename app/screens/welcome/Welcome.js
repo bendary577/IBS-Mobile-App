@@ -25,7 +25,7 @@ const Welcome = (props) => {
         if(language !== null){
             setTimeout(() => {
                 props.navigation.navigate('WelcomeAnimation');
-            }, 4000);
+            }, 200000000);
         }
     }, []);
 
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         padding : 10,
         marginTop : 30,
         //marginLeft : 30
-        right : -60
+        right : -40
     },
     viewLang : {
         flexDirection : 'column',
