@@ -66,7 +66,7 @@ const HomeStack = () => {
                 headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
             }}
-            />
+          />
 
           <Stack.Screen
               name="SingleFAQ" 
