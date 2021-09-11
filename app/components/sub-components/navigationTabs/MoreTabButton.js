@@ -8,7 +8,7 @@ const MoreTabButton = () => {
     const navigation = useNavigation();
     return (
         <TouchableOpacity onPress={()=>{ navigation.dispatch(DrawerActions.toggleDrawer())}}  >
-            <Image style={styles.icon} source={require('../../../assets/icons/Home/moreIcon.png')} />
+            <Image style={styles.icon} source={require('../../../assets/icons/Home/menu.png')} />
         </TouchableOpacity>
     )
 }

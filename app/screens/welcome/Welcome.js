@@ -21,44 +21,12 @@ const Welcome = (props) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
-        SecureStore.getItemAsync('language').then(language => {
-            console.log(language);
-            if(language){
-                props.navigation.navigate('WelcomeAnimation');
-<<<<<<< HEAD
-            }, 200000000);
-        }
-=======
-            }
-        });
->>>>>>> 52462cfc2c88c76e40fca4a2be810604945bb7d3
+        setTimeout(()=>{
+            props.navigation.navigate('WelcomeAnimation');
+        },
+        2000);
     }, []);
 
-    const setEnglishLanguage = (lang) =>{
-       //setLang(true);
-        i18n
-        .changeLanguage(lang, () => {
-            I18nManager.forceRTL(false);
-            //RNRestart.Restart();
-            //Updates.reloadFromCache();
-            SecureStore.setItemAsync('language', 'true');
-            SecureStore.setItemAsync('lang', lang);
-            Updates.reloadAsync();
-        })
-    }
-
-    const setArabicLanguage = (lang) =>{
-        //setLang(true);
-         i18n
-         .changeLanguage(lang, () => {
-             I18nManager.forceRTL(true);
-             //RNRestart.Restart();
-             //Updates.reloadFromCache();
-             SecureStore.setItemAsync('language', 'true');
-             SecureStore.setItemAsync('lang', lang);
-             Updates.reloadAsync();
-         })
-     }
 
 	return (
 
@@ -83,6 +51,7 @@ const Welcome = (props) => {
 
                     {/* -------------------------------- select language ------------------------------ */}
                         <View style={styles.viewLang}>
+                            {/*
                             <View >
                                 <Text style={styles.selectLang}>Select App</Text>
                                 <Text style={styles.selectLang}>Language</Text>
@@ -96,6 +65,7 @@ const Welcome = (props) => {
                                     <Text style={styles.textLang}>العربية</Text>
                                 </TouchableOpacity >
                             </View>
+                            */}
                         </View>
                 </ImageBackground>   
             </View>
@@ -137,16 +107,15 @@ const styles = StyleSheet.create({
         flexDirection : 'column'
     }, 
     image : {
-        
         width : width + 35,
         height : "125%",
         justifyContent : "center",
     },
     viewTitle : {
         padding : 10,
-        marginTop : 30,
         //marginLeft : 30
-        right : rtlValue
+        right : rtlValue,
+        marginBottom : 70
     },
     viewLang : {
         flexDirection : 'column',

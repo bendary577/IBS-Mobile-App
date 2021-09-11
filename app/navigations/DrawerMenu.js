@@ -5,6 +5,7 @@ import {ContactUsAuthStack, MessagesForYouStack} from './AppStack';
 import BottomTabStack from './BottomTabStack';
 import {useTranslation} from 'react-i18next';
 import {textAlign} from '../utils/utilFunctions';
+import ChangeLanguageButton from '../components/sub-components/buttons/ChangeLanguageButton';
 
 
 const Drawer = createDrawerNavigator();
@@ -49,6 +50,18 @@ const DrawerNavigation = () => {
             title:"Contacts",
             drawerIcon: ({focused, size}) => (
               <Image source={require('../assets/icons/Support/contacts.png')} style={{width:30, height:30}}/> 
+            ),
+          }}
+        />
+
+        <Drawer.Screen 
+          name="Home" 
+          component={ContactUsAuthStack}
+          options={{ 
+            drawerLabel: t(`language`),
+            title:"Contacts",
+            drawerIcon: ({focused, size}) => (
+              <ChangeLanguageButton />
             ),
           }}
         />

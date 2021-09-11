@@ -1,7 +1,9 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, Image, TouchableOpacity, StyleSheet, I18nManager} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import * as Updates from "expo-updates";
+import ChangeLanguageButton from './ChangeLanguageButton';
 
 let contact = '../../../assets/icons/Navigation/contact.png';
 let visit = '../../../assets/icons/Navigation/visit.png';
@@ -10,7 +12,33 @@ let about = '../../../assets/icons/Navigation/about.png';
 const NavigationButtons = (props) => {
 
     const navigation = useNavigation();
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
+
+    const setEnglishLanguage = (lang) =>{
+        //setLang(true);
+         i18n
+         .changeLanguage(lang, () => {
+             I18nManager.forceRTL(false);
+             //RNRestart.Restart();
+             //Updates.reloadFromCache();
+             SecureStore.setItemAsync('language', 'true');
+             SecureStore.setItemAsync('lang', lang);
+             Updates.reloadAsync();
+         })
+     }
+ 
+     const setArabicLanguage = (lang) =>{
+         //setLang(true);
+          i18n
+          .changeLanguage(lang, () => {
+              I18nManager.forceRTL(true);
+              //RNRestart.Restart();
+              //Updates.reloadFromCache();
+              SecureStore.setItemAsync('language', 'true');
+              SecureStore.setItemAsync('lang', lang);
+              Updates.reloadAsync();
+          })
+    }
 
     return (
         <View style={styles.container}>
@@ -31,6 +59,9 @@ const NavigationButtons = (props) => {
                     <Image style={styles.icon} source={require(about)} />
                     <Text style={styles.text}> {t(`aboutIBS`)} </Text>
                 </TouchableOpacity>
+            </View>
+            <View>
+                <ChangeLanguageButton />
             </View>
         </View>
     )

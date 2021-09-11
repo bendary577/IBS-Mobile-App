@@ -176,7 +176,8 @@ const resources = {
             "wait_sms" : "please wait a minute before sending another sms",
             "sendSms" : "Send SMS",
             "receive_code_in" : "Resend code in",
-            "cib" : "CIB"
+            "cib" : "CIB",
+            "language" : "language"
           },
     },
     ar: {
@@ -354,7 +355,8 @@ const resources = {
             "wait_sms" : "برجاء الانتظار لدقيقة قبل إرسال رسالة أخري",
             "sendSms" :  " ارسل رسالة نصية",
             "receive_code_in" : "اعد الارسال خلال",
-            "cib" : "البنك التجاري الدولي"
+            "cib" : "البنك التجاري الدولي",
+            "language" : "اللغة"
         },
     },
   };

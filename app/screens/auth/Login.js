@@ -12,7 +12,7 @@ import {useTranslation} from 'react-i18next';
 
 let {width, height} = Dimensions.get('window'); 
 let ibsImage = '../../assets/images/Login/ibs.png';
-let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
+let ibsLogo = '../../assets/icons/Login/IBSLogo.png';
 
 //------------------------ screen ---------------------
 const Login = (props) => {
@@ -95,7 +95,7 @@ const Login = (props) => {
             :
             <SafeAreaView style={styles.container}>
                 <View style={styles.top}>
-                    <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
+                    <Image style={styles.topImage} source={require(ibsLogo)} />
                 </View>
                 <View style={{flex : 5, flexDirection : 'column'}}>
                     <View style={{flex : 4, flexDirection : 'column', height : '100%',zIndex : 999, width : '95%', marginStart : 20}}>
@@ -130,12 +130,13 @@ const styles = StyleSheet.create({
     },
     top : {
         flex : 2,
-        alignItems : 'flex-end',
+        alignItems : 'center',
+        justifyContent : 'center',
     },
     topImage : {
-        width : 122,
-        height : 155
-    },
+        width : 145,
+        height : 146
+        },
     backgroundImage : {
         width : width ,
         height : height-50
