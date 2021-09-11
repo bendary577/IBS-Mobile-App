@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import {Text, SafeAreaView, View, StyleSheet, Image, ImageBackground, Dimensions, TouchableOpacity, I18nManager} from 'react-native';
+import {Text, Platform, SafeAreaView, View, StyleSheet, Image, ImageBackground, Dimensions, TouchableOpacity, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import Loading from '../../components/sub-components/general/Loading';
 //import { Updates } from 'expo';
@@ -21,29 +21,44 @@ const Welcome = (props) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
-        const language = SecureStore.getItemAsync('language');
-        if(language !== null){
-            setTimeout(() => {
+        SecureStore.getItemAsync('language').then(language => {
+            console.log(language);
+            if(language){
                 props.navigation.navigate('WelcomeAnimation');
+<<<<<<< HEAD
             }, 200000000);
         }
+=======
+            }
+        });
+>>>>>>> 52462cfc2c88c76e40fca4a2be810604945bb7d3
     }, []);
 
-    const setLang = () =>{
+    const setEnglishLanguage = (lang) =>{
        //setLang(true);
         i18n
-        .changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')
-        .then(() => {
-          I18nManager.forceRTL(i18n.language === 'ar');
-          //RNRestart.Restart();
-          //Updates.reloadFromCache();
-          SecureStore.setItemAsync('language', 'true');
-          SecureStore.setItemAsync('lang', i18n.language);
-          Updates.reloadAsync();
-        }).catch((error) => {
-            console.log('error ' + error.message);
-        });
+        .changeLanguage(lang, () => {
+            I18nManager.forceRTL(false);
+            //RNRestart.Restart();
+            //Updates.reloadFromCache();
+            SecureStore.setItemAsync('language', 'true');
+            SecureStore.setItemAsync('lang', lang);
+            Updates.reloadAsync();
+        })
     }
+
+    const setArabicLanguage = (lang) =>{
+        //setLang(true);
+         i18n
+         .changeLanguage(lang, () => {
+             I18nManager.forceRTL(true);
+             //RNRestart.Restart();
+             //Updates.reloadFromCache();
+             SecureStore.setItemAsync('language', 'true');
+             SecureStore.setItemAsync('lang', lang);
+             Updates.reloadAsync();
+         })
+     }
 
 	return (
 
@@ -73,11 +88,11 @@ const Welcome = (props) => {
                                 <Text style={styles.selectLang}>Language</Text>
                             </View>
                             <View style={styles.lang}>
-                                <TouchableOpacity onPress={()=>{setLang()}} >
+                                <TouchableOpacity onPress={()=>{setEnglishLanguage()}} >
                                     <Text style={styles.textLang}>English</Text>
                                 </TouchableOpacity >
                                 <Text style={styles.textLang}>\</Text>
-                                <TouchableOpacity onPress={()=>{setLang()}} >
+                                <TouchableOpacity onPress={()=>{setArabicLanguage()}} >
                                     <Text style={styles.textLang}>العربية</Text>
                                 </TouchableOpacity >
                             </View>
@@ -86,6 +101,21 @@ const Welcome = (props) => {
             </View>
         </SafeAreaView>
 	);
+}
+
+let rtlValue = null;
+if(I18nManager.isRTL === true){
+    if(Platform.OS == 'android'){
+        rtlValue = -40;
+    }else{
+        rtlValue = 200;
+    }
+}else{
+    if(Platform.OS == 'android'){
+        rtlValue = -40;
+    }else{
+        rtlValue = -20
+    }
 }
 
 //----------------------- screen styling ---------------------
@@ -116,7 +146,7 @@ const styles = StyleSheet.create({
         padding : 10,
         marginTop : 30,
         //marginLeft : 30
-        right : -40 
+        right : rtlValue
     },
     viewLang : {
         flexDirection : 'column',

@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
-import {Text,SafeAreaView, Image, ImageBackground, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
-import TitleText from '../../components/primitive-components/TitleText';
+import {Text,SafeAreaView, Image, View, StyleSheet, Dimensions, I18nManager} from 'react-native';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSPasswordText from '../../components/primitive-components/IBSPasswordText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
@@ -12,11 +11,8 @@ import Loading from '../../components/sub-components/general/Loading';
 import {useTranslation} from 'react-i18next';
 
 let {width, height} = Dimensions.get('window'); 
-let loginBackground = '../../assets/images/Login/loginBackground.png';
 let ibsImage = '../../assets/images/Login/ibs.png';
 let ibsImageLeft = '../../assets/images/Login/ibs-2.png';
-let loginBottom = '../../assets/images/Login/BottomBlackLtr.png';
-let loginBottomRtl = '../../assets/images/Login/bottomBlackRtl.png';
 
 //------------------------ screen ---------------------
 const Login = (props) => {
@@ -38,16 +34,16 @@ const Login = (props) => {
 
     const handleLogin = async () =>{
         let data = {
-            identityNumber : identityNumber,
-            password : password
+            identityNumber,
+            password
         }
         setLoading(true);
         let response = await signIn(data);
-        setLoading(false);
-        if(response.status === 200 ){
+        //let response = {status : 200}
+        if(response?.status === 200 ){
             clearInputs();
             response.data.data.user.isVerified === true ? setAuthenticated(true) : handleVerifyPhone();
-        }else if (response.status === 422){
+        }else if (response?.status === 422){
             response.data.errors.map( error => {
                 if(error.param === 'password'){
                     setPasswordErrorMessage(error.msg)
@@ -56,16 +52,21 @@ const Login = (props) => {
                 }
             });
         }else{
-            response.data.error === null || response.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
+            response?.data.error === null || response?.data.error ? setErrorMessage(response.data.error) : setErrorMessage(t(`something_wrong`))
         }
+        setLoading(false);
     }
 
     const validate = () => {
-        identityNumber === '' ? setNationalIdErrorMessage(t(`provide_id`)) : setNationalIdErrorMessage('');
-        password === '' ? setPasswordErrorMessage(t(`provide_password`)) : setPasswordErrorMessage('');
-        if(nationalIdErrorMessage === '' && passwordErrorMessage === ''){
+        //! TODO: Change national id validation to 14 digits only! 
+        const nationalIdValid = /^[0-9]{12,14}$/.test(identityNumber);
+        const passwordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9\d@$.!%*#?&]{8,20}/.test(password);
+        !nationalIdValid ? setNationalIdErrorMessage(t(`provide_id`)) : setNationalIdErrorMessage('');
+        !passwordValid ? setPasswordErrorMessage(t(`provide_password`)) : setPasswordErrorMessage('');
+        console.log(nationalIdValid, passwordValid)
+        if(nationalIdValid && passwordValid){
             handleLogin();
-        }
+        }   
     }
 
     const handleCreateAccount = () =>{
@@ -110,9 +111,11 @@ const Login = (props) => {
                         <View style={{flex : 4, marginTop : '5%', justifyContent : 'center', alignItems : 'flex-start', padding : 20}}>
                                 <NavigationButtons />
                             </View>
+                            {/*
                             <View style={{flex : 2, justifyContent : 'center', alignItems : 'flex-end'}}>
                                 <Image style={{width : 125, height : '115%'}} source={I18nManager.isRTL ? require(loginBottomRtl) : require(loginBottom)} />
-                        </View>
+                            </View>
+                            */}
                     </View>
                 </View>
             </SafeAreaView>

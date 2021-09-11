@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView,View,  StyleSheet, FlatList, I18nManager} from 'react-native';
+import {SafeAreaView,View,  StyleSheet, FlatList, I18nManager, Platform} from 'react-native';
 import Transaction from '../../../components/sub-components/Payment/Transaction';
 import {getUserPayments} from '../../../services/api_requests';
 import NoContent from '../../../components/sub-components/general/NoContent';
@@ -19,7 +19,7 @@ class MyTransactions extends Component {
             transactions : [],
             isLoading : false,
             yearFilterDropDownLabels : [],
-            historyFilterDropDownLabels : [{label : 'hello', value : 2}],
+            historyFilterDropDownLabels : [{label : t(`no_data`), value : 2}],
             employmentHistory : [],
             refreshing : false,
             error : '',
@@ -61,7 +61,7 @@ class MyTransactions extends Component {
 
     initializeHistoryFiltrationLabels = () => {
         let historyClients = this.state.employmentHistory.map((client)=>{
-            return {label : client === null || client.client === null || client.client.name === null ? I18nManager.isRTL ? "لا يوجد بيانات" : "no data" :   I18nManager.isRTL ? client.client.name.ar: client.client.name.en, value : client._id.toString()}
+            return {label : client === null || client.client === null || client.client.name === null ? I18nManager.isRTL ? "لا يوجد بيانات" : "no data" :   I18nManager.isRTL ? client.client.name.ar: client.client.name.en, value : client._id}
         })
         this.setState({historyFilterDropDownLabels : historyClients})
     }
@@ -90,10 +90,12 @@ class MyTransactions extends Component {
     }
 
     filterTicketsByClient = async (id) => {
-        SecureStore.setItemAsync('employee_id', id.toString());
-        let year = await SecureStore.getItemAsync('year');
-        year = parseInt(year);
-        this.fetchPayments(year);
+        if(id !== null){
+            SecureStore.setItemAsync('employee_id', id.toString());
+            let year = await SecureStore.getItemAsync('year');
+            year = parseInt(year);
+            this.fetchPayments(year);
+        }
     }
 
     navigateToPaymentDetails = (id) => {
@@ -159,21 +161,27 @@ const styles = StyleSheet.create({
     titleView : {
         flex : 1,
         flexDirection : 'row',
+        padding : Platform.OS === 'ios'  ? 10  : 0
     },
     yearFilter : {
         flex : 3,
         justifyContent : 'center',
         alignItems : 'center',
-        padding : 3,
+        padding : 1,
+        position : 'relative',
+        zIndex : 10000
     },
     clientFilter : {
         flex : 3,
         justifyContent : 'center',
         alignItems : 'center',
-        padding : 3,
+        padding : 1,
+        position : 'relative',
+        zIndex : 1000,
     },
     transactionsView : {
         flex : 5,
+        zIndex : -1
     },
 
 })

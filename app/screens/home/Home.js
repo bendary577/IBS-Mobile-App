@@ -1,5 +1,5 @@
-import React from 'react';
-import {SafeAreaView, Image,Text, View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import React, {useEffect}  from 'react';
+import {SafeAreaView, Image,Text, View, StyleSheet, ScrollView, TouchableOpacity, I18nManager, Platform} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import PaymentCard from '../../components/sub-components/cards/PaymentCard';
 import SmallMap from '../../components/sub-components/Maps/SmallMap';
@@ -8,9 +8,8 @@ import getFlipForRTLStyle from '../../utils/utilFunctions';
 import {useTranslation} from 'react-i18next';
 import IBSButtonLargeGray from '../../components/primitive-components/IBSButtonLargeGray';
 import PTRView from 'react-native-pull-to-refresh';
-import {refresh} from '../../utils/utilFunctions';
+import {refresh, textAlign} from '../../utils/utilFunctions';
 let blackElipse = '../../assets/images/Home/black-elipse.png';
-
 
 //------------------------ screen ---------------------
 const Home = ({navigation}) => {
@@ -24,6 +23,10 @@ const Home = ({navigation}) => {
     const navigateToInformation = () => {
         navigation.navigate("Information")
     }
+
+    useEffect(()=>{
+        console.log("ios version is " + Platform.Version)
+    }, [])
     
 
 
@@ -34,12 +37,14 @@ const Home = ({navigation}) => {
 
                     {/* -------------------------------------- payment card ----------------------------- */}
                     <View style={styles.paymentCard}>
-                        <Image style={[styles.blackElipseImage, getFlipForRTLStyle()]} source={require(blackElipse)} />
+                        <View style={[styles.blackElipseImage, getFlipForRTLStyle()]}>
+                        </View>
                         <PaymentCard style={styles.card} navigate={navigation}/>
                     </View>
                     {/* -------------------------------------- about ibs -------------------------------- */}
                     <View style={styles.middleContainer}>
-                        <View style={styles.aboutIbs}>
+                        
+                        <TouchableOpacity activeOpacity={0.8} style={styles.aboutIbs} onPress={()=>{navigation.navigate("AboutUs")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -47,24 +52,24 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TouchableOpacity onPress={()=>{navigation.navigate("AboutUs")}}>
+                                <View >
                                     <TitleText value={t(`aboutIBS`)}/>
-                                </TouchableOpacity>
+                                </View>
 
                             </View>
                             
                             <View style={styles.description}>
-                                <Text>{t(`aboutDesctiption`)}</Text>
+                                <Text style={textAlign()}>{t(`aboutDesctiption`)}</Text>
                                 <TouchableOpacity onPress={()=>{navigation.navigate("AboutUs")}}>
-                                    <Text style={styles.seeMoreTxt}>{t(`seeMore`)}</Text>
+                                    <Text style={[styles.seeMoreTxt, textAlign()]}>{t(`seeMore`)}</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={styles.separatorLine}></View>
 
                         {/* -------------------------------------- FAQ -------------------------------- */}
-                        <View style={styles.aboutIbs}>
+                        <TouchableOpacity activeOpacity={0.8} style={styles.aboutIbs} onPress={()=>{navigation.navigate("FAQ")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -72,23 +77,23 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TouchableOpacity onPress={()=>{navigation.navigate("FAQ")}}>
+                                <View>
                                     <TitleText value={t(`faq`)}/>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                             
                             <View style={styles.description}>
-                                <Text>{t(`faq_description`)}</Text>
+                                <Text style={textAlign()}>{t(`faq_description`)}</Text>
                                 <TouchableOpacity onPress={()=>{navigation.navigate("FAQ")}}>
-                                    <Text style={styles.seeMoreTxt}>{t(`take_look`)}</Text>
+                                    <Text style={[styles.seeMoreTxt, textAlign()]}>{t(`take_look`)}</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={styles.separatorLine}></View>
 
-                        {/* -------------------------------------- my information -------------------------------- */}
-                        <View style={styles.aboutIbs}>
+                        {/* -------------------------------------- my information 
+                        <TouchableOpacity activeOpacity={0.8} style={styles.aboutIbs} onPress={()=>{navigation.navigate("Information")}}>
 
                             <View style={styles.header}>
                                 <View style={styles.card}>
@@ -97,23 +102,24 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/aboutUs/about.png')}
                                     />  
                                 </View>
-                                <TouchableOpacity onPress={()=>{navigation.navigate("Information")}}>
+                                <View >
                                     <TitleText value={t(`latest_information`)}/>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                             
                             <View style={styles.description}>
-                                <Text>{t(`information_description`)}</Text>
+                                <Text style={textAlign()}>{t(`information_description`)}</Text>
                                 <TouchableOpacity onPress={navigateToInformation}>
-                                    <Text style={styles.seeInfoTxt}>{t(`information_action`)}</Text>
+                                    <Text style={[styles.seeInfoTxt, textAlign()]}>{t(`information_action`)}</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={styles.separatorLine}></View>
+                        -------------------------------- */}
 
                         {/* -------------------------------------- visit us -------------------------------- */}
-                        <View style={styles.visitUs}>
+                        <TouchableOpacity activeOpacity={0.9} style={styles.visitUs} onPress={()=>{navigation.navigate("VisitUs")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -121,14 +127,14 @@ const Home = ({navigation}) => {
                                         source={require('../../assets/icons/VisitUs/location.png')}
                                     />  
                                 </View>
-                                <TouchableOpacity onPress={()=>{navigation.navigate("VisitUs")}}>
+                                <View>
                                     <TitleText value={t(`visitUs`)}/>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                             <View>
                                 <SmallMap />
                             </View>
-                        </View>
+                        </TouchableOpacity>
                         {/**-------------------     <BottomTabsNavigation />    -------------------- */}
                     </View>  
                 </ScrollView>
@@ -151,8 +157,6 @@ const styles = StyleSheet.create({
      },
     paymentCard : {
         flexDirection : 'row-reverse',
-        marginBottom : 10,
-        height : 180,
     },
     card : {
         position : 'absolute',
@@ -191,20 +195,24 @@ const styles = StyleSheet.create({
         margin : 5
     },
     seeMoreTxt : {
-        marginTop : 5,
-        fontSize : 16
+        marginTop : 15,
+        fontSize : 12,
+        fontWeight: 'bold',
+        color: 'gray',
+        textTransform: 'capitalize'
     },
     seeInfoTxt : {
-        marginTop : 5,
+        marginTop : 15,
         fontSize : 16,
-        color : 'black',
-        fontWeight : 'bold'
+        fontWeight: 'bold',
+        color: '#b70000',
+        textTransform: 'capitalize'
     },
     separatorLine : {
-        borderBottomColor: '#c4c3c2',
+        borderBottomColor: '#e2e2e2',
         borderBottomWidth: 2,
-        marginVertical : '3%',
-    }
+        marginVertical : '5%',
+    },
 
 });
 

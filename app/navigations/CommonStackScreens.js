@@ -23,7 +23,8 @@ export const getCommon = (Stack) => {
                 headerTitleStyle: {
                 fontWeight: 'bold',
             },
-            headerBackImage : () =>( <BackButton /> )
+            //headerBackImage : () =>( <BackButton /> ),
+            headerLeft : () =>( <BackButton /> )
         }}
         />,
 
@@ -41,7 +42,8 @@ export const getCommon = (Stack) => {
             headerTitleStyle: {
             fontWeight: 'bold',
             },
-            headerBackImage : () =>( <BackButton /> )
+            //headerBackImage : () =>( <BackButton /> )
+            headerLeft : () =>( <BackButton /> )
         }} 
     />
     ];

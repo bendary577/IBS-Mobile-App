@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {SafeAreaView, ScrollView,Alert, Image, ImageBackground, View, StyleSheet, Dimensions, Text, I18nManager} from 'react-native';
+import {SafeAreaView, ScrollView,Alert, Image, ImageBackground, View, StyleSheet,TouchableOpacity, Dimensions, Text, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import IBSInputText from '../../components/primitive-components/IBSInputText';
 import IBSButtonLargeRed from '../../components/primitive-components/IBSButtonLargeRed';
@@ -8,7 +8,7 @@ import BackButton from '../../components/sub-components/buttons/BackButton';
 import {requestResetPassword} from '../../services/authentication';
 import { withTranslation } from 'react-i18next';
 import Loading from '../../components/sub-components/general/Loading';
-import CountDown from 'react-native-countdown-component';
+import CounterComponent from '../../components/sub-components/animations/CounterComponent'
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -45,7 +45,8 @@ class ResetPassword extends Component {
         });
     }
 
-    handleSendConfirmation = async () => {
+    handleSendSms = async () => {
+        //this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
         this.clearInputs();
         let data = {
             phone : this.state.phone
@@ -55,6 +56,7 @@ class ResetPassword extends Component {
         if(response.status === 200 ){
             this.setState({waitForSms : true})
             this.props.navigation.navigate("ConfirmNewPassword", { phone : this.state.phone });
+            console.log("after navigation")
         }else if (response.status === 422){
             this.setState({waitForSms : false})
             response.data.errors.map( error => {
@@ -71,11 +73,6 @@ class ResetPassword extends Component {
         this.setState({loading : false})
     }
 
-    onTimerFinish = () => {
-        this.setState({
-            waitForSms : false,
-        })
-    }
 
     render(){
         const { t } = this.props;
@@ -92,7 +89,7 @@ class ResetPassword extends Component {
                         <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                     </View>
                 </View>
-                <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
+                <View style={styles.backgroundImage}>
                     <ScrollView>
                     <View style={styles.middle}>
                         <View style={styles.title}>
@@ -102,7 +99,7 @@ class ResetPassword extends Component {
                         </View>
                         <View style={styles.loginForm}>
                             {
-                                this.state.errorMessage !== '' ? 
+                                this.state.errorMessage !== '' && this.state.waitForSms === true ? 
                                     <View style={{justifyContent:'center', alignItems:'center'}}>
                                         <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
                                     </View>
@@ -110,39 +107,18 @@ class ResetPassword extends Component {
                                     <></>
                             }
                             <IBSInputText placeholder={t(`phone`)} onChangeText={this.handleChangeText}/>
-                            {
-                                this.state.waitForSms === false ?
-                                    <IBSButtonLargeRed value={t(`sendConfirmation`)} action={false} onHandlePress={this.handleSendConfirmation} />
-                                    :
-                                    <>
-                                    <IBSButtonLargeGray value={t(`sendConfirmation`)} action={false} onHandlePress={()=>{Alert.alert(t(`wait_sms`))}} />
-                                    <View style={{flex:1, alignItems:'flex-start'}}>
-                                        <View style={{flexDirection : 'row',width:200}}>
-                                            <View style={{flex : 1}}>
-                                                <Text>{t(`resendText`)}</Text>
-                                            </View>
-                                            <View style={{flex:1, alignItems:'flex-start'}}>
-                                                <CountDown  
-                                                    until={60}
-                                                    onFinish={this.onTimerFinish}
-                                                    digitStyle={{width:20,height:15}}
-                                                    digitTxtStyle={{color: 'black', fontSize:14}}
-                                                    separatorStyle={{color: 'black', fontSize : 14}}
-                                                    onPress={() => alert('hello')}
-                                                    timeToShow={['M', 'S']}
-                                                    size={25}
-                                                    timeLabels={{m: null, s: null}}
-                                                    showSeparator
-                                                />
-                                            </View>
-                                        </View>
-                                    </View>
-                                    </>
-                            }
+                            <IBSButtonLargeRed value={t(`sendSms`)} onHandlePress={this.handleSendSms} />
                         </View>
                     </View>
+                    {
+                        this.state.waitForSms === true ? 
+                        <CounterComponent handleSend={this.handleSendSms}/>
+                        :
+                        <></>
+                    }
+
                     </ScrollView>
-                </ImageBackground>
+                </View>
             </SafeAreaView>
         );
     }
@@ -196,6 +172,9 @@ const styles = StyleSheet.create({
         padding : 2,
         color : 'red',
         textAlign : 'center'
+    },
+    title : {
+        alignItems : 'flex-start'
     }
 });
 

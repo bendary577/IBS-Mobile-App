@@ -16,14 +16,15 @@ const IBSPasswordText = (props) => {
     return (
                 <View>
                     <View style={styles.inputTextWithChild}>
-                        <View style={styles.passwordInput}>
+                        
                             <TextInput  
+                                style={styles.passwordInput}
                                 placeholder={props.placeholder} 
                                 placeholderTextColor="#B9B9B9"
                                 secureTextEntry={props.hasChild ? true : !textVisible}
                                 onChangeText={text => props.onChangeText(text)}
                             />
-                        </View>
+
                         {
                             props.hasChild ? 
                             <TouchableOpacity style={styles.forgotText} onPress={()=>{navigation.navigate("ResetPassword")}}>
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
         borderColor : '#DBDBDB',
         borderWidth : 1,
         flexDirection : 'row',
+        textAlign : I18nManager.isRTL ? 'right' : 'left'
     },
     text : {
         color : 'red'
@@ -70,10 +72,11 @@ const styles = StyleSheet.create({
         height : 60,
         justifyContent : 'center',
         alignItems : 'flex-start',
-        padding : 8
+        padding : 8,
+        textAlign : I18nManager.isRTL ? 'right' : 'left'
     },
     forgotText : {
-        flex : 2,
+        flex : 1,
         justifyContent : 'center',
         paddingRight : 20
     }

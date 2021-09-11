@@ -170,12 +170,14 @@ const SignUp = () => {
                             </View>
                         </View>
                         <View style={{flex : 2, flexDirection : 'row'}}>
-                            <View style={{flex : 4, justifyContent : 'center', alignItems : 'flex-start', padding : 20}}>
+                            <View style={{padding:30}}>
                                 <NavigationButtons />
                             </View>
+                            {/*
                             <View style={{flex : 2, justifyContent : 'center', alignItems : 'flex-end'}}>
                                 <Image style={{width : 125, height : '220%'}} source={I18nManager.isRTL ? require(loginBottomRtl) : require(loginBottom)} />
                             </View>
+                            */}
                         </View>
                     </View>
                 </View>

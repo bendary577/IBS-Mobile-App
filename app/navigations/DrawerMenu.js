@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import {ContactUsAuthStack, MessagesForYouStack} from './AppStack';
 import BottomTabStack from './BottomTabStack';
 import {useTranslation} from 'react-i18next';
-
+import {textAlign} from '../utils/utilFunctions';
 
 
 const Drawer = createDrawerNavigator();
@@ -14,7 +14,11 @@ const DrawerNavigation = () => {
   const {t} = useTranslation();
 
   return (
-      <Drawer.Navigator drawerPosition= {I18nManager.isRTL ? 'left' : 'right'}>
+      <Drawer.Navigator 
+      drawerPosition= {I18nManager.isRTL ? 'left' : 'right'}
+      drawerContentOptions= {{
+        labelStyle: Platform.OS === 'ios' ? textAlign() : {}
+        }}>
 
         <Drawer.Screen 
           name="More" 

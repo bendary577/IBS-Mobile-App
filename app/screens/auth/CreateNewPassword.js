@@ -139,6 +139,9 @@ const styles = StyleSheet.create({
     loginForm : {
         marginTop : 15
     },
+    title : {
+        alignItems : 'flex-start'
+    }
 });
 
 

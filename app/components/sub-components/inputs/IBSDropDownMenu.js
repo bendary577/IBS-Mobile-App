@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View,SafeAreaView, StyleSheet} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useTranslation} from 'react-i18next';
+import {textAlign} from '../../../utils/utilFunctions';
 
 const IBSDropDownMenu = (props) => {
 
@@ -19,15 +20,15 @@ const IBSDropDownMenu = (props) => {
     }  
 
     return (
-        <SafeAreaView>
+        //<SafeAreaView>
             <DropDownPicker
-                zIndex = {2000}
+                //zIndex = {2000}
                 items={props.labels}
                 value={selectedValue}
                 open={filterDropDownOpen}
-                containerStyle={styles.dropdown}
-                style={styles.dropdown}
-                //dropDownStyle={{backgroundColor: '#fafafa'}}
+                //containerStyle={[styles.dropdown, textAlign()]}
+                style={[styles.dropdown, textAlign()]}
+                dropDownStyle={{elevation : 1000, zIndex: 1000}}
                 setValue={applyFilter}
                 onChangeValue={(value)=> props.handleFilter(value)}
                 placeholder={ props.type === 'year' ? t(`year_filter`) : props.type === 'client' ? t(`client_filter`) : t(`tickets_filter`) }
@@ -40,21 +41,24 @@ const IBSDropDownMenu = (props) => {
                 itemSeparatorStyle={styles.itemSeparator}
                 onClose={toggleFilterDropDown}  
             />
-        </SafeAreaView>
+        //</SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     dropdown : {
         height: 45,
-        borderRadius : 20,
+        borderRadius : 10,
+        zIndex : 999,
+        elevation: 1,
+        borderWidth: 0,
     },
     dropdownContainer : {
-        backgroundColor: "#edebeb",
-        borderColor : '#bababa',
+        zIndex : 1000,
+        elevation : 1000
     },
     selectedItemContainer : {
-        backgroundColor: "#f0afaf"
+        backgroundColor: "#f0afaf",
     },
     selectedItemLabel : {
         fontWeight: "bold"

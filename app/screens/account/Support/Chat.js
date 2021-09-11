@@ -192,7 +192,7 @@ class Chat extends Component {
           messages={messages}
           textInputStyle={styles.composer}
           minComposerHeight={45}
-          maxComposerHeight={45}
+          maxComposerHeight={100}
           minInputToolbarHeight={80}
           renderInputToolbar={(props) => {
             return ticket.statusFormatted == "closed" ? (

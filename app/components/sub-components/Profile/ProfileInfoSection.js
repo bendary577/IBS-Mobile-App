@@ -36,6 +36,7 @@ const ProfileInfoSection = () => {
     const fetchUserData = async () =>{
         setLoading(true);
         let response = await getUserInfo();
+        console.log(response);
         if(response.status === 200){
             setUsername(I18nManager.isRTL ? response.data.user.emp.name.ar : response.data.user.emp.name.en);
             setNationalID(response.data.user.identityNumbe);

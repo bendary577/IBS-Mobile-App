@@ -201,7 +201,10 @@ const styles = StyleSheet.create({
         flex : 5,
         justifyContent : 'center',
         alignItems : 'center',
-        minHeight :45
+        minHeight :45,
+        position : 'relative',
+        zIndex : 10000
+
     },
     ticketView : {
         flex : 1,
@@ -225,6 +228,7 @@ const styles = StyleSheet.create({
     },
     supportTicketsView : {
         flex : 5,
+        zIndex : -1
     },
     errorMessage : {
         color : 'red',

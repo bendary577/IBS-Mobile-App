@@ -23,24 +23,31 @@ const ProfileInfoSection = () => {
         setLoading(true);
         let response = await signout();
         if(response == "success"){
-            setLoading(false);
             setAuthenticated(false);
         }
+        setLoading(false);
     }
 
 
-    const changeLanguage = () => {
-        i18n
-        .changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')
-        .then(() => {
-          I18nManager.forceRTL(i18n.language === 'ar');
-          SecureStore.setItemAsync('lang', i18n.language);
-          Updates.reloadAsync();
-          //RNRestart.Restart();
-        }).catch((error) => {
-            console.log('error ' + error.message);
-        });
-    }
+    const setArabicLanguage = (lang) =>{
+         i18n
+         .changeLanguage(lang, () => {
+             I18nManager.forceRTL(true);
+             SecureStore.setItemAsync('language', 'true');
+             SecureStore.setItemAsync('lang', lang);
+             Updates.reloadAsync();
+         })
+     }
+
+     const setEnglishLanguage = (lang) =>{
+         i18n
+         .changeLanguage(lang, () => {
+             I18nManager.forceRTL(false);
+             SecureStore.setItemAsync('language', 'true');
+             SecureStore.setItemAsync('lang', lang);
+             Updates.reloadAsync();
+         })
+     }
 
 
     return (
@@ -50,7 +57,7 @@ const ProfileInfoSection = () => {
         <Loading action={t(`loggingOut`)}/>
         :
         <View style={styles.conatiner}>
-            <TouchableOpacity style={styles.view} onPress={()=>{changeLanguage()}}>
+            <TouchableOpacity style={styles.view} onPress={()=>{ I18nManager.isRTL ? setEnglishLanguage() : setArabicLanguage() }}>
                 <Image style={styles.icon} source={I18nManager.isRTL ? require(englishIcon) : require(arabicIcon)} />
                 <Text style={styles.text}>{t(`changeLanguage`)}</Text>
             </TouchableOpacity>

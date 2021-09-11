@@ -37,7 +37,7 @@ const WelcomeAnimation = (props) => {
            </View>
 
            {/*------------------------------ animation component ---------------------------- */}  
-           <ImageBackground style={styles.image} source={require(black)}>
+           <View style={styles.image}>
                 <View style={styles.viewAnimation}>
                         <AnimationComponent />  
                 </View>
@@ -53,7 +53,7 @@ const WelcomeAnimation = (props) => {
                         <IBSButton style={styles.btn} onHandlePress={navigateToSignUp} title={t(`getStartedButton`)} />
                     </View>
                 </View>
-            </ImageBackground>
+            </View>
         </SafeAreaView>
 	);
 }

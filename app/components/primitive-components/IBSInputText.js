@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import {StyleSheet,TextInput, KeyboardAvoidingView  } from 'react-native';
+import {StyleSheet,TextInput, KeyboardAvoidingView , I18nManager } from 'react-native';
 
 const IBSInputText = (props) => {
 
@@ -8,14 +8,12 @@ const IBSInputText = (props) => {
 
     return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={offset} >
-            <ScrollView>
                 <TextInput  
                     style={styles.inputText}
                     placeholder={props.placeholder} 
                     placeholderTextColor="#B9B9B9"
                     onChangeText={text => props.onChangeText(text)}
                 />
-            </ScrollView>
         </KeyboardAvoidingView>    
     )
 }
@@ -29,7 +27,8 @@ const styles = StyleSheet.create({
         marginBottom : 10,
         padding : 8,
         borderColor : '#DBDBDB',
-        borderWidth : 1
+        borderWidth : 1,
+        textAlign : I18nManager.isRTL ? 'right' : 'left'
     },
 })
 

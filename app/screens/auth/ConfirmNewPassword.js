@@ -1,5 +1,5 @@
-import React,{useState, useEffect} from 'react';
-import {SafeAreaView, ScrollView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, TouchableOpacity, I18nManager} from 'react-native';
+import React,{useState, useEffect, useRef} from 'react';
+import {SafeAreaView,TextInput, ScrollView, Image, ImageBackground, View, StyleSheet, Dimensions, Text, TouchableOpacity, I18nManager} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import BackButton from '../../components/sub-components/buttons/BackButton';
 import IBSConfirmationButton from '../../components/primitive-components/IBSConfirmationButton';
@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import {requestResetPassword} from '../../services/authentication';
 import Loading from '../../components/sub-components/general/Loading';
+import { getNotificationCategoriesAsync } from 'expo-notifications';
+import CounterComponent from '../../components/sub-components/animations/CounterComponent';
 
 let {width, height} = Dimensions.get('window'); 
 let loginBackground = '../../assets/images/ResetPassword/reset-password.png';
@@ -26,14 +28,13 @@ const ConfirmNewPassword =({route})=> {
         const [fourthCellCode, setFourthCellCode] = useState("");
         const [confirm, setConfirm] = useState(false);
         const [error, setErrorMessage] = useState('');
-        const [enableResend, setEnableResend] = useState(false);
         const [loading, setLoading] = useState(false);
-        const {t, i18n} = useTranslation();
+        const {t} = useTranslation();
         const navigation = useNavigation();
-
-    useEffect(()=>{
-        console.log("phooooooone is " + route.params.phone)
-    }, [])
+        const ref_input_1 = useRef();
+        const ref_input_2 = useRef();
+        const ref_input_3 = useRef();
+        const ref_input_4 = useRef();
 
     React.useEffect(() => {
         incrementCompleteInputs();
@@ -60,29 +61,62 @@ const ConfirmNewPassword =({route})=> {
         }
     }
 
-    const handleFirstCell = (userInput) => {
-        setFirstCellCode(userInput);
+    const goToFirstInput = () => {
+        ref_input_1.current.focus();
     }
 
-    const handleSecondCell = (userInput) => {
-        setSecondCellCode(userInput);
+    const goToSecondInput = () => {
+        ref_input_2.current.focus();
     }
 
-    const handleThirdCell = (userInput) => {
-        setThirdCellCode(userInput);
+    const goToThirdInput = () => {
+        ref_input_3.current.focus();
     }
 
-    const handleFourthCell = (userInput) => {
-        setFourthCellCode(userInput);
+    const goToFourthInput = () => {
+        ref_input_4.current.focus();
+    }
+
+    const firstCellKeyPressed = ({ nativeEvent: { key: keyValue } } ) => {
+        if(keyValue == 'Backspace'){
+            setFirstCellCode('');
+        }else{
+            setFirstCellCode(keyValue);
+            goToSecondInput();
+        }
+    }
+
+    const secondCellKeyPressed = ({ nativeEvent: { key: keyValue } } ) => {
+        if(keyValue == 'Backspace'){
+            setSecondCellCode('');
+            goToFirstInput();
+        }else{
+            setSecondCellCode(keyValue);
+            goToThirdInput();
+        }
+    }
+
+    const thirdCellKeyPressed = ({ nativeEvent: { key: keyValue } } ) => {
+        if(keyValue == 'Backspace'){
+            setThirdCellCode('');
+            goToSecondInput();
+        }else{
+            setThirdCellCode(keyValue);
+            goToFourthInput();
+        }
+    }
+
+    const fourthCellKeyPressed = ({ nativeEvent: { key: keyValue } } ) => {
+        if(keyValue == 'Backspace'){
+            setFourthCellCode('')
+            goToThirdInput();
+        }else{
+            setFourthCellCode(keyValue);
+        }
     }
 
     const handleConfirmPassword = async () => {
-        let _code;
-        if(I18nManager.isRTL){
-            _code = fourthCellCode + thirdCellCode + secondCellCode +  + firstCellCode;
-        }else{
-            _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
-        }
+            let _code = firstCellCode + secondCellCode + thirdCellCode + fourthCellCode;
         let data = {
             code : _code,
             phone : route.params.phone
@@ -130,7 +164,7 @@ const ConfirmNewPassword =({route})=> {
                         <Image style={styles.topImage} source={I18nManager.isRTL ? require(ibsImageLeft) : require(ibsImage)} />
                     </View>
                 </View>
-                <ImageBackground style={styles.backgroundImage} source={require(loginBackground)}>
+                <View style={styles.backgroundImage}>
                     <ScrollView>
                     <View style={styles.middle}>
                         <View style={styles.title}>
@@ -141,51 +175,17 @@ const ConfirmNewPassword =({route})=> {
                         { error !== '' ? <Text style={styles.errorMessage}>{error}</Text> : <></>}
                         <View style={styles.loginForm}>
                             <View style={styles.confirmationInputs}>
-                                <IBSConfirmationText ChangeText={handleFirstCell} value={firstCellCode}/>
-                                <IBSConfirmationText ChangeText={handleSecondCell} value={secondCellCode}/>
-                                <IBSConfirmationText ChangeText={handleThirdCell} value={thirdCellCode}/>
-                                <IBSConfirmationText ChangeText={handleFourthCell} value={fourthCellCode}/>
+                                <IBSConfirmationText value={firstCellCode} isFirst={true} reference={ref_input_1} onKeyPressed={firstCellKeyPressed} />
+                                <IBSConfirmationText value={secondCellCode} isFirst={false} reference={ref_input_2} onKeyPressed={secondCellKeyPressed}/>
+                                <IBSConfirmationText value={thirdCellCode} isFirst={false} reference={ref_input_3} onKeyPressed={thirdCellKeyPressed}/>
+                                <IBSConfirmationText value={fourthCellCode} isFirst={false} reference={ref_input_4} onKeyPressed={fourthCellKeyPressed}/>
                             </View>
                             <IBSConfirmationButton active={confirm} onHandlePress={handleConfirmPassword} />
-
-                            <View style={styles.confirmationText}>
-                                <View style={{marginLeft : 10, color : 'black'}}>
-                                    {confirm ?
-                                        <View style={{flexDirection : 'row',width:200}}>
-                                            <View style={{flex : 1}}>
-                                                <Text>{t(`resendText`)}</Text>
-                                            </View>
-                                            <View style={{flex:1, alignItems:'flex-start'}}>
-                                                <CountDown  
-                                                    until={65}
-                                                    onFinish={() => setEnableResend(true)}
-                                                    digitStyle={{width:20,height:15}}
-                                                    digitTxtStyle={{color: 'black', fontSize:14}}
-                                                    separatorStyle={{color: 'black', fontSize : 14}}
-                                                    onPress={() => alert('hello')}
-                                                    timeToShow={['M', 'S']}
-                                                    size={25}
-                                                    timeLabels={{m: null, s: null}}
-                                                    showSeparator
-                                                    />
-                                            </View>
-                                        </View>
-                                            : 
-                                        <Text>{t(`recieveCode`)}</Text>        
-                                    }
-                                </View>
-                                <TouchableOpacity> 
-                                    {confirm ?
-                                     enableResend ? <TouchableOpacity onPress={handleResetPassword}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>  : <Text style={styles.rightTextInactive}>{t(`resend`)}</Text> 
-                                     :
-                                     <TouchableOpacity onPress={handleResetPassword}><Text style={styles.rightText}>{t(`resend`)}</Text></TouchableOpacity>
-                                    }
-                                </TouchableOpacity>
-                            </View>
                         </View>
                     </View>
+                    <CounterComponent handleSend={handleResetPassword}/>
                     </ScrollView>
-                </ImageBackground>
+                </View>
             </SafeAreaView>
         );
 }
@@ -261,6 +261,9 @@ const styles = StyleSheet.create({
         marginTop : 3,
         textAlign : 'center'
     },
+    title : {
+        alignItems : 'flex-start'
+    }
 });
 
 

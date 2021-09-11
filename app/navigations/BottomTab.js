@@ -11,6 +11,9 @@ import { DrawerActions } from '@react-navigation/native';
 import {HomeStack, ProfileStack, SupportStack, EmploymentPaymentsStack} from './AppStack';
 import More from '../screens/account/Messages/More';
 import {useTranslation} from 'react-i18next';
+import {Platform} from 'react-native';
+import { NotificationTimeoutError } from 'expo-notifications';
+import NotificationsButton from '../components/sub-components/buttons/NotificationsButton';
 
 //------------------------------------------- bottom tab navigation ------------------------------------
 
@@ -29,13 +32,13 @@ const BottomTabsNavigation = () => {
           activeTintColor: '#e91e63',
           inactiveTintColor : "black",
           style : {
-             backgroundColor: '#E8E8E8' ,
-             borderTopLeftRadius : 20,
-             borderTopRightRadius : 20,
-             height : 70
+            backgroundColor: "white",
+            borderBottomEndRadius : 'gray',
+            borderBottomWidth : 1,
+             height : '12%'
             },
           tabStyle :{
-            padding : 13
+            padding : 0
           },
         }}
       >
@@ -45,7 +48,7 @@ const BottomTabsNavigation = () => {
           component={HomeStack}
           options={{
             tabBarLabel: t(`home`),
-            tabBarIcon : ({ tintColor, focused })=>(<HomeTabButton active={focused ? true : false}/>),
+            tabBarIcon : ({ focused })=>(<HomeTabButton active={focused ? true : false}/>),
           }}
         />
 
@@ -54,7 +57,7 @@ const BottomTabsNavigation = () => {
           component={EmploymentPaymentsStack}
           options={{
             tabBarLabel: t(`payments`),
-            tabBarIcon : ({ tintColor, focused })=>(<PaymentTabButton active={focused ? true : false}/>),
+            tabBarIcon : ({ focused })=>(<PaymentTabButton active={focused ? true : false}/>),
           }}
         />
 
@@ -62,8 +65,8 @@ const BottomTabsNavigation = () => {
           name="MyProfile"
           component={ProfileStack}
           options={{
-            tabBarLabel: '',
-            tabBarIcon : ({ tintColor, focused })=>(<ProfileTabButton active={focused ? true : false}/>),
+            tabBarLabel: t(`myProfile`),
+            tabBarIcon : ({ focused })=>(<ProfileTabButton active={focused ? true : false}/>),
           }}
         />
 
@@ -72,16 +75,16 @@ const BottomTabsNavigation = () => {
           component={SupportStack}
           options={{
             tabBarLabel: t(`support`),
-            tabBarIcon : ({ tintColor, focused })=>(<SupportTabButton active={focused ? true : false}/>),
+            tabBarIcon : ({ focused })=>(<SupportTabButton active={focused ? true : false}/>),
           }}
         />
 
         <Tab.Screen
-          name="More"
+          name="Notifications"
           component={More}
           options={{
-            tabBarLabel: t(`more`),
-            tabBarIcon : ({ tintColor, focused })=>(<MoreTabButton active={focused ? true : false} />),
+            tabBarLabel: t(`notifications`),
+            tabBarIcon : ({ focused })=>(<NotificationsButton active={focused ? true : false} />),
           }}
           listeners={({navigation}) => ({
             tabPress: e => {

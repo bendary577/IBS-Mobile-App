@@ -1,6 +1,7 @@
 import React from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import {useTranslation} from 'react-i18next';
+import {textAlign} from '../../../utils/utilFunctions';
 
 const ProfileInfoCard = (props) => {
 
@@ -8,8 +9,8 @@ const ProfileInfoCard = (props) => {
 
     return (
         <View style={styles.conatiner}>
-            <Text style={styles.title}>{props.title}</Text>
-            <Text style={props.value === '' || props.value === null || props.value === undefined ? [styles.info, styles.not_available] : styles.info}> {props.value === '' || props.value === null || props.value === undefined ? t(`no_info`) : props.value}</Text>
+            <Text style={[styles.title, textAlign()]}>{props.title}</Text>
+            <Text style={props.value === '' || props.value === null || props.value === undefined ? [styles.info, styles.not_available, textAlign()] : [styles.info, textAlign()]}> {props.value === '' || props.value === null || props.value === undefined ? t(`no_info`) : props.value}</Text>
         </View>
     )
 }

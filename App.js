@@ -36,20 +36,25 @@ const App = () => {
                   console.log(response);
                 });
             
+                authenticateUser();
+                
                 return () => {
                   Notifications.removeNotificationSubscription(notificationListener.current);
                   Notifications.removeNotificationSubscription(responseListener.current);
                 };
         //check if there is a token registered
-        let token = SecureStore.getItemAsync('token');
-        if(token !== null){
-          setAuthenticated(true);
-        }
   }, [])
+
+  const authenticateUser = async () => {
+    let token = await SecureStore.getItemAsync('access_token');
+    if(token !== null){
+      setAuthenticated(true);
+    }
+  }
 
     return (
         <AuthProvider>
-          <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#EC253C" translucent = {true}/>
+          <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#f2f2f2" translucent = {true}/>
           <Router />
         </AuthProvider>
     );    

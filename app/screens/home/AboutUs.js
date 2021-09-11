@@ -3,7 +3,7 @@ import {Image, Text, View, StyleSheet} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import {primaryRedColor} from '../../config/colors';
 import {useTranslation} from 'react-i18next';
-
+import {textAlign} from '../../utils/utilFunctions';
 
 //------------------------ screen ---------------------
 const AboutUs = ({navigation}) => {
@@ -13,6 +13,7 @@ const AboutUs = ({navigation}) => {
 	return (
 	    <View style={styles.container}>
             {/* ------------------------------------- header section ------------------------------------ */}
+            {/*
             <View style={styles.header}>
                 <View style={styles.card}>
                     <Image
@@ -22,22 +23,23 @@ const AboutUs = ({navigation}) => {
                 </View>
                 <TitleText value={t(`aboutIBS`)}/>
             </View>
+            */}
 
             {/* ------------------------------------- about text section ------------------------------------ */}
             <View>
-                <Text style={styles.text}>
+                <Text style={[styles.text,textAlign()]}>
                     {t(`about_description_1`)}
                 </Text>
 
-                <Text style={styles.text}>
+                <Text style={[styles.text,textAlign()]}>
                     {t(`about_description_2`)}
                 </Text>
 
-                <Text style={styles.text}>
+                <Text style={[styles.text,textAlign()]}>
                     {t(`about_description_3`)}
                 </Text>
                 
-                <Text style={styles.text}>
+                <Text style={[styles.text,textAlign()]}>
                     {t(`about_description_4`)}
                 </Text>
             </View>
@@ -51,8 +53,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        paddingVertical: 50,
-        paddingHorizontal: 20
+        paddingVertical: 20,
+        paddingHorizontal: 20,
     },
     header : {
         display: 'flex',
