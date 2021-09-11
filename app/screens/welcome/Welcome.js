@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
         flexDirection : 'column'
     }, 
     image : {
+        
         width : width + 35,
         height : "125%",
         justifyContent : "center",
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
         padding : 10,
         marginTop : 30,
         //marginLeft : 30
-        right : -40
+        right : -40 
     },
     viewLang : {
         flexDirection : 'column',
