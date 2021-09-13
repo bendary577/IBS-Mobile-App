@@ -18,7 +18,6 @@ import { addTicketMessage } from "../../../services/api_requests";
 
 let userAvatar = "../../../assets/icons/Support/userAvatar.png";
 let supportAvatar = "../../../assets/icons/Support/supportAvatar.png";
-//'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 
 class Chat extends Component {
   constructor(props) {
@@ -46,10 +45,6 @@ class Chat extends Component {
     this.socket = io(SOCKET_IO_SERVER, {
       jsonp: false,
       transports: ["websocket", "polling"],
-    });
-    //this.socket.connect();
-    this.socket.on("hello", () => {
-      console.log("hello")
     });
 
     this.socket.on("connect", () => {
@@ -181,7 +176,7 @@ class Chat extends Component {
       <>
         <View style={styles.chatHeader}>
           <View style={styles.top}>
-            <Text style={styles.titleText}>{ticket.statusFormatted}</Text>
+            <Text style={styles.titleText}>I need help !</Text>
             <Text>#{ticket._id}</Text>
           </View>
           <View style={styles.bottom}>

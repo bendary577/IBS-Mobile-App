@@ -8,6 +8,9 @@ import DrawerMenu from './DrawerMenu';
 import ChatCard from '../components/sub-components/cards/ChatCard';
 import {useTranslation} from 'react-i18next';
 import {createStackNavigator} from '@react-navigation/stack';
+import FAQBackButton from '../components/sub-components/buttons/FAQBackButton';
+import FAQ from '../screens/home/FAQ';
+import SingleFAQ from '../screens/home/SingleFAQ';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +28,36 @@ const MainStack = () => {
                     }}
             />  
   
+  <Stack.Screen
+              name="FAQ" 
+              component={FAQ}
+              options={{
+                title : t(`faq`),
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerLeft : () =>( <FAQBackButton /> )
+            }}
+          />
+
+          <Stack.Screen
+              name="SingleFAQ" 
+              component={SingleFAQ}
+              options={({route})=>({
+                title : `#${route.params.title}`,
+                headerStyle: {
+                  backgroundColor: "white",
+                  borderBottomEndRadius : 'gray',
+                  borderBottomWidth : 1,
+                },
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerRight : ()=>(  <MoreTabButton />),
+                headerLeft : () =>( <BackButton /> )
+              })}
+            />
+
             <Stack.Screen
                     name="Notifications" 
                     component={Notifications}
@@ -48,16 +81,16 @@ const MainStack = () => {
                     options={({route})=>({
                       title : `#${route.params.roomNumber}`,
                       headerStyle: {
-                        backgroundColor: "#D8D8D8",
-                        borderBottomRightRadius : 20,
-                        borderBottomLeftRadius : 20
+                        backgroundColor: "white",
+                        borderBottomEndRadius : 'gray',
+                        borderBottomWidth : 1,
                       },
                       headerTitleStyle: {
                         fontWeight: 'bold',
                       },
-                      headerRight : () => ( I18nManager.isRTL ? <></> : route.params.closed === true ? <ChatCard /> : <></>),
-                      //headerLeft : () => ( I18nManager.isRTL ?  route.params.closed === true ? <ChatCard /> : <></> : <></>  ),
-                      headerBackImage : () =>( <BackButton /> )
+                      headerRight : () => ( <ChatCard opened={route.params.status} />),
+                      headerLeft : () => ( <BackButton /> ),
+                      //headerBackImage : () =>( <BackButton /> )
                   })}
             />  
       </Stack.Navigator>

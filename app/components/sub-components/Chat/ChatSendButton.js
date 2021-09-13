@@ -29,7 +29,9 @@ const styles = StyleSheet.create({
     },
     icon : {
         width : 60,
-        height : 60,
+        height : 45 ,
+        borderRadius : 10,
+        marginBottom : 10
     },
 })
 

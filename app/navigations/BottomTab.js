@@ -1,5 +1,5 @@
 
-import * as React from 'react';
+import React,{useState} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeTabButton from '../components/sub-components/navigationTabs/HomeTabButton';
 import PaymentTabButton from '../components/sub-components/navigationTabs/PaymentTabButton';
@@ -15,6 +15,7 @@ import {Platform} from 'react-native';
 import { NotificationTimeoutError } from 'expo-notifications';
 import NotificationsButton from '../components/sub-components/buttons/NotificationsButton';
 
+
 //------------------------------------------- bottom tab navigation ------------------------------------
 
 const Tab = createBottomTabNavigator();
@@ -25,7 +26,6 @@ const BottomTabsNavigation = () => {
   const {t} = useTranslation();
 
   return (
-
       <Tab.Navigator
         initialRouteName="Home"
         tabBarOptions={{
@@ -44,13 +44,14 @@ const BottomTabsNavigation = () => {
       >
 
         <Tab.Screen
-          name="Home"
-          component={HomeStack}
+          name="MyProfile"
+          component={ProfileStack}
           options={{
-            tabBarLabel: t(`home`),
-            tabBarIcon : ({ focused })=>(<HomeTabButton active={focused ? true : false}/>),
+            tabBarLabel: t(`myProfile`),
+            tabBarIcon : ({ focused })=>(<ProfileTabButton active={focused ? true : false}/>),
           }}
         />
+
 
         <Tab.Screen
           name="MyTransactions"
@@ -62,11 +63,11 @@ const BottomTabsNavigation = () => {
         />
 
         <Tab.Screen
-          name="MyProfile"
-          component={ProfileStack}
+          name="Home"
+          component={HomeStack}
           options={{
-            tabBarLabel: t(`myProfile`),
-            tabBarIcon : ({ focused })=>(<ProfileTabButton active={focused ? true : false}/>),
+            tabBarLabel: t(`home`),
+            tabBarIcon : ({ focused })=>(<HomeTabButton active={focused ? true : false}/>),
           }}
         />
 
@@ -94,7 +95,12 @@ const BottomTabsNavigation = () => {
           })}
         />
     </Tab.Navigator>
+        
+
+
   );
 }
+
+
 
 export default BottomTabsNavigation;

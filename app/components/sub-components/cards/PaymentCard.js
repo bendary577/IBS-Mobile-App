@@ -50,7 +50,9 @@ const styles = StyleSheet.create({
     },
     paymentCardImage : {
         width : "100%",
-        height : "100%"
+        height : "85%",
+        shadowOpacity : 0.3,
+        shadowRadius : 20,
     },
     topHeader : {
        // backgroundColor : 'blue'

@@ -115,9 +115,7 @@ class Support extends Component {
 
     /* ------------- navigate to certain ticket support chat -------------------------- */
     navigateToChat = (id, number, status) => {
-        let bool = false;
-        if (status === "closed") bool = true;
-        this.props.navigation.navigate('Chat',  {id, roomNumber : number, closed : bool})
+        this.props.navigation.navigate('Chat',  {id, roomNumber : number, status})
     }
 
     handleRefresh = () => {

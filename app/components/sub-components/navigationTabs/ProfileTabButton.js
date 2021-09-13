@@ -22,24 +22,26 @@ const ProfileTabButton = (props) => {
     )
 }
 
-// const styles = StyleSheet.create({
-//     container : {
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         // flex: 1
-//     },
-//     icon : {
-//         // position: 'absolute',
-//         bottom: 0, 
-//         height: 90,
-//         width: 90,
-//         transform: [{translateY: -20}],
-//         borderRadius: 68,
-//         borderWidth : 8,
-//         borderColor : 'white',
-//     },
-// })
-
+{/*
+const styles = StyleSheet.create({
+     container : {
+         justifyContent: 'center',
+         alignItems: 'center',
+          flex: 1
+     },
+     icon : {
+         position: 'absolute',
+         bottom: 0, 
+        height: 90,
+          width: 90,
+        transform: [{translateY: 10}],
+        transform: [{translateX: -45}],
+        borderRadius: 68,
+         borderWidth : 8,
+         borderColor : 'white',
+     },
+ })
+*/}
 
 const styles = StyleSheet.create({
     icon : {

@@ -59,14 +59,15 @@ const Login = (props) => {
 
     const validate = () => {
         //! TODO: Change national id validation to 14 digits only! 
+        /*
         const nationalIdValid = /^[0-9]{12,14}$/.test(identityNumber);
         const passwordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9\d@$.!%*#?&]{8,20}/.test(password);
         !nationalIdValid ? setNationalIdErrorMessage(t(`provide_id`)) : setNationalIdErrorMessage('');
         !passwordValid ? setPasswordErrorMessage(t(`provide_password`)) : setPasswordErrorMessage('');
-        console.log(nationalIdValid, passwordValid)
-        if(nationalIdValid && passwordValid){
+        */
+        if(identityNumber !== '' && password !==''){
             handleLogin();
-        }   
+        } 
     }
 
     const handleCreateAccount = () =>{

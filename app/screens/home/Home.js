@@ -17,7 +17,12 @@ const Home = ({navigation}) => {
     const {t} = useTranslation();
 
     const navigateToFAQ = () => {
-        navigation.navigate("FAQ")
+        //navigation.navigate("FAQ")
+        //navigation.navigate('FAQStack', { screen: 'FAQ' });
+        navigation.navigate('FAQStack', {
+            screen: 'FAQ',
+          });
+          
     }
 
     const navigateToInformation = () => {
@@ -153,7 +158,6 @@ const styles = StyleSheet.create({
     blackElipseImage : {
         width : 91,
         height : 175,
-        marginTop : 70
      },
     paymentCard : {
         flexDirection : 'row-reverse',

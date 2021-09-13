@@ -22,8 +22,9 @@ const App = () => {
   const notificationListener = useRef();
   const [notification, setNotification] = useState(false);
   const responseListener = useRef();
-  
+
   useEffect (() => {
+  
         registerForPushNotificationsAsync();
                 // This listener is fired whenever a notification is received while the app is foregrounded
                 notificationListener.current = Notifications.addNotificationReceivedListener(notification => {

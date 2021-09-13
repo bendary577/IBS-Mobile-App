@@ -2,6 +2,7 @@ import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import ContactUsAuth from '../screens/home/ContactUsAuth';
 import BackButton from '../components/sub-components/buttons/BackButton';
+import FAQBackButton from '../components/sub-components/buttons/FAQBackButton';
 import NotificationsButton from '../components/sub-components/buttons/NotificationsButton';
 import LogoButton from '../components/sub-components/buttons/LogoButton';
 import Support from '../screens/account/Support/Support';
@@ -24,6 +25,7 @@ import MoreTabButton from '../components/sub-components/navigationTabs/MoreTabBu
 
 const Stack = createStackNavigator();
 
+//-------------------------------- home stack ----------------------------------------
 const HomeStack = () => {
 
   const common = getCommon(Stack);
@@ -38,6 +40,11 @@ const HomeStack = () => {
         options={{
           title : false,
           headerStyle: {
+            /*
+              backgroundColor: "#D8D8D8",
+              borderBottomRightRadius : 20,
+              borderBottomLeftRadius : 20
+            */
             backgroundColor: "white",
             borderBottomEndRadius : 'gray',
             borderBottomWidth : 1,
@@ -49,42 +56,6 @@ const HomeStack = () => {
           headerLeft : ()=>(  <LogoButton />)
       }}
       /> 
-
-        <Stack.Screen
-              name="FAQ" 
-              component={FAQ}
-              options={{
-                title : t(`faq`),
-                headerStyle: {
-                  backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
-                  borderBottomWidth : 1,
-                },
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-                headerRight : ()=>(  <MoreTabButton />),
-                headerLeft : () =>( <BackButton /> )
-            }}
-          />
-
-          <Stack.Screen
-              name="SingleFAQ" 
-              component={SingleFAQ}
-              options={({route})=>({
-                title : `#${route.params.title}`,
-                headerStyle: {
-                  backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
-                  borderBottomWidth : 1,
-                },
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-                headerRight : ()=>(  <MoreTabButton />),
-                headerLeft : () =>( <BackButton /> )
-              })}
-            />
 
           <Stack.Screen
               name="Information" 
@@ -128,8 +99,6 @@ const HomeStack = () => {
   );
 }
 
-
-
 //----------------------------------- Profile Stack -----------------------------------------------------
 const EmploymentPaymentsStack = () => {
   const {t} = useTranslation();
@@ -160,11 +129,6 @@ const EmploymentPaymentsStack = () => {
               options={{
                 title : t(`payments`),
                 headerStyle: {
-                  /*
-                  backgroundColor: "#D8D8D8",
-                  borderBottomRightRadius : 20,
-                  borderBottomLeftRadius : 20
-                  */
                  backgroundColor: "white",
                  borderBottomEndRadius : 'gray',
                  borderBottomWidth : 1,
