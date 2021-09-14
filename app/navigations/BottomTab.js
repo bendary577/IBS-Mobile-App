@@ -33,7 +33,7 @@ const BottomTabsNavigation = () => {
           inactiveTintColor : "black",
           style : {
             backgroundColor: "white",
-            borderBottomEndRadius : 'gray',
+            borderBottomEndRadius : 1,
             borderBottomWidth : 1,
              height : '12%'
             },

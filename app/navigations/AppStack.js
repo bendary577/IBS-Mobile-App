@@ -46,7 +46,7 @@ const HomeStack = () => {
               borderBottomLeftRadius : 20
             */
             backgroundColor: "white",
-            borderBottomEndRadius : 'gray',
+            borderBottomEndRadius : 1,
             borderBottomWidth : 1,
           },
           headerTitleStyle: {
@@ -64,7 +64,7 @@ const HomeStack = () => {
                 title : t(`information`),
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
+                  borderBottomEndRadius : 1,
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -82,7 +82,7 @@ const HomeStack = () => {
                 title : `#${route.params.title}`,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
+                  borderBottomEndRadius : 1,
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -112,7 +112,7 @@ const EmploymentPaymentsStack = () => {
                 title : t(`payments`),
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
+                  borderBottomEndRadius : 1,
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -130,7 +130,7 @@ const EmploymentPaymentsStack = () => {
                 title : t(`payments`),
                 headerStyle: {
                  backgroundColor: "white",
-                 borderBottomEndRadius : 'gray',
+                 borderBottomEndRadius : 1,
                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -161,7 +161,7 @@ const ProfileStack = () => {
                 title : false,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
+                  borderBottomEndRadius : 1,
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -179,7 +179,7 @@ const ProfileStack = () => {
                 title : false,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
+                  borderBottomEndRadius : 1,
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -205,7 +205,7 @@ const SupportStack = () => {
                 title : false,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
+                  borderBottomEndRadius : 1,
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -234,7 +234,7 @@ const ContactUsAuthStack = () => {
                 title : t(`contactUs`),
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
+                  borderBottomEndRadius : 1,
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -262,7 +262,7 @@ const MessagesForYouStack = () => {
                 title : t(`MessagesForYou`),
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
+                  borderBottomEndRadius : 1,
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -279,7 +279,7 @@ const MessagesForYouStack = () => {
               title: t(`cib`),
               headerStyle: {
                 backgroundColor: "white",
-                borderBottomEndRadius : 'gray',
+                borderBottomEndRadius : 1,
                 borderBottomWidth : 1,
               },
                 headerTitleStyle: {

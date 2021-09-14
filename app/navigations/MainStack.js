@@ -47,7 +47,7 @@ const MainStack = () => {
                 title : `#${route.params.title}`,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
+                  borderBottomEndRadius : 1,
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -82,7 +82,7 @@ const MainStack = () => {
                       title : `#${route.params.roomNumber}`,
                       headerStyle: {
                         backgroundColor: "white",
-                        borderBottomEndRadius : 'gray',
+                        borderBottomEndRadius : 1,
                         borderBottomWidth : 1,
                       },
                       headerTitleStyle: {
