@@ -1,23 +1,18 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import {Image, StyleSheet} from 'react-native';
 
-let ibsIcon = '../../../assets/icons/Home/ibs.png';
+let ibsIcon = '../../../assets/icons/Home/ibs-logo.png';
 
 const LogoButton = () => {
     return (
-        <TouchableOpacity>
-            <Image style={styles.icon} source={require(ibsIcon)} />
-        </TouchableOpacity>
+        <Image style={styles.icon} source={require(ibsIcon)} />
     )
 }
 
 const styles = StyleSheet.create({
     icon : {
         width : 40,
-        height : 40,
-        marginLeft : 30,
-        marginBottom : 15
+        height : 40
     },
 })
 

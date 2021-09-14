@@ -40,20 +40,24 @@ const HomeStack = () => {
         options={{
           title : false,
           headerStyle: {
-            /*
-              backgroundColor: "#D8D8D8",
-              borderBottomRightRadius : 20,
-              borderBottomLeftRadius : 20
-            */
             backgroundColor: "white",
-            borderBottomEndRadius : 1,
             borderBottomWidth : 1,
+          },
+          headerLeftContainerStyle: {
+            alignItems: 'center',
+            height: '100%',
+            paddingHorizontal: 25
+          },
+          headerRightContainerStyle: {
+            alignItems: 'center',
+            height: '100%',
+            paddingHorizontal: 25
           },
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerRight : ()=>(  <MoreTabButton />),
-          headerLeft : ()=>(  <LogoButton />)
+          headerRight : ()=> <MoreTabButton />,
+          headerLeft : ()=> <LogoButton />
       }}
       /> 
 
@@ -70,7 +74,6 @@ const HomeStack = () => {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
             }}
             />
@@ -88,7 +91,6 @@ const HomeStack = () => {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
               })}
             />  
@@ -118,6 +120,11 @@ const EmploymentPaymentsStack = () => {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
+                headerRightContainerStyle: {
+                  alignItems: 'center',
+                  height: '100%',
+                  paddingHorizontal: 25
+                },
                 headerRight : ()=>(  <MoreTabButton />),
                 headerBackImage : () =>( <BackButton /> )
             }}
@@ -136,7 +143,6 @@ const EmploymentPaymentsStack = () => {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <MoreTabButton />),
                 headerBackImage : () =>( <BackButton /> )
             }}
             /> 
@@ -167,6 +173,11 @@ const ProfileStack = () => {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
+                headerRightContainerStyle: {
+                  alignItems: 'center',
+                  height: '100%',
+                  paddingHorizontal: 25
+                },
                 headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value={t(`myProfile`)} /></View>)
             }}
@@ -185,7 +196,6 @@ const ProfileStack = () => {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : ()=>( <BackButton /> )
             }}
             />
@@ -210,6 +220,11 @@ const SupportStack = () => {
                 },
                 headerTitleStyle: {
                   fontWeight: 'bold',
+                },
+                headerRightContainerStyle: {
+                  alignItems: 'center',
+                  height: '100%',
+                  paddingHorizontal: 25
                 },
                 headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : ()=>(  <View style={{marginLeft : 25}}><TitleText value={t(`support`)} /></View>)
@@ -240,7 +255,6 @@ const ContactUsAuthStack = () => {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
             }}
             />
@@ -268,7 +282,6 @@ const MessagesForYouStack = () => {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-                headerRight : ()=>(  <MoreTabButton />),
                 headerLeft : () =>( <BackButton /> )
             }}/>
 

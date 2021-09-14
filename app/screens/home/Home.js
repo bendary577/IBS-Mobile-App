@@ -1,5 +1,5 @@
 import React, {useEffect}  from 'react';
-import {SafeAreaView, Image,Text, View, StyleSheet, ScrollView, TouchableOpacity, I18nManager, Platform} from 'react-native';
+import {SafeAreaView, Image,Text, View, StyleSheet, ScrollView, TouchableOpacity, I18nManager, Platform, StatusBar} from 'react-native';
 import TitleText from '../../components/primitive-components/TitleText';
 import PaymentCard from '../../components/sub-components/cards/PaymentCard';
 import SmallMap from '../../components/sub-components/Maps/SmallMap';
@@ -37,6 +37,7 @@ const Home = ({navigation}) => {
 
         return (
             <PTRView onRefresh={refresh} >
+            <StatusBar backgroundColor={'white'} />
             <SafeAreaView style={styles.container}>
                 <ScrollView>
 
@@ -124,7 +125,7 @@ const Home = ({navigation}) => {
                         -------------------------------- */}
 
                         {/* -------------------------------------- visit us -------------------------------- */}
-                        <TouchableOpacity activeOpacity={0.9} style={styles.visitUs} onPress={()=>{navigation.navigate("VisitUs")}}>
+                        <View activeOpacity={0.9} style={styles.visitUs} onPress={()=>{navigation.navigate("VisitUs")}}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image
@@ -139,7 +140,7 @@ const Home = ({navigation}) => {
                             <View>
                                 <SmallMap />
                             </View>
-                        </TouchableOpacity>
+                        </View>
                         {/**-------------------     <BottomTabsNavigation />    -------------------- */}
                     </View>  
                 </ScrollView>

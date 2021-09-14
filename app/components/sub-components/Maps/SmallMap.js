@@ -1,5 +1,5 @@
 import React from 'react';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, View,Text, Dimensions } from 'react-native';
 import IBSButton from '../../primitive-components/IBSButton';
 import { useNavigation } from '@react-navigation/native';
@@ -18,13 +18,23 @@ export default function SmallMap(props) {
 
   return (
     <View style={styles.container}>
-           <MapView style={styles.map} 
+           <MapView style={styles.map}
+           maxZoomLevel={30} 
             initialRegion={{
               latitude: 29.969648271435027,
               longitude: 31.274970942328,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
-            }} />
+            }}>
+              <Marker
+                coordinate={{
+                  latitude: 29.969648271435027,
+                  longitude: 31.274970942328
+                }}
+                title={'IBS'}
+              />
+              </MapView>
+
 
           {/* -------------------------------- map footer ---------------------------- */}
           <View style={styles.footer}>

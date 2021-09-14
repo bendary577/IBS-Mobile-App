@@ -11,9 +11,10 @@ import { DrawerActions } from '@react-navigation/native';
 import {HomeStack, ProfileStack, SupportStack, EmploymentPaymentsStack} from './AppStack';
 import More from '../screens/account/Messages/More';
 import {useTranslation} from 'react-i18next';
-import {Platform} from 'react-native';
+import {Dimensions, Platform, StatusBar} from 'react-native';
 import { NotificationTimeoutError } from 'expo-notifications';
 import NotificationsButton from '../components/sub-components/buttons/NotificationsButton';
+const height = Dimensions.get('window').height;
 
 
 //------------------------------------------- bottom tab navigation ------------------------------------
@@ -28,20 +29,24 @@ const BottomTabsNavigation = () => {
   return (
       <Tab.Navigator
         initialRouteName="Home"
+        lazy={true}
         tabBarOptions={{
           activeTintColor: '#e91e63',
           inactiveTintColor : "black",
+          // showLabel: false,
           style : {
             backgroundColor: "white",
             borderBottomEndRadius : 1,
             borderBottomWidth : 1,
-             height : '12%'
+            paddingBottom: 10,
+            height : height * 0.07
             },
           tabStyle :{
             padding : 0
           },
         }}
       >
+
 
         <Tab.Screen
           name="MyProfile"

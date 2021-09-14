@@ -11,7 +11,7 @@ import ChatComposer from "../../../components/sub-components/Chat/ChatComposer";
 import { withTranslation } from "react-i18next";
 import ChatClosedToolbar from "../../../components/sub-components/Chat/ChatClosedToolbar";
 import OpenChatButton from "../../../components/sub-components/Chat/OpenChatButton";
-window.navigator.userAgent = "react-native";
+// window.navigator.userAgent = "react-native";
 import io from "socket.io-client/dist/socket.io";
 import { SOCKET_IO_SERVER } from "../../../services/apis";
 import { addTicketMessage } from "../../../services/api_requests";
