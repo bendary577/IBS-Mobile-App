@@ -8,16 +8,16 @@ import MoreTabButton from '../components/sub-components/navigationTabs/MoreTabBu
 import ProfileTabButton from '../components/sub-components/navigationTabs/ProfileTabButton';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
-import {HomeStack, ProfileStack, SupportStack, EmploymentPaymentsStack} from './AppStack';
+import {HomeStack, NotificationsStack,ProfileStack, SupportStack, EmploymentPaymentsStack} from './AppStack';
 import More from '../screens/account/Messages/More';
 import {useTranslation} from 'react-i18next';
-import {Platform} from 'react-native';
+import {Platform, Dimensions} from 'react-native';
 import { NotificationTimeoutError } from 'expo-notifications';
 import NotificationsButton from '../components/sub-components/buttons/NotificationsButton';
-
+import Notifications from '../screens/account/Notifications/Notifications'
 
 //------------------------------------------- bottom tab navigation ------------------------------------
-
+let {width, height} = Dimensions.get('window'); 
 const Tab = createBottomTabNavigator();
 
 const BottomTabsNavigation = () => {
@@ -33,12 +33,14 @@ const BottomTabsNavigation = () => {
           inactiveTintColor : "black",
           style : {
             backgroundColor: "white",
-            borderBottomEndRadius : 'gray',
             borderBottomWidth : 1,
-             height : '12%'
+            justifyContent : 'center',
+            alignItems : 'center',
+            height : '12%',
             },
           tabStyle :{
-            padding : 0
+            marginTop : '2%',
+            marginBottom : '2%',
           },
         }}
       >
@@ -51,7 +53,6 @@ const BottomTabsNavigation = () => {
             tabBarIcon : ({ focused })=>(<ProfileTabButton active={focused ? true : false}/>),
           }}
         />
-
 
         <Tab.Screen
           name="MyTransactions"
@@ -72,6 +73,21 @@ const BottomTabsNavigation = () => {
         />
 
         <Tab.Screen
+          name="Notifications"
+          component={NotificationsStack}
+          options={{
+            tabBarLabel: t(`notifications`),
+            tabBarIcon : ({ focused })=>(<NotificationsButton active={focused ? true : false} />),
+          }}
+          listeners={({navigation}) => ({
+            tabPress: e => {
+              e.preventDefault()
+              navigation.navigate('Notifications')
+            }
+          })}
+        />
+
+        <Tab.Screen
           name="Support"
           component={SupportStack}
           options={{
@@ -80,20 +96,7 @@ const BottomTabsNavigation = () => {
           }}
         />
 
-        <Tab.Screen
-          name="Notifications"
-          component={More}
-          options={{
-            tabBarLabel: t(`notifications`),
-            tabBarIcon : ({ focused })=>(<NotificationsButton active={focused ? true : false} />),
-          }}
-          listeners={({navigation}) => ({
-            tabPress: e => {
-              e.preventDefault()
-              navigation.dispatch(DrawerActions.toggleDrawer());
-            }
-          })}
-        />
+
     </Tab.Navigator>
         
 

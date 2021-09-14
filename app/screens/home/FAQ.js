@@ -15,7 +15,7 @@ import { List } from 'react-native-paper';
 
 let see = '../../assets/icons/Login/View.png';
 let add = '../../assets/icons/Home/add.png';
-
+let remove = '../../assets/icons/Home/remove.svg';
 //------------------------ screen ---------------------
 const FAQ = ({navigation}) => {
 
@@ -25,7 +25,7 @@ const FAQ = ({navigation}) => {
     const [isMiddleItem , setIsMiddleItem] = useState(false);
     const [error, setError] = useState('');
     const {t} = useTranslation();
-    const [expanded, setExpanded] = React.useState(true);
+
 
     const dimensions = Dimensions.get('window');
     const screenWidth = dimensions.width;
@@ -53,8 +53,6 @@ const FAQ = ({navigation}) => {
         fetchFAQ();
     }
 
-    const handlePress = () => setExpanded(!expanded);
-
 	return (
 
         loading === true ? 
@@ -77,23 +75,23 @@ const FAQ = ({navigation}) => {
 
             <View style={{ margin : 10}}>
                 <View style={{marginVertical : 10}}>
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>we are here to help you with any thing and everything on kaspuss</Text>
+                    <Text style={{fontSize:16, fontWeight:'bold', textAlign :'left'}}>{t(`faq_screen_title`)}</Text>
                 </View>
 
                 <View style={{marginBottom : 15}}>
-                    <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</Text>
+                    <Text style={{textAlign :'left'}}>{t(`faq_screen_description`)}</Text>
                 </View>
 
-                <View style={{marginBottom : 10}}>
+                <View style={{marginBottom : 10, alignItems : 'center'}}>
                     <IBSSearchBar />
                 </View>
 
                 <View>
-                    <Text style={{fontSize:18, fontWeight:'bold'}}>FAQ</Text>
+                    <Text style={{fontSize:18, fontWeight:'bold', textAlign :'left'}}>{t(`faq`)}</Text>
                 </View>
             </View>
                 {/* ------------------------------------- about text section ------------------------------------ */}
-                    <View>
+                    <View style={{flex : 3}}>
                         {/*}
                         <FlatList
                             data={faqs}
@@ -103,8 +101,9 @@ const FAQ = ({navigation}) => {
                             onRefresh={handleRefresh}
                         />
                         */}
-                        <ScrollView>
+                        
                             <List.Section style={{borderTopWidth : 1, borderTopColor : '#a2a3a2'}}>
+                            <ScrollView>
                                 {
                                     faqs.map((faq)=>{
                                         return(
@@ -114,27 +113,24 @@ const FAQ = ({navigation}) => {
                                             title="what is kaspuss"
                                             titleStyle={{fontSize:16, fontWeight : 'bold'}}
                                             descriptionStyle={{justifyContent : 'flex-start',backgroundColor : 'blue', alignItems : 'flex-start'}}
-                                            right={props => <Image
-                                                                style={{width:8, height:8,color : 'red'}} 
-                                                                source={require(add)}/>}
-                                            >
-                                            <List.Item 
-                                                title="accordion content example" />
+                                            right={props => <Image style={{width:8, height:8,color : 'red'}}  source={require(add)}/>}>
+                                            <List.Item title="accordion content example" />
                                         </List.Accordion>
                                         )
                                     })
                                 }
+                                                        </ScrollView>
                             </List.Section>
-                        </ScrollView>
+
                     </View>
             </SafeAreaView>
             <View style={{backgroundColor : 'white', borderTopWidth:1, borderTopColor : '#d9d9d9', paddingLeft : 20, paddingRight : 20, paddingBottom : 20}}>
                 <View style={{justifyContent : 'center', alignItems : 'center'}}>
                     <View style={{marginVertical : 10}}>
-                        <Text style={{fontSize:16, fontWeight:'bold'}}>still stuck ? help is a mail away</Text>
+                        <Text style={{fontSize:16, fontWeight:'bold'}}>{t(`still_need_help`)}</Text>
                     </View>
                     <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>send a message</Text>
+                        <Text style={styles.buttonText}>{t(`send_message`)}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

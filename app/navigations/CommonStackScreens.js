@@ -16,9 +16,8 @@ export const getCommon = (Stack) => {
             options={{
             title: t(`aboutUs`),
             headerStyle: {
-                backgroundColor: "#D8D8D8",
-                borderBottomRightRadius : 20,
-                borderBottomLeftRadius : 20
+                backgroundColor: "white",
+                borderBottomWidth : 1,
             },
                 headerTitleStyle: {
                 fontWeight: 'bold',
@@ -35,9 +34,8 @@ export const getCommon = (Stack) => {
         options={{
             title: t(`visitUs`),
             headerStyle: {
-                backgroundColor: "#D8D8D8",
-                borderBottomRightRadius : 20,
-                borderBottomLeftRadius : 20
+                backgroundColor: "white",
+                borderBottomWidth : 1,
             },
             headerTitleStyle: {
             fontWeight: 'bold',

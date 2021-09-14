@@ -1,12 +1,13 @@
 import 'react-native-gesture-handler';
 import React, {useState, useRef, useEffect} from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, Alert} from 'react-native';
 import Router from './app/config/router';
 import {AuthProvider} from './app/contexts/authContext';
 import {useAuth} from './app/contexts/authContext';
 import * as SecureStore from 'expo-secure-store';
 import registerForPushNotificationsAsync from './app/notifications/registeration';
 import * as Notifications from 'expo-notifications';
+import * as Updates from 'expo-updates';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -26,6 +27,9 @@ const App = () => {
   useEffect (() => {
   
         registerForPushNotificationsAsync();
+
+                checkForNewUpdates();
+
                 // This listener is fired whenever a notification is received while the app is foregrounded
                 notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
                   console.log(notification)
@@ -43,8 +47,7 @@ const App = () => {
                   Notifications.removeNotificationSubscription(notificationListener.current);
                   Notifications.removeNotificationSubscription(responseListener.current);
                 };
-        //check if there is a token registered
-  }, [])
+        }, [])
 
   const authenticateUser = async () => {
     let token = await SecureStore.getItemAsync('access_token');
@@ -53,9 +56,22 @@ const App = () => {
     }
   }
 
+  const checkForNewUpdates = async () => {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync();
+      }
+    } catch (e) {
+      console.log(e)
+    }    
+  }
+
+
     return (
         <AuthProvider>
-          <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#f2f2f2" translucent = {true}/>
+          <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "white" translucent = {true}/>
           <Router />
         </AuthProvider>
     );    

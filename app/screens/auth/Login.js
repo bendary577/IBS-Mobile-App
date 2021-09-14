@@ -67,7 +67,11 @@ const Login = (props) => {
         */
         if(identityNumber !== '' && password !==''){
             handleLogin();
-        } 
+        }else if(identityNumber === ''){
+            setErrorMessage(t(`provide_id`))
+        }else if(password === ''){
+            setErrorMessage(t(`provide_password`))
+        }
     }
 
     const handleCreateAccount = () =>{
@@ -98,8 +102,8 @@ const Login = (props) => {
                 <View style={styles.top}>
                     <Image style={styles.topImage} source={require(ibsLogo)} />
                 </View>
-                <View style={{flex : 5, flexDirection : 'column'}}>
-                    <View style={{flex : 4, flexDirection : 'column', height : '100%',zIndex : 999, width : '95%', marginStart : 20}}>
+                <View style={{flex : 4, flexDirection : 'column'}}>
+                    <View style={{flex : 4, flexDirection : 'column', zIndex : 999, width : '95%', marginStart : 20}}>
                             { error !== '' ? <Text style={styles.errorMessage}>{error}</Text> : <></>}
                             { nationalIdErrorMessage !== '' ? <Text style={styles.errorMessage}>{nationalIdErrorMessage}</Text> : <></>}
                             <IBSInputText placeholder={t(`loginPlaceholder`)} onChangeText={handleOnChangeIdentificationNumber}/>
@@ -108,15 +112,10 @@ const Login = (props) => {
                             <IBSButtonLargeRed value={t(`login`)} action={true} onHandlePress={validate} />
                             <IBSButtonLargeGray value={t(`noAccount`)} action={true} actionText={t(`create`)} onHandlePress={handleCreateAccount}/>
                     </View>
-                    <View style={{flex : 3, flexDirection : 'row'}}>
+                    <View style={{flex : 2, flexDirection : 'row'}}>
                         <View style={{flex : 4, marginTop : '5%', justifyContent : 'center', alignItems : 'flex-start', padding : 20}}>
                                 <NavigationButtons />
-                            </View>
-                            {/*
-                            <View style={{flex : 2, justifyContent : 'center', alignItems : 'flex-end'}}>
-                                <Image style={{width : 125, height : '115%'}} source={I18nManager.isRTL ? require(loginBottomRtl) : require(loginBottom)} />
-                            </View>
-                            */}
+                        </View>
                     </View>
                 </View>
             </SafeAreaView>
@@ -135,15 +134,9 @@ const styles = StyleSheet.create({
         justifyContent : 'center',
     },
     topImage : {
-        width : 145,
-        height : 146
+        width : 146,
+        height : 148
         },
-    backgroundImage : {
-        width : width ,
-        height : height-50
-        //width : 360,
-        //height : 500
-    },
     middle : {
         flex : 4,
         paddingLeft : 20,

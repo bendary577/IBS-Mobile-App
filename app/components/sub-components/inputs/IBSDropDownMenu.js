@@ -22,12 +22,11 @@ const IBSDropDownMenu = (props) => {
     return (
         //<SafeAreaView>
             <DropDownPicker
-                //zIndex = {2000}
                 items={props.labels}
                 value={selectedValue}
                 open={filterDropDownOpen}
-                //containerStyle={[styles.dropdown, textAlign()]}
-                style={[styles.dropdown, textAlign()]}
+                containerStyle={[styles.dropdown, textAlign()]}
+                style={[styles.dropdown, textAlign()]} 
                 dropDownStyle={{elevation : 1000, zIndex: 1000}}
                 setValue={applyFilter}
                 onChangeValue={(value)=> props.handleFilter(value)}
@@ -38,7 +37,7 @@ const IBSDropDownMenu = (props) => {
                 dropDownContainerStyle={styles.dropdownContainer}
                 selectedItemContainerStyle={styles.selectedItemContainer}
                 selectedItemLabelStyle={styles.selectedItemLabel}
-                itemSeparatorStyle={styles.itemSeparator}
+                itemSeparatorStyle={styles.itemSeparator}  
                 onClose={toggleFilterDropDown}  
             />
         //</SafeAreaView>
@@ -49,13 +48,10 @@ const styles = StyleSheet.create({
     dropdown : {
         height: 45,
         borderRadius : 10,
-        zIndex : 999,
-        elevation: 1,
         borderWidth: 0,
     },
     dropdownContainer : {
-        zIndex : 1000,
-        elevation : 1000
+        zIndex : 120000,
     },
     selectedItemContainer : {
         backgroundColor: "#f0afaf",

@@ -201,8 +201,6 @@ const styles = StyleSheet.create({
         alignItems : 'center',
         minHeight :45,
         position : 'relative',
-        zIndex : 10000
-
     },
     ticketView : {
         flex : 1,

@@ -22,6 +22,7 @@ import SingleInformation from '../screens/home/SingleInformation';
 import FAQ from '../screens/home/FAQ';
 import SingleFAQ from '../screens/home/SingleFAQ';
 import MoreTabButton from '../components/sub-components/navigationTabs/MoreTabButton';
+import Notifications from '../screens/account/Notifications/Notifications';
 
 const Stack = createStackNavigator();
 
@@ -46,7 +47,6 @@ const HomeStack = () => {
               borderBottomLeftRadius : 20
             */
             backgroundColor: "white",
-            borderBottomEndRadius : 'gray',
             borderBottomWidth : 1,
           },
           headerTitleStyle: {
@@ -64,7 +64,6 @@ const HomeStack = () => {
                 title : t(`information`),
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -82,7 +81,6 @@ const HomeStack = () => {
                 title : `#${route.params.title}`,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -112,7 +110,6 @@ const EmploymentPaymentsStack = () => {
                 title : t(`payments`),
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -130,7 +127,6 @@ const EmploymentPaymentsStack = () => {
                 title : t(`payments`),
                 headerStyle: {
                  backgroundColor: "white",
-                 borderBottomEndRadius : 'gray',
                  borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -161,7 +157,6 @@ const ProfileStack = () => {
                 title : false,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -179,7 +174,6 @@ const ProfileStack = () => {
                 title : false,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -205,7 +199,6 @@ const SupportStack = () => {
                 title : false,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -234,7 +227,6 @@ const ContactUsAuthStack = () => {
                 title : t(`contactUs`),
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -262,7 +254,6 @@ const MessagesForYouStack = () => {
                 title : t(`MessagesForYou`),
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -279,7 +270,6 @@ const MessagesForYouStack = () => {
               title: t(`cib`),
               headerStyle: {
                 backgroundColor: "white",
-                borderBottomEndRadius : 'gray',
                 borderBottomWidth : 1,
               },
                 headerTitleStyle: {
@@ -293,6 +283,31 @@ const MessagesForYouStack = () => {
 }
 
 
+const NotificationsStack = () => {
+
+  const {t} = useTranslation();
+
+  return (
+    <Stack.Navigator>
+            <Stack.Screen
+              name="ContactUs" 
+              component={Notifications}
+              options={{
+                title : t(`notifications`),
+                headerStyle: {
+                  backgroundColor: "white",
+                  borderBottomWidth : 1,
+                },
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerRight : ()=>(  <MoreTabButton />),
+                headerLeft : () =>( <BackButton /> )
+            }}
+            />
+    </Stack.Navigator>
+  );
+}
 
 
-export { HomeStack, ProfileStack,EmploymentPaymentsStack, SupportStack, ContactUsAuthStack, MessagesForYouStack};
+export { HomeStack,NotificationsStack, ProfileStack,EmploymentPaymentsStack, SupportStack, ContactUsAuthStack, MessagesForYouStack};

@@ -126,6 +126,10 @@ const resources = {
             "chatClosed" : "Closed",
             "faq" : "Help & Support",
             "faq_description" : "Take a look at the common frequently asked questions",
+            "faq_screen_title" : "we are here to help you with any thing and everything on kaspuss",
+            "faq_screen_description" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+            "still_need_help" : "still stuck ? help is a mail away",
+            "send_message" : "send a message",
             "information" : "My Information",
             "latest_information" : "Latest Information",
             "information_description" : "All our employees clients are grouped in one place, access your info anywhere any time",
@@ -167,7 +171,7 @@ const resources = {
             "tickets_filter" : "Filter your tickets",
             "take_look" : "take a look",
             "check_privacy_policy" : "please make sure you have read our privacy policy",
-            "provide_password" : "Password should be at least 8 characters, with small and uppercase letters",
+            "provide_password" : "you must enter your password",
             "confirm_your_password" : "please confirm your password",
             "provide_id" : "Please provide a valid National Id",
             "provide_phone" : "please provide a phone number",
@@ -177,7 +181,8 @@ const resources = {
             "sendSms" : "Send SMS",
             "receive_code_in" : "Resend code in",
             "cib" : "CIB",
-            "language" : "language"
+            "language" : "language",
+            "internet_connection_warning" : 'please check your internet connection and try again'
           },
     },
     ar: {
@@ -305,6 +310,10 @@ const resources = {
             "chatClosed" : "مغلقة",
             "faq" : "المساعدة والدعم",
             "faq_description" : "ألق نظرة علي الأسئلة الشائعة بين المستخدمين",
+            "faq_screen_title" : "نحن هنا لمساعدتك في أي شيء وكل شيء ",
+            "faq_screen_description" : "لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر.",
+            "still_need_help" : "لازلت بحاجة للمساعدة ؟ راسلنا علي البريد ",
+            "send_message" : "ارسل رسالة",
             "information" : "معلوماتي",
             "latest_information" : "اَخر المعلومات",
             "information_description" : "كل المعلومات الخاصة بموظفينا في مكان واحد, يمكنك الاطلاع عليها بأي وقت",
@@ -356,7 +365,8 @@ const resources = {
             "sendSms" :  " ارسل رسالة نصية",
             "receive_code_in" : "اعد الارسال خلال",
             "cib" : "البنك التجاري الدولي",
-            "language" : "اللغة"
+            "language" : "اللغة",
+            "internet_connection_warning" : 'يرجى التحقق من اتصالك بالإنترنت المحاولة مرة أخرى'
         },
     },
   };

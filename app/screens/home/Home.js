@@ -124,7 +124,7 @@ const Home = ({navigation}) => {
                         -------------------------------- */}
 
                         {/* -------------------------------------- visit us -------------------------------- */}
-                        <TouchableOpacity activeOpacity={0.9} style={styles.visitUs} onPress={()=>{navigation.navigate("VisitUs")}}>
+                        <TouchableOpacity activeOpacity={0.9} style={styles.visitUs}>
                             <View style={styles.header}>
                                 <View style={styles.card}>
                                     <Image

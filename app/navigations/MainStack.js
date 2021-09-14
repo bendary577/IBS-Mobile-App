@@ -11,6 +11,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import FAQBackButton from '../components/sub-components/buttons/FAQBackButton';
 import FAQ from '../screens/home/FAQ';
 import SingleFAQ from '../screens/home/SingleFAQ';
+import {NotificationsStack} from './AppStack';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +29,7 @@ const MainStack = () => {
                     }}
             />  
   
-  <Stack.Screen
+          <Stack.Screen
               name="FAQ" 
               component={FAQ}
               options={{
@@ -47,7 +48,6 @@ const MainStack = () => {
                 title : `#${route.params.title}`,
                 headerStyle: {
                   backgroundColor: "white",
-                  borderBottomEndRadius : 'gray',
                   borderBottomWidth : 1,
                 },
                 headerTitleStyle: {
@@ -82,7 +82,6 @@ const MainStack = () => {
                       title : `#${route.params.roomNumber}`,
                       headerStyle: {
                         backgroundColor: "white",
-                        borderBottomEndRadius : 'gray',
                         borderBottomWidth : 1,
                       },
                       headerTitleStyle: {

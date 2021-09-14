@@ -12,8 +12,7 @@ module.exports = {
          },
        }),
      },
-      /** include this below (remove this comment too)*/
-   resolver: {                              
+   resolver: {                   
      sourceExts: ['jsx', 'js', 'ts', 'tsx'],
    },
 };

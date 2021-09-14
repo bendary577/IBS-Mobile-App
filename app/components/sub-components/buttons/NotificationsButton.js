@@ -35,10 +35,11 @@ const NotificationsButton = () => {
     }, []);
 
     const onPressHandle =async  () => {
-        let response = await getUserNotifications();
-        setNotifications(response);
-        setNewNotification({});
-        navigation.navigate("Notifications",{notifications})
+        //let response = await getUserNotifications();
+        //setNotifications(response);
+        //setNewNotification({});
+        //navigation.navigate("Notifications",{notifications})
+        navigation.navigate("Notifications")
     }
 
     return (
@@ -52,7 +53,8 @@ const NotificationsButton = () => {
 const styles = StyleSheet.create({
     icon : {
         width : 25,
-        height : 25
+        height : 25,
+
     },
 })
 
